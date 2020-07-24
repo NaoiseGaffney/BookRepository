@@ -11,7 +11,7 @@ class ConfigClass(object):
     # Flask settings
     SECRET_KEY = os.urandom(128).hex()
     print("Random Secret Key:", SECRET_KEY)
-    CSRF_ENABLED = True
+    # CSRF_ENABLED = True
 
     # Flask-MongoEngine settings
     MONGO_DB_URL = os.getenv("MONGO_URI_FU")
