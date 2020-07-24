@@ -2,6 +2,7 @@ import os
 from flask import Flask, render_template_string, render_template
 from flask_mongoengine import MongoEngine
 from flask_user import login_required, UserManager, UserMixin, current_user, roles_required
+from wtforms.validators import DataRequired
 
 from config import ConfigClass
 
@@ -43,11 +44,12 @@ class User(db.Document, UserMixin):
 class Book(db.Document):
     title = db.StringField(default="")
     author = db.StringField(default="")
-    year = db.IntField()
-    ISBN = db.StringField()
+    year = db.IntField(default="")
+    ISBN = db.StringField(defualt="123-1-123-12345-1")
+    short_description = db.StringField()
     user = db.ReferenceField(User, required=True)
-    comments = db.ListField()
-    votes = db.ListField()
+    comments = db.ListField(default="Please add your own comments.")
+    votes = db.ListField(default="Please add your vote.")
 
 
 # Setup Flask-User and specify the User data-model
