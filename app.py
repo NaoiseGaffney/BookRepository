@@ -40,6 +40,16 @@ class User(db.Document, UserMixin):
     roles = db.ListField(db.StringField(), default=["user"])
 
 
+class Book(db.Document):
+    title = db.StringField(default="")
+    author = db.StringField(default="")
+    year = db.IntField()
+    ISBN = db.StringField()
+    user = db.ReferenceField(User, required=True)
+    comments = db.ListField()
+    votes = db.ListField()
+
+
 # Setup Flask-User and specify the User data-model
 user_manager = UserManager(app, db, User)
 
