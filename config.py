@@ -1,4 +1,5 @@
 import os
+from datetime import timedelta
 
 from dotenv import load_dotenv
 from pathlib import Path
@@ -41,8 +42,6 @@ class ConfigClass(object):
                            "forms.email4pythonandjs@gmail.com")
     USER_EMAIL_SENDER_EMAIL = "forms.email4pythonandjs@gmail.com"
 
-
-""" # User Profile Customisation
-class CustomUserProfileForm(UserProfileForm):
-    # Add a country field to the UserProfile form
-    country = StringField(_('Country'), validators=[DataRequired()]) """
+    # Flask Session Configuration for Session Protection and "Remember Me" function
+    SESSION_PROTECTION = "strong"
+    REMEMBER_COOKIE_DURATION = timedelta(seconds=3600) # Logged out after 1 hour (come back in without logging in too)
