@@ -8,16 +8,16 @@
     <title>{{ user_manager.USER_APP_NAME }}</title>
 
     <!-- Bootstrap -->
-    <!-- <link href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet"> -->
+    <link href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet">
     <!-- font awesome -->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css"
         integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
     <!--Import Google Icon Font-->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <!--Import materialize.css-->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"> -->
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="/static/css/style.css">
+    <!-- <link rel="stylesheet" href="/static/css/style.css"> -->
 
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -84,8 +84,13 @@
     </div>
     {% endblock %}
 
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+    <!-- Bootstrap -->
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+
     <!-- Initialise MaterializeCSS 1.0.0 Features -->
-    <script src="/static/scripts/materialize.js"></script>
+    <!-- <script src="/static/scripts/materialize.js"></script> -->
 
     {# *** Allow sub-templates to insert extra html to the bottom of the body *** #}
     {% block extra_js %}{% endblock %}
