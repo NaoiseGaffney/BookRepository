@@ -9,6 +9,7 @@ from mongoengine.errors import NotUniqueError
 # generates WTForms from MongoEngine models
 from flask_mongoengine.wtf import model_form
 
+
 from config import ConfigClass
 
 from dotenv import load_dotenv
