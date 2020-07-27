@@ -1,9 +1,10 @@
 import os
-from flask import Flask, render_template_string, render_template
+from flask import Flask, render_template_string, render_template, redirect, url_for
 from flask_mongoengine import MongoEngine, MongoEngineSession, MongoEngineSessionInterface
 from flask_user import login_required, UserManager, UserMixin, current_user, roles_required
 from wtforms.validators import DataRequired
 from mongoengine.errors import NotUniqueError
+from statistics import mean
 
 
 # generates WTForms from MongoEngine models
@@ -54,11 +55,15 @@ class Book(db.Document):
     title = db.StringField(default="")
     author = db.StringField(default="")
     year = db.IntField(default="")
-    ISBN = db.StringField(defualt="123-1-123-12345-1", unique=True)
+    ISBN = db.StringField(default="123-1-123-12345-1", unique=True)
     short_description = db.StringField()
     user = db.ReferenceField(User, required=True)
     comments = db.ListField()
-    votes = db.ListField()
+    votes = db.ListField(db.IntField(choices=[1, 2, 3, 4, 5]))
+    rating = db.FloatField()  # book.calc_votes()
+
+    def calc_votes(self):
+        self.rating = mean(n for n in self.votes if n is not None)
 
     # Single indexes created for "status" and "created_at", indexing in the background
     # Compound indexes [("")]
@@ -79,18 +84,24 @@ class Book(db.Document):
         #     }]
     }
 
+
 # Setup Flask-User and specify the User data-model
 user_manager = UserManager(app, db, User)
 
 # Flask-User MongoEngine test to understand how to CRUD
 try:
-    book = Book(title="Project+ Study Guide", author="Kim Heldman", year="2017", ISBN="978-1-119-28052-1", short_description="CompTIA Certification Guide for Project+.", user="User").save()
+    book = Book(title="Project+ Study Guide", author="Kim Heldman", year="2017", ISBN="978-1-119-28052-1",
+                short_description="CompTIA Certification Guide for Project+.", user="User").save()
 except NotUniqueError as e:
     print("Book already exists in the Book Repository")
 
 book_update = Book.objects(ISBN="978-1-119-28052-1").get()
-update_dict = {"short_description":"This is an updated description."}
+update_dict = {"short_description": "This is an updated description."}
 book_update.update(**update_dict, year=1999)
+print(book_update.to_json())
+print(book_update.id)
+print(book_update.title)
+
 
 try:
     book.delete()
@@ -102,7 +113,8 @@ except NameError as e:
 
 @app.route("/")
 def home_page():
-    # String-based templates
+    if current_user.is_authenticated:
+        return redirect(url_for("member_page"))
     return render_template("index.html")
 
 # The Members page is only accessible to authenticated users via the @login_required decorator
@@ -111,7 +123,6 @@ def home_page():
 @app.route("/members")
 @login_required    # User must be authenticated
 def member_page():
-    # String-based templates
     return render_template("members.html")
 
 
@@ -125,7 +136,6 @@ def admin_page():
 @app.route("/user/<int:id>/")
 def user_profile(id):
     return f"Profile page of user #{id}"
-
 
 
 # export PRODUCTION=ON | OFF in TEST
