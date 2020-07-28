@@ -15,7 +15,7 @@ class ConfigClass(object):
     # CSRF_ENABLED = True
 
     # Flask-MongoEngine settings
-    MONGO_DB_URL = os.getenv("MONGO_URI_FU")
+    MONGO_DB_URL = os.getenv("MONGO_URI_BR")
     print("MongoDB URL:", MONGO_DB_URL)
     MONGODB_SETTINGS = {
         'host': MONGO_DB_URL
