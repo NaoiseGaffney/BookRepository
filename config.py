@@ -45,3 +45,7 @@ class ConfigClass(object):
     # Flask Session Configuration for Session Protection and "Remember Me" function
     SESSION_PROTECTION = "strong"
     REMEMBER_COOKIE_DURATION = timedelta(seconds=3600) # Logged out after 1 hour (come back in without logging in too)
+
+    # Flask User Manager Configuration
+    USER_COPYRIGHT_YEAR = 2020
+    USER_CORPORATION_NAME = "GaffCo Consulting"
