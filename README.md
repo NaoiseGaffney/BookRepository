@@ -1,6 +1,6 @@
 # Book Repository
 
-![Initial Thoughts for the Book Repository](https://github.com/NaoiseGaffney/BookRepository/blob/master/documentation/Initial%20thoughts%20for%20Book%20Repository.jpg)
+![Initial Thoughts for the Book Repository](https://github.com/NaoiseGaffney/BookRepository/blob/development/documentation/Initial%20thoughts%20for%20Book%20Repository.jpg)
 
 Milestone Project 3: Data-Centric Development with Python, Flask, JavaScript, CSS, HTML, and MongoDB. Using several Python frameworks and the Google Books API. The Book Repository is a virtual library for the personal storage and sharing of books, sharing of thoughts about books read, via comments and votes, and all through a secure website.
 
