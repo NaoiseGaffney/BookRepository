@@ -1,1 +1,4 @@
 .venv
+/Snippets
+notes.py
+__pycache__
