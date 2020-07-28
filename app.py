@@ -88,25 +88,6 @@ class Book(db.Document):
 # Setup Flask-User and specify the User data-model
 user_manager = UserManager(app, db, User)
 
-# Flask-User MongoEngine test to understand how to CRUD
-try:
-    book = Book(title="Project+ Study Guide", author="Kim Heldman", year="2017", ISBN="978-1-119-28052-1",
-                short_description="CompTIA Certification Guide for Project+.", user="User").save()
-except NotUniqueError as e:
-    print("Book already exists in the Book Repository")
-
-book_update = Book.objects(ISBN="978-1-119-28052-1").get()
-update_dict = {"short_description": "This is an updated description."}
-book_update.update(**update_dict, year=1999)
-print(book_update.to_json())
-print(book_update.id)
-print(book_update.title)
-
-
-try:
-    book.delete()
-except NameError as e:
-    pass
 
 # The Home page is accessible to anyone
 
@@ -116,6 +97,7 @@ def home_page():
     if current_user.is_authenticated:
         return redirect(url_for("member_page"))
     return render_template("index.html")
+
 
 # The Members page is only accessible to authenticated users via the @login_required decorator
 
