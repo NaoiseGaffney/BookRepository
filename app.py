@@ -5,7 +5,7 @@ from flask_user import login_required, UserManager, UserMixin, current_user, rol
 from wtforms.validators import DataRequired
 from mongoengine.errors import NotUniqueError
 from statistics import mean
-
+import datetime
 
 # generates WTForms from MongoEngine models
 from flask_mongoengine.wtf import model_form
@@ -95,9 +95,20 @@ class Book(db.Document):
 user_manager = UserManager(app, db, User)
 
 
+# Create admin user as first/default user, if admin does not exist. Password must be changed immediately upon first login.
+if not User.objects.filter(User.username == "admin").first():
+    user =  User(
+        username="admin",
+        first_name="Administrator",
+        last_name="Administrator",
+        email=os.environ.get("MAIL_DEFAULT_SENDER"),
+        email_confirmed_at=datetime.datetime.utcnow(),
+        password=user_manager.hash_password(os.environ.get("ADMIN_PASSWORD"))
+        )
+    user.roles.append("Admin")
+    user.save()
+
 # The Home page is accessible to anyone
-
-
 @app.route("/")
 def home_page():
     if current_user.is_authenticated:
@@ -115,8 +126,8 @@ def member_page():
 
 
 # The Admin page requires an 'Admin' role.
-@ app.route("/admin")
-@ roles_required("Admin")  # Use of @roles_required decorator
+@app.route("/admin")
+@roles_required("Admin")
 def admin_page():
     return render_template("admin.html")
 
