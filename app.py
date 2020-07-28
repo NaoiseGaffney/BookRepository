@@ -50,6 +50,12 @@ class User(db.Document, UserMixin):
     # Relationships
     roles = db.ListField(db.StringField(), default=["user"])
 
+    meta = {
+        "auto_create_index": True,
+        "index_background": True,
+        "indexes": ["username"]
+    }
+
 
 class Book(db.Document):
     title = db.StringField(default="")
