@@ -8,14 +8,14 @@
     <title>{{ user_manager.USER_APP_NAME }}</title>
 
     <!-- Bootstrap -->
-    <link href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet">
+    <!-- <link href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet"> -->
     <!-- font awesome -->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css"
         integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
     <!--Import Google Icon Font-->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <!--Import materialize.css-->
-    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"> -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
     <!-- Custom CSS -->
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename = '/styles/style.css') }}"
 
@@ -33,9 +33,9 @@
 
 
 <body>
-
+<header>
     {% block body %}
-    <div id="header-div" class="clearfix with-margins">
+   <!--  <div id="header-div" class="clearfix with-margins">
         <div class="pull-left"><a href="/">
                 <h1 class="no-margins">{{ user_manager.USER_APP_NAME }}</h1>
             </a></div>
@@ -48,13 +48,65 @@
             <a href="{{ url_for('user.login') }}">{%trans%}Sign in{%endtrans%}</a>
             {% endif %}
         </div>
-    </div>
+    </div> -->
+    <nav class="nav-wrapper transparent">
+        <div class="container">
+            <a href="{{url_for('home_page')}}"><img src="/static/images/logo.png" height="70" alt="Book Repository Logo"></a>
+            <a href="#" class="sidenav-trigger" data-target="mobile-links">
+                <i class="material-icons" id="matnavbar">menu</i>
+            </a>
+            <ul class="right hide-on-med-and-down blue darken-4 waves-effect" id="nav-mobile">
+                {% if call_or_get(current_user.is_authenticated) %}
+                <li>
+                    <a href="{{ url_for('dashboard')}}">Dashboard<i class="material-icons right">dashboard</i></a>
+                </li>
+                <li>
+                    <a href="{{ url_for('user.logout') }}">{%trans%}Sign out{%endtrans%}<i class="material-icons right">pan_tool</i></a>
+                </li>
+                {% else %}
+                <li>
+                    <a href="{{ url_for('home_page')}}">Home<i class="material-icons right">home</i></a>
+                </li>
+                <li>
+                    <a href="{{ url_for('user.login') }}">{%trans%}Sign in{%endtrans%}<i class="material-icons right">login</i></a>
+                </li>
+                <li>
+                    <a href="{{ url_for('user.register')}}">Register<i class="material-icons right">how_to_reg</i></a>
+                </li>
+                {% endif %}
+            </ul>
+        </div>
+    </nav>
+    <!-- Naviagtion for Mobile devices using a "Hamburger-menu" which must be defined outside of <nav></nav> to function in Materialize 1.0.0 -->
+    <ul class="sidenav pink lighten-2" id="mobile-links">
+        {% if call_or_get(current_user.is_authenticated) %}
+        <li>
+            <a href="{{ url_for('dashboard')}}" class="black-text">Dashboard<i
+                    class="material-icons black-text left">dashboard</i></a>
+        </li>
+        <li>
+            <a href="{{ url_for('user.logout') }}" class="white-text">Logout<i class="material-icons white-text left">pan_tool</i></a>
+        </li>
+        {% else %}
+        <li>
+            <a href="{{ url_for('home_page')}}" class="white-text">Home<i class="material-icons white-text left">home</i></a>
+        </li>
+        <li>
+            <a href="{{ url_for('user.login') }}" class="white-text">Login<i class="material-icons white-text left">login</i></a>
+        </li>
+        <li>
+            <a href="{{ url_for('user.register')}}" class="white-text">Register<i
+                    class="material-icons white-text left">how_to_reg</i></a>
+        </li>
+        {% endif %}
+    </ul>
+</header>
     {% block menu %}
-    <div id="menu-div" class="with-margins">
+    <!-- <div id="menu-div" class="with-margins">
         <a href="/">{%trans%}Home page{%endtrans%}</a>
-    </div>
+    </div> -->
     {% endblock %}
-    <hr class="no-margins" />
+    <!-- <hr class="no-margins" /> -->
 
     <div id="main-div" class="with-margins">
         {# One-time system messages called Flash messages #}
@@ -86,12 +138,12 @@
     {% endblock %}
 
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-    <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+    <!-- <script src="//code.jquery.com/jquery-1.11.0.min.js"></script> -->
     <!-- Bootstrap -->
-    <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+    <!-- <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script> -->
 
     <!-- Initialise MaterializeCSS 1.0.0 Features -->
-    <!-- <script src="/static/scripts/materialize.js"></script> -->
+    <script src="/static/scripts/materialize.js"></script>
 
     {# *** Allow sub-templates to insert extra html to the bottom of the body *** #}
     {% block extra_js %}{% endblock %}
