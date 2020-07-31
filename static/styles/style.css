@@ -43,8 +43,17 @@ footer {
     box-shadow: 0 -2px 0 rgba(0, 0, 0, 0.14), 0 -3px 1px 0 rgba(0, 0, 0, 0.12), 0 -1px 5px 0 rgba(0, 0, 0, 0.2);
 }
 
-a i:hover {
-    transform: scale(1.5);
+#menu_book {
+    transform: scale(1.2);
+    padding: 0px 2px;
+}
+
+footer .left-align {
+    padding-left: 15%;
+}
+
+footer .right-align {
+    padding-right: 15%;
 }
 
 /* Modal Colour Schemes to match the Book Repository UX Design */
