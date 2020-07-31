@@ -1,19 +1,54 @@
 @import url('https://fonts.googleapis.com/css?family=Raleway|&display=swap');
 
-hr {
-    border-color: #cccccc;
+* {
     margin: 0;
+    padding: 0;
+    border: 0;
+    box-sizing: border-box;
 }
 
-.no-margins {
-    margin: 0px;
+html,
+body {
+    background-color: #FFFFFF;
+    font-family: 'Raleway', sans-serif;
 }
 
-.with-margins {
-    margin: 10px;
+main {
+    flex: 1 0 auto;
 }
 
-.col-centered {
-    float: none;
-    margin: 0 auto;
+/* Footer: fixed footer and MaterializeCSS styling. Using box-shadow (in reverse) from the MaterializeCSS navbar class. */
+footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    background-color: #0D470D;
+    color: #FFFFFF;
+    text-align: center;
+}
+
+.footer-copyright {
+    -webkit-box-shadow: 0px -6px 20px 0px rgba(0, 0, 0, 0.19);
+    -moz-box-shadow: 0px -6px 20px 0px rgba(0, 0, 0, 0.19);
+    box-shadow: 0px -6px 20px 0px rgba(0, 0, 0, 0.19);
+    /* 0 2px 2px 0 rgba(0, 0, 0, 0.14),
+    0 3px 1px -2px rgba(0, 0, 0, 0.12),
+    0 1px 5px 0 rgba(0, 0, 0, 0.2); */
+}
+
+a i:hover {
+    transform: scale(1.5);
+}
+
+/* Modal Colour Schemes to match the Book Repository UX Design */
+.modal,
+.modal-footer {
+    /* background-color: #FFFFFF !important; */
+    font-family: 'Raleway', sans-serif;
+    color: #0D470D;
+}
+
+.page-footer, .tabs .indicator {
+    background-color: #0D470D;
 }
