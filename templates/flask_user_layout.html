@@ -17,7 +17,8 @@
     <!--Import materialize.css-->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
     <!-- Custom CSS -->
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename = '/styles/style.css') }}"
+    <!-- <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename = '/styles/style.css') }}"> -->
+    <link rel="stylesheet" type="text/css" href="/static/styles/style.css">
 
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -33,74 +34,67 @@
 
 
 <body>
-<header>
-    {% block body %}
-   <!--  <div id="header-div" class="clearfix with-margins">
-        <div class="pull-left"><a href="/">
-                <h1 class="no-margins">{{ user_manager.USER_APP_NAME }}</h1>
-            </a></div>
-        <div class="pull-right">
+    <header>
+        {% block body %}
+        <nav class="nav-wrapper transparent">
+            <div class="container">
+                <a href="{{url_for('home_page')}}"><img src="/static/images/logo_bookstack_text_96_spacing.png"
+                        height="60" alt="Book Repository Logo"></a>
+                <a href="#" class="sidenav-trigger" data-target="mobile-links">
+                    <i class="material-icons" id="matnavbar">menu</i>
+                </a>
+                <ul class="right hide-on-med-and-down blue darken-4 waves-effect" id="nav-mobile">
+                    {% if call_or_get(current_user.is_authenticated) %}
+                    <li>
+                        <a href="{{ url_for('dashboard')}}">Dashboard<i class="material-icons right">dashboard</i></a>
+                    </li>
+                    <li>
+                        <a href="{{ url_for('user.logout') }}">{%trans%}Sign out{%endtrans%}<i
+                                class="material-icons right">pan_tool</i></a>
+                    </li>
+                    {% else %}
+                    <li>
+                        <a href="{{ url_for('home_page')}}">Home<i class="material-icons right">home</i></a>
+                    </li>
+                    <li>
+                        <a href="{{ url_for('user.login') }}">{%trans%}Sign in{%endtrans%}<i
+                                class="material-icons right">login</i></a>
+                    </li>
+                    <li>
+                        <a href="{{ url_for('user.register')}}">Register<i
+                                class="material-icons right">how_to_reg</i></a>
+                    </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </nav>
+        <!-- Naviagtion for Mobile devices using a "Hamburger-menu" which must be defined outside of <nav></nav> to function in Materialize 1.0.0 -->
+        <ul class="sidenav pink lighten-2" id="mobile-links">
             {% if call_or_get(current_user.is_authenticated) %}
-            <a href="{{ url_for('user.edit_user_profile') }}">{{ current_user.username or current_user.email }}</a>
-            &nbsp; | &nbsp;
-            <a href="{{ url_for('user.logout') }}">{%trans%}Sign out{%endtrans%}</a>
+            <li>
+                <a href="{{ url_for('dashboard')}}" class="black-text">Dashboard<i
+                        class="material-icons black-text left">dashboard</i></a>
+            </li>
+            <li>
+                <a href="{{ url_for('user.logout') }}" class="white-text">Logout<i
+                        class="material-icons white-text left">pan_tool</i></a>
+            </li>
             {% else %}
-            <a href="{{ url_for('user.login') }}">{%trans%}Sign in{%endtrans%}</a>
+            <li>
+                <a href="{{ url_for('home_page')}}" class="white-text">Home<i
+                        class="material-icons white-text left">home</i></a>
+            </li>
+            <li>
+                <a href="{{ url_for('user.login') }}" class="white-text">Login<i
+                        class="material-icons white-text left">login</i></a>
+            </li>
+            <li>
+                <a href="{{ url_for('user.register')}}" class="white-text">Register<i
+                        class="material-icons white-text left">how_to_reg</i></a>
+            </li>
             {% endif %}
-        </div>
-    </div> -->
-    <nav class="nav-wrapper transparent">
-        <div class="container">
-            <a href="{{url_for('home_page')}}"><img src="/static/images/logo.png" height="70" alt="Book Repository Logo"></a>
-            <a href="#" class="sidenav-trigger" data-target="mobile-links">
-                <i class="material-icons" id="matnavbar">menu</i>
-            </a>
-            <ul class="right hide-on-med-and-down blue darken-4 waves-effect" id="nav-mobile">
-                {% if call_or_get(current_user.is_authenticated) %}
-                <li>
-                    <a href="{{ url_for('dashboard')}}">Dashboard<i class="material-icons right">dashboard</i></a>
-                </li>
-                <li>
-                    <a href="{{ url_for('user.logout') }}">{%trans%}Sign out{%endtrans%}<i class="material-icons right">pan_tool</i></a>
-                </li>
-                {% else %}
-                <li>
-                    <a href="{{ url_for('home_page')}}">Home<i class="material-icons right">home</i></a>
-                </li>
-                <li>
-                    <a href="{{ url_for('user.login') }}">{%trans%}Sign in{%endtrans%}<i class="material-icons right">login</i></a>
-                </li>
-                <li>
-                    <a href="{{ url_for('user.register')}}">Register<i class="material-icons right">how_to_reg</i></a>
-                </li>
-                {% endif %}
-            </ul>
-        </div>
-    </nav>
-    <!-- Naviagtion for Mobile devices using a "Hamburger-menu" which must be defined outside of <nav></nav> to function in Materialize 1.0.0 -->
-    <ul class="sidenav pink lighten-2" id="mobile-links">
-        {% if call_or_get(current_user.is_authenticated) %}
-        <li>
-            <a href="{{ url_for('dashboard')}}" class="black-text">Dashboard<i
-                    class="material-icons black-text left">dashboard</i></a>
-        </li>
-        <li>
-            <a href="{{ url_for('user.logout') }}" class="white-text">Logout<i class="material-icons white-text left">pan_tool</i></a>
-        </li>
-        {% else %}
-        <li>
-            <a href="{{ url_for('home_page')}}" class="white-text">Home<i class="material-icons white-text left">home</i></a>
-        </li>
-        <li>
-            <a href="{{ url_for('user.login') }}" class="white-text">Login<i class="material-icons white-text left">login</i></a>
-        </li>
-        <li>
-            <a href="{{ url_for('user.register')}}" class="white-text">Register<i
-                    class="material-icons white-text left">how_to_reg</i></a>
-        </li>
-        {% endif %}
-    </ul>
-</header>
+        </ul>
+    </header>
     {% block menu %}
     <!-- <div id="menu-div" class="with-margins">
         <a href="/">{%trans%}Home page{%endtrans%}</a>
@@ -128,13 +122,65 @@
         {% endblock %}
     </div>
 
-    <br />
-    <hr class="no-margins" />
-    <div id="footer-div" class="clearfix with-margins">
-        <div class="pull-left">{{ user_manager.USER_APP_NAME }} {{ user_manager.USER_APP_VERSION }}</div>
-        <div class="pull-right">&copy; {{ user_manager.USER_COPYRIGHT_YEAR }} {{ user_manager.USER_CORPORATION_NAME }}
+    <footer class="page-footer white">
+        <div class="footer-copyright blue darken-4">
+            <div class="left-align">&nbsp;{{ user_manager.USER_APP_NAME }} {{ user_manager.USER_APP_VERSION }}</div>
+            <div class="center-align"><a class="modal-trigger" href="#about"><i
+                        class="material-icons white-text right">menu_book</i></a></div>
+            <div class="right-align">&copy; {{ user_manager.USER_COPYRIGHT_YEAR }}
+                {{ user_manager.USER_CORPORATION_NAME }}&nbsp;</div>
         </div>
-    </div>
+        <div class="container">
+            <div id="about" class="modal center">
+                <div class="modal-content">
+                    <ul class="tabs blue darken-4 center">
+                        <li class="tab">
+                            <a href="#bookrepo" class="active blue darken-4 white-text waves-effect">Book Repository</a>
+                        </li>
+                        <li class="tab">
+                            <a href="#gaff" class="active blue darken-4 white-text waves-effect">Gaff</a>
+                        </li>
+                        <li class="tab">
+                            <a href="#ecs_logo" class="active blue darken-4 white-text waves-effect">Logo</a>
+                        </li>
+                        <li class="tab">
+                            <a href="#code" class="active blue darken-4 white-text waves-effect">Code</a>
+                        </li>
+                    </ul>
+                    <div id="bookrepo" class="flow-text">
+                        <!-- <p class="flow-text blue-text text-darken-4">Book Repository</p> -->
+                        <p><img src="/static/images/logo_bookstack_text_96_spacing.png" height="150"
+                                alt="Book Repository Logo"></p>
+                        <p>A safe virtual repository for books...</p>
+                    </div>
+                    <div id="gaff" class="flow-text">
+                        <p class="flow-text blue-text text-darken-4">Naoise Gaffney - "Gaff"</p>
+                        <p><img src="/static/images/Gaff.png" height="150" alt="Gaff"></p>
+                        <p>Code Institute Learner and Developer of this Book Repository Milestone Project 3 for the Code Institute Diploma in Full Stack Development.</p>
+                        <p>UX Designer, Python Programmer...</p>
+                    </div>
+                    <div id="ecs_logo" class="flow-text">
+                        <!-- <p class="flow-text blue-text text-darken-4">Logo Description</p> -->
+                        <p><img src="/static/images/logo_bookstack_text_96_spacing.png" height="150"
+                                alt="Book Repository Logo"></p>
+                        <p>A stack of books, stored in a repository, with the text "Book Repository".</p>
+                    </div>
+                    <div id="code" class="flow-text">
+                        <p class="flow-text blue-text text-darken-4">Code on GitHub</p>
+                        <p>Code on GitHub...</p>
+                        <p><a href="https://github.com/NaoiseGaffney/BookRepository" target="_blank"
+                                class="blue darken-4 waves-effect">Link to the Book Repository Repository on GitHub.</a>
+                        </p>
+                    </div>
+                    <div class="modal-footer">
+                        <a href="#!" class="modal-close btn waves-effect waves-light blue darken-4">Thank You!<i
+                                class="material-icons right">thumb_up</i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </footer>
     {% endblock %}
 
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
@@ -142,6 +188,8 @@
     <!-- Bootstrap -->
     <!-- <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script> -->
 
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
     <!-- Initialise MaterializeCSS 1.0.0 Features -->
     <script src="/static/scripts/materialize.js"></script>
 
