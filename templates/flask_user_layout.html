@@ -7,8 +7,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{{ user_manager.USER_APP_NAME }}</title>
 
-    <!-- Bootstrap -->
-    <!-- <link href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet"> -->
     <!-- font awesome -->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css"
         integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
@@ -17,8 +15,7 @@
     <!--Import materialize.css-->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
     <!-- Custom CSS -->
-    <!-- <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename = '/styles/style.css') }}"> -->
-    <link rel="stylesheet" type="text/css" href="/static/styles/style.css">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename = 'styles/style.css') }}">
 
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -46,10 +43,10 @@
                 <ul class="right hide-on-med-and-down blue darken-4 waves-effect" id="nav-mobile">
                     {% if call_or_get(current_user.is_authenticated) %}
                     <li>
-                        <a href="{{ url_for('dashboard')}}">Dashboard<i class="material-icons right">dashboard</i></a>
+                        <a href="{{ url_for('member_page')}}">Member's Page<i class="material-icons right">dashboard</i></a>
                     </li>
                     <li>
-                        <a href="{{ url_for('user.logout') }}">{%trans%}Sign out{%endtrans%}<i
+                        <a href="{{ url_for('user.logout') }}">{%trans%}Sign Out{%endtrans%}<i
                                 class="material-icons right">pan_tool</i></a>
                     </li>
                     {% else %}
@@ -57,7 +54,7 @@
                         <a href="{{ url_for('home_page')}}">Home<i class="material-icons right">home</i></a>
                     </li>
                     <li>
-                        <a href="{{ url_for('user.login') }}">{%trans%}Sign in{%endtrans%}<i
+                        <a href="{{ url_for('user.login') }}">{%trans%}Sign In{%endtrans%}<i
                                 class="material-icons right">login</i></a>
                     </li>
                     <li>
@@ -69,14 +66,14 @@
             </div>
         </nav>
         <!-- Naviagtion for Mobile devices using a "Hamburger-menu" which must be defined outside of <nav></nav> to function in Materialize 1.0.0 -->
-        <ul class="sidenav pink lighten-2" id="mobile-links">
+        <ul class="sidenav blue darken-4" id="mobile-links">
             {% if call_or_get(current_user.is_authenticated) %}
             <li>
-                <a href="{{ url_for('dashboard')}}" class="black-text">Dashboard<i
+                <a href="{{ url_for('member_page')}}" class="black-text">Member's Page<i
                         class="material-icons black-text left">dashboard</i></a>
             </li>
             <li>
-                <a href="{{ url_for('user.logout') }}" class="white-text">Logout<i
+                <a href="{{ url_for('user.logout') }}" class="white-text">Sign Out<i
                         class="material-icons white-text left">pan_tool</i></a>
             </li>
             {% else %}
@@ -85,7 +82,7 @@
                         class="material-icons white-text left">home</i></a>
             </li>
             <li>
-                <a href="{{ url_for('user.login') }}" class="white-text">Login<i
+                <a href="{{ url_for('user.login') }}" class="white-text">Sign In<i
                         class="material-icons white-text left">login</i></a>
             </li>
             <li>
@@ -96,11 +93,7 @@
         </ul>
     </header>
     {% block menu %}
-    <!-- <div id="menu-div" class="with-margins">
-        <a href="/">{%trans%}Home page{%endtrans%}</a>
-    </div> -->
     {% endblock %}
-    <!-- <hr class="no-margins" /> -->
 
     <div id="main-div" class="with-margins">
         {# One-time system messages called Flash messages #}
@@ -111,7 +104,7 @@
         {% if category=='error' %}
         {% set category='danger' %}
         {% endif %}
-        <div class="alert alert-{{category}}">{{ message|safe }}</div>
+        <div class="container message alert alert-{{category}}">{{ message|safe }}</div>
         {% endfor %}
         {% endif %}
         {%- endwith %}
@@ -124,11 +117,11 @@
 
     <footer class="page-footer transparent">
         <div class="footer-copyright blue darken-4">
-            <div class="left-align">&nbsp;{{ user_manager.USER_APP_NAME }} {{ user_manager.USER_APP_VERSION }}</div>
+            <div class="left-align">{{ user_manager.USER_APP_NAME }} {{ user_manager.USER_APP_VERSION }}</div>
             <div class="center-align"><a class="modal-trigger" href="#about"><i
-                        class="material-icons white-text right">menu_book</i></a></div>
+                        class="material-icons white-text" id="menu_book">menu_book</i></a></div>
             <div class="right-align">&copy; {{ user_manager.USER_COPYRIGHT_YEAR }}
-                {{ user_manager.USER_CORPORATION_NAME }}&nbsp;</div>
+                {{ user_manager.USER_CORPORATION_NAME }}</div>
         </div>
         <div class="container">
             <div id="about" class="modal center">
@@ -149,7 +142,7 @@
                     </ul>
                     <div id="bookrepo" class="flow-text">
                         <!-- <p class="flow-text blue-text text-darken-4">Book Repository</p> -->
-                        <p><img src="/static/images/logo_bookstack_text_96_spacing.png" height="150"
+                        <p><img src="/static/images/logo_bookstack_text_96_spacing.png" height="75"
                                 alt="Book Repository Logo"></p>
                         <p>A safe virtual repository for books...</p>
                     </div>
@@ -161,15 +154,14 @@
                     </div>
                     <div id="ecs_logo" class="flow-text">
                         <!-- <p class="flow-text blue-text text-darken-4">Logo Description</p> -->
-                        <p><img src="/static/images/logo_bookstack_text_96_spacing.png" height="150"
+                        <p><img src="/static/images/logo_bookstack_text_96_spacing.png" height="75"
                                 alt="Book Repository Logo"></p>
                         <p>A stack of books, stored in a repository, with the text "Book Repository".</p>
                     </div>
                     <div id="code" class="flow-text">
                         <p class="flow-text blue-text text-darken-4">Code on GitHub</p>
                         <p>Code on GitHub...</p>
-                        <p><a href="https://github.com/NaoiseGaffney/BookRepository" target="_blank"
-                                class="blue darken-4 waves-effect">Link to the Book Repository Repository on GitHub.</a>
+                        <p><a href="https://github.com/NaoiseGaffney/BookRepository" target="_blank" rel="noopener" class="blue darken-4 waves-effect">Link to the Book Repository Repository on GitHub.</a>
                         </p>
                     </div>
                     <div class="modal-footer">
@@ -183,15 +175,10 @@
     </footer>
     {% endblock %}
 
-    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-    <!-- <script src="//code.jquery.com/jquery-1.11.0.min.js"></script> -->
-    <!-- Bootstrap -->
-    <!-- <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script> -->
-
     <!-- Compiled and minified JavaScript -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
     <!-- Initialise MaterializeCSS 1.0.0 Features -->
-    <script src="/static/scripts/materialize.js"></script>
+    <script src="{{ url_for('static', filename = 'scripts/materialize.js') }}"></script>
 
     {# *** Allow sub-templates to insert extra html to the bottom of the body *** #}
     {% block extra_js %}{% endblock %}
