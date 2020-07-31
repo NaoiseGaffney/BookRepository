@@ -36,7 +36,7 @@
 <body>
     <header>
         {% block body %}
-        <nav class="nav-wrapper transparent">
+        <nav class="nav-wrapper white">
             <div class="container">
                 <a href="{{url_for('home_page')}}"><img src="/static/images/logo_bookstack_text_96_spacing.png"
                         height="60" alt="Book Repository Logo"></a>
@@ -122,7 +122,7 @@
         {% endblock %}
     </div>
 
-    <footer class="page-footer white">
+    <footer class="page-footer transparent">
         <div class="footer-copyright blue darken-4">
             <div class="left-align">&nbsp;{{ user_manager.USER_APP_NAME }} {{ user_manager.USER_APP_VERSION }}</div>
             <div class="center-align"><a class="modal-trigger" href="#about"><i
