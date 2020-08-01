@@ -104,7 +104,9 @@
         {% if category=='error' %}
         {% set category='danger' %}
         {% endif %}
-        <div class="container message alert alert-{{category}}">{{ message|safe }}</div>
+        <div class="container">
+        <div class="message chip {{category}}">{{ message|safe }}</div>
+        </div>
         {% endfor %}
         {% endif %}
         {%- endwith %}
@@ -179,6 +181,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
     <!-- Initialise MaterializeCSS 1.0.0 Features -->
     <script src="{{ url_for('static', filename = 'scripts/materialize.js') }}"></script>
+    <!-- Message Chip Timeout -->
+    <script src="{{ url_for('static', filename = 'scripts/message.js') }}"></script>
 
     {# *** Allow sub-templates to insert extra html to the bottom of the body *** #}
     {% block extra_js %}{% endblock %}
