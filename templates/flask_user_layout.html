@@ -105,7 +105,7 @@
         {% set category='danger' %}
         {% endif %}
         <div class="container">
-        <div class="message chip {{category}}">{{ message|safe }}</div>
+        <div class="message chip message-{{category}}">{{ message|safe }}</div>
         </div>
         {% endfor %}
         {% endif %}

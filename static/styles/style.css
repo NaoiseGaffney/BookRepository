@@ -68,3 +68,29 @@ footer .right-align {
 .tabs .indicator {
     background-color: #0D470D;
 }
+
+/* Message Chips (Flask, MaterializeCSS 1.0.0, custom CSS 3, and a JS Timeout function = Flask Flash Messages */
+.message-success {
+    color: green;
+    background-color: lightgreen;
+}
+
+.message-info {
+    color: blue;
+    background-color: lightblue;
+}
+
+.message-warning {
+    color: yellow;
+    background-color: lightgoldenrodyellow;
+}
+
+.message-danger {
+    color: red;
+    background-color: lightcoral;
+}
+
+.help-block {
+    color: hotpink;
+    background-color: lightpink;
+}
