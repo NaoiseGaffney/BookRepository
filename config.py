@@ -11,12 +11,10 @@ class ConfigClass(object):
     """ Flask application config """
     # Flask settings
     SECRET_KEY = os.urandom(128).hex()
-    print("Random Secret Key:", SECRET_KEY)
     # CSRF_ENABLED = True
 
     # Flask-MongoEngine settings
     MONGO_DB_URL = os.getenv("MONGO_URI_BR")
-    print("MongoDB URL:", MONGO_DB_URL)
     MONGODB_SETTINGS = {
         'host': MONGO_DB_URL
     }
