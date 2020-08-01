@@ -11,10 +11,19 @@ html,
 body {
     background-color: #FFFFFF;
     font-family: 'Raleway', sans-serif;
+    margin-top: 35px;
+    margin-bottom: 35px;
 }
 
 main {
     flex: 1 0 auto;
+}
+
+/* Navigation Bar: fixed and MaterializeCSS styling. */
+nav {
+    overflow: hidden;
+    position: fixed;
+    top: 0;
 }
 
 /* Footer: fixed footer and MaterializeCSS styling. Using box-shadow (in reverse) from the MaterializeCSS navbar class. */
@@ -29,16 +38,22 @@ footer {
 }
 
 .footer-copyright {
-    -webkit-box-shadow: 0px -6px 20px 0px rgba(0, 0, 0, 0.19);
-    -moz-box-shadow: 0px -6px 20px 0px rgba(0, 0, 0, 0.19);
-    box-shadow: 0px -6px 20px 0px rgba(0, 0, 0, 0.19);
-    /* 0 2px 2px 0 rgba(0, 0, 0, 0.14),
-    0 3px 1px -2px rgba(0, 0, 0, 0.12),
-    0 1px 5px 0 rgba(0, 0, 0, 0.2); */
+    -webkit-box-shadow: 0 -2px 0 rgba(0, 0, 0, 0.14), 0 -3px 1px 0 rgba(0, 0, 0, 0.12), 0 -1px 5px 0 rgba(0, 0, 0, 0.2);
+    -moz-box-shadow: 0 -2px 0 rgba(0, 0, 0, 0.14), 0 -3px 1px 0 rgba(0, 0, 0, 0.12), 0 -1px 5px 0 rgba(0, 0, 0, 0.2);
+    box-shadow: 0 -2px 0 rgba(0, 0, 0, 0.14), 0 -3px 1px 0 rgba(0, 0, 0, 0.12), 0 -1px 5px 0 rgba(0, 0, 0, 0.2);
 }
 
-a i:hover {
-    transform: scale(1.5);
+#menu_book {
+    transform: scale(1.2);
+    padding: 0px 2px;
+}
+
+footer .left-align {
+    padding-left: 15%;
+}
+
+footer .right-align {
+    padding-right: 15%;
 }
 
 /* Modal Colour Schemes to match the Book Repository UX Design */
@@ -49,6 +64,33 @@ a i:hover {
     color: #0D470D;
 }
 
-.page-footer, .tabs .indicator {
+.page-footer,
+.tabs .indicator {
     background-color: #0D470D;
+}
+
+/* Message Chips (Flask, MaterializeCSS 1.0.0, custom CSS 3, and a JS Timeout function = Flask Flash Messages */
+.message-success {
+    color: green;
+    background-color: lightgreen;
+}
+
+.message-info {
+    color: blue;
+    background-color: lightblue;
+}
+
+.message-warning {
+    color: yellow;
+    background-color: lightgoldenrodyellow;
+}
+
+.message-danger {
+    color: red;
+    background-color: lightcoral;
+}
+
+.help-block {
+    color: hotpink;
+    background-color: lightpink;
 }
