@@ -1,3 +1,4 @@
+// Timeout Chip: handles multiple Flask flash messages.
 setTimeout(()=> {
     chip_message = document.getElementsByClassName("chip");
 
