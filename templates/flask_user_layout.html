@@ -95,7 +95,7 @@
     {% block menu %}
     {% endblock %}
 
-    <div id="main-div" class="with-margins">
+    <div id="main-div" class="container">
         {# One-time system messages called Flash messages #}
         {% block flash_messages %}
         {%- with messages = get_flashed_messages(with_categories=true) -%}
@@ -104,18 +104,16 @@
         {% if category=='error' %}
         {% set category='danger' %}
         {% endif %}
-        <div class="container">
         <div class="message chip message-{{category}}">{{ message|safe }}</div>
-        </div>
         {% endfor %}
         {% endif %}
         {%- endwith %}
         {% endblock %}
-
-        {% block main %}
-        {% block content %}{% endblock %}
-        {% endblock %}
     </div>
+
+    {% block main %}
+    {% block content %}{% endblock %}
+    {% endblock %}
 
     <footer class="page-footer transparent">
         <div class="footer-copyright blue darken-4">
