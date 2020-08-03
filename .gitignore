@@ -3,3 +3,4 @@
 notes.py
 __pycache__
 .env
+bfg*
