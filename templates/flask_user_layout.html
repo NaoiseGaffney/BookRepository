@@ -69,8 +69,8 @@
         <ul class="sidenav blue darken-4" id="mobile-links">
             {% if call_or_get(current_user.is_authenticated) %}
             <li>
-                <a href="{{ url_for('member_page')}}" class="black-text">Member's Page<i
-                        class="material-icons black-text left">dashboard</i></a>
+                <a href="{{ url_for('member_page')}}" class="white-text">Member's Page<i
+                        class="material-icons white-text left">dashboard</i></a>
             </li>
             <li>
                 <a href="{{ url_for('user.logout') }}" class="white-text">Sign Out<i
