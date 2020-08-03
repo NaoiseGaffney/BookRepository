@@ -11,12 +11,10 @@ class ConfigClass(object):
     """ Flask application config """
     # Flask settings
     SECRET_KEY = os.urandom(128).hex()
-    print("Random Secret Key:", SECRET_KEY)
     # CSRF_ENABLED = True
 
     # Flask-MongoEngine settings
     MONGO_DB_URL = os.getenv("MONGO_URI_BR")
-    print("MongoDB URL:", MONGO_DB_URL)
     MONGODB_SETTINGS = {
         'host': MONGO_DB_URL
     }
@@ -49,3 +47,7 @@ class ConfigClass(object):
     # Flask User Manager Configuration
     USER_COPYRIGHT_YEAR = 2020
     USER_CORPORATION_NAME = "GaffCo Consulting"
+
+    # reCAPTCHA Public and Private Keys
+    RECAPTCHA_PUBLIC_KEY = os.getenv("RECAPTCHA_PUBLIC_KEY")
+    RECAPTCHA_PRIVATE_KEY = os.getenv("RECAPTCHA_PRIVATE_KEY")
