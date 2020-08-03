@@ -47,3 +47,7 @@ class ConfigClass(object):
     # Flask User Manager Configuration
     USER_COPYRIGHT_YEAR = 2020
     USER_CORPORATION_NAME = "GaffCo Consulting"
+
+    # reCAPTCHA Public and Private Keys
+    RECAPTCHA_PUBLIC_KEY = os.getenv("RECAPTCHA_PUBLIC_KEY")
+    RECAPTCHA_PRIVATE_KEY = os.getenv("RECAPTCHA_PRIVATE_KEY")
