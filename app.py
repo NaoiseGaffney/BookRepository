@@ -4,6 +4,7 @@ from flask_mongoengine import MongoEngine, MongoEngineSession, MongoEngineSessio
 from flask_user import login_required, UserManager, UserMixin, current_user, roles_required
 from wtforms.validators import DataRequired
 from mongoengine.errors import NotUniqueError
+from mongoengine import CASCADE
 from statistics import mean
 import datetime
 
@@ -61,33 +62,22 @@ class Book(db.Document):
     title = db.StringField(default="")
     author = db.StringField(default="")
     year = db.IntField(default="")
-    ISBN = db.StringField(default="123-1-123-12345-1", unique=True)
+    # ISBN = db.StringField(default="123-1-123-12345-1", unique=True)
+    ISBN = db.StringField(default="123-1-123-12345-1")
     short_description = db.StringField()
-    user = db.ReferenceField(User, required=True)
+    user = db.ReferenceField(User, required=True, reverse_delete_rule=CASCADE)
+    user2 = db.StringField(required=True)
     comments = db.ListField()
-    votes = db.ListField(db.IntField(choices=[1, 2, 3, 4, 5]))
+    votes = db.ListField(db.IntField(choices=[1, 2, 3, 4, 5, 6, 7, 8, 9, 10]))
     rating = db.FloatField()  # book.calc_votes()
 
     def calc_votes(self):
         self.rating = mean(n for n in self.votes if n is not None)
 
-    # Single indexes created for "status" and "created_at", indexing in the background
-    # Compound indexes [("")]
     meta = {
-        # "collection":"VirtualBook" # Renaming the collection name in MongoDB
         "auto_create_index": True,
         "index_background": True,
-        # "indexes": ["status", "created_at"]
-        # "indexes":[("status", "created_at"), ("title",)]
-        # "indexes": [
-        #     {
-        #         "name": "status",
-        #         "fields": ("status", "created_at",)
-        #     }, {
-        #         "name": "title",
-        #         "fields": ("title",),
-        #         "unique": True
-        #     }]
+        "indexes": ["title"]
     }
 
 
@@ -97,18 +87,21 @@ user_manager = UserManager(app, db, User)
 
 # Create admin user as first/default user, if admin does not exist. Password must be changed immediately upon first login.
 if not User.objects.filter(User.username == "admin").first():
-    user =  User(
+    user = User(
         username="admin",
         first_name="Administrator",
         last_name="Administrator",
         email=os.environ.get("MAIL_DEFAULT_SENDER"),
         email_confirmed_at=datetime.datetime.utcnow(),
         password=user_manager.hash_password(os.environ.get("ADMIN_PASSWORD"))
-        )
+    )
     user.roles.append("Admin")
     user.save()
 
+
 # The Home page is accessible to anyone
+
+
 @app.route("/")
 def home_page():
     if current_user.is_authenticated:
@@ -126,10 +119,31 @@ def member_page():
     total_num_books = Book.objects.count()
     print("\nTotal Number of Users:", total_num_users)
     print("\nTotal Number of Books:", total_num_books)
-    return render_template("members.html")
+
+    book = Book(
+        title="Fresh Spice",
+        author="Arun Kapil",
+        year=2014,
+        ISBN="978-1-909108-47-9",
+        short_description="Vibrant recipes for bringing flavour, depth, and colour home cooking.",
+        user = current_user.username,
+        user2 = current_user.username,
+        comments=["I love reading this book, dreaming of the recipes I can make.",
+                  "I made the Lamb Vindaloo and it was gorgeous.", "Good Samosas are hard to make."],
+        votes=["8"],
+    ).save()
+
+    user_books = Book.objects.filter(Book.user == "gaff")
+    json_user_books = user_books.to_json()
+    # print(json_user_books)
+    print(current_user.username)
+    print(Book.user2)
+    return render_template("members.html", user_books=user_books)
 
 
 # The Admin page requires an 'Admin' role.
+
+
 @app.route("/admin")
 @roles_required("Admin")
 def admin_page():

@@ -1,10 +1,25 @@
 {% extends "flask_user_layout.html" %}
 {% block content %}
 <div class="container">
+{% if call_or_get(current_user.is_authenticated) %}
+<h6>Home&nbsp; > &nbsp;<a href="{{ url_for('member_page') }}">Member's Page</a>
+    - Welcome {{current_user.username}}! Your ID is: {{current_user.id}}</h6>
+{% else %}
 <h6><a href="{{ url_for('home_page')}}">Home</a>&nbsp; > &nbsp;<a href="{{ url_for('member_page') }}">Member's Page</a> - Welcome {{current_user.username}}! Your ID is: {{current_user.id}}</h6>
+{% endif %}
 <li>
     <a href="{{ url_for('user.edit_user_profile') }}">Edit Profile: {{ current_user.username or current_user.email }}<i
             class="material-icons right">how_to_reg</i></a>
 </li>
+{% if user_books %}
+{% for user_book in user_books %}
+<ul>
+    <li>{{user_book.title}}, by {{user_book.author}}</li>
+    {% for comment in user_book.comments %}
+    <li>{{comment}}</li>
+    {% endfor %}
+</ul>
+{% endfor %}
+{% endif %}
 </div>
 {% endblock %}
