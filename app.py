@@ -122,6 +122,10 @@ def home_page():
 @app.route("/members")
 @login_required    # User must be authenticated
 def member_page():
+    total_num_users = User.objects.count()
+    total_num_books = Book.objects.count()
+    print("\nTotal Number of Users:", total_num_users)
+    print("\nTotal Number of Books:", total_num_books)
     return render_template("members.html")
 
 

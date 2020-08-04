@@ -19,6 +19,11 @@ main {
     flex: 1 0 auto;
 }
 
+/* <a href... */
+a {
+    color: #d81b60;
+}
+
 /* Navigation Bar: fixed and MaterializeCSS styling. */
 nav {
     overflow: hidden;
@@ -32,7 +37,7 @@ footer {
     left: 0;
     bottom: 0;
     width: 100%;
-    background-color: #0D470D;
+    background-color: #0D47A1;
     color: #FFFFFF;
     text-align: center;
 }
@@ -61,36 +66,63 @@ footer .right-align {
 .modal-footer {
     /* background-color: #FFFFFF !important; */
     font-family: 'Raleway', sans-serif;
-    color: #0D470D;
+    color: #0D47A1;
 }
 
 .page-footer,
 .tabs .indicator {
-    background-color: #0D470D;
+    background-color: #0D47A1;
 }
 
 /* Message Chips (Flask, MaterializeCSS 1.0.0, custom CSS 3, and a JS Timeout function = Flask Flash Messages */
 .message-success {
-    color: green;
-    background-color: lightgreen;
+    color: #FFFFFF;
+    background-color: #26A69A;
 }
 
 .message-info {
-    color: blue;
-    background-color: lightblue;
+    color: #FFFFFF;
+    background-color: #37474F;
 }
 
 .message-warning {
-    color: yellow;
-    background-color: lightgoldenrodyellow;
+    color: #FFFFFF;
+    background-color: orange;
 }
 
 .message-danger {
-    color: red;
-    background-color: lightcoral;
+    color: #FFFFFF;
+    background-color: #FF4081;
 }
 
 .help-block {
-    color: hotpink;
-    background-color: lightpink;
+    color: #FFFFFF;
+    background-color: #FF4081;
+}
+
+/* ToolTip and ToolTipText position and colour scheme */
+.tooltip {
+    position: relative;
+    display: inline-block;
+}
+
+.tooltip .tooltiptext {
+    visibility: hidden;
+    width: 160px;
+    /* top: 100%; */
+    left: 80%;
+    /* margin-left: -20px; */
+    margin-left: 40px;
+    background-color: #26A69A;
+    color: #fff;
+    text-align: center;
+    padding: 10px;
+
+    /* Position the tooltip */
+    position: absolute;
+    z-index: 2;
+}
+
+.tooltip:hover .tooltiptext {
+    visibility: visible;
 }
