@@ -147,16 +147,15 @@ footer .right-align {
 /* Photo by <a href="https://unsplash.com/@christianw?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Christian Wiediger</a> on <a href="https://unsplash.com/s/photos/open-book?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a> */
 .collapsible-header {
     background-image: url("/static/images/christian-wiediger-GWucxGZvO-w-unsplash.jpg");
-    background-position: 80% 55%;
+    background-position: 95% 55%;
     background-size: 150%
 }
 
-/* .book_spine {
-    background: rgba(13, 71, 161, 0.55);
-    background: rgba(255, 64, 129, 0.55);
-    color: rgb(255, 64, 129);
-    color: rgb(55, 71, 79);
-     width: 70%;
-    padding: 5px 5px;
-    color: white;
-} */
+.book_spine {
+    background: rgba(0, 0, 0, 0.05);
+    text-align: center;
+}
+
+div.collapsible-header div h6 {
+    padding-left: 20px;
+}

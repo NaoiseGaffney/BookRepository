@@ -16,10 +16,11 @@
         {% if user_books %}
         {% for user_book in user_books %}
         <li>
-            <div class="collapsible-header"><i class="material-icons black-text">visibility</i>
-                <div>
-                    <a href="{{url_for('edit_book', book_id=user_book.id)}}"><i class="material-icons blue-text"">create</i></a>
-                    <a class="modal-trigger" href="#delete_book"><i class="material-icons red-text">delete_forever</i></a>
+            <div class="collapsible-header">
+                <div class="book_spine">
+                    <a href="{{url_for('edit_book', book_id=user_book.id)}}"><i class="material-icons blue-text text-darken-4">create</i></a>
+                    <a class="modal-trigger" href="#delete_book"><i class="material-icons pink-text text-accent-2">delete_forever</i></a>
+                    <i class="material-icons teal-text text-lighten-1">visibility</i>
                     
                     <div id="delete_book" class="modal">
                         <div class="modal-content">
