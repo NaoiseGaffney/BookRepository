@@ -144,9 +144,11 @@ footer .right-align {
 }
 
 /* Book Spine background-image for the Member's Page */
+/* Photo by <a href="https://unsplash.com/@christianw?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Christian Wiediger</a> on <a href="https://unsplash.com/s/photos/open-book?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a> */
 .collapsible-header {
     background-image: url("/static/images/christian-wiediger-GWucxGZvO-w-unsplash.jpg");
-    background-position: 60% 50%;
+    background-position: 80% 55%;
+    background-size: 150%
 }
 
 /* .book_spine {
