@@ -145,7 +145,6 @@ footer .right-align {
 
 /* Book Spine background-image for the Member's Page */
 .collapsible-header {
-    /* background-image: url("/static/images/book_spine.jpg"); */
-    background-image: url("https://images.unsplash.com/photo-1497633762265-9d179a990aa6?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1352&q=80");
-    background-position: left;
+    background-image: url("/static/images/blue_book_pages.png");
+    background-position: center;
 }
