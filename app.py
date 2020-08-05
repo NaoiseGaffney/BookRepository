@@ -65,8 +65,9 @@ class Book(db.Document):
     # ISBN = db.StringField(default="123-1-123-12345-1", unique=True)
     ISBN = db.StringField(default="123-1-123-12345-1")
     short_description = db.StringField()
-    user = db.ReferenceField(User, required=True, reverse_delete_rule=CASCADE)
-    user2 = db.StringField(required=True)
+    # user = db.ReferenceField(User, required=True, reverse_delete_rule=CASCADE)
+    user = db.StringField(required=True)
+    creation_date = db.DateTimeField(default=datetime.datetime.now)
     comments = db.ListField()
     votes = db.ListField(db.IntField(choices=[1, 2, 3, 4, 5, 6, 7, 8, 9, 10]))
     rating = db.FloatField()  # book.calc_votes()
@@ -115,44 +116,47 @@ def home_page():
 @app.route("/members")
 @login_required    # User must be authenticated
 def member_page():
-    total_num_users = User.objects.count()
-    total_num_books = Book.objects.count()
-    print("\nTotal Number of Users:", total_num_users)
-    print("\nTotal Number of Books:", total_num_books)
+    # total_num_users = User.objects.count()
+    # total_num_books = Book.objects.count()
+    # print("\nTotal Number of Users:", total_num_users)
+    # print("\nTotal Number of Books:", total_num_books)
 
-    book = Book(
+    filtered_books = Book.objects.filter(user=current_user.username)
+    filtered_books_as_json = filtered_books.to_json()
+    print("Filtered Books as JSON:", filtered_books_as_json)
+
+    """ book = Book(
         title="Fresh Spice",
         author="Arun Kapil",
         year=2014,
         ISBN="978-1-909108-47-9",
+        user=current_user.username,
         short_description="Vibrant recipes for bringing flavour, depth, and colour home cooking.",
-        user = current_user.username,
-        user2 = current_user.username,
         comments=["I love reading this book, dreaming of the recipes I can make.",
                   "I made the Lamb Vindaloo and it was gorgeous.", "Good Samosas are hard to make."],
         votes=["8"],
-    ).save()
+    ).save() """
 
-    user_books = Book.objects.filter(Book.user == "gaff")
-    json_user_books = user_books.to_json()
-    # print(json_user_books)
-    print(current_user.username)
-    print(Book.user2)
+    # user_books = Book.objects()
+    user_books = Book.objects.filter(user=current_user.username)
     return render_template("members.html", user_books=user_books)
 
 
-# The Admin page requires an 'Admin' role.
+@app.route('/edit_book/<book_id>')
+def edit_book(book_id):
+    book = Book.objects.get(id=book_id)
+    book_as_json = book.to_json()
+    print("Book as JSON:", book_as_json)
+    # return render_template("edit_book.html", book=book)
+    return render_template_string("{book}")
 
 
-@app.route("/admin")
-@roles_required("Admin")
-def admin_page():
-    return render_template("admin.html")
-
-
-@app.route("/user/<int:id>/")
-def user_profile(id):
-    return f"Profile page of user #{id}"
+@app.route('/delete_book/<book_id>')
+def delete_book(book_id):
+    book = Book.objects.get(id=book_id)
+    book.delete()
+    # return render_template("edit_book.html", book=book)
+    return redirect(url_for("member_page"))
 
 
 # export PRODUCTION=ON | OFF in TEST

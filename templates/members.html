@@ -1,25 +1,52 @@
 {% extends "flask_user_layout.html" %}
 {% block content %}
 <div class="container">
-{% if call_or_get(current_user.is_authenticated) %}
-<h6>Home&nbsp; > &nbsp;<a href="{{ url_for('member_page') }}">Member's Page</a>
-    - Welcome {{current_user.username}}! Your ID is: {{current_user.id}}</h6>
-{% else %}
-<h6><a href="{{ url_for('home_page')}}">Home</a>&nbsp; > &nbsp;<a href="{{ url_for('member_page') }}">Member's Page</a> - Welcome {{current_user.username}}! Your ID is: {{current_user.id}}</h6>
-{% endif %}
-<li>
-    <a href="{{ url_for('user.edit_user_profile') }}">Edit Profile: {{ current_user.username or current_user.email }}<i
-            class="material-icons right">how_to_reg</i></a>
-</li>
-{% if user_books %}
-{% for user_book in user_books %}
-<ul>
-    <li>{{user_book.title}}, by {{user_book.author}}</li>
-    {% for comment in user_book.comments %}
-    <li>{{comment}}</li>
-    {% endfor %}
-</ul>
-{% endfor %}
-{% endif %}
+    {% if call_or_get(current_user.is_authenticated) %}
+    <h6>Home&nbsp; > &nbsp;<a href="{{ url_for('member_page') }}">Member's Page</a>
+        - <a href="{{ url_for('user.edit_user_profile') }}">{{ current_user.username or current_user.email }}!&nbsp;<i
+                class="material-icons">how_to_reg</i></a></h6>
+    {% else %}
+    <h6><a href="{{ url_for('home_page')}}">Home</a>&nbsp; > &nbsp;<a href="{{ url_for('member_page') }}">Member's
+            Page</a> - <a
+            href="{{ url_for('user.edit_user_profile') }}">{{ current_user.username or current_user.email }}!&nbsp;<i
+                class="material-icons">how_to_reg</i></a></h6>
+    {% endif %}
+
+    <ul class="collapsible popout">
+        {% if user_books %}
+        {% for user_book in user_books %}
+        <li>
+            <div class="collapsible-header"><i class="material-icons black-text">visibility</i>
+                <div class="">
+                    <a href="{{url_for('edit_book', book_id=user_book.id)}}"><i class="material-icons blue-text"">create</i></a>
+                    <a class="modal-trigger" href="#delete_book"><i class="material-icons red-text">delete_forever</i></a>
+                    
+                    <div id="delete_book" class="modal">
+                        <div class="modal-content">
+                            <h6>Deleting Book: {{user_book.title}}, by {{user_book.author}}</h6>
+                            <p>This action will permanently delete this book from your Book Repository. Are you sure you wish to do this?</p>
+                        </div>
+                        <div class="modal-footer">
+                            <a href="{{url_for('delete_book', book_id=user_book.id)}}" class="modal-close btn orange">Yes</a>
+                            <a href="#!" class="modal-close btn orange">No</a>
+                        </div>
+                    </div>
+                    
+                </div>
+                <div>
+                    <h6>{{user_book.title}}, by {{user_book.author}}</h6>
+                </div>
+            </div>
+            <div class="collapsible-body">
+                <p>Published: {{user_book.year}}, ISBN: {{user_book.ISBN}}</p>
+                <p>Description: {{user_book.short_description}}</p>
+                <p>{% for comment in user_book.comments %}</p>
+                <p>{{comment}}</p>
+                {% endfor %}
+            </div>
+        </li>
+        {% endfor %}
+        {% endif %}
+    </ul>
 </div>
 {% endblock %}
