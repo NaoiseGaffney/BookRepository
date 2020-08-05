@@ -13,11 +13,16 @@ body {
     font-family: 'Raleway', sans-serif;
     margin-top: 35px;
     margin-bottom: 35px;
+    background-image: url("https://trello-attachments.s3.amazonaws.com/5f1c7d85e3e3fe660612d334/5f298955c387ab04a47314c1/9ea0626e600ce4f51870c65956ca76f9/sharon-mccutcheon-eMP4sYPJ9x0-unsplash.jpg");
+    background-position: center;
+    background-size: 2300px;
+    background-repeat: no-repeat;
+    position: relative;
 }
 
-main {
+/* main {
     flex: 1 0 auto;
-}
+} */
 
 /* <a href... */
 a {
@@ -53,7 +58,8 @@ footer {
     box-shadow: 0 -2px 0 rgba(0, 0, 0, 0.14), 0 -3px 1px 0 rgba(0, 0, 0, 0.12), 0 -1px 5px 0 rgba(0, 0, 0, 0.2);
 }
 
-.page-footer, .footer-copyright {
+.page-footer,
+.footer-copyright {
     padding: 0px;
     z-index: 10;
 }

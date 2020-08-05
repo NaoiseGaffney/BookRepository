@@ -9,7 +9,7 @@ from statistics import mean
 import datetime
 
 # generates WTForms from MongoEngine models
-from flask_mongoengine.wtf import model_form
+# from flask_mongoengine.wtf import model_form
 
 
 from config import ConfigClass
