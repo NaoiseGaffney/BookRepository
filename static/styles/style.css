@@ -145,6 +145,16 @@ footer .right-align {
 
 /* Book Spine background-image for the Member's Page */
 .collapsible-header {
-    background-image: url("/static/images/blue_book_pages.png");
-    background-position: center;
+    background-image: url("/static/images/christian-wiediger-GWucxGZvO-w-unsplash.jpg");
+    background-position: 60% 50%;
 }
+
+/* .book_spine {
+    background: rgba(13, 71, 161, 0.55);
+    background: rgba(255, 64, 129, 0.55);
+    color: rgb(255, 64, 129);
+    color: rgb(55, 71, 79);
+     width: 70%;
+    padding: 5px 5px;
+    color: white;
+} */
