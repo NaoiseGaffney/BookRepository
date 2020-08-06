@@ -5,6 +5,7 @@ from flask_user import login_required, UserManager, UserMixin, current_user, rol
 # from wtforms.validators import DataRequired
 # from mongoengine.errors import NotUniqueError
 import datetime
+from flask_debugtoolbar import DebugToolbarExtension
 
 # generates WTForms from MongoEngine models
 # from flask_mongoengine.wtf import model_form
@@ -23,6 +24,7 @@ load_dotenv(dotenv_path=env_path)
 # Setup Flask and load app.config
 app = Flask(__name__, static_folder="static")
 app.config.from_object(__name__+".ConfigClass")
+app.debug = True
 
 # Setup Flask-MongoEngine
 db = MongoEngine(app)
@@ -30,6 +32,8 @@ db = MongoEngine(app)
 # Use Flask Sessions with Mongoengine
 app.session_interface = MongoEngineSessionInterface(db)
 
+# Initiate the Flask Debug Toolbar Extension
+toolbar = DebugToolbarExtension(app)
 
 class User(db.Document, UserMixin):
     # Active set to True to allow login of user
