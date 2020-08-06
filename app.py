@@ -116,14 +116,15 @@ def home_page():
 
 
 @app.route("/members")
+@app.route("/members/<int:page>")
 @login_required    # User must be authenticated
-def member_page():
+def member_page(page=1):
     # total_num_users = User.objects.count()
     # total_num_books = Book.objects.count()
     # print("\nTotal Number of Users:", total_num_users)
     # print("\nTotal Number of Books:", total_num_books)
 
-    filtered_books = Book.objects.filter(user=current_user.username)
+    # filtered_books = Book.objects.filter(user=current_user.username)
     # filtered_books_as_json = filtered_books.to_json()
     # print("Filtered Books as JSON:", filtered_books_as_json)
 
@@ -164,7 +165,17 @@ def member_page():
     ).save() """
 
     user_books = Book.objects.filter(user=current_user.username)
-    return render_template("members.html", user_books=user_books)
+
+    # books_pagination = Book.objects.paginate(page, per_page=10)
+    # books_current_page = books_pagination.page
+    # books_total_pages = books_pagination.pages
+    # books_item_per_page = books_pagination.per_page
+    # books_total_number_of_items = books_pagination.total
+    # books_list_of_items = books_pagination.items
+    books_pagination = Book.objects.filter(user=current_user.username).paginate(page=page, per_page=10)
+    return render_template("members.html", books_pagination=books_pagination)
+    # return render_template("members.html", user_books=user_books, books_pagination=books_pagination)
+    # return render_template("members.html", user_books=user_books)
 
 
 @app.route("/edit_book/<book_id>")
