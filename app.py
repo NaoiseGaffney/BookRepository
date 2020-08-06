@@ -66,6 +66,8 @@ class Book(db.Document):
     creation_date = db.DateTimeField(default=datetime.datetime.now)
     comments = db.StringField(default="Please add your comments here.")
     rating = db.IntField(choices=[1, 2, 3, 4, 5, 6, 7, 8, 9, 10])
+    private_view = db.StringField(default="")
+
 
     # def calc_votes(self):
         # self.rating = mean(n for n in self.votes if n is not None)
@@ -130,6 +132,7 @@ def member_page():
         short_description="Vibrant recipes for bringing flavour, depth, and colour to home cooking.",
         comments="I love reading this book, dreaming of the recipes I can make. I made the Lamb Vindaloo and it was gorgeous. Good Samosas are hard to make.",
         rating=8,
+        private_view = ""
     ).save() """
 
     user_books = Book.objects.filter(user=current_user.username)
@@ -154,7 +157,8 @@ def update_book(book_id):
         "ISBN": request.form.get("isbn"),
         "short_description": request.form.get("short_description"),
         "comments": request.form.get("comments"),
-        "rating": request.form.get("rating")
+        "rating": request.form.get("rating"),
+        "private_view": request.form.get("private_view")
     }
     book.update(**fields)
     flash(

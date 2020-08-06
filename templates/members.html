@@ -49,6 +49,11 @@
                 {% else %}
                 <p>Rating: <span class="red-text book_spine">{{ user_book.rating }}</span></p>
                 {% endif %}
+                {% if user_book.private_view %}
+                <p>Private View: Book is HIDDEN from Public Searches.</p>
+                {% else %}
+                <p>Private View: Book is SEEN in Public Searches.</p>
+                {% endif %}
             </div>
         </li>
         {% endfor %}
