@@ -1,11 +1,9 @@
 import os
-from flask import Flask, render_template_string, render_template, redirect, url_for
+from flask import Flask, render_template_string, render_template, redirect, url_for, request, flash
 from flask_mongoengine import MongoEngine, MongoEngineSession, MongoEngineSessionInterface
 from flask_user import login_required, UserManager, UserMixin, current_user, roles_required
 from wtforms.validators import DataRequired
 from mongoengine.errors import NotUniqueError
-from mongoengine import CASCADE
-from statistics import mean
 import datetime
 
 # generates WTForms from MongoEngine models
@@ -62,23 +60,21 @@ class Book(db.Document):
     title = db.StringField(default="")
     author = db.StringField(default="")
     year = db.IntField(default="")
-    # ISBN = db.StringField(default="123-1-123-12345-1", unique=True)
-    ISBN = db.StringField(default="123-1-123-12345-1")
-    short_description = db.StringField()
-    # user = db.ReferenceField(User, required=True, reverse_delete_rule=CASCADE)
+    ISBN = db.IntField(default="")
+    short_description = db.StringField(default="A short description goes here. Please update this description.")
     user = db.StringField(required=True)
     creation_date = db.DateTimeField(default=datetime.datetime.now)
-    comments = db.ListField()
-    votes = db.ListField(db.IntField(choices=[1, 2, 3, 4, 5, 6, 7, 8, 9, 10]))
-    rating = db.FloatField()  # book.calc_votes()
+    comments = db.StringField(default="Please add your comments here.")
+    rating = db.IntField(choices=[1, 2, 3, 4, 5, 6, 7, 8, 9, 10])
 
-    def calc_votes(self):
-        self.rating = mean(n for n in self.votes if n is not None)
+    # def calc_votes(self):
+        # self.rating = mean(n for n in self.votes if n is not None)
 
     meta = {
         "auto_create_index": True,
         "index_background": True,
-        "indexes": ["title"]
+        "indexes": ["title"],
+        "ordering": ["-title"]
     }
 
 
@@ -122,40 +118,55 @@ def member_page():
     # print("\nTotal Number of Books:", total_num_books)
 
     filtered_books = Book.objects.filter(user=current_user.username)
-    filtered_books_as_json = filtered_books.to_json()
-    print("Filtered Books as JSON:", filtered_books_as_json)
+    # filtered_books_as_json = filtered_books.to_json()
+    # print("Filtered Books as JSON:", filtered_books_as_json)
 
     """ book = Book(
         title="Fresh Spice",
         author="Arun Kapil",
         year=2014,
-        ISBN="978-1-909108-47-9",
+        ISBN=9781909108479,
         user=current_user.username,
-        short_description="Vibrant recipes for bringing flavour, depth, and colour home cooking.",
-        comments=["I love reading this book, dreaming of the recipes I can make.",
-                  "I made the Lamb Vindaloo and it was gorgeous.", "Good Samosas are hard to make."],
-        votes=["8"],
+        short_description="Vibrant recipes for bringing flavour, depth, and colour to home cooking.",
+        comments="I love reading this book, dreaming of the recipes I can make. I made the Lamb Vindaloo and it was gorgeous. Good Samosas are hard to make.",
+        rating=8,
     ).save() """
 
-    # user_books = Book.objects()
     user_books = Book.objects.filter(user=current_user.username)
     return render_template("members.html", user_books=user_books)
 
 
-@app.route('/edit_book/<book_id>')
+@app.route("/edit_book/<book_id>")
+@login_required
 def edit_book(book_id):
     book = Book.objects.get(id=book_id)
-    book_as_json = book.to_json()
-    print("Book as JSON:", book_as_json)
-    # return render_template("edit_book.html", book=book)
-    return render_template_string("{book}")
+    return render_template("edit_book.html", book=book)
 
 
-@app.route('/delete_book/<book_id>')
+@app.route("/update_book/<book_id>", methods=["POST"])
+@login_required
+def update_book(book_id):
+    book = Book.objects.get(id=book_id)
+    fields = {
+        "title": request.form.get("title"),
+        "author": request.form.get("author"),
+        "year": request.form.get("year"),
+        "ISBN": request.form.get("isbn"),
+        "short_description": request.form.get("short_description"),
+        "comments": request.form.get("comments"),
+        "rating": request.form.get("rating")
+    }
+    book.update(**fields)
+    flash(
+        f"The book '{book.title}' is updated successfully by '{current_user.username}'.", "success")
+    return redirect(url_for("member_page"))
+
+
+@app.route("/delete_book/<book_id>")
+@login_required
 def delete_book(book_id):
     book = Book.objects.get(id=book_id)
     book.delete()
-    # return render_template("edit_book.html", book=book)
     return redirect(url_for("member_page"))
 
 

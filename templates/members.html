@@ -41,9 +41,14 @@
             <div class="collapsible-body">
                 <p>Published: {{user_book.year}}, ISBN: {{user_book.ISBN}}</p>
                 <p>Description: {{user_book.short_description}}</p>
-                <p>{% for comment in user_book.comments %}</p>
-                <p>{{comment}}</p>
-                {% endfor %}
+                <p>Comments: {{ user_book.comments }}</p>
+                {% if user_book.rating > 7 %}
+                <p>Rating: <span class="green-text book_spine">{{ user_book.rating }}</span></p>
+                {% elif user_book.rating > 5 %}
+                <p>Rating: <span class="orange-text book_spine">{{ user_book.rating }}</span></p>
+                {% else %}
+                <p>Rating: <span class="red-text book_spine">{{ user_book.rating }}</span></p>
+                {% endif %}
             </div>
         </li>
         {% endfor %}
