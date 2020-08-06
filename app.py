@@ -57,14 +57,14 @@ class User(db.Document, UserMixin):
 
 
 class Book(db.Document):
-    title = db.StringField(default="")
-    author = db.StringField(default="")
-    year = db.IntField(default="")
-    ISBN = db.IntField(default="")
-    short_description = db.StringField(default="A short description goes here. Please update this description.")
+    title = db.StringField(default="", maxlength=250)
+    author = db.StringField(default="", maxlength=250)
+    year = db.IntField(default="", maxlength=4)
+    ISBN = db.IntField(default="", maxlength=13)
+    short_description = db.StringField(default="A short description goes here. Please update this description. You have a maximum of 1500 characters to use.", maxlength=2000)
     user = db.StringField(required=True)
     creation_date = db.DateTimeField(default=datetime.datetime.now)
-    comments = db.StringField(default="Please add your comments here.")
+    comments = db.StringField(default="Please add your comments here. You have a maximum of 3000 characters to use, about the size of an A4 page.", maxlength=3500)
     rating = db.IntField(choices=[1, 2, 3, 4, 5, 6, 7, 8, 9, 10])
     private_view = db.StringField(default="")
 

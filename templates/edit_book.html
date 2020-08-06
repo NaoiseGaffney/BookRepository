@@ -15,50 +15,50 @@
             <div class="row">
                 <div class="input-field col s12">
                     <i class="material-icons prefix">title</i>
-                    <input id="title" name="title" type="text" class="validate" value="{{book.title}}">
-                    <label for="icon_prefix">Book Title</label>
+                    <input id="title" name="title" type="text" class="validate" maxlength="200" value="{{book.title}}">
+                    <label for="book_title">Book Title</label>
                 </div>
             </div>
             <div class="row">
                 <div class="input-field col s12">
                     <i class="material-icons prefix">person</i>
-                    <input id="author" name="author" type="text" class="validate" value="{{book.author}}">
-                    <label for="icon_prefix">Book Author</label>
+                    <input id="author" name="author" type="text" class="validate" maxlength="200" value="{{book.author}}">
+                    <label for="book_author">Book Author</label>
                 </div>
             </div>
             <div class="row">
                 <div class="input-field col s12">
                     <i class="material-icons prefix">event</i>
                     <input id="year" name="year" type="number" class="validate" min="1455" max="2050" value="{{book.year}}">
-                    <label for="icon_prefix">Book Published</label>
+                    <label for="book_published">Book Published</label>
                 </div>
             </div>
             <div class="row">
                 <div class="input-field col s12">
                     <i class="material-icons prefix">vpn_key</i>
                     <input id="isbn" name="isbn" type="number" max="9789999999999" class="validate" value="{{book.ISBN}}">
-                    <label for="icon_prefix">Book ISBN</label>
+                    <label for="book_isbn">Book ISBN</label>
                 </div>
             </div>
             <div class="row">
                 <div class="input-field col s12">
                     <i class="material-icons prefix">description</i>
-                    <textarea id="short_description" name="short_description" type="textarea" class="materialize-textarea">{{book.short_description}}</textarea>
-                    <label for="icon_prefix">Book Description</label>
+                    <textarea id="short_description" name="short_description" type="textarea" maxlength="1500" class="materialize-textarea">{{book.short_description}}</textarea>
+                    <label for="book_description">Book Description</label>
                 </div>
             </div>
             <div class="row">
                 <div class="input-field col s12">
                     <i class="material-icons prefix">comment</i>
-                    <textarea id="comments" name="comments" type="textarea" class="materialize-textarea">{{book.comments}}</textarea>
-                    <label for="icon_prefix">Book Comments</label>
+                    <textarea id="comments" name="comments" type="textarea" maxlength="3000" class="materialize-textarea">{{book.comments}}</textarea>
+                    <label for="book_comments">Book Comments</label>
                 </div>
             </div>
             <div class="row">
                 <div class="input-field col s12">
                     <i class="material-icons prefix">poll</i>
                     <input id="rating" name="rating" type="number" min="1" max="10" class="validate" value="{{book.rating}}">
-                    <label for="icon_prefix">Book Rating</label>
+                    <label for="book_rating">Book Rating</label>
                 </div>
             </div>
             <div class="row">
