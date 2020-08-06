@@ -133,6 +133,30 @@ def member_page():
         comments="I love reading this book, dreaming of the recipes I can make. I made the Lamb Vindaloo and it was gorgeous. Good Samosas are hard to make.",
         rating=8,
         private_view = ""
+    ).save()
+    
+    book = Book(
+        title="The Art of War",
+        author="Sun Tzu",
+        year=1991,
+        ISBN=9780877735373,
+        user=current_user.username,
+        short_description="Thomas Cleary's translation and commentary of the 2000 year old piece on the Art of War.",
+        comments="Nothing like a little management bullshit.",
+        rating=4,
+        private_view = ""
+    ).save()
+    
+    book = Book(
+        title="Festa",
+        author="Eileen Dunne Crescenzi",
+        year=2015,
+        ISBN=9780717164448,
+        user=current_user.username,
+        short_description="Recipes and recollections.",
+        comments="An veritable feast of Italian dishes.",
+        rating=7,
+        private_view = ""
     ).save() """
 
     user_books = Book.objects.filter(user=current_user.username)

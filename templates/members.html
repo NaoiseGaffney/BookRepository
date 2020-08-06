@@ -19,10 +19,10 @@
             <div class="collapsible-header">
                 <div class="book_spine">
                     <a href="{{url_for('edit_book', book_id=user_book.id)}}"><i class="material-icons blue-text text-darken-4">create</i></a>
-                    <a class="modal-trigger" href="#delete_book"><i class="material-icons pink-text text-accent-2">delete_forever</i></a>
+                    <a class="modal-trigger" href="#delete_book_{{user_book.id}}"><i class="material-icons pink-text text-accent-2">delete_forever</i></a>
                     <i class="material-icons teal-text text-lighten-1">visibility</i>
                     
-                    <div id="delete_book" class="modal">
+                    <div id="delete_book_{{user_book.id}}" class="modal">
                         <div class="modal-content">
                             <h6>Deleting Book: {{user_book.title}}, by {{user_book.author}}</h6>
                             <p>This action will permanently delete this book from your Book Repository. Are you sure you wish to do this?</p>
@@ -50,9 +50,9 @@
                 <p>Rating: <span class="red-text book_spine">{{ user_book.rating }}</span></p>
                 {% endif %}
                 {% if user_book.private_view %}
-                <p>Private View: Book is HIDDEN from Public Searches.</p>
+                <p>Private View: Book is HIDDEN from Public Searches.<i class="material-icons pink-text text-accent-2">lock</i></p>
                 {% else %}
-                <p>Private View: Book is SEEN in Public Searches.</p>
+                <p>Private View: Book is SEEN in Public Searches.<i class="material-icons teal-text text-lighten-1">lock_open</i></p>
                 {% endif %}
             </div>
         </li>

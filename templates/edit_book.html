@@ -36,7 +36,7 @@
             <div class="row">
                 <div class="input-field col s12">
                     <i class="material-icons prefix">vpn_key</i>
-                    <input id="isbn" name="isbn" type="number" class="validate" value="{{book.ISBN}}">
+                    <input id="isbn" name="isbn" type="number" max="9789999999999" class="validate" value="{{book.ISBN}}">
                     <label for="icon_prefix">Book ISBN</label>
                 </div>
             </div>
@@ -57,7 +57,7 @@
             <div class="row">
                 <div class="input-field col s12">
                     <i class="material-icons prefix">poll</i>
-                    <input id="rating" name="rating" type="text" class="validate" value="{{book.rating}}">
+                    <input id="rating" name="rating" type="number" min="1" max="10" class="validate" value="{{book.rating}}">
                     <label for="icon_prefix">Book Rating</label>
                 </div>
             </div>
