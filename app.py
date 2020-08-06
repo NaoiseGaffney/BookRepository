@@ -2,8 +2,8 @@ import os
 from flask import Flask, render_template_string, render_template, redirect, url_for, request, flash
 from flask_mongoengine import MongoEngine, MongoEngineSession, MongoEngineSessionInterface
 from flask_user import login_required, UserManager, UserMixin, current_user, roles_required
-from wtforms.validators import DataRequired
-from mongoengine.errors import NotUniqueError
+# from wtforms.validators import DataRequired
+# from mongoengine.errors import NotUniqueError
 import datetime
 
 # generates WTForms from MongoEngine models
@@ -184,9 +184,11 @@ def update_book(book_id):
         "rating": request.form.get("rating"),
         "private_view": request.form.get("private_view")
     }
-    book.update(**fields)
-    flash(
-        f"The book '{book.title}' is updated successfully by '{current_user.username}'.", "success")
+    try:
+        book.update(**fields)
+        flash(f"The book '{book.title}' is updated successfully by '{current_user.username}'.", "success")
+    except:
+        flash(f"The book '{book.title}' did NOT update successfully by '{current_user.username}'.", "danger")
     return redirect(url_for("member_page"))
 
 
@@ -194,7 +196,11 @@ def update_book(book_id):
 @login_required
 def delete_book(book_id):
     book = Book.objects.get(id=book_id)
-    book.delete()
+    try:
+        book.delete()
+        flash(f"The book '{book.title}' is deleted successfully by '{current_user.username}'.", "success")
+    except:
+        flash(f"The book '{book.title}' was NOT deleted successfully by '{current_user.username}'.", "danger")
     return redirect(url_for("member_page"))
 
 
