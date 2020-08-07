@@ -69,8 +69,8 @@ class User(db.Document, UserMixin):
 class Book(db.Document):
     title = db.StringField(default="", maxlength=250)
     author = db.StringField(default="", maxlength=250)
-    year = db.IntField(default="", maxlength=4)
-    ISBN = db.IntField(default="", maxlength=13)
+    year = db.IntField(maxlength=4)
+    ISBN = db.IntField(maxlength=13)
     short_description = db.StringField(default="", maxlength=2000)
     user = db.StringField(required=True)
     creation_date = db.DateTimeField(default=datetime.datetime.now)
@@ -201,11 +201,11 @@ def save_book():
 
     try:
         book.save()
-        flash(f"The book '{book.title}' was saved!", "success")
+        flash(f"The book {book.title} was saved!", "success")
         app.logger.info(f"{book.title} with id {book.id} created by {current_user.username}.")
     except:
         app.logger.error(f"{book.title} with id {book.id} not created by {current_user.username}.")
-        flash(f"The book '{book.title}' was NOT saved!", "success")
+        flash(f"The book {book.title} was NOT saved!", "danger")
     return redirect(url_for("member_page"))
 
 
@@ -213,8 +213,7 @@ def save_book():
 @login_required
 def edit_book(book_id):
     book = Book.objects.get(id=book_id)
-    app.logger.info(
-        f"{book.title} with id {book.id} to be edited by {current_user.username}.")
+    app.logger.info(f"{book.title} with id {book.id} to be edited by {current_user.username}.")
     return render_template("edit_book.html", book=book)
 
 
@@ -234,13 +233,11 @@ def update_book(book_id):
     }
     try:
         book.update(**fields)
-        flash(f"The book '{book.title}' is updated!", "success")
-        app.logger.info(
-            f"{book.title} with id {book.id} edited by {current_user.username}.")
+        flash(f"The book {book.title} is updated!", "success")
+        app.logger.info(f"{book.title} with id {book.id} edited by {current_user.username}.")
     except:
-        app.logger.error(
-            f"{book.title} with id {book.id} edited by {current_user.username}.")
-        flash(f"The book '{book.title}' was NOT updated!", "danger")
+        app.logger.error(f"{book.title} with id {book.id} edited by {current_user.username}.")
+        flash(f"The book {book.title} was NOT updated!", "danger")
     return redirect(url_for("member_page"))
 
 
@@ -250,13 +247,11 @@ def delete_book(book_id):
     book = Book.objects.get(id=book_id)
     try:
         book.delete()
-        flash(f"The book '{book.title}' is deleted!", "success")
-        app.logger.info(
-            f"{book.title} with id {book.id} deleted by {current_user.username}.")
+        flash(f"The book {book.title} is deleted!", "success")
+        app.logger.info(f"{book.title} with id {book.id} deleted by {current_user.username}.")
     except:
-        app.logger.error(
-            f"{book.title} with id {book.id} NOT deleted by {current_user.username}.")
-        flash(f"The book '{book.title}' was NOT deleted!", "danger")
+        app.logger.error(f"{book.title} with id {book.id} NOT deleted by {current_user.username}.")
+        flash(f"The book {book.title} was NOT deleted!", "danger")
     return redirect(url_for("member_page"))
 
 
