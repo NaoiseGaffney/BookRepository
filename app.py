@@ -172,7 +172,7 @@ def member_page(page=1):
     # books_item_per_page = books_pagination.per_page
     # books_total_number_of_items = books_pagination.total
     # books_list_of_items = books_pagination.items
-    books_pagination = Book.objects.filter(user=current_user.username).paginate(page=page, per_page=10)
+    books_pagination = Book.objects.filter(user=current_user.username).paginate(page=page, per_page=7)
     return render_template("members.html", books_pagination=books_pagination)
     # return render_template("members.html", user_books=user_books, books_pagination=books_pagination)
     # return render_template("members.html", user_books=user_books)
@@ -201,9 +201,9 @@ def update_book(book_id):
     }
     try:
         book.update(**fields)
-        flash(f"The book '{book.title}' is updated successfully by '{current_user.username}'.", "success")
+        flash(f"The book '{book.title}' is updated!", "success")
     except:
-        flash(f"The book '{book.title}' did NOT update successfully by '{current_user.username}'.", "danger")
+        flash(f"The book '{book.title}' was NOT updated!", "danger")
     return redirect(url_for("member_page"))
 
 
@@ -213,9 +213,9 @@ def delete_book(book_id):
     book = Book.objects.get(id=book_id)
     try:
         book.delete()
-        flash(f"The book '{book.title}' is deleted successfully by '{current_user.username}'.", "success")
+        flash(f"The book '{book.title}' is deleted!", "success")
     except:
-        flash(f"The book '{book.title}' was NOT deleted successfully by '{current_user.username}'.", "danger")
+        flash(f"The book '{book.title}' was NOT deleted!", "danger")
     return redirect(url_for("member_page"))
 
 
