@@ -164,3 +164,9 @@ div.collapsible-header div h6 {
 #add_book_button {
     margin-right: 10px;
 }
+
+/* Remember Me Label */
+#remember_me_label {
+    font-size: 0.8rem;
+    color: #9E9E9E;
+}

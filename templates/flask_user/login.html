@@ -2,8 +2,9 @@
 
 {% block content %}
 {% from "flask_user/_macros.html" import render_field, render_checkbox_field, render_submit_field %}
-<h6><a href="{{ url_for('home_page')}}">Home</a>&nbsp; > &nbsp;<a href="{{ url_for('user.login') }}">{%trans%}Sign In Page{%endtrans%}</a></h6>
-<form action="" method="POST" class="form" role="form">
+<h6><a href="{{ url_for('home_page')}}">Home</a>&nbsp; > &nbsp;<a href="{{ url_for('user.login') }}">{%trans%}Sign In
+        Page{%endtrans%}</a></h6>
+<form method="POST" class="form">
     {{ form.hidden_tag() }}
 
     {# Username or Email field #}
@@ -13,22 +14,23 @@
         <div class="row">
             <div class="col-xs-6">
                 <div class="tooltip">
-                <label for="{{ field.id }}" class="control-label">{{ field.label.text }}</label>
-                <span class="tooltiptext"> Please enter your username, the same one you used when you registered.</span>
+                    <label for="{{ field.id }}" class="control-label">{{ field.label.text }}</label>
+                    <span class="tooltiptext"> Please enter your username, the same one you used when you
+                        registered.</span>
                 </div>
             </div>
             <div class="col-xs-6 text-right">
                 {% if user_manager.USER_ENABLE_REGISTER and not user_manager.USER_REQUIRE_INVITATION %}
-                    <a href="{{ url_for('user.register') }}" tabindex='190'>
-                        {%trans%}New here? Register.{%endtrans%}</a>
+                <a href="{{ url_for('user.register') }}" tabindex='190'>
+                    {%trans%}New here? Register.{%endtrans%}</a>
                 {% endif %}
             </div>
         </div>
         {{ field(class_='form-control', tabindex=110) }}
         {% if field.errors %}
-            {% for e in field.errors %}
-                <p class="help-block">{{ e }}</p>
-            {% endfor %}
+        {% for e in field.errors %}
+        <p class="help-block">{{ e }}</p>
+        {% endfor %}
         {% endif %}
     </div>
 
@@ -39,39 +41,40 @@
         <div class="row">
             <div class="col-xs-6">
                 <div class="tooltip">
-                <label for="{{ field.id }}" class="control-label">{{ field.label.text }}</label>
-                <span class="tooltiptext">Please enter your password, the same one you used when you registered.</span>
+                    <label for="{{ field.id }}" class="control-label">{{ field.label.text }}</label>
+                    <span class="tooltiptext">Please enter your password, the same one you used when you
+                        registered.</span>
                 </div>
             </div>
             <div class="col-xs-6 text-right">
                 {% if user_manager.USER_ENABLE_FORGOT_PASSWORD %}
-                    <a href="{{ url_for('user.forgot_password') }}" tabindex='195'>
-                        {%trans%}Forgot your Password?{%endtrans%}</a>
+                <a href="{{ url_for('user.forgot_password') }}" tabindex='195'>
+                    {%trans%}Forgot your Password?{%endtrans%}</a>
                 {% endif %}
             </div>
         </div>
         {{ field(class_='form-control', tabindex=120) }}
         {% if field.errors %}
-            {% for e in field.errors %}
-                <p class="help-block">{{ e }}</p>
-            {% endfor %}
+        {% for e in field.errors %}
+        <p class="help-block">{{ e }}</p>
+        {% endfor %}
         {% endif %}
     </div>
 
     {# Remember me #}
     {% if user_manager.USER_ENABLE_REMEMBER_ME %}
-    <div class="tooltip control-label">
-    <label>
-    <p>Remember Me</p>
-    <input id="remember_me" name="remember_me" tabindex="130" type="checkbox"/><span></span>
-    </label>
-    <span class="tooltiptext">Please click the checkbox to remain logged in.</span>
+    <div class="tooltip">
+        <div id="remember_me_label">Remember Me</div>
+        <label>
+            <input id="remember_me" name="remember_me" tabindex="130" type="checkbox" /><span></span>
+            <span class="tooltiptext">Please click the checkbox to remain logged in.</span>
+        </label>
     </div>
     {% endif %}
 
     <div>
-    {# Submit button #}
-    {{ render_submit_field(form.submit, tabindex=180) }}
+        {# Submit button #}
+        {{ render_submit_field(form.submit, tabindex=180) }}
     </div>
 </form>
 
