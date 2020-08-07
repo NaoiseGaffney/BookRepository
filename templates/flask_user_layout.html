@@ -46,6 +46,10 @@
                         <a href="{{ url_for('member_page')}}">Member's Page<i class="material-icons right">dashboard</i></a>
                     </li>
                     <li>
+                        <a href="{{ url_for('user.edit_user_profile') }}">{{ current_user.username or current_user.email }}<i
+                                class="material-icons right">account_box</i></a></h6>
+                    </li>
+                    <li>
                         <a href="{{ url_for('user.logout') }}">{%trans%}Sign Out{%endtrans%}<i
                                 class="material-icons right">pan_tool</i></a>
                     </li>
@@ -71,6 +75,10 @@
             <li>
                 <a href="{{ url_for('member_page')}}" class="white-text">Member's Page<i
                         class="material-icons white-text left">dashboard</i></a>
+            </li>
+            <li>
+                <a href="{{ url_for('user.edit_user_profile') }}" class="white-text">{{ current_user.username or current_user.email }}<i
+                        class="material-icons white-text left">account_box</i></a></h6>
             </li>
             <li>
                 <a href="{{ url_for('user.logout') }}" class="white-text">Sign Out<i

@@ -1,16 +1,14 @@
 {% extends "flask_user_layout.html" %}
 {% block content %}
 <div class="container">
+    <h6>
     {% if call_or_get(current_user.is_authenticated) %}
-    <h6>Home&nbsp; > &nbsp;<a href="{{ url_for('member_page') }}">Member's Page</a>
-        - <a href="{{ url_for('user.edit_user_profile') }}">{{ current_user.username or current_user.email }}!&nbsp;<i
-                class="material-icons">how_to_reg</i></a></h6>
+    Home
     {% else %}
-    <h6><a href="{{ url_for('home_page')}}">Home</a>&nbsp; > &nbsp;<a href="{{ url_for('member_page') }}">Member's
-            Page</a> - <a
-            href="{{ url_for('user.edit_user_profile') }}">{{ current_user.username or current_user.email }}!&nbsp;<i
-                class="material-icons">how_to_reg</i></a></h6>
+    <a href="{{ url_for('home_page')}}">Home</a>
     {% endif %}
+    &nbsp; > &nbsp;<a href="{{ url_for('member_page') }}">Member's Page</a> - <button class="btn waves-effect waves-light"><a href="{{ url_for('add_book')}}">Add Book&nbsp;<i class="material-icons">import_contacts</i></button></a></h6>
+    </h6>
 
     <ul class="collapsible popout">
         {% if books_pagination %}

@@ -1,3 +1,4 @@
+import logging
 import os
 from flask import Flask, render_template_string, render_template, redirect, url_for, request, flash
 from flask_mongoengine import MongoEngine, MongoEngineSession, MongoEngineSessionInterface
@@ -18,8 +19,7 @@ from pathlib import Path
 env_path = Path(".") / ".env"
 load_dotenv(dotenv_path=env_path)
 
-# Initialize logging
-import logging
+# Enable logging of application events (info, warning, error)
 
 """ Flask application factory """
 
@@ -28,6 +28,7 @@ app = Flask(__name__, static_folder="static")
 app.config.from_object(__name__+".ConfigClass")
 app.debug = True
 
+# Initialize logging - set after app initialisation
 app.logger.setLevel(logging.INFO)
 
 # Setup Flask-MongoEngine
@@ -38,6 +39,7 @@ app.session_interface = MongoEngineSessionInterface(db)
 
 # Initiate the Flask Debug Toolbar Extension
 toolbar = DebugToolbarExtension(app)
+
 
 class User(db.Document, UserMixin):
     # Active set to True to allow login of user
@@ -69,22 +71,23 @@ class Book(db.Document):
     author = db.StringField(default="", maxlength=250)
     year = db.IntField(default="", maxlength=4)
     ISBN = db.IntField(default="", maxlength=13)
-    short_description = db.StringField(default="A short description goes here. Please update this description. You have a maximum of 1500 characters to use.", maxlength=2000)
+    short_description = db.StringField(
+        default="A short description goes here. Please update this description. You have a maximum of 1500 characters to use.", maxlength=2000)
     user = db.StringField(required=True)
     creation_date = db.DateTimeField(default=datetime.datetime.now)
-    comments = db.StringField(default="Please add your comments here. You have a maximum of 3000 characters to use, about the size of an A4 page.", maxlength=3500)
+    comments = db.StringField(
+        default="Please add your comments here. You have a maximum of 3000 characters to use, about the size of an A4 page.", maxlength=3500)
     rating = db.IntField(choices=[1, 2, 3, 4, 5, 6, 7, 8, 9, 10])
     private_view = db.StringField(default="")
 
-
     # def calc_votes(self):
-        # self.rating = mean(n for n in self.votes if n is not None)
+    # self.rating = mean(n for n in self.votes if n is not None)
 
     meta = {
         "auto_create_index": True,
         "index_background": True,
         "indexes": ["title"],
-        "ordering": ["-title"]
+        "ordering": ["title"]
     }
 
 
@@ -131,7 +134,6 @@ def member_page(page=1):
     # filtered_books = Book.objects.filter(user=current_user.username)
     # filtered_books_as_json = filtered_books.to_json()
     # print("Filtered Books as JSON:", filtered_books_as_json)
-
     """ book = Book(
         title="Fresh Spice",
         author="Arun Kapil",
@@ -143,7 +145,7 @@ def member_page(page=1):
         rating=8,
         private_view = ""
     ).save()
-    
+
     book = Book(
         title="The Art of War",
         author="Sun Tzu",
@@ -155,7 +157,7 @@ def member_page(page=1):
         rating=4,
         private_view = ""
     ).save()
-    
+
     book = Book(
         title="Festa",
         author="Eileen Dunne Crescenzi",
@@ -172,23 +174,52 @@ def member_page(page=1):
 
     user_books = Book.objects.filter(user=current_user.username)
 
-    # books_pagination = Book.objects.paginate(page, per_page=10)
-    # books_current_page = books_pagination.page
-    # books_total_pages = books_pagination.pages
-    # books_item_per_page = books_pagination.per_page
-    # books_total_number_of_items = books_pagination.total
-    # books_list_of_items = books_pagination.items
-    books_pagination = Book.objects.filter(user=current_user.username).paginate(page=page, per_page=7)
+    books_pagination = Book.objects.filter(
+        user=current_user.username).paginate(page=page, per_page=7)
     return render_template("members.html", books_pagination=books_pagination)
-    # return render_template("members.html", user_books=user_books, books_pagination=books_pagination)
-    # return render_template("members.html", user_books=user_books)
+
+
+@app.route("/add_book")
+@login_required
+def add_book():
+    app.logger.info(f"{current_user.username} is about to add a book.")
+    return render_template("add_book.html")
+
+
+@app.route("/save_book", methods=["POST"])
+@login_required
+def save_book():
+    book = Book(
+        title = request.form.get("title"),
+        author = request.form.get("author"),
+        year = request.form.get("year"),
+        ISBN = request.form.get("isbn"),
+        short_description = request.form.get("short_description"),
+        comments = request.form.get("comments"),
+        rating = request.form.get("rating"),
+        private_view = request.form.get("private_view")
+    )
+
+    try:
+        book.save()
+        flash(
+            f"The book '{book.title}' with id {book.id} is created!", "success")
+        app.logger.info(
+            f"{book.title} with id {book.id} created by {current_user.username}.")
+    except:
+        app.logger.error(
+            f"{book.title} with id {book.id} not created by {current_user.username}.")
+        flash(
+            f"The book '{book.title}' with id {book.id} is NOT created!", "success")
+    return redirect(url_for("member_page"))
 
 
 @app.route("/edit_book/<book_id>")
 @login_required
 def edit_book(book_id):
     book = Book.objects.get(id=book_id)
-    app.logger.info(f"{book.title} with id {book.id} to be edited by {current_user.username}.")
+    app.logger.info(
+        f"{book.title} with id {book.id} to be edited by {current_user.username}.")
     return render_template("edit_book.html", book=book)
 
 
@@ -209,8 +240,11 @@ def update_book(book_id):
     try:
         book.update(**fields)
         flash(f"The book '{book.title}' is updated!", "success")
-        app.logger.info(f"{book.title} with id {book.id} edited by {current_user.username}.")
+        app.logger.info(
+            f"{book.title} with id {book.id} edited by {current_user.username}.")
     except:
+        app.logger.error(
+            f"{book.title} with id {book.id} edited by {current_user.username}.")
         flash(f"The book '{book.title}' was NOT updated!", "danger")
     return redirect(url_for("member_page"))
 
@@ -222,9 +256,11 @@ def delete_book(book_id):
     try:
         book.delete()
         flash(f"The book '{book.title}' is deleted!", "success")
-        app.logger.info(f"{book.title} with id {book.id} deleted by {current_user.username}.")
+        app.logger.info(
+            f"{book.title} with id {book.id} deleted by {current_user.username}.")
     except:
-        app.logger.info(f"{book.title} with id {book.id} NOT deleted by {current_user.username}.")
+        app.logger.error(
+            f"{book.title} with id {book.id} NOT deleted by {current_user.username}.")
         flash(f"The book '{book.title}' was NOT deleted!", "danger")
     return redirect(url_for("member_page"))
 
