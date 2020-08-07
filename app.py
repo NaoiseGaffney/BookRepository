@@ -18,6 +18,8 @@ from pathlib import Path
 env_path = Path(".") / ".env"
 load_dotenv(dotenv_path=env_path)
 
+# Initialize logging
+import logging
 
 """ Flask application factory """
 
@@ -25,6 +27,8 @@ load_dotenv(dotenv_path=env_path)
 app = Flask(__name__, static_folder="static")
 app.config.from_object(__name__+".ConfigClass")
 app.debug = True
+
+app.logger.setLevel(logging.INFO)
 
 # Setup Flask-MongoEngine
 db = MongoEngine(app)
@@ -164,6 +168,8 @@ def member_page(page=1):
         private_view = ""
     ).save() """
 
+    app.logger.info(f"Member Page Accessed by {current_user.username}.")
+
     user_books = Book.objects.filter(user=current_user.username)
 
     # books_pagination = Book.objects.paginate(page, per_page=10)
@@ -182,6 +188,7 @@ def member_page(page=1):
 @login_required
 def edit_book(book_id):
     book = Book.objects.get(id=book_id)
+    app.logger.info(f"{book.title} with id {book.id} to be edited by {current_user.username}.")
     return render_template("edit_book.html", book=book)
 
 
@@ -202,6 +209,7 @@ def update_book(book_id):
     try:
         book.update(**fields)
         flash(f"The book '{book.title}' is updated!", "success")
+        app.logger.info(f"{book.title} with id {book.id} edited by {current_user.username}.")
     except:
         flash(f"The book '{book.title}' was NOT updated!", "danger")
     return redirect(url_for("member_page"))
@@ -214,7 +222,9 @@ def delete_book(book_id):
     try:
         book.delete()
         flash(f"The book '{book.title}' is deleted!", "success")
+        app.logger.info(f"{book.title} with id {book.id} deleted by {current_user.username}.")
     except:
+        app.logger.info(f"{book.title} with id {book.id} NOT deleted by {current_user.username}.")
         flash(f"The book '{book.title}' was NOT deleted!", "danger")
     return redirect(url_for("member_page"))
 
