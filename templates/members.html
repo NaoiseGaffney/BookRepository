@@ -7,7 +7,26 @@
     {% else %}
     <a href="{{ url_for('home_page')}}">Home</a>
     {% endif %}
-    &nbsp; > &nbsp;<a href="{{ url_for('member_page') }}">Member's Page</a> - <button class="btn waves-effect waves-light"><a href="{{ url_for('add_book')}}">Add Book&nbsp;<i class="material-icons">import_contacts</i></button></a></h6>
+    &nbsp; > &nbsp;<a href="{{ url_for('member_page') }}">Member's Page</a><button id="add_book_button" class="btn waves-effect waves-light right teal lighten-1"><a href="{{ url_for('add_book')}}" class="white-text"><i class="material-icons white-text">import_contacts</i><i class="material-icons white-text">plus_one</i></button></a>
+
+    {# Macro for creating navigation links #}
+    {% macro render_navigation(pagination, endpoint) %}
+    <div class="pagination">
+        {% for page in pagination.iter_pages() %}
+        {% if page %}
+        {% if page != pagination.page %}
+        <a href="{{ url_for(endpoint, page=page) }}">{{ page }}</a>
+        {% else %}
+        <span style="background-color: #FF4081;">{{ page }}</span>
+        {% endif %}
+        {% else %}
+        <span class="ellipsis">…</span>
+        {% endif %}
+        {% endfor %}
+    </div>
+    {% endmacro %}
+    
+    {{ render_navigation(books_pagination, 'member_page') }}
     </h6>
 
     <ul class="collapsible popout">
@@ -64,24 +83,7 @@
         {% endif %}
     </ul>
 
-    {# Macro for creating navigation links #}
-    {% macro render_navigation(pagination, endpoint) %}
-    <div class="pagination">
-        {% for page in pagination.iter_pages() %}
-            {% if page %}
-                {% if page != pagination.page %}
-                    <a href="{{ url_for(endpoint, page=page) }}">{{ page }}</a>
-                {% else %}
-                    <span style="background-color: #FF4081;">{{ page }}</span>
-                {% endif %}
-            {% else %}
-                <span class="ellipsis">…</span>
-            {% endif %}
-        {% endfor %}
-    </div>
-    {% endmacro %}
-
-    {{ render_navigation(books_pagination, 'member_page') }}
+    
 
 </div>
 {% endblock %}

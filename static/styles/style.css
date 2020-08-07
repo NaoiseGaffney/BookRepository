@@ -159,3 +159,8 @@ footer .right-align {
 div.collapsible-header div h6 {
     padding-left: 20px;
 }
+
+/* Add Book Button */
+#add_book_button {
+    margin-right: 10px;
+}

@@ -71,12 +71,10 @@ class Book(db.Document):
     author = db.StringField(default="", maxlength=250)
     year = db.IntField(default="", maxlength=4)
     ISBN = db.IntField(default="", maxlength=13)
-    short_description = db.StringField(
-        default="A short description goes here. Please update this description. You have a maximum of 1500 characters to use.", maxlength=2000)
+    short_description = db.StringField(default="", maxlength=2000)
     user = db.StringField(required=True)
     creation_date = db.DateTimeField(default=datetime.datetime.now)
-    comments = db.StringField(
-        default="Please add your comments here. You have a maximum of 3000 characters to use, about the size of an A4 page.", maxlength=3500)
+    comments = db.StringField(default="", maxlength=3500)
     rating = db.IntField(choices=[1, 2, 3, 4, 5, 6, 7, 8, 9, 10])
     private_view = db.StringField(default="")
 
@@ -194,6 +192,7 @@ def save_book():
         author = request.form.get("author"),
         year = request.form.get("year"),
         ISBN = request.form.get("isbn"),
+        user=current_user.username,
         short_description = request.form.get("short_description"),
         comments = request.form.get("comments"),
         rating = request.form.get("rating"),
@@ -202,15 +201,11 @@ def save_book():
 
     try:
         book.save()
-        flash(
-            f"The book '{book.title}' with id {book.id} is created!", "success")
-        app.logger.info(
-            f"{book.title} with id {book.id} created by {current_user.username}.")
+        flash(f"The book '{book.title}' was saved!", "success")
+        app.logger.info(f"{book.title} with id {book.id} created by {current_user.username}.")
     except:
-        app.logger.error(
-            f"{book.title} with id {book.id} not created by {current_user.username}.")
-        flash(
-            f"The book '{book.title}' with id {book.id} is NOT created!", "success")
+        app.logger.error(f"{book.title} with id {book.id} not created by {current_user.username}.")
+        flash(f"The book '{book.title}' was NOT saved!", "success")
     return redirect(url_for("member_page"))
 
 
