@@ -116,33 +116,6 @@ footer .right-align {
     background-color: #FF4081;
 }
 
-/* ToolTip and ToolTipText position and colour scheme */
-.tooltip {
-    position: relative;
-    display: inline-block;
-}
-
-.tooltip .tooltiptext {
-    visibility: hidden;
-    width: 160px;
-    /* top: 100%; */
-    left: 20%;
-    /* margin-left: -20px; */
-    margin-left: 40px;
-    background-color: #26A69A;
-    color: #fff;
-    text-align: center;
-    padding: 10px;
-
-    /* Position the tooltip */
-    position: absolute;
-    z-index: 2;
-}
-
-.tooltip:hover .tooltiptext {
-    visibility: visible;
-}
-
 /* Book Spine background-image for the Member's Page */
 /* Photo by <a href="https://unsplash.com/@christianw?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Christian Wiediger</a> on <a href="https://unsplash.com/s/photos/open-book?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a> */
 .collapsible-header {
