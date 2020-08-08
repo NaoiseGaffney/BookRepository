@@ -177,3 +177,8 @@ div.collapsible-header div h6 {
     line-height: 110%;
     margin-bottom: 1rem;
 }
+
+/* Private View Toggle Text to suit the styling of the other form fields in Add/Edit Books */
+div.switch {
+    color: #9E9E9E;
+}

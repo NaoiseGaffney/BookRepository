@@ -16,51 +16,51 @@
         <form action="{{ url_for('update_book', book_id=book.id) }}" method="POST" class="col s12">
             <div class="row">
                 <div class="input-field col s12">
-                    <i class="material-icons prefix">title</i>
-                    <input id="title" name="title" type="text" class="validate" maxlength="200" value="{{book.title}}">
-                    <label for="book_title">Book Title</label>
+                    <i class="material-icons prefix tooltipped" data-position="right" data-tooltip="Please enter the title of the book.">title</i>
+                    <input id="title" name="title" type="text" class="validate" maxlength="200" value="{{book.title}}" required>
+                    <label for="title">Book Title</label>
                 </div>
             </div>
             <div class="row">
                 <div class="input-field col s12">
-                    <i class="material-icons prefix">person</i>
-                    <input id="author" name="author" type="text" class="validate" maxlength="200" value="{{book.author}}">
-                    <label for="book_author">Book Author</label>
+                    <i class="material-icons prefix tooltipped" data-position="right" data-tooltip="Please enter the author's name.">person</i>
+                    <input id="author" name="author" type="text" class="validate" maxlength="200" value="{{book.author}}" required>
+                    <label for="author">Book Author</label>
                 </div>
             </div>
             <div class="row">
                 <div class="input-field col s12">
-                    <i class="material-icons prefix">event</i>
-                    <input id="year" name="year" type="number" class="validate" min="1455" max="2050" value="{{book.year}}">
-                    <label for="book_published">Book Published</label>
+                    <i class="material-icons prefix tooltipped" data-position="right" data-tooltip="Please enter the year the book was published.">event</i>
+                    <input id="year" name="year" type="number" class="validate" min="1455" max="2050" value="{{book.year}}" required>
+                    <label for="year">Book Published</label>
                 </div>
             </div>
             <div class="row">
                 <div class="input-field col s12">
-                    <i class="material-icons prefix">vpn_key</i>
-                    <input id="isbn" name="isbn" type="number" max="9789999999999" class="validate" value="{{book.ISBN}}">
-                    <label for="book_isbn">Book ISBN</label>
+                    <i class="material-icons prefix tooltipped" data-position="right" data-tooltip="Please enter the 10 or 13 digit ISBN. It is used for external book searches.">vpn_key</i>
+                    <input id="isbn" name="isbn" type="number" max="9789999999999" class="validate" value="{{book.ISBN}}" required>
+                    <label for="isbn">Book ISBN</label>
                 </div>
             </div>
             <div class="row">
                 <div class="input-field col s12">
-                    <i class="material-icons prefix">description</i>
-                    <textarea id="short_description" name="short_description" type="textarea" maxlength="1500" class="materialize-textarea">{{book.short_description}}</textarea>
-                    <label for="book_description">Book Description</label>
+                    <i class="material-icons prefix tooltipped" data-position="right" data-tooltip="Please enter a short description of the book.">description</i>
+                    <textarea id="short_description" name="short_description" maxlength="1500" class="materialize-textarea">{{book.short_description}}</textarea>
+                    <label for="short_description">Book Description</label>
                 </div>
             </div>
             <div class="row">
                 <div class="input-field col s12">
-                    <i class="material-icons prefix">comment</i>
-                    <textarea id="comments" name="comments" type="textarea" maxlength="3000" class="materialize-textarea">{{book.comments}}</textarea>
-                    <label for="book_comments">Book Comments</label>
+                    <i class="material-icons prefix tooltipped" data-position="right" data-tooltip="Please enter your thoughts, ideas, and comments about the book. Add additional comments over time.">comment</i>
+                    <textarea id="comments" name="comments" maxlength="3000" class="materialize-textarea">{{book.comments}}</textarea>
+                    <label for="comments">Book Comments</label>
                 </div>
             </div>
             <div class="row">
                 <div class="input-field col s12">
-                    <i class="material-icons prefix">poll</i>
-                    <input id="rating" name="rating" type="number" min="1" max="10" class="validate" value="{{book.rating}}">
-                    <label for="book_rating">Book Rating</label>
+                    <i class="material-icons prefix tooltipped" data-position="right" data-tooltip="Please rate the  book from 1 to 10 (10 being spectacular).">poll</i>
+                    <input id="rating" name="rating" type="number" min="1" max="10" class="validate" value="{{book.rating}}" required>
+                    <label for="rating">Book Rating</label>
                 </div>
             </div>
             <div class="row">
@@ -71,9 +71,8 @@
                         {% else %}
                         <input id="private_view" name="private_view" type="checkbox">
                         {% endif%}
-                        <span class="lever"></span>
-                        Private View
-                    </label>
+                        <span class="lever tooltipped" data-position="right" data-tooltip="Please toggle this switch if you want to keep this book hidden from public book searches."></span>
+                    </label>Private View
                 </div>
             </div>
             <div class="row">
