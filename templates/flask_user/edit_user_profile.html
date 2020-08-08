@@ -9,7 +9,7 @@
     {% else %}
     <a href="{{ url_for('home_page')}}">Home</a>
     {% endif %}
-    &nbsp; > &nbsp;<a href="{{ url_for('member_page') }}">Member's Page</a>&nbsp; > &nbsp;<a href="{{ url_for('user.edit_user_profile') }}">{%trans%}User Profile{%endtrans%}: {{ current_user.username or current_user.email }}</a>
+    &nbsp; > &nbsp;<a href="{{ url_for('member_page') }}">Member's Page</a>&nbsp; > &nbsp;<a href="{{ url_for('user.edit_user_profile') }}">{%trans%}User Profile{%endtrans%}: {{ current_user.username or current_user.email }}</a>&nbsp;<i class="material-icons prefix tooltipped blue-text text-darken-4" data-position="bottom" data-tooltip="Please enter your first (First Name) and last name (Last Name) in the fields below, and then click on the UPDATE button when you are done.">help</i>
 </h6>
 
 <form action="" method="POST" class="form" role="form">
@@ -17,9 +17,13 @@
     {% for field in form %}
         {% if not field.flags.hidden %}
             {% if field.type=='SubmitField' %}
+            <div class="button_top_padding">
                 {{ render_submit_field(field, tabindex=loop.index*10) }}
+            </div>
             {% else %}
+            <div class="button_top_padding">
                 {{ render_field(field, tabindex=loop.index*10) }}
+            </div>
             {% endif %}
         {% endif %}
     {% endfor %}

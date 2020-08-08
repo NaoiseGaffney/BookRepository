@@ -7,7 +7,9 @@
     {% else %}
     <a href="{{ url_for('home_page')}}">Home</a>
     {% endif %}
-    &nbsp; > &nbsp;<a href="{{ url_for('member_page') }}">Member's Page</a><a href="{{ url_for('add_book')}}" class="white-text btn waves-effect waves-light right teal lighten-1" id="add_book_button"><i class="material-icons white-text">import_contacts</i><i class="material-icons white-text">plus_one</i></a>
+    &nbsp; > &nbsp;<a href="{{ url_for('member_page') }}">Member's Page</a>&nbsp;<i class="material-icons prefix tooltipped blue-text text-darken-4" data-position="bottom" role="tooltip"
+        tabindex="10"
+        data-tooltip="To view a book, click on the 'book spine' or eye icon. To edit a book's details, click on the pencil icon for the book you want to edit. To delete a book,  click on the rubbish bin/dust-bin icon and answer yes or no to the question. Use the page numbers to navigate to a different page. To add a book, click on the 'Book+1' icon.">help</i><a href="{{ url_for('add_book')}}" class="white-text btn waves-effect waves-light right blue darken-4" id="add_book_button"><i class="material-icons white-text">import_contacts</i><i class="material-icons white-text">plus_one</i></a>
     </h6>
     {# Macro for creating navigation links #}
     {% macro render_navigation(pagination, endpoint) %}
@@ -17,7 +19,7 @@
         {% if page != pagination.page %}
         <a href="{{ url_for(endpoint, page=page) }}">{{ page }}</a>
         {% else %}
-        <span style="background-color: #FF4081;">{{ page }}</span>
+        <span style="background-color: #0D47A1; color: white; padding: 1px 5px;">{{ page }}</span>
         {% endif %}
         {% else %}
         <span class="ellipsis">…</span>
@@ -37,7 +39,7 @@
                     <a href="{{url_for('edit_book', book_id=book.id)}}"><i
                             class="material-icons blue-text text-darken-4">create</i></a>
                     <a class="modal-trigger" href="#delete_book_{{book.id}}"><i
-                            class="material-icons pink-text text-accent-2">delete_forever</i></a>
+                            class="material-icons pink-text text-darken-1">delete_forever</i></a>
                     <i class="material-icons teal-text text-lighten-1">visibility</i>
         
                     <div id="delete_book_{{book.id}}" class="modal">
@@ -47,8 +49,8 @@
                                 do this?</p>
                         </div>
                         <div class="modal-footer">
-                            <a href="{{url_for('delete_book', book_id=book.id)}}" class="modal-close btn orange">Yes</a>
-                            <a href="#!" class="modal-close btn orange">No</a>
+                            <a href="{{url_for('delete_book', book_id=book.id)}}" class="modal-close btn blue darken-4"><i class="material-icons white-text">delete_forever</i>&nbsp;Yes</a>
+                            <a href="#!" class="modal-close btn blue darken-4"><i class="material-icons white-text">pan_tool</i>&nbsp;No</a>
                         </div>
                     </div>
         

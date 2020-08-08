@@ -7,7 +7,7 @@
         {% else %}
         <a href="{{ url_for('home_page')}}">Home</a>
         {% endif %}
-        &nbsp; > &nbsp;<a href="{{ url_for('member_page') }}">Member's Page</a>&nbsp; > &nbsp;<a href="{{ url_for('add_book')}}">Add Book</a>
+        &nbsp; > &nbsp;<a href="{{ url_for('member_page') }}">Member's Page</a>&nbsp; > &nbsp;<a href="{{ url_for('add_book')}}">Add Book</a>&nbsp;<i class="material-icons prefix tooltipped blue-text text-darken-4" data-position="bottom" role="tooltip" tabindex="10" data-tooltip="Please hover over the icons on the left of each field for further help on what to do. All fields, except the Book Description, Book Comments and the Private View are mandatory to fill out.">help</i>
     </h6>
 
 
@@ -18,7 +18,7 @@
                 <div class="input-field col s12">
                     <i class="material-icons prefix tooltipped" data-position="right"
                         data-tooltip="Please enter the title of the book.">title</i>
-                    <input id="title" name="title" type="text" class="validate" maxlength="200" required>
+                    <input id="title" name="title" type="text" maxlength="200" required>
                     <label for="title">Book Title</label>
                 </div>
             </div>
@@ -26,7 +26,7 @@
                 <div class="input-field col s12">
                     <i class="material-icons prefix tooltipped" data-position="right"
                         data-tooltip="Please enter the author's name.">person</i>
-                    <input id="author" name="author" type="text" class="validate" maxlength="200" required>
+                    <input id="author" name="author" type="text" maxlength="200" required>
                     <label for="author">Book Author</label>
                 </div>
             </div>
@@ -34,7 +34,7 @@
                 <div class="input-field col s12">
                     <i class="material-icons prefix tooltipped" data-position="right"
                         data-tooltip="Please enter the year the book was published.">event</i>
-                    <input id="year" name="year" type="number" class="validate" min="1455" max="2050" required>
+                    <input id="year" name="year" type="number" min="1455" max="2050" required>
                     <label for="year">Book Published</label>
                 </div>
             </div>
@@ -42,7 +42,7 @@
                 <div class="input-field col s12">
                     <i class="material-icons prefix tooltipped" data-position="right"
                         data-tooltip="Please enter the 10 or 13 digit ISBN. It is used for external book searches.">vpn_key</i>
-                    <input id="isbn" name="isbn" type="number" max="9789999999999" class="validate" required>
+                    <input id="isbn" name="isbn" type="number" max="9789999999999" required>
                     <label for="isbn">Book ISBN</label>
                 </div>
             </div>
@@ -68,7 +68,7 @@
                 <div class="input-field col s12">
                     <i class="material-icons prefix tooltipped" data-position="right"
                         data-tooltip="Please rate the  book from 1 to 10 (10 being spectacular).">poll</i>
-                    <input id="rating" name="rating" type="number" min="1" max="10" class="validate" required>
+                    <input id="rating" name="rating" type="number" min="1" max="10" required>
                     <label for="rating">Book Rating</label>
                 </div>
             </div>

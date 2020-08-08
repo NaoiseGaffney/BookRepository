@@ -20,13 +20,10 @@ body {
     position: relative;
 }
 
-/* main {
-    flex: 1 0 auto;
-} */
-
 /* <a href... */
 a {
-    color: #d81b60;
+    /* color: #d81b60; */
+    color: #0D47A1;
 }
 
 /* Navigation Bar: fixed and MaterializeCSS styling. */
@@ -94,6 +91,7 @@ footer .right-align {
 .message-success {
     color: #FFFFFF;
     background-color: #26A69A;
+    /* Persian Green (#26A69A, teal lighten-1) */
 }
 
 .message-info {
@@ -108,12 +106,13 @@ footer .right-align {
 
 .message-danger {
     color: #FFFFFF;
-    background-color: #FF4081;
+    background-color: #d81b60;
+    /* Ruby, (#d81b60, pink darken-1) */
 }
 
 .help-block {
     color: #FFFFFF;
-    background-color: #FF4081;
+    background-color: #d81b60;
 }
 
 /* Book Spine background-image for the Member's Page */
@@ -156,12 +155,79 @@ div.switch {
     color: #9E9E9E;
 }
 
-/* Spacing between form field Material Icons and Label Text */
-.prefix ~ label {
-    margin-left: 1rem;
-}
-
 /* "Breathing space between the submit/register/login buttons and the forms */
 .button_top_padding {
     padding-top: 1rem;
+}
+
+.btn {
+    background-color: #0d47a1;
+}
+
+.btn:hover {
+    background-color: #0c4091;
+}
+
+/* Checkbox when selected is the same colour as the rest of the form elements */
+[type="checkbox"]:checked+span:not(.lever):before {
+    top: -4px;
+    left: -5px;
+    width: 12px;
+    height: 22px;
+    border-top: 2px solid transparent;
+    border-left: 2px solid transparent;
+    border-right: 2px solid #0d47a1;
+    border-bottom: 2px solid #0d47a1;
+    -webkit-transform: rotate(40deg);
+    transform: rotate(40deg);
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    -webkit-transform-origin: 100% 100%;
+    transform-origin: 100% 100%;
+}
+
+input:not([type]):focus:not([readonly]),
+input[type=text]:not(.browser-default):focus:not([readonly]),
+input[type=password]:not(.browser-default):focus:not([readonly]),
+input[type=email]:not(.browser-default):focus:not([readonly]),
+input[type=url]:not(.browser-default):focus:not([readonly]),
+input[type=time]:not(.browser-default):focus:not([readonly]),
+input[type=date]:not(.browser-default):focus:not([readonly]),
+input[type=datetime]:not(.browser-default):focus:not([readonly]),
+input[type=datetime-local]:not(.browser-default):focus:not([readonly]),
+input[type=tel]:not(.browser-default):focus:not([readonly]),
+input[type=number]:not(.browser-default):focus:not([readonly]),
+input[type=search]:not(.browser-default):focus:not([readonly]),
+textarea.materialize-textarea:focus:not([readonly]) {
+    border-bottom: 1px solid #0d47a1;
+    -webkit-box-shadow: 0 1px 0 0 #0d47a1;
+    box-shadow: 0 1px 0 0 #0d47a1;
+}
+
+input:not([type]):focus:not([readonly])+label,
+input[type=text]:not(.browser-default):focus:not([readonly])+label,
+input[type=password]:not(.browser-default):focus:not([readonly])+label,
+input[type=email]:not(.browser-default):focus:not([readonly])+label,
+input[type=url]:not(.browser-default):focus:not([readonly])+label,
+input[type=time]:not(.browser-default):focus:not([readonly])+label,
+input[type=date]:not(.browser-default):focus:not([readonly])+label,
+input[type=datetime]:not(.browser-default):focus:not([readonly])+label,
+input[type=datetime-local]:not(.browser-default):focus:not([readonly])+label,
+input[type=tel]:not(.browser-default):focus:not([readonly])+label,
+input[type=number]:not(.browser-default):focus:not([readonly])+label,
+input[type=search]:not(.browser-default):focus:not([readonly])+label,
+textarea.materialize-textarea:focus:not([readonly])+label {
+    color: #0d47a1;
+}
+
+.input-field .prefix.active {
+    color: #0d47a1;
+}
+
+.switch label input[type=checkbox]:checked+.lever {
+    background-color: #0c4091;
+}
+
+.switch label input[type=checkbox]:checked+.lever:after {
+    background-color: #0d47a1;
 }
