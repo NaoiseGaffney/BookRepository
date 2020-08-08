@@ -7,11 +7,11 @@
     {% else %}
     <a href="{{ url_for('home_page')}}">Home</a>
     {% endif %}
-    &nbsp; > &nbsp;<a href="{{ url_for('member_page') }}">Member's Page</a><button id="add_book_button" class="btn waves-effect waves-light right teal lighten-1"><a href="{{ url_for('add_book')}}" class="white-text"><i class="material-icons white-text">import_contacts</i><i class="material-icons white-text">plus_one</i></button></a>
-
+    &nbsp; > &nbsp;<a href="{{ url_for('member_page') }}">Member's Page</a><a href="{{ url_for('add_book')}}" class="white-text btn waves-effect waves-light right teal lighten-1" id="add_book_button"><i class="material-icons white-text">import_contacts</i><i class="material-icons white-text">plus_one</i></a>
+    </h6>
     {# Macro for creating navigation links #}
     {% macro render_navigation(pagination, endpoint) %}
-    <div class="pagination">
+    <div class="pagination">Page #:
         {% for page in pagination.iter_pages() %}
         {% if page %}
         {% if page != pagination.page %}
@@ -27,7 +27,6 @@
     {% endmacro %}
     
     {{ render_navigation(books_pagination, 'member_page') }}
-    </h6>
 
     <ul class="collapsible popout">
         {% if books_pagination %}

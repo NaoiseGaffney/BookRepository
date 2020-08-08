@@ -126,7 +126,7 @@ footer .right-align {
     visibility: hidden;
     width: 160px;
     /* top: 100%; */
-    left: 80%;
+    left: 20%;
     /* margin-left: -20px; */
     margin-left: 40px;
     background-color: #26A69A;
@@ -169,4 +169,11 @@ div.collapsible-header div h6 {
 #remember_me_label {
     font-size: 0.8rem;
     color: #9E9E9E;
+}
+
+/* Pagination styling to suit <H6> above on the 'members.html' page */
+.pagination {
+    font-size: 1.15rem;
+    line-height: 110%;
+    margin-bottom: 1rem;
 }

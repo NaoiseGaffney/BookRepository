@@ -124,6 +124,7 @@ def home_page():
 @app.route("/members/<int:page>")
 @login_required    # User must be authenticated
 def member_page(page=1):
+    # The "R" in CRUD
     # total_num_users = User.objects.count()
     # total_num_books = Book.objects.count()
     # print("\nTotal Number of Users:", total_num_users)
@@ -180,6 +181,7 @@ def member_page(page=1):
 @app.route("/add_book")
 @login_required
 def add_book():
+    # Preparing for the "C" in CRUD
     app.logger.info(f"{current_user.username} is about to add a book.")
     return render_template("add_book.html")
 
@@ -187,24 +189,27 @@ def add_book():
 @app.route("/save_book", methods=["POST"])
 @login_required
 def save_book():
+    # The "C" in CRUD
     book = Book(
-        title = request.form.get("title"),
-        author = request.form.get("author"),
-        year = request.form.get("year"),
-        ISBN = request.form.get("isbn"),
+        title=request.form.get("title"),
+        author=request.form.get("author"),
+        year=request.form.get("year"),
+        ISBN=request.form.get("isbn"),
         user=current_user.username,
-        short_description = request.form.get("short_description"),
-        comments = request.form.get("comments"),
-        rating = request.form.get("rating"),
-        private_view = request.form.get("private_view")
+        short_description=request.form.get("short_description"),
+        comments=request.form.get("comments"),
+        rating=request.form.get("rating"),
+        private_view=request.form.get("private_view")
     )
 
     try:
         book.save()
         flash(f"The book {book.title} was saved!", "success")
-        app.logger.info(f"{book.title} with id {book.id} created by {current_user.username}.")
+        app.logger.info(
+            f"{book.title} with id {book.id} created by {current_user.username}.")
     except:
-        app.logger.error(f"{book.title} with id {book.id} not created by {current_user.username}.")
+        app.logger.error(
+            f"{book.title} with id {book.id} not created by {current_user.username}.")
         flash(f"The book {book.title} was NOT saved!", "danger")
     return redirect(url_for("member_page"))
 
@@ -212,14 +217,17 @@ def save_book():
 @app.route("/edit_book/<book_id>")
 @login_required
 def edit_book(book_id):
+    # Preparing for the "U" in CRUD
     book = Book.objects.get(id=book_id)
-    app.logger.info(f"{book.title} with id {book.id} to be edited by {current_user.username}.")
+    app.logger.info(
+        f"{book.title} with id {book.id} to be edited by {current_user.username}.")
     return render_template("edit_book.html", book=book)
 
 
 @app.route("/update_book/<book_id>", methods=["POST"])
 @login_required
 def update_book(book_id):
+    # The "U" in CRUD
     book = Book.objects.get(id=book_id)
     fields = {
         "title": request.form.get("title"),
@@ -234,9 +242,11 @@ def update_book(book_id):
     try:
         book.update(**fields)
         flash(f"The book {book.title} is updated!", "success")
-        app.logger.info(f"{book.title} with id {book.id} edited by {current_user.username}.")
+        app.logger.info(
+            f"{book.title} with id {book.id} edited by {current_user.username}.")
     except:
-        app.logger.error(f"{book.title} with id {book.id} edited by {current_user.username}.")
+        app.logger.error(
+            f"{book.title} with id {book.id} edited by {current_user.username}.")
         flash(f"The book {book.title} was NOT updated!", "danger")
     return redirect(url_for("member_page"))
 
@@ -244,13 +254,16 @@ def update_book(book_id):
 @app.route("/delete_book/<book_id>")
 @login_required
 def delete_book(book_id):
+    # The "D" in CRUD
     book = Book.objects.get(id=book_id)
     try:
         book.delete()
         flash(f"The book {book.title} is deleted!", "success")
-        app.logger.info(f"{book.title} with id {book.id} deleted by {current_user.username}.")
+        app.logger.info(
+            f"{book.title} with id {book.id} deleted by {current_user.username}.")
     except:
-        app.logger.error(f"{book.title} with id {book.id} NOT deleted by {current_user.username}.")
+        app.logger.error(
+            f"{book.title} with id {book.id} NOT deleted by {current_user.username}.")
         flash(f"The book {book.title} was NOT deleted!", "danger")
     return redirect(url_for("member_page"))
 

@@ -1,13 +1,15 @@
 {% extends "flask_user_layout.html" %}
 {% block content %}
 <div class="container">
-    {% if call_or_get(current_user.is_authenticated) %}
-    <h6>Home&nbsp; > &nbsp;<a href="{{ url_for('member_page') }}">Member's Page</a>&nbsp; > &nbsp;
-        <a href="{{ url_for('add_book')}}">Add Book</a></h6>
-    {% else %}
-    <h6><a href="{{ url_for('home_page')}}">Home</a>&nbsp; > &nbsp;<a href="{{ url_for('member_page') }}">Member's
-            Page</a>&nbsp; > &nbsp;<a href="{{ url_for('add_book')}}">Add Book</a></h6>
-    {% endif %}
+    <h6>
+        {% if call_or_get(current_user.is_authenticated) %}
+        Home
+        {% else %}
+        <a href="{{ url_for('home_page')}}">Home</a>
+        {% endif %}
+        &nbsp; > &nbsp;<a href="{{ url_for('member_page') }}">Member's Page</a>&nbsp; > &nbsp;<a href="{{ url_for('add_book')}}">Add Book</a>
+    </h6>
+
 
 
     <div class="row">
@@ -15,35 +17,35 @@
             <div class="row">
                 <div class="input-field col s12">
                     <i class="material-icons prefix">title</i>
-                    <input id="title" name="title" type="text" class="validate" maxlength="200">
+                    <input id="title" name="title" type="text" class="validate" maxlength="200" required>
                     <label for="title">Book Title</label>
                 </div>
             </div>
             <div class="row">
                 <div class="input-field col s12">
                     <i class="material-icons prefix">person</i>
-                    <input id="author" name="author" type="text" class="validate" maxlength="200">
+                    <input id="author" name="author" type="text" class="validate" maxlength="200" required>
                     <label for="author">Book Author</label>
                 </div>
             </div>
             <div class="row">
                 <div class="input-field col s12">
                     <i class="material-icons prefix">event</i>
-                    <input id="year" name="year" type="number" class="validate" min="1455" max="2050">
+                    <input id="year" name="year" type="number" class="validate" min="1455" max="2050" required>
                     <label for="year">Book Published</label>
                 </div>
             </div>
             <div class="row">
                 <div class="input-field col s12">
                     <i class="material-icons prefix">vpn_key</i>
-                    <input id="isbn" name="isbn" type="number" max="9789999999999" class="validate">
+                    <input id="isbn" name="isbn" type="number" max="9789999999999" class="validate" required>
                     <label for="isbn">Book ISBN</label>
                 </div>
             </div>
             <div class="row">
                 <div class="input-field col s12">
                     <i class="material-icons prefix">description</i>
-                    <textarea id="short_description" name="short_description" type="textarea" maxlength="1500"
+                    <textarea id="short_description" name="short_description" placeholder="Please enter a short description of the book." maxlength="1500"
                         class="materialize-textarea"></textarea>
                     <label for="short_description">Book Description</label>
                 </div>
@@ -51,7 +53,7 @@
             <div class="row">
                 <div class="input-field col s12">
                     <i class="material-icons prefix">comment</i>
-                    <textarea id="comments" name="comments" type="textarea" maxlength="3000"
+                    <textarea id="comments" name="comments" placeholder="Please enter your comments, ideas, and thoughts about the book." maxlength="3000"
                         class="materialize-textarea"></textarea>
                     <label for="comments">Book Comments</label>
                 </div>
@@ -59,7 +61,7 @@
             <div class="row">
                 <div class="input-field col s12">
                     <i class="material-icons prefix">poll</i>
-                    <input id="rating" name="rating" type="number" min="1" max="10" class="validate">
+                    <input id="rating" name="rating" type="number" min="1" max="10" class="validate" required>
                     <label for="rating">Book Rating</label>
                 </div>
             </div>

@@ -1,13 +1,15 @@
 {% extends "flask_user_layout.html" %}
 {% block content %}
 <div class="container">
-    {% if call_or_get(current_user.is_authenticated) %}
-    <h6>Home&nbsp; > &nbsp;<a href="{{ url_for('member_page') }}">Member's Page</a>&nbsp; > &nbsp;
-        <a href="{{ url_for('edit_book', book_id=book.id ) }}">Edit Book</a></h6>
-    {% else %}
-    <h6><a href="{{ url_for('home_page')}}">Home</a>&nbsp; > &nbsp;<a href="{{ url_for('member_page') }}">Member's
-            Page</a>&nbsp; > &nbsp;<a href="{{ url_for('edit_book', book_id=book.id ) }}">Edit Book</a></h6>
-    {% endif %}
+    <h6>
+        {% if call_or_get(current_user.is_authenticated) %}
+        Home
+        {% else %}
+        <a href="{{ url_for('home_page')}}">Home</a>
+        {% endif %}
+        &nbsp; > &nbsp;<a href="{{ url_for('member_page') }}">Member's Page</a>&nbsp; > &nbsp;<a
+            href="{{ url_for('edit_book', book_id=book.id ) }}">Edit Book</a>
+    </h6>
 
 
     <div class="row">
