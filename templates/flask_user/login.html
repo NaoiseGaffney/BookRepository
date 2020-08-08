@@ -13,11 +13,8 @@
         {# Label on left, "New here? Register." on right #}
         <div class="row">
             <div class="col-xs-6">
-                <div class="tooltip">
+                <i class="material-icons prefix tooltipped" data-position="right" data-tooltip="Please enter your username or e-mail, the same one you used when you registered.">person</i>
                     <label for="{{ field.id }}" class="control-label">{{ field.label.text }}</label>
-                    <span class="tooltiptext"> Please enter your username, the same one you used when you
-                        registered.</span>
-                </div>
             </div>
             <div class="col-xs-6 text-right">
                 {% if user_manager.USER_ENABLE_REGISTER and not user_manager.USER_REQUIRE_INVITATION %}
@@ -40,11 +37,8 @@
         {# Label on left, "Forgot your Password?" on right #}
         <div class="row">
             <div class="col-xs-6">
-                <div class="tooltip">
+                <i class="material-icons prefix tooltipped" data-position="right" data-tooltip="Please enter your password, the same one you used when you registered.">vpn_key</i>
                     <label for="{{ field.id }}" class="control-label">{{ field.label.text }}</label>
-                    <span class="tooltiptext">Please enter your password, the same one you used when you
-                        registered.</span>
-                </div>
             </div>
             <div class="col-xs-6 text-right">
                 {% if user_manager.USER_ENABLE_FORGOT_PASSWORD %}
@@ -63,16 +57,15 @@
 
     {# Remember me #}
     {% if user_manager.USER_ENABLE_REMEMBER_ME %}
-    <div class="tooltip">
-        <div id="remember_me_label">Remember Me</div>
-        <label>
-            <input id="remember_me" name="remember_me" tabindex="130" type="checkbox" /><span></span>
+        
+        <i class="material-icons prefix tooltipped black-text" data-position="right" data-tooltip="Please click the checkbox to the right if you want to remain logged in.">check_box</i>
+        <label id="remember_me_label">Remember Me&nbsp;
+        <input id="remember_me" name="remember_me" tabindex="130" type="checkbox" /><span></span>
         </label>
-        <span class="tooltiptext">Please click the checkbox to remain logged in.</span>
-    </div>
+        
     {% endif %}
 
-    <div>
+    <div class="button_top_padding">
         {# Submit button #}
         {{ render_submit_field(form.submit, tabindex=180) }}
     </div>

@@ -182,3 +182,13 @@ div.collapsible-header div h6 {
 div.switch {
     color: #9E9E9E;
 }
+
+/* Spacing between form field Material Icons and Label Text */
+.prefix ~ label {
+    margin-left: 1rem;
+}
+
+/* "Breathing space between the submit/register/login buttons and the forms */
+.button_top_padding {
+    padding-top: 1rem;
+}

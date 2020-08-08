@@ -12,10 +12,9 @@
     <div class="form-group {% if field.errors %}has-error{% endif %}">
         {# Label on left, "Already registered? Sign in." on right #}
         <div class="row">
-            <div class="col-xs-6 tooltip">
+            <div class="col-xs-6">
+                <i class="material-icons prefix tooltipped" data-position="right" data-tooltip="Please enter your username using 250 characters or less. Letters, digits and @ . + - _ only.">person</i>
                 <label for="{{ field.id }}" class="control-label">{{ field.label.text }}</label>
-                <span class="tooltiptext">Please enter your username using 150 characters or less. Letters, digits and @
-                    . + - _ only.</span>
             </div>
             <div class="col-xs-6 text-right">
                 {% if user_manager.USER_ENABLE_REGISTER %}
@@ -35,9 +34,9 @@
     {% if user_manager.USER_ENABLE_EMAIL and user_manager.USER_ENABLE_USERNAME %}
     <div class="form-group {% if field.errors %}has-error{% endif %}">
         <div>
-            <div class="col-xs-6 tooltip">
+            <div class="col-xs-6">
+                <i class="material-icons prefix tooltipped" data-position="right" data-tooltip="Please enter your e-mail address, for example 'name@domain.com'.">email</i>
                 <label for="email" class="control-label">Email</label>
-                <span class="tooltiptext">Please enter your e-mail address, for example 'name@domain.com'.</span>
             </div>
             <input class="form-control" id="email" name="email" required="" tabindex="220" type="text" value="">
         </div>
@@ -45,9 +44,9 @@
     {% endif %}
     <div class="form-group {% if field.errors %}has-error{% endif %}">
         <div>
-            <div class="col-xs-6 tooltip">
+            <div class="col-xs-6">
+                <i class="material-icons prefix tooltipped" data-position="right" data-tooltip="Please enter a password longer than 8 characters, using a mixture of numbers and letters, and ideally one or more special characters.">vpn_key</i>
                 <label for="password" class="control-label">Password</label>
-                <span class="tooltiptext">Please enter a password longer than 8 characters, using a mixture of numbers and letters, and ideally one or more special characters.</span>
             </div>
             <input class="form-control" id="password" name="password" required="" tabindex="230" type="password" value="">
         </div>
@@ -57,16 +56,18 @@
     {% if user_manager.USER_REQUIRE_RETYPE_PASSWORD %}
     <div class="form-group {% if field.errors %}has-error{% endif %}">
         <div>
-            <div class="col-xs-6 tooltip">
+            <div class="col-xs-6">
+                <i class="material-icons prefix tooltipped" data-position="right" data-tooltip="Password confirmation: Please enter the same password as again for verification.">vpn_key</i>
                 <label for="retype_password" class="control-label">Retype Password</label>
-                <span class="tooltiptext">Password confirmation: Please enter the same password as again for verification.</span>
             </div>
             <input class="form-control" id="retype_password" name="retype_password" tabindex="240" type="password" value="">
         </div>
     </div>
     {% endif %}
 
+    <div class="button_top_padding">
     {{ render_submit_field(form.submit, tabindex=280) }}
+    </div>
 </form>
 
 {% endblock %}
