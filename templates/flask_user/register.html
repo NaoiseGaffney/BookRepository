@@ -4,7 +4,7 @@
 {% from "flask_user/_macros.html" import render_field, render_submit_field %}
 <h6><a href="{{ url_for('home_page')}}">Home</a>&nbsp; > &nbsp;<a href="{{ url_for('user.register') }}">{%trans%}Register{%endtrans%}</a></h6>
 
-<form action="" method="POST" novalidate formnovalidate class="form" role="form">
+<form method="POST" class="form">
     {{ form.hidden_tag() }}
 
     {# Username or Email #}
@@ -12,32 +12,58 @@
     <div class="form-group {% if field.errors %}has-error{% endif %}">
         {# Label on left, "Already registered? Sign in." on right #}
         <div class="row">
-            <div class="col-xs-6">
+            <div class="col-xs-6 tooltip">
                 <label for="{{ field.id }}" class="control-label">{{ field.label.text }}</label>
+                <span class="tooltiptext">Please enter your username using 150 characters or less. Letters, digits and @
+                    . + - _ only.</span>
             </div>
             <div class="col-xs-6 text-right">
                 {% if user_manager.USER_ENABLE_REGISTER %}
-                    <a href="{{ url_for('user.login') }}" tabindex='290'>
-                        {%trans%}Already registered? Sign in.{%endtrans%}</a>
+                <a href="{{ url_for('user.login') }}" tabindex='290'>
+                    {%trans%}Already registered? Sign in.{%endtrans%}</a>
                 {% endif %}
             </div>
         </div>
         {{ field(class_='form-control', tabindex=210) }}
         {% if field.errors %}
-            {% for e in field.errors %}
-                <p class="help-block">{{ e }}</p>
-            {% endfor %}
+        {% for e in field.errors %}
+        <p class="help-block">{{ e }}</p>
+        {% endfor %}
         {% endif %}
     </div>
 
     {% if user_manager.USER_ENABLE_EMAIL and user_manager.USER_ENABLE_USERNAME %}
-        {{ render_field(form.email, tabindex=220) }}
+    <div class="form-group {% if field.errors %}has-error{% endif %}">
+        <div>
+            <div class="col-xs-6 tooltip">
+                <label for="email" class="control-label">Email</label>
+                <span class="tooltiptext">Please enter your e-mail address, for example 'name@domain.com'.</span>
+            </div>
+            <input class="form-control" id="email" name="email" required="" tabindex="220" type="text" value="">
+        </div>
+    </div>
     {% endif %}
+    <div class="form-group {% if field.errors %}has-error{% endif %}">
+        <div>
+            <div class="col-xs-6 tooltip">
+                <label for="password" class="control-label">Password</label>
+                <span class="tooltiptext">Please enter a password longer than 8 characters, using a mixture of numbers and letters, and ideally one or more special characters.</span>
+            </div>
+            <input class="form-control" id="password" name="password" required="" tabindex="230" type="password" value="">
+        </div>
+    </div>
 
-    {{ render_field(form.password, tabindex=230) }}
 
     {% if user_manager.USER_REQUIRE_RETYPE_PASSWORD %}
-        {{ render_field(form.retype_password, tabindex=240) }}
+    <div class="form-group {% if field.errors %}has-error{% endif %}">
+        <div>
+            <div class="col-xs-6 tooltip">
+                <label for="retype_password" class="control-label">Retype Password</label>
+                <span class="tooltiptext">Password confirmation: Please enter the same password as again for verification.</span>
+            </div>
+            <input class="form-control" id="retype_password" name="retype_password" tabindex="240" type="password" value="">
+        </div>
+    </div>
     {% endif %}
 
     {{ render_submit_field(form.submit, tabindex=280) }}
