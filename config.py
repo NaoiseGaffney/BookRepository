@@ -10,8 +10,9 @@ load_dotenv(dotenv_path=env_path)
 class ConfigClass(object):
     """ Flask application config """
     # Flask settings
-    SECRET_KEY = "A not-so-secret test key for Heroku."
+    SECRET_KEY = os.environ.get("SECRET_KEY")
     # SECRET_KEY = os.urandom(128).hex()
+    print(SECRET_KEY)
 
     # Flask-MongoEngine settings
     MONGO_DB_URL = os.environ.get("MONGO_URI_BR")
