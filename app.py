@@ -271,7 +271,21 @@ def delete_book(book_id):
 # export PRODUCTION=ON | OFF in TEST
 # PRODUCTION App -> Settings -> Reveal Config Vars -> KEY: PRODUCTION, VALUE: ON
 if __name__ == "__main__":
-    if os.environ.get("PRODUCTION") == "ON":
+    if not os.environ.get("MONGO_URI_BR"):
+        raise ValueError("MongoDB Uniform Resource Identifier is missing, which means that we can't access the database.")
+    elif not os.environ.get("ADMIN_PASSWORD"):
+        raise ValueError("Admin Password is not set which means that the Admin user can not be created.")
+    elif not os.environ.get("MAIL_SERVER"):
+        raise ValueError("Mail Server Configuration error: MAIL_SERVER is not defined.")
+    elif not os.environ.get("MAIL_PORT"):
+        raise ValueError("Mail Server Configuration error: MAIL_PORT is not defined.")
+    elif not os.environ.get("MAIL_USERNAME"):
+        raise ValueError("Mail Server Configuration error: MAIL_USERNAME is not defined.")
+    elif not os.environ.get("MAIL_PASSWORD"):
+        raise ValueError("Mail Server Configuration error: MAIL_PASSWORD is not defined.")
+    elif not os.environ.get("USER_EMAIL_SENDER_EMAIL"):
+        raise ValueError("Mail Server Configuration error: USER_EMAIL_SENDER_EMAIL is not defined.")
+    elif os.environ.get("PRODUCTION") == "ON":
         app.run(host=os.environ.get("IP"),
                 port=os.environ.get("PORT"), debug=False)
     else:

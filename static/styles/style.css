@@ -168,6 +168,7 @@ div.switch {
     background-color: #0c4091;
 }
 
+/* Taken from 'materialize.css' (1.0.0) to style the input fields to match the Book Repository UX Design */
 /* Checkbox when selected is the same colour as the rest of the form elements */
 [type="checkbox"]:checked+span:not(.lever):before {
     top: -4px;
