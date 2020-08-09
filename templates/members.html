@@ -9,7 +9,11 @@
     {% endif %}
     &nbsp; > &nbsp;<a href="{{ url_for('member_page') }}">Member's Page</a>&nbsp;<i class="material-icons prefix tooltipped blue-text text-darken-4" data-position="bottom" role="tooltip"
         tabindex="10"
-        data-tooltip="To view a book, click on the 'book spine' or eye icon. To edit a book's details, click on the pencil icon for the book you want to edit. To delete a book,  click on the rubbish bin/dust-bin icon and answer yes or no to the question. Use the page numbers to navigate to a different page. To add a book, click on the 'Book+1' icon.">help</i><a href="{{ url_for('add_book')}}" class="white-text btn waves-effect waves-light right blue darken-4" id="add_book_button"><i class="material-icons white-text">import_contacts</i><i class="material-icons white-text">plus_one</i></a>
+        data-tooltip="<p class='left-align'>To view a book, click on the 'book spine' or eye icon.</p><br>
+        <p class='left-align'>To edit a book's details, click on the pencil icon for the book you want to edit.</p><br>
+        <p class='left-align'>To delete a book, click on the rubbish bin/dust-bin icon and answer yes or no to the question.</p><br>
+        <p class='left-align'>Use the page numbers to navigate to a different page.</p><br>
+        <p class='left-align'>To add a book, click on the 'Book+1' icon.</p>">help</i><a href="{{ url_for('add_book')}}" class="white-text btn waves-effect waves-light right blue darken-4" id="add_book_button"><i class="material-icons white-text">import_contacts</i><i class="material-icons white-text">plus_one</i></a>
     </h6>
     {# Macro for creating navigation links #}
     {% macro render_navigation(pagination, endpoint) %}

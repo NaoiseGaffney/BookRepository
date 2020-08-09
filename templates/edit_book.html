@@ -8,7 +8,8 @@
         <a href="{{ url_for('home_page')}}">Home</a>
         {% endif %}
         &nbsp; > &nbsp;<a href="{{ url_for('member_page') }}">Member's Page</a>&nbsp; > &nbsp;<a
-            href="{{ url_for('edit_book', book_id=book.id ) }}">Edit Book</a>&nbsp;<i class="material-icons prefix tooltipped blue-text text-darken-4" data-position="bottom" role="tooltip" tabindex="10" data-tooltip="Please hover over the icons on the left of each field for further help on what to do. All fields, except the Book Description, Book Comments and the Private View are mandatory to fill out.">help</i>
+            href="{{ url_for('edit_book', book_id=book.id ) }}">Edit Book</a>&nbsp;<i class="material-icons prefix tooltipped blue-text text-darken-4" data-position="bottom" role="tooltip" tabindex="10" data-tooltip="<p class='left-align'>Please hover over the icons on the left of each field for further help on what to do.</p><br>
+            <p class='left-align'>All fields, except the Book Description, Book Comments and the Private View are mandatory to fill out.</p>">help</i>
     </h6>
 
 
