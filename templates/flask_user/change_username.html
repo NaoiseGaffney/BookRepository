@@ -2,13 +2,22 @@
 
 {% block content %}
 {% from "flask_user/_macros.html" import render_field, render_submit_field %}
-<h1>{%trans%}Change username{%endtrans%}</h1>
+<h6>
+    {% if call_or_get(current_user.is_authenticated) %}
+    Home
+    {% else %}
+    <a href="{{ url_for('home_page')}}">Home</a>
+    {% endif %}
+    &nbsp; > &nbsp;<a href="{{ url_for('member_page') }}">Member's Page</a>&nbsp; > &nbsp;<a href="{{ url_for('user.edit_user_profile') }}">{%trans%}User Profile{%endtrans%}</a>&nbsp; > &nbsp;<a href="{{ url_for('user.change_username') }}">{%trans%}Change Username{%endtrans%}: {{ current_user.username or current_user.email }}</a>&nbsp;<i class="material-icons prefix tooltipped blue-text text-darken-4" data-position="bottom" data-tooltip="Please enter your new username (New Username), using 250 characters or less with letters, digits and @ . + - _ only. Then enter your current (Old Password) password and click on the CHANGE USERNAME button.">help</i>
+</h6>
 
 <form action="" method="POST" class="form" role="form">
     {{ form.hidden_tag() }}
     {{ render_field(form.new_username, tabindex=10) }}
     {{ render_field(form.old_password, tabindex=20) }}
+    <div class="button_top_padding">
     {{ render_submit_field(form.submit, tabindex=90) }}
+    </div>
 </form>
 
 {% endblock %}

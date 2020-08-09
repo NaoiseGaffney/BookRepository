@@ -1,11 +1,90 @@
 {% extends "flask_user_layout.html" %}
 {% block content %}
 <div class="container">
-<h6><a href="{{ url_for('home_page')}}">Home</a>&nbsp; > &nbsp;<a href="{{ url_for('member_page') }}">Member's Page</a> - Welcome {{current_user.username}}! Your ID is: {{current_user.id}}</h6>
-<p><a href="{{ url_for('user.register') }}">Register</a></p>
-<p><a href="{{ url_for('user.login') }}">Sign In</a></p>
-<p><a href="{{ url_for('home_page') }}">Home Page</a> (accessible to anyone)</p>
-<p><a href="{{ url_for('member_page') }}">Member's Page</a> (login required)</p>
-<p><a href="{{ url_for('user.logout') }}">Sign Out</a></p>
+    <h6>
+    {% if call_or_get(current_user.is_authenticated) %}
+    Home
+    {% else %}
+    <a href="{{ url_for('home_page')}}">Home</a>
+    {% endif %}
+    &nbsp; > &nbsp;<a href="{{ url_for('member_page') }}">Member's Page</a>&nbsp;<i class="material-icons prefix tooltipped blue-text text-darken-4" data-position="bottom" role="tooltip"
+        tabindex="10"
+        data-tooltip="To view a book, click on the 'book spine' or eye icon. To edit a book's details, click on the pencil icon for the book you want to edit. To delete a book,  click on the rubbish bin/dust-bin icon and answer yes or no to the question. Use the page numbers to navigate to a different page. To add a book, click on the 'Book+1' icon.">help</i><a href="{{ url_for('add_book')}}" class="white-text btn waves-effect waves-light right blue darken-4" id="add_book_button"><i class="material-icons white-text">import_contacts</i><i class="material-icons white-text">plus_one</i></a>
+    </h6>
+    {# Macro for creating navigation links #}
+    {% macro render_navigation(pagination, endpoint) %}
+    <div class="pagination">Page #:
+        {% for page in pagination.iter_pages() %}
+        {% if page %}
+        {% if page != pagination.page %}
+        <a href="{{ url_for(endpoint, page=page) }}">{{ page }}</a>
+        {% else %}
+        <span style="background-color: #0D47A1; color: white; padding: 1px 5px;">{{ page }}</span>
+        {% endif %}
+        {% else %}
+        <span class="ellipsis">…</span>
+        {% endif %}
+        {% endfor %}
+    </div>
+    {% endmacro %}
+    
+    {{ render_navigation(books_pagination, 'member_page') }}
+
+    <ul class="collapsible popout">
+        {% if books_pagination %}
+        {% for book in books_pagination.items %}
+        <li>
+            <div class="collapsible-header">
+                <div class="book_spine">
+                    <a href="{{url_for('edit_book', book_id=book.id)}}"><i
+                            class="material-icons blue-text text-darken-4">create</i></a>
+                    <a class="modal-trigger" href="#delete_book_{{book.id}}"><i
+                            class="material-icons pink-text text-darken-1">delete_forever</i></a>
+                    <i class="material-icons teal-text text-lighten-1">visibility</i>
+        
+                    <div id="delete_book_{{book.id}}" class="modal">
+                        <div class="modal-content">
+                            <h6>Deleting Book: {{book.title}}, by {{book.author}}</h6>
+                            <p>This action will permanently delete this book from your Book Repository. Are you sure you wish to
+                                do this?</p>
+                        </div>
+                        <div class="modal-footer">
+                            <a href="{{url_for('delete_book', book_id=book.id)}}" class="modal-close btn blue darken-4"><i class="material-icons white-text">delete_forever</i>&nbsp;Yes</a>
+                            <a href="#!" class="modal-close btn blue darken-4"><i class="material-icons white-text">pan_tool</i>&nbsp;No</a>
+                        </div>
+                    </div>
+        
+                </div>
+                <div>
+                    <h6>{{book.title}}, by {{book.author}}</h6>
+                </div>
+            </div>
+            <div class="collapsible-body">
+                <p>Published: {{book.year}}, ISBN: {{book.ISBN}}</p>
+                <p>Description: {{book.short_description}}</p>
+                <p>Comments: {{book.comments}}</p>
+                {% if book.rating > 7 %}
+                <p>Rating: <span class="green-text book_spine">{{ book.rating }}</span></p>
+                {% elif book.rating > 5 %}
+                <p>Rating: <span class="orange-text book_spine">{{ book.rating }}</span></p>
+                {% else %}
+                <p>Rating: <span class="red-text book_spine">{{ book.rating }}</span></p>
+                {% endif %}
+                {% if book.private_view %}
+                <p>Private View: Book is HIDDEN from Public Searches.<i class="material-icons pink-text text-accent-2">lock</i>
+                </p>
+                {% else %}
+                <p>Private View: Book is SEEN in Public Searches.<i
+                        class="material-icons teal-text text-lighten-1">lock_open</i></p>
+                {% endif %}
+            </div>
+        </li>
+
+        {% endfor %}
+        {% endif %}
+    </ul>
+
+    
+
 </div>
 {% endblock %}

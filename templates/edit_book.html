@@ -1,0 +1,86 @@
+{% extends "flask_user_layout.html" %}
+{% block content %}
+<div class="container">
+    <h6>
+        {% if call_or_get(current_user.is_authenticated) %}
+        Home
+        {% else %}
+        <a href="{{ url_for('home_page')}}">Home</a>
+        {% endif %}
+        &nbsp; > &nbsp;<a href="{{ url_for('member_page') }}">Member's Page</a>&nbsp; > &nbsp;<a
+            href="{{ url_for('edit_book', book_id=book.id ) }}">Edit Book</a>&nbsp;<i class="material-icons prefix tooltipped blue-text text-darken-4" data-position="bottom" role="tooltip" tabindex="10" data-tooltip="Please hover over the icons on the left of each field for further help on what to do. All fields, except the Book Description, Book Comments and the Private View are mandatory to fill out.">help</i>
+    </h6>
+
+
+    <div class="row">
+        <form action="{{ url_for('update_book', book_id=book.id) }}" method="POST" class="col s12">
+            <div class="row">
+                <div class="input-field col s12">
+                    <i class="material-icons prefix tooltipped" data-position="right" data-tooltip="Please enter the title of the book.">title</i>
+                    <input id="title" name="title" type="text" maxlength="200" value="{{book.title}}" required>
+                    <label for="title">Book Title</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field col s12">
+                    <i class="material-icons prefix tooltipped" data-position="right" data-tooltip="Please enter the author's name.">person</i>
+                    <input id="author" name="author" type="text" maxlength="200" value="{{book.author}}" required>
+                    <label for="author">Book Author</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field col s12">
+                    <i class="material-icons prefix tooltipped" data-position="right" data-tooltip="Please enter the year the book was published.">event</i>
+                    <input id="year" name="year" type="number" min="1455" max="2050" value="{{book.year}}" required>
+                    <label for="year">Book Published</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field col s12">
+                    <i class="material-icons prefix tooltipped" data-position="right" data-tooltip="Please enter the 10 or 13 digit ISBN. It is used for external book searches.">vpn_key</i>
+                    <input id="isbn" name="isbn" type="number" max="9789999999999" value="{{book.ISBN}}" required>
+                    <label for="isbn">Book ISBN</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field col s12">
+                    <i class="material-icons prefix tooltipped" data-position="right" data-tooltip="Please enter a short description of the book.">description</i>
+                    <textarea id="short_description" name="short_description" maxlength="1500" class="materialize-textarea">{{book.short_description}}</textarea>
+                    <label for="short_description">Book Description</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field col s12">
+                    <i class="material-icons prefix tooltipped" data-position="right" data-tooltip="Please enter your thoughts, ideas, and comments about the book. Add additional comments over time.">comment</i>
+                    <textarea id="comments" name="comments" maxlength="3000" class="materialize-textarea">{{book.comments}}</textarea>
+                    <label for="comments">Book Comments</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field col s12">
+                    <i class="material-icons prefix tooltipped" data-position="right" data-tooltip="Please rate the  book from 1 to 10 (10 being spectacular).">poll</i>
+                    <input id="rating" name="rating" type="number" min="1" max="10" value="{{book.rating}}" required>
+                    <label for="rating">Book Rating</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="switch">
+                    <label>
+                        {% if book.private_view %}
+                        <input id="private_view" name="private_view" type="checkbox" checked>
+                        {% else %}
+                        <input id="private_view" name="private_view" type="checkbox">
+                        {% endif%}
+                        <span class="lever tooltipped" data-position="right" data-tooltip="Please toggle this switch if you want to keep this book hidden from public book searches."></span>
+                    </label>Private View
+                </div>
+            </div>
+            <div class="row button_top_padding">
+                <button class="btn waves-effect waves-light" type="submit" name="action">Update Book
+                    <i class="material-icons right">playlist_add</i>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

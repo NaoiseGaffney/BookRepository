@@ -11,12 +11,9 @@ class ConfigClass(object):
     """ Flask application config """
     # Flask settings
     SECRET_KEY = os.urandom(128).hex()
-    print("Random Secret Key:", SECRET_KEY)
-    # CSRF_ENABLED = True
 
     # Flask-MongoEngine settings
-    MONGO_DB_URL = os.getenv("MONGO_URI_BR")
-    print("MongoDB URL:", MONGO_DB_URL)
+    MONGO_DB_URL = os.environ.get("MONGO_URI_BR")
     MONGODB_SETTINGS = {
         'host': MONGO_DB_URL
     }
@@ -28,19 +25,14 @@ class ConfigClass(object):
     USER_ENABLE_USERNAME = True    # Enable username authentication
     USER_REQUIRE_RETYPE_PASSWORD = True
 
-    # USER_AFTER_LOGIN_ENDPOINT = 'main.member_page'
-    # USER_AFTER_LOGOUT_ENDPOINT = 'main.home_page'
-
-    MAIL_SERVER = os.getenv("MAIL_SERVER")
-    MAIL_PORT = os.getenv("MAIL_PORT")
+    MAIL_SERVER = os.environ.get("MAIL_SERVER")
+    MAIL_PORT = os.environ.get("MAIL_PORT")
     # TLS Port: 587, SSL Port: 465 --> TLS or SSL: True/False
-    MAIL_USERNAME = os.getenv("MAIL_USERNAME")
-    MAIL_PASSWORD = os.getenv("MAIL_PASSWORD")
+    MAIL_USERNAME = os.environ.get("MAIL_USERNAME")
+    MAIL_PASSWORD = os.environ.get("MAIL_PASSWORD")
     MAIL_USE_TLS = True
     MAIL_USE_SSL = False
-    MAIL_DEFAULT_SENDER = ("Naoise Gaffney - 'Gaff'",
-                           "forms.email4pythonandjs@gmail.com")
-    USER_EMAIL_SENDER_EMAIL = "forms.email4pythonandjs@gmail.com"
+    USER_EMAIL_SENDER_EMAIL = os.environ.get("USER_EMAIL_SENDER_EMAIL")
 
     # Flask Session Configuration for Session Protection and "Remember Me" function
     SESSION_PROTECTION = "strong"
