@@ -2,7 +2,7 @@
 
 {% block content %}
 {% from "flask_user/_macros.html" import render_field, render_submit_field %}
-<h6><a href="{{ url_for('home_page')}}">Home</a>&nbsp; > &nbsp;<a href="{{ url_for('user.register') }}">{%trans%}Register{%endtrans%}</a>&nbsp;<i class="material-icons prefix tooltipped blue-text text-darken-4" data-position="bottom" data-tooltip="Please enter your username (Username) using 250 characters or less. Letters, digits and @ . + - _ only.">help</i></h6>
+<h6><a href="{{ url_for('home_page')}}">Home</a>&nbsp; > &nbsp;<a href="{{ url_for('user.register') }}">{%trans%}Register{%endtrans%}</a>&nbsp;<i class="material-icons prefix tooltipped blue-text text-darken-4" data-position="bottom" data-tooltip="<li>Please enter your username (Username) using 250 characters or less. Letters, digits and @ . + - _ only.</li><li>Please enter your e-mail address (Email), for example 'name@domain.com'.</li><li>Please enter a password (Password) longer than 8 characters, using a mixture of numbers and letters, and ideally one or more special characters.</li><li>Password confirmation: Please enter the same password (Retype Password) again for verification.</li>">help</i></h6>
 
 <form method="POST" class="form">
     {{ form.hidden_tag() }}
@@ -34,7 +34,7 @@
     <div class="form-group {% if field.errors %}has-error{% endif %}">
         <div>
             <div class="col-xs-6">
-                <label for="email" class="control-label tooltipped" data-position="right" data-tooltip="Please enter your e-mail address, for example 'name@domain.com'.">Email</label>
+                <label for="email" class="control-label">Email</label>
             </div>
             <input class="form-control" id="email" name="email" required="" tabindex="220" type="text" value="">
         </div>
@@ -43,7 +43,7 @@
     <div class="form-group {% if field.errors %}has-error{% endif %}">
         <div>
             <div class="col-xs-6">
-                <label for="password" class="control-label tooltipped" data-position="right" data-tooltip="Please enter a password longer than 8 characters, using a mixture of numbers and letters, and ideally one or more special characters.">Password</label>
+                <label for="password" class="control-label">Password</label>
             </div>
             <input class="form-control" id="password" name="password" required="" tabindex="230" type="password" value="">
         </div>
@@ -54,7 +54,7 @@
     <div class="form-group {% if field.errors %}has-error{% endif %}">
         <div>
             <div class="col-xs-6">
-                <label for="retype_password" class="control-label tooltipped" data-position="right" data-tooltip="Password confirmation: Please enter the same password as again for verification.">Retype Password</label>
+                <label for="retype_password" class="control-label">Retype Password</label>
             </div>
             <input class="form-control" id="retype_password" name="retype_password" tabindex="240" type="password" value="">
         </div>
