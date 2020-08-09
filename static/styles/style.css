@@ -12,11 +12,18 @@ body {
     background-color: #FFFFFF;
     font-family: 'Raleway', sans-serif;
     margin-top: 35px;
-    margin-bottom: 35px;
+    margin-bottom: 50px;
+    background-image: url("/static/images/sharon-mccutcheon-eMP4sYPJ9x0-unsplash.jpg");
+    background-position: center;
+    background-size: 2700px;
+    background-repeat: no-repeat;
+    position: relative;
 }
 
-main {
-    flex: 1 0 auto;
+/* <a href... */
+a {
+    /* color: #d81b60; */
+    color: #0D47A1;
 }
 
 /* Navigation Bar: fixed and MaterializeCSS styling. */
@@ -24,6 +31,11 @@ nav {
     overflow: hidden;
     position: fixed;
     top: 0;
+    z-index: 10;
+}
+
+.sidenav {
+    width: 230px;
 }
 
 /* Footer: fixed footer and MaterializeCSS styling. Using box-shadow (in reverse) from the MaterializeCSS navbar class. */
@@ -32,7 +44,7 @@ footer {
     left: 0;
     bottom: 0;
     width: 100%;
-    background-color: #0D470D;
+    background-color: #0D47A1;
     color: #FFFFFF;
     text-align: center;
 }
@@ -41,6 +53,12 @@ footer {
     -webkit-box-shadow: 0 -2px 0 rgba(0, 0, 0, 0.14), 0 -3px 1px 0 rgba(0, 0, 0, 0.12), 0 -1px 5px 0 rgba(0, 0, 0, 0.2);
     -moz-box-shadow: 0 -2px 0 rgba(0, 0, 0, 0.14), 0 -3px 1px 0 rgba(0, 0, 0, 0.12), 0 -1px 5px 0 rgba(0, 0, 0, 0.2);
     box-shadow: 0 -2px 0 rgba(0, 0, 0, 0.14), 0 -3px 1px 0 rgba(0, 0, 0, 0.12), 0 -1px 5px 0 rgba(0, 0, 0, 0.2);
+}
+
+.page-footer,
+.footer-copyright {
+    padding: 0px;
+    z-index: 10;
 }
 
 #menu_book {
@@ -61,36 +79,156 @@ footer .right-align {
 .modal-footer {
     /* background-color: #FFFFFF !important; */
     font-family: 'Raleway', sans-serif;
-    color: #0D470D;
+    color: #0D47A1;
 }
 
 .page-footer,
 .tabs .indicator {
-    background-color: #0D470D;
+    background-color: #0D47A1;
 }
 
 /* Message Chips (Flask, MaterializeCSS 1.0.0, custom CSS 3, and a JS Timeout function = Flask Flash Messages */
 .message-success {
-    color: green;
-    background-color: lightgreen;
+    color: #FFFFFF;
+    background-color: #26A69A;
+    /* Persian Green (#26A69A, teal lighten-1) */
 }
 
 .message-info {
-    color: blue;
-    background-color: lightblue;
+    color: #FFFFFF;
+    background-color: #37474F;
 }
 
 .message-warning {
-    color: yellow;
-    background-color: lightgoldenrodyellow;
+    color: #FFFFFF;
+    background-color: orange;
 }
 
 .message-danger {
-    color: red;
-    background-color: lightcoral;
+    color: #FFFFFF;
+    background-color: #d81b60;
+    /* Ruby, (#d81b60, pink darken-1) */
 }
 
 .help-block {
-    color: hotpink;
-    background-color: lightpink;
+    color: #FFFFFF;
+    background-color: #d81b60;
+}
+
+/* Book Spine background-image for the Member's Page */
+/* Photo by <a href="https://unsplash.com/@christianw?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Christian Wiediger</a> on <a href="https://unsplash.com/s/photos/open-book?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a> */
+.collapsible-header {
+    background-image: url("/static/images/christian-wiediger-GWucxGZvO-w-unsplash.jpg");
+    background-position: 95% 55%;
+    background-size: 150%
+}
+
+.book_spine {
+    background: rgba(0, 0, 0, 0.05);
+    text-align: center;
+}
+
+div.collapsible-header div h6 {
+    padding-left: 20px;
+}
+
+/* Add Book Button */
+#add_book_button {
+    margin-right: 10px;
+}
+
+/* Remember Me Label */
+#remember_me_label {
+    font-size: 0.8rem;
+    color: #9E9E9E;
+}
+
+/* Pagination styling to suit <H6> above on the 'members.html' page */
+.pagination {
+    font-size: 1.15rem;
+    line-height: 110%;
+    margin-bottom: 1rem;
+}
+
+/* Private View Toggle Text to suit the styling of the other form fields in Add/Edit Books */
+div.switch {
+    color: #9E9E9E;
+}
+
+/* "Breathing space between the submit/register/login buttons and the forms */
+.button_top_padding {
+    padding-top: 1rem;
+}
+
+.btn {
+    background-color: #0d47a1;
+}
+
+.btn:hover {
+    background-color: #0c4091;
+}
+
+/* Taken from 'materialize.css' (1.0.0) to style the input fields to match the Book Repository UX Design */
+/* Checkbox when selected is the same colour as the rest of the form elements */
+[type="checkbox"]:checked+span:not(.lever):before {
+    top: -4px;
+    left: -5px;
+    width: 12px;
+    height: 22px;
+    border-top: 2px solid transparent;
+    border-left: 2px solid transparent;
+    border-right: 2px solid #0d47a1;
+    border-bottom: 2px solid #0d47a1;
+    -webkit-transform: rotate(40deg);
+    transform: rotate(40deg);
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    -webkit-transform-origin: 100% 100%;
+    transform-origin: 100% 100%;
+}
+
+input:not([type]):focus:not([readonly]),
+input[type=text]:not(.browser-default):focus:not([readonly]),
+input[type=password]:not(.browser-default):focus:not([readonly]),
+input[type=email]:not(.browser-default):focus:not([readonly]),
+input[type=url]:not(.browser-default):focus:not([readonly]),
+input[type=time]:not(.browser-default):focus:not([readonly]),
+input[type=date]:not(.browser-default):focus:not([readonly]),
+input[type=datetime]:not(.browser-default):focus:not([readonly]),
+input[type=datetime-local]:not(.browser-default):focus:not([readonly]),
+input[type=tel]:not(.browser-default):focus:not([readonly]),
+input[type=number]:not(.browser-default):focus:not([readonly]),
+input[type=search]:not(.browser-default):focus:not([readonly]),
+textarea.materialize-textarea:focus:not([readonly]) {
+    border-bottom: 1px solid #0d47a1;
+    -webkit-box-shadow: 0 1px 0 0 #0d47a1;
+    box-shadow: 0 1px 0 0 #0d47a1;
+}
+
+input:not([type]):focus:not([readonly])+label,
+input[type=text]:not(.browser-default):focus:not([readonly])+label,
+input[type=password]:not(.browser-default):focus:not([readonly])+label,
+input[type=email]:not(.browser-default):focus:not([readonly])+label,
+input[type=url]:not(.browser-default):focus:not([readonly])+label,
+input[type=time]:not(.browser-default):focus:not([readonly])+label,
+input[type=date]:not(.browser-default):focus:not([readonly])+label,
+input[type=datetime]:not(.browser-default):focus:not([readonly])+label,
+input[type=datetime-local]:not(.browser-default):focus:not([readonly])+label,
+input[type=tel]:not(.browser-default):focus:not([readonly])+label,
+input[type=number]:not(.browser-default):focus:not([readonly])+label,
+input[type=search]:not(.browser-default):focus:not([readonly])+label,
+textarea.materialize-textarea:focus:not([readonly])+label {
+    color: #0d47a1;
+}
+
+.input-field .prefix.active {
+    color: #0d47a1;
+}
+
+.switch label input[type=checkbox]:checked+.lever {
+    background-color: #0c4091;
+}
+
+.switch label input[type=checkbox]:checked+.lever:after {
+    background-color: #0d47a1;
 }
