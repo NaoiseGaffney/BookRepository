@@ -24,7 +24,7 @@ load_dotenv(dotenv_path=env_path)
 """ Flask application factory """
 
 # Setup Flask and load app.config
-app = Flask(__name__, static_folder="static")
+app = Flask(__name__, static_folder="static", template_folder="templates")
 app.config.from_object(__name__+".ConfigClass")
 app.debug = True
 
