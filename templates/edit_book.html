@@ -8,7 +8,8 @@
         <a href="{{ url_for('home_page')}}">Home</a>
         {% endif %}
         &nbsp; > &nbsp;<a href="{{ url_for('member_page') }}">Member's Page</a>&nbsp; > &nbsp;<a
-            href="{{ url_for('edit_book', book_id=book.id ) }}">Edit Book</a>&nbsp;<i class="material-icons prefix tooltipped blue-text text-darken-4" data-position="bottom" role="tooltip" tabindex="10" data-tooltip="Please hover over the icons on the left of each field for further help on what to do. All fields, except the Book Description, Book Comments and the Private View are mandatory to fill out.">help</i>
+            href="{{ url_for('edit_book', book_id=book.id ) }}">Edit Book</a>&nbsp;<i class="material-icons prefix tooltipped blue-text text-darken-4" data-position="bottom" role="tooltip" tabindex="10" data-tooltip="<p class='left-align'>Please hover over the icons on the left of each field for further help on what to do.</p><br>
+            <p class='left-align'>All fields, except the Book Description, Book Comments and the Private View are mandatory to fill out.</p>">help</i>
     </h6>
 
 
@@ -63,8 +64,22 @@
                     <label for="rating">Book Rating</label>
                 </div>
             </div>
-            <div class="row">
-                <div class="switch">
+            <div class="row container">
+                <div class="input-field col s10">
+                    <i class="material-icons prefix tooltipped" data-position="right"
+                        data-tooltip="Please select a suitable genre for the book.">subject</i>
+                    <select id="genre" name="genre">
+                        <option disabled selected>Select Genre</option>
+                        {% for g in genre %}
+                        {% if g.genre == book.genre %}
+                        <option value="{{g.genre}}" selected>{{g.genre}}</option>
+                        {% else %}
+                        <option value="{{g.genre}}">{{g.genre}}</option>
+                        {% endif %}
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="switch col s2">
                     <label>
                         {% if book.private_view %}
                         <input id="private_view" name="private_view" type="checkbox" checked>
@@ -72,7 +87,7 @@
                         <input id="private_view" name="private_view" type="checkbox">
                         {% endif%}
                         <span class="lever tooltipped" data-position="right" data-tooltip="Please toggle this switch if you want to keep this book hidden from public book searches."></span>
-                    </label>Private View
+                    </label>&nbsp;&nbsp;&nbsp;Private
                 </div>
             </div>
             <div class="row button_top_padding">

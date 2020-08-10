@@ -132,11 +132,6 @@ div.collapsible-header div h6 {
     padding-left: 20px;
 }
 
-/* Add Book Button */
-#add_book_button {
-    margin-right: 10px;
-}
-
 /* Remember Me Label */
 #remember_me_label {
     font-size: 0.8rem;
@@ -148,11 +143,6 @@ div.collapsible-header div h6 {
     font-size: 1.15rem;
     line-height: 110%;
     margin-bottom: 1rem;
-}
-
-/* Private View Toggle Text to suit the styling of the other form fields in Add/Edit Books */
-div.switch {
-    color: #9E9E9E;
 }
 
 /* "Breathing space between the submit/register/login buttons and the forms */
@@ -231,4 +221,44 @@ textarea.materialize-textarea:focus:not([readonly])+label {
 
 .switch label input[type=checkbox]:checked+.lever:after {
     background-color: #0d47a1;
+}
+
+.input-field>label {
+    color: #000000;
+}
+
+.dropdown-content li>a,
+.dropdown-content li>span {
+    color: #0d47a1;
+}
+
+.select-wrapper input.select-dropdown:focus {
+    border-bottom: 2px solid #0d47a1;
+}
+
+.select-wrapper .prefix.active {
+    color: #0D47A1;
+}
+
+/* W3Schools Drop-Down Menu */
+.book-dropdown {
+    position: relative;
+    display: inline-block;
+    list-style-type: none;
+    padding-top: 12px;
+}
+
+.book-dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #ffffff;
+    min-width: 216px;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    padding: 12px 16px;
+    z-index: 10;
+    right: 0;
+}
+
+.book-dropdown:hover .book-dropdown-content {
+    display: block;
 }
