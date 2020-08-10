@@ -69,6 +69,7 @@ class User(db.Document, UserMixin):
 class Book(db.Document):
     title = db.StringField(default="", maxlength=250)
     author = db.StringField(default="", maxlength=250)
+    genre = db.StringField(default="")
     year = db.IntField(maxlength=4)
     ISBN = db.IntField(maxlength=13)
     short_description = db.StringField(default="", maxlength=2000)
@@ -89,11 +90,24 @@ class Book(db.Document):
     }
 
 
+class Genre(db.Document):
+    genre = db.StringField(default="")
+    icon = db.StringField(default="")
+    description = db.StringField(default="")
+
+    meta = {
+        "auto_create_index": True,
+        "index_background": True,
+        "indexes": ["genre"],
+        "ordering": ["genre"]
+    }
+
+
 # Setup Flask-User and specify the User data-model
 user_manager = UserManager(app, db, User)
 
 
-# Create admin user as first/default user, if admin does not exist. Password must be changed immediately upon first login.
+# Create admin user as first/default user, if admin does not exist. Password is set using an environment variable.
 if not User.objects.filter(User.username == "admin").first():
     user = User(
         username="admin",
@@ -105,6 +119,20 @@ if not User.objects.filter(User.username == "admin").first():
     )
     user.roles.append("Admin")
     user.save()
+
+
+# Create the Genre Collection if it does not exist.
+if not Genre.objects:
+    print("No Genre Objects exist.")
+    genre_array = [
+         {"genre": "Fiction - Classic", "icon": "", "description": "Fiction that has become part of an accepted literary canon, widely taught in schools."},
+         {"genre": "Fiction - Crime", "icon": "", "description": "Fiction about a crime, how the criminal gets caught and serve time, and the repercussions of the crime."},
+         {"genre": "Fiction - Epic", "icon": "", "description": "Genre of poetry."},
+         {"genre": "Other", "icon": "", "description": "Book's genre is not in the list."},
+         ]
+    genre_instances = [Genre(**data) for data in genre_array]
+    Genre.objects.insert(genre_instances, load_bulk=False)
+
 
 
 # The Home page is accessible to anyone
@@ -136,6 +164,7 @@ def member_page(page=1):
     """ book = Book(
         title="Fresh Spice",
         author="Arun Kapil",
+        genre = "Fiction - Classic",
         year=2014,
         ISBN=9781909108479,
         user=current_user.username,
@@ -148,6 +177,7 @@ def member_page(page=1):
     book = Book(
         title="The Art of War",
         author="Sun Tzu",
+        genre = "Fiction - Classic",
         year=1991,
         ISBN=9780877735373,
         user=current_user.username,
@@ -160,6 +190,7 @@ def member_page(page=1):
     book = Book(
         title="Festa",
         author="Eileen Dunne Crescenzi",
+        genre = "Fiction - Classic",
         year=2015,
         ISBN=9780717164448,
         user=current_user.username,
@@ -171,10 +202,7 @@ def member_page(page=1):
 
     app.logger.info(f"Member Page Accessed by {current_user.username}.")
 
-    user_books = Book.objects.filter(user=current_user.username)
-
-    books_pagination = Book.objects.filter(
-        user=current_user.username).paginate(page=page, per_page=7)
+    books_pagination = Book.objects.filter(user=current_user.username).paginate(page=page, per_page=7)
     return render_template("members.html", books_pagination=books_pagination)
 
 
@@ -182,8 +210,9 @@ def member_page(page=1):
 @login_required
 def add_book():
     # Preparing for the "C" in CRUD
+    genre = Genre.objects()
     app.logger.info(f"{current_user.username} is about to add a book.")
-    return render_template("add_book.html")
+    return render_template("add_book.html", genre=genre)
 
 
 @app.route("/save_book", methods=["POST"])
@@ -193,6 +222,7 @@ def save_book():
     book = Book(
         title=request.form.get("title"),
         author=request.form.get("author"),
+        genre=request.form.get("genre"),
         year=request.form.get("year"),
         ISBN=request.form.get("isbn"),
         user=current_user.username,
@@ -219,9 +249,10 @@ def save_book():
 def edit_book(book_id):
     # Preparing for the "U" in CRUD
     book = Book.objects.get(id=book_id)
+    genre = Genre.objects()
     app.logger.info(
         f"{book.title} with id {book.id} to be edited by {current_user.username}.")
-    return render_template("edit_book.html", book=book)
+    return render_template("edit_book.html", book=book, genre=genre)
 
 
 @app.route("/update_book/<book_id>", methods=["POST"])
@@ -232,6 +263,7 @@ def update_book(book_id):
     fields = {
         "title": request.form.get("title"),
         "author": request.form.get("author"),
+        "genre": request.form.get("genre"),
         "year": request.form.get("year"),
         "ISBN": request.form.get("isbn"),
         "short_description": request.form.get("short_description"),
