@@ -69,7 +69,6 @@ class User(db.Document, UserMixin):
 class Book(db.Document):
     title = db.StringField(default="", maxlength=250)
     author = db.StringField(default="", maxlength=250)
-    genre = db.StringField(default="")
     year = db.IntField(maxlength=4)
     ISBN = db.IntField(maxlength=13)
     short_description = db.StringField(default="", maxlength=2000)
@@ -77,6 +76,7 @@ class Book(db.Document):
     creation_date = db.DateTimeField(default=datetime.datetime.now)
     comments = db.StringField(default="", maxlength=3500)
     rating = db.IntField(choices=[1, 2, 3, 4, 5, 6, 7, 8, 9, 10])
+    genre = db.StringField(default="")
     private_view = db.StringField(default="")
 
     # def calc_votes(self):
@@ -216,39 +216,39 @@ def member_page(page=1):
     """ book = Book(
         title="Fresh Spice",
         author="Arun Kapil",
-        genre="(NF) Cooking",
         year=2014,
         ISBN=9781909108479,
         user=current_user.username,
         short_description="Vibrant recipes for bringing flavour, depth, and colour to home cooking.",
         comments="I love reading this book, dreaming of the recipes I can make. I made the Lamb Vindaloo and it was gorgeous. Good Samosas are hard to make.",
         rating=8,
+        genre="(NF) Cooking",
         private_view=""
     ).save()
 
     book = Book(
         title="The Art of War",
         author="Sun Tzu",
-        genre="(NF) Philosophy",
         year=1991,
         ISBN=9780877735373,
         user=current_user.username,
         short_description="Thomas Cleary's translation and commentary of the 2000 year old piece on the Art of War.",
         comments="Nothing like a little management bullshit.",
         rating=4,
+        genre="(NF) Philosophy",
         private_view=""
     ).save()
 
     book = Book(
         title="Festa",
         author="Eileen Dunne Crescenzi",
-        genre="(NF) Cooking",
         year=2015,
         ISBN=9780717164448,
         user=current_user.username,
         short_description="Recipes and recollections.",
         comments="An veritable feast of Italian dishes.",
         rating=7,
+        genre="(NF) Cooking",
         private_view=""
     ).save() """
 
@@ -275,13 +275,13 @@ def save_book():
     book = Book(
         title=request.form.get("title"),
         author=request.form.get("author"),
-        genre=request.form.get("genre"),
         year=request.form.get("year"),
         ISBN=request.form.get("isbn"),
         user=current_user.username,
         short_description=request.form.get("short_description"),
         comments=request.form.get("comments"),
         rating=request.form.get("rating"),
+        genre=request.form.get("genre"),
         private_view=request.form.get("private_view")
     )
 
@@ -316,12 +316,12 @@ def update_book(book_id):
     fields = {
         "title": request.form.get("title"),
         "author": request.form.get("author"),
-        "genre": request.form.get("genre"),
         "year": request.form.get("year"),
         "ISBN": request.form.get("isbn"),
         "short_description": request.form.get("short_description"),
         "comments": request.form.get("comments"),
         "rating": request.form.get("rating"),
+        "genre": request.form.get("genre"),
         "private_view": request.form.get("private_view")
     }
     try:
@@ -351,6 +351,29 @@ def delete_book(book_id):
             f"{book.title} with id {book.id} NOT deleted by {current_user.username}.")
         flash(f"The book {book.title} was NOT deleted!", "danger")
     return redirect(url_for("member_page"))
+
+
+@app.route("/search_book")
+@login_required
+def search_book():
+    # return render_template_string("search_book.html")
+    genre = Genre.objects()
+    return render_template("search_book.html", genre=genre)
+
+
+@app.route("/search_results", methods=["POST"])
+@login_required
+def search_results():
+    fields = {
+        "title": request.form.get("title"),
+        "author": request.form.get("author"),
+        "ISBN": request.form.get("isbn"),
+        "rating": request.form.get("rating"),
+        "genre": request.form.get("genre"),
+        "private_view": request.form.get("private_view")
+    }
+    return render_template_string(f"{fields}")
+    # {'title': 'The Art of War', 'author': 'Sun Tzu', 'ISBN': '9780877735373', 'rating': '3', 'genre': '(NF) Philosophy', 'private_view': None}
 
 
 # export PRODUCTION=ON | OFF in TEST
