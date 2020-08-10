@@ -73,17 +73,17 @@
                 </div>
             </div>
             <div class="collapsible-body">
-                <p>Genre: {{book.genre}}</p>
                 <p>Published: {{book.year}}, ISBN: {{book.ISBN}}</p>
                 <p>Description: {{book.short_description}}</p>
                 <p>Comments: {{book.comments}}</p>
                 {% if book.rating > 7 %}
-                <p>Rating: <span class="green-text book_spine">{{ book.rating }}</span></p>
+                <p>Rating: {{ book.rating }} <span class="green book_spine">&nbsp;&nbsp;&nbsp;</span></p>
                 {% elif book.rating > 5 %}
-                <p>Rating: <span class="orange-text book_spine">{{ book.rating }}</span></p>
+                <p>Rating: {{ book.rating }} <span class="orange book_spine">&nbsp;&nbsp;&nbsp;</span></p>
                 {% else %}
-                <p>Rating: <span class="red-text book_spine">{{ book.rating }}</span></p>
+                <p>Rating: {{ book.rating }} <span class="red book_spine">&nbsp;&nbsp;&nbsp;</span></p>
                 {% endif %}
+                <p>Genre: {{book.genre}}</p>
                 {% if book.private_view %}
                 <p>Private View: Book is HIDDEN from Public Searches.<i class="material-icons pink-text text-accent-2">lock</i>
                 </p>
