@@ -202,17 +202,10 @@ def home_page():
 
 @app.route("/members")
 @app.route("/members/<int:page>")
-@login_required    # User must be authenticated
+@login_required
 def member_page(page=1):
     # The "R" in CRUD
-    # total_num_users = User.objects.count()
-    # total_num_books = Book.objects.count()
-    # print("\nTotal Number of Users:", total_num_users)
-    # print("\nTotal Number of Books:", total_num_books)
 
-    # filtered_books = Book.objects.filter(user=current_user.username)
-    # filtered_books_as_json = filtered_books.to_json()
-    # print("Filtered Books as JSON:", filtered_books_as_json)
     """ book = Book(
         title="Fresh Spice",
         author="Arun Kapil",
@@ -256,7 +249,7 @@ def member_page(page=1):
 
     books_pagination = Book.objects.filter(
         user=current_user.username).paginate(page=page, per_page=7)
-    return render_template("members.html", books_pagination=books_pagination)
+    return render_template("members.html", books_pagination=books_pagination, page_prev=(page-1), page_next=(page+1))
 
 
 @app.route("/add_book")
@@ -356,7 +349,6 @@ def delete_book(book_id):
 @app.route("/search_book")
 @login_required
 def search_book():
-    # return render_template_string("search_book.html")
     genre = Genre.objects()
     return render_template("search_book.html", genre=genre)
 
@@ -372,6 +364,19 @@ def search_results():
         "genre": request.form.get("genre"),
         "private_view": request.form.get("private_view")
     }
+    test_results = Book.objects.filter(rating__lte=6)
+    print("\n\n---------------------\n\nRating Filter:", test_results.to_json())
+
+    form_title = request.form.get("title")
+    form_author = request.form.get("author")
+    form_genre = request.form.get("genre")
+    test_results = Book.objects.filter(title__icontains=form_title)
+    print("\n\n---------------------\n\nTitle Filter:", test_results.to_json())
+
+    combo_query = Book.objects.filter(title__icontains=form_title, author__icontains=form_author, rating__lte=8, genre=form_genre).order_by("-rating")
+    print("\n\n---------------------\n\nCombo Filter:", combo_query.to_json())
+    
+
     return render_template_string(f"{fields}")
     # {'title': 'The Art of War', 'author': 'Sun Tzu', 'ISBN': '9780877735373', 'rating': '3', 'genre': '(NF) Philosophy', 'private_view': None}
 
