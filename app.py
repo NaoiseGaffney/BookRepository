@@ -374,7 +374,10 @@ def search_results():
 
     print(form_title, form_author, form_isbn, form_rating, form_genre)
 
+    # IF BOOK IS SET TO PRIVATE IT MUST NOT SHOW UP IN THE PUBLIC SEARCH!!!
+
     # Query Book Repository based on the search form data
+    # Private Search "form_private_view == "on"
     if form_private_view == "on":
         if form_isbn:
             books_pagination = Book.objects.filter(user=current_user.username, ISBN=form_isbn)
@@ -385,15 +388,19 @@ def search_results():
         else:
             books_pagination = Book.objects.filter(user=current_user.username, title__icontains=form_title, author__icontains=form_author, rating__gte=form_rating, genre=form_genre).order_by("+title", "+author", "-rating")
             return render_template("test.html", books_pagination=books_pagination)
+    # Public Search "form_private_view == None"
     else:
         if form_isbn:
-            books_pagination = Book.objects.filter(ISBN=form_isbn)
+            books_pagination = Book.objects.filter(ISBN=form_isbn, private_view="")
             return render_template("test.html", books_pagination=books_pagination)
+            # return render_template("test.html", books_pagination=books_pagination, private_view="")
         elif form_genre == None:
             books_pagination = Book.objects.filter(title__icontains=form_title, author__icontains=form_author, rating__gte=form_rating).order_by("+title", "+author", "-rating")
+            # books_pagination = Book.objects.filter(title__icontains=form_title, author__icontains=form_author, rating__gte=form_rating, private_view="").order_by("+title", "+author", "-rating")
             return render_template("test.html", books_pagination=books_pagination)
         else:
             books_pagination = Book.objects.filter(title__icontains=form_title, author__icontains=form_author, rating__gte=form_rating, genre=form_genre).order_by("+title", "+author", "-rating")
+            # books_pagination = Book.objects.filter(title__icontains=form_title, author__icontains=form_author, rating__gte=form_rating, genre=form_genre, private_view="").order_by("+title", "+author", "-rating")
             return render_template("test.html", books_pagination=books_pagination)
 
     # book_query_results = Book.objects.filter(user=current_user.username, title__icontains=form_title, author__icontains=form_author, ISBN=form_isbn, rating__lte=form_rating, genre=form_genre).order_by("+title", "+author", "-rating").paginate(page=page, per_page=7)
