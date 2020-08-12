@@ -32,6 +32,11 @@
         {% else %}
         <a href="{{ url_for(endpoint, page=page_prev) }}">&lt;&nbsp;</a>
         {% endif %}
+        {% if pagination.has_next %}
+        <a href="{{ url_for(endpoint, page=page_next) }}">&gt;&nbsp;</a>
+        {% else %}
+        &gt;&nbsp;
+        {% endif %}
         {% for page in pagination.iter_pages() %}
         {% if page %}
         {% if page != pagination.page %}
@@ -43,11 +48,6 @@
         <span class="ellipsis">…</span>
         {% endif %}
         {% endfor %}
-        {% if pagination.has_next %}
-        <a href="{{ url_for(endpoint, page=page_next) }}">&nbsp;&gt;</a>
-        {% else %}
-        &nbsp;&gt;
-        {% endif %}
     </div>
     {% endmacro %}
     

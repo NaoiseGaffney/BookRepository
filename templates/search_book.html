@@ -7,8 +7,16 @@
         {% else %}
         <a href="{{ url_for('home_page')}}">Home</a>
         {% endif %}
-        &nbsp; > &nbsp;<a href="{{ url_for('member_page') }}">Member's Page</a>&nbsp; > &nbsp;<a href="{{ url_for('search_book')}}">Search Books</a>&nbsp;<i class="material-icons prefix tooltipped blue-text text-darken-4" data-position="bottom" role="tooltip" tabindex="10" data-tooltip="<p class='left-align'>Please hover over the icons on the left of each field for further help on what to do.</p><br>
-        <p class='left-align'>All fields, except the Book Description, Book Comments and the Private View are mandatory to fill out.</p>">help</i>
+        &nbsp; > &nbsp;<a href="{{ url_for('member_page') }}">Member's Page</a>&nbsp; > &nbsp;<a href="{{ url_for('search_book')}}">Search Books</a>&nbsp;<i class="material-icons prefix tooltipped blue-text text-darken-4" data-position="bottom" role="tooltip" tabindex="10" data-tooltip="<p class='left-align'>To search for a book or books, please fill in the fields below. The more information you enter, the more precise the
+        search.</p><br>
+        <p class='left-align'>If you enter the ISBN, then that will be the only search criteria used for the search as it’s specific (ignoring all other fields).</p><br>
+        <p class='left-align'>By default, the book search will include all books in the Book Repository (except those marked private by other users).</p><br>
+        <p class='left-align'>If you toggle the Private selector below, you will only search your books in the Book Repository.</p><br>
+        <p class='left-align'>Selecting a Genre will limit the search to books in that genre. If you want to explore all genres, leave the Genre field as it is.</p><br>
+        <p class='left-align'>You can enter a full title or the full author’s name, or only pieces of the title and the first couple of letter in the author’s name.</p><br>
+        <p class='left-align'>No fields are mandatory, and leaving the form empty will display all books in the Book Repository (except those marked private by other users).</p><br>
+        <p class='left-align'>Please click on SEARCH BOOKS when you are done filling in the form.</p><br>
+        <p class='left-align'>Please hover over the icons on the left of each field for further help on what to do.</p>">help</i>
     </h6>
 
     <div class="row">
@@ -16,7 +24,7 @@
             <div class="row">
                 <div class="input-field col s12">
                     <i class="material-icons prefix tooltipped" data-position="right"
-                        data-tooltip="Please enter the title of the book.">title</i>
+                        data-tooltip="Please enter the title of the book, or parts of a title.">title</i>
                     <input id="title" name="title" type="text" maxlength="200">
                     <label for="title">Search Title</label>
                 </div>
@@ -24,7 +32,7 @@
             <div class="row">
                 <div class="input-field col s12">
                     <i class="material-icons prefix tooltipped" data-position="right"
-                        data-tooltip="Please enter the author's name.">person</i>
+                        data-tooltip="Please enter the author's name, or parts of a name.">person</i>
                     <input id="author" name="author" type="text" maxlength="200">
                     <label for="author">Search Author</label>
                 </div>
@@ -32,7 +40,7 @@
             <div class="row">
                 <div class="input-field col s12">
                     <i class="material-icons prefix tooltipped" data-position="right"
-                        data-tooltip="Please enter the 10 or 13 digit ISBN. It is used for external book searches.">vpn_key</i>
+                        data-tooltip="Please enter the 10 or 13 digit ISBN. It is used for external book searches. When filling in this field, this is the only field that will be used as the search criteria.">vpn_key</i>
                     <input id="isbn" name="isbn" type="number" max="9789999999999">
                     <label for="isbn">Search ISBN</label>
                 </div>
@@ -40,14 +48,14 @@
             <div class="row">
                 <div class="input-field col s12">
                     <i class="material-icons prefix tooltipped" data-position="right"
-                        data-tooltip="Please rate the  book from 1 to 10 (10 being spectacular).">poll</i>
+                        data-tooltip="Please enter the rating (greater than or equal to), from 1 to 10. For example, 8 will only return books with a rating of 8 or greater (8, 9, 10).">poll</i>
                     <input id="rating" name="rating" type="number" min="1" max="10">
                     <label for="rating">Search Rating</label>
                 </div>
             </div>
             <div class="row container">
                 <div class="input-field col s10">
-                    <i class="material-icons prefix tooltipped" data-position="right" data-tooltip="Please select a suitable genre for the book.">subject</i>
+                    <i class="material-icons prefix tooltipped" data-position="right" data-tooltip="Please select genre to search for.">subject</i>
                     <select id="genre" name="genre">
                         <option disabled selected>Genre</option>
                         {% for g in genre %}
@@ -59,7 +67,7 @@
                     <label>
                         <input id="private_view" name="private_view" type="checkbox">
                         <span class="lever tooltipped" data-position="right"
-                            data-tooltip="Please toggle this switch if you want to keep this book hidden from public book searches."></span>
+                            data-tooltip="Please toggle this switch if you want to search your books only."></span>
                     </label>&nbsp;&nbsp;&nbsp;Private
                 </div>
             </div>
