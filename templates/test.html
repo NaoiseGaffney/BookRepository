@@ -1,7 +1,1 @@
-{% for book in books_pagination %}
-{% if book.private_view and book.user != current_user.username %}
-{% else %}
-<p>{{book.title}}</p>
-<p>{{book.author}}</p>
-{% endif %}
-{% endfor %}
+{{session["fields"]}}

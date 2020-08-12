@@ -1,6 +1,6 @@
 import logging
 import os
-from flask import Flask, render_template_string, render_template, redirect, url_for, request, flash
+from flask import Flask, render_template_string, render_template, redirect, url_for, request, flash, session
 from flask_mongoengine import MongoEngine, MongoEngineSession, MongoEngineSessionInterface
 from flask_user import login_required, UserManager, UserMixin, current_user, roles_required
 # from wtforms.validators import DataRequired
@@ -352,56 +352,138 @@ def search_book():
     return render_template("search_book.html", genre=genre)
 
 
-@app.route("/search_results", methods=["POST"])
-# @app.route("/search_results/<int:page>")
+@app.route("/save_search", methods=["GET", "POST"])
 @login_required
-def search_results():
+def save_search():
+    fields = {
+        "title": request.form.get("title"),
+        "author": request.form.get("author"),
+        "year": request.form.get("year"),
+        "ISBN": request.form.get("isbn"),
+        "short_description": request.form.get("short_description"),
+        "comments": request.form.get("comments"),
+        "rating": request.form.get("rating"),
+        "genre": request.form.get("genre"),
+        "private_view": request.form.get("private_view")
+    }
+    session["fields"] = fields
+    # {'title': '', 'author': '', 'year': None, 'ISBN': '', 'short_description': None, 'comments': None, 'rating': '', 'genre': None, 'private_view': None}
+
+    return redirect(url_for("search_results"))
+
+
+@app.route("/search_results", methods=["GET", "POST"])
+@app.route("/search_results/<int:page>")
+@login_required
+def search_results(page=1):
     # Get search form data
-    form_title = request.form.get("title")
-    form_author = request.form.get("author")
+    print("Request Cookies:", request.cookies)
+    print("Request View Args:", request.view_args)
+    print("Request URL:", request.url)
+    print("Session Fields:", session.get("fields"))
+
+    """ 
+    Request Cookies: ImmutableMultiDict([('session', '5b968b5a-bda1-4673-a518-a9892299f1a1')])
+    Request View Args: {}
+    Request URL: http://127.0.0.1:5000/search_results
+
+    Request Cookies: ImmutableMultiDict([('session', '5b968b5a-bda1-4673-a518-a9892299f1a1')])
+    Request View Args: {}
+    Request URL: http://127.0.0.1:5000/search_results?page=2
+
+    Request Cookies: ImmutableMultiDict([('session', '5b968b5a-bda1-4673-a518-a9892299f1a1')])
+    Request View Args: {'page': 3}
+    Request URL: http://127.0.0.1:5000/search_results/3
+
+    Request Cookies: ImmutableMultiDict([('cookieconsent_status', 'dismiss'), ('session', 'eb23efc3-2e8c-4bc1-a48d-200e383ec5cc'), ('fldt', 'hide')])
+    Request View Args: {}
+    Request URL: http://127.0.0.1:5000/search_results
+    Session Fields: {'title': '', 'author': '', 'year': None, 'ISBN': '', 'short_description': None, 'comments': None, 'rating': '', 'genre': None, 'private_view': None}
+    """
+
+
+    # form_title = "art"
+    # form_author = "sun"
+    # form_isbn = None
+    # form_rating = 1
+    # form_genre = None
+    # form_private_view = "on"
+
+    fields = session.get("fields")
+    print("Get Session Fields:", fields)
+
+    form_title = fields["title"]
+    form_author = fields["author"]
     try:
-        form_isbn = int(request.form.get("isbn"))
+        form_isbn = int(fields["ISBN"])
     except ValueError:
         form_isbn = 0
-
+    except TypeError:
+        form_isbn = 0
     try:
-        form_rating = int(request.form.get("rating"))
+        form_rating = int(fields["rating"])
     except ValueError:
         form_rating = 1
+    except TypeError:
+        form_rating = 0
+    form_genre = fields["genre"]
+    form_private_view = fields["private_view"]
 
-    form_genre = request.form.get("genre")
-    form_private_view = request.form.get("private_view")
 
-    print(form_title, form_author, form_isbn, form_rating, form_genre)
+    # form_title = request.form.get("title")
+    print("\n\nForm Title", type(form_title), form_title)
+    # form_author = request.form.get("author")
+    print("\n\nForm Author", type(form_author), form_author)
+    # try:
+    #     form_isbn = int(request.form.get("isbn"))
+    # except ValueError:
+    #     form_isbn = 0
+    # except TypeError:
+    #     form_isbn = 0
+    print("\n\nForm ISBN", type(form_isbn), form_isbn)
 
-    # IF BOOK IS SET TO PRIVATE IT MUST NOT SHOW UP IN THE PUBLIC SEARCH!!!
+    # try:
+    #     form_rating = int(request.form.get("rating"))
+    # except ValueError:
+    #     form_rating = 1
+    # except TypeError:
+    #     form_rating = 0
+    print("\n\nForm Rating", type(form_rating), form_rating)
+
+    # form_genre = request.form.get("genre")
+    print("\n\nForm Genre", type(form_genre), form_genre)
+    # form_private_view = request.form.get("private_view")
+    print("\n\nForm Private View", type(form_private_view), form_private_view)
 
     # Query Book Repository based on the search form data
     # Private Search "form_private_view == "on"
     if form_private_view == "on":
         if form_isbn:
-            books_pagination = Book.objects.filter(user=current_user.username, ISBN=form_isbn)
-            return render_template("test.html", books_pagination=books_pagination)
+            book_query_results = Book.objects.filter(user=current_user.username, ISBN=form_isbn).paginate(page=page, per_page=7)
+            return render_template("search_results.html", book_query_results=book_query_results, page_prev=(page-1), page_next=(page+1))
+            print("1: user=current_user.username, ISBN=form_isbn")
         elif form_genre == None:
-            books_pagination = Book.objects.filter(user=current_user.username, title__icontains=form_title, author__icontains=form_author, rating__gte=form_rating).order_by("+title", "+author", "-rating")
-            return render_template("test.html", books_pagination=books_pagination)
+            book_query_results = Book.objects.filter(user=current_user.username, title__icontains=form_title, author__icontains=form_author, rating__gte=form_rating).order_by("+title", "+author", "-rating").paginate(page=page, per_page=7)
+            return render_template("search_results.html", book_query_results=book_query_results, page_prev=(page-1), page_next=(page+1))
+            print("2: user=current_user.username, title__icontains=form_title, author__icontains=form_author, rating__gte=form_rating")
         else:
-            books_pagination = Book.objects.filter(user=current_user.username, title__icontains=form_title, author__icontains=form_author, rating__gte=form_rating, genre=form_genre).order_by("+title", "+author", "-rating")
-            return render_template("test.html", books_pagination=books_pagination)
+            book_query_results = Book.objects.filter(user=current_user.username, title__icontains=form_title, author__icontains=form_author, rating__gte=form_rating, genre=form_genre).order_by("+title", "+author", "-rating").paginate(page=page, per_page=7)
+            return render_template("search_results.html", book_query_results=book_query_results, page_prev=(page-1), page_next=(page+1))
+            print("3: user=current_user.username, title__icontains=form_title, author__icontains=form_author, rating__gte=form_rating, genre=form_genre")
     # Public Search "form_private_view == None"
     else:
         if form_isbn:
-            books_pagination = Book.objects.filter(ISBN=form_isbn, private_view="")
-            return render_template("test.html", books_pagination=books_pagination)
-            # return render_template("test.html", books_pagination=books_pagination, private_view="")
+            book_query_results = Book.objects.filter(ISBN=form_isbn, private_view="").paginate(page=page, per_page=7)
+            return render_template("search_results.html", book_query_results=book_query_results, page_prev=(page-1), page_next=(page+1))
+            print("4: ISBN=form_isbn, private_view="").paginate(page=page, per_page=7")
         elif form_genre == None:
-            books_pagination = Book.objects.filter(title__icontains=form_title, author__icontains=form_author, rating__gte=form_rating).order_by("+title", "+author", "-rating")
-            # books_pagination = Book.objects.filter(title__icontains=form_title, author__icontains=form_author, rating__gte=form_rating, private_view="").order_by("+title", "+author", "-rating")
-            return render_template("test.html", books_pagination=books_pagination)
+            book_query_results = Book.objects.filter(title__icontains=form_title, author__icontains=form_author, rating__gte=form_rating).order_by("+title", "+author", "-rating").paginate(page=page, per_page=7)
+            return render_template("search_results.html", book_query_results=book_query_results, page_prev=(page-1), page_next=(page+1))
+            print("5: title__icontains=form_title, author__icontains=form_author, rating__gte=form_rating")
         else:
-            books_pagination = Book.objects.filter(title__icontains=form_title, author__icontains=form_author, rating__gte=form_rating, genre=form_genre).order_by("+title", "+author", "-rating")
-            # books_pagination = Book.objects.filter(title__icontains=form_title, author__icontains=form_author, rating__gte=form_rating, genre=form_genre, private_view="").order_by("+title", "+author", "-rating")
-            return render_template("test.html", books_pagination=books_pagination)
+            book_query_results = Book.objects.filter(title__icontains=form_title, author__icontains=form_author, rating__gte=form_rating, genre=form_genre).order_by("+title", "+author", "-rating").paginate(page=page, per_page=7)
+            return render_template("search_results.html", book_query_results=book_query_results, page_prev=(page-1), page_next=(page+1))
+            print("6: title__icontains=form_title, author__icontains=form_author, rating__gte=form_rating, genre=form_genre")
 
     # book_query_results = Book.objects.filter(user=current_user.username, title__icontains=form_title, author__icontains=form_author, ISBN=form_isbn, rating__lte=form_rating, genre=form_genre).order_by("+title", "+author", "-rating").paginate(page=page, per_page=7)
 
