@@ -247,8 +247,7 @@ def member_page(page=1):
 
     app.logger.info(f"Member Page Accessed by {current_user.username}.")
 
-    books_pagination = Book.objects.filter(
-        user=current_user.username).paginate(page=page, per_page=7)
+    books_pagination = Book.objects.filter(user=current_user.username).paginate(page=page, per_page=7)
     return render_template("members.html", books_pagination=books_pagination, page_prev=(page-1), page_next=(page+1))
 
 
@@ -354,31 +353,50 @@ def search_book():
 
 
 @app.route("/search_results", methods=["POST"])
+# @app.route("/search_results/<int:page>")
 @login_required
 def search_results():
-    fields = {
-        "title": request.form.get("title"),
-        "author": request.form.get("author"),
-        "ISBN": request.form.get("isbn"),
-        "rating": request.form.get("rating"),
-        "genre": request.form.get("genre"),
-        "private_view": request.form.get("private_view")
-    }
-    test_results = Book.objects.filter(rating__lte=6)
-    print("\n\n---------------------\n\nRating Filter:", test_results.to_json())
-
+    # Get search form data
     form_title = request.form.get("title")
     form_author = request.form.get("author")
+    try:
+        form_isbn = int(request.form.get("isbn"))
+    except ValueError:
+        form_isbn = 0
+
+    try:
+        form_rating = int(request.form.get("rating"))
+    except ValueError:
+        form_rating = 1
+
     form_genre = request.form.get("genre")
-    test_results = Book.objects.filter(title__icontains=form_title)
-    print("\n\n---------------------\n\nTitle Filter:", test_results.to_json())
+    form_private_view = request.form.get("private_view")
 
-    combo_query = Book.objects.filter(title__icontains=form_title, author__icontains=form_author, rating__lte=8, genre=form_genre).order_by("-rating")
-    print("\n\n---------------------\n\nCombo Filter:", combo_query.to_json())
-    
+    print(form_title, form_author, form_isbn, form_rating, form_genre)
 
-    return render_template_string(f"{fields}")
-    # {'title': 'The Art of War', 'author': 'Sun Tzu', 'ISBN': '9780877735373', 'rating': '3', 'genre': '(NF) Philosophy', 'private_view': None}
+    # Query Book Repository based on the search form data
+    if form_private_view == "on":
+        if form_isbn:
+            books_pagination = Book.objects.filter(user=current_user.username, ISBN=form_isbn)
+            return render_template("test.html", books_pagination=books_pagination)
+        elif form_genre == None:
+            books_pagination = Book.objects.filter(user=current_user.username, title__icontains=form_title, author__icontains=form_author, rating__gte=form_rating).order_by("+title", "+author", "-rating")
+            return render_template("test.html", books_pagination=books_pagination)
+        else:
+            books_pagination = Book.objects.filter(user=current_user.username, title__icontains=form_title, author__icontains=form_author, rating__gte=form_rating, genre=form_genre).order_by("+title", "+author", "-rating")
+            return render_template("test.html", books_pagination=books_pagination)
+    else:
+        if form_isbn:
+            books_pagination = Book.objects.filter(ISBN=form_isbn)
+            return render_template("test.html", books_pagination=books_pagination)
+        elif form_genre == None:
+            books_pagination = Book.objects.filter(title__icontains=form_title, author__icontains=form_author, rating__gte=form_rating).order_by("+title", "+author", "-rating")
+            return render_template("test.html", books_pagination=books_pagination)
+        else:
+            books_pagination = Book.objects.filter(title__icontains=form_title, author__icontains=form_author, rating__gte=form_rating, genre=form_genre).order_by("+title", "+author", "-rating")
+            return render_template("test.html", books_pagination=books_pagination)
+
+    # book_query_results = Book.objects.filter(user=current_user.username, title__icontains=form_title, author__icontains=form_author, ISBN=form_isbn, rating__lte=form_rating, genre=form_genre).order_by("+title", "+author", "-rating").paginate(page=page, per_page=7)
 
 
 # export PRODUCTION=ON | OFF in TEST
