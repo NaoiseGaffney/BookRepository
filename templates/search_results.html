@@ -61,6 +61,8 @@
     <ul class="collapsible popout">
         {% if book_query_results %}
         {% for book in book_query_results.items %}
+        {% if book.private_view and book.user != current_user.username %}
+        {% else %}
         <li>
             <div class="collapsible-header">
                 <div class="book_spine">
@@ -113,7 +115,7 @@
                 {% endif %}
             </div>
         </li>
-
+        {% endif %}
         {% endfor %}
         {% endif %}
     </ul>
