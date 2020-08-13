@@ -1,0 +1,159 @@
+{% extends "flask_user_layout.html" %}
+{% block content %}
+<div class="container">
+    <h6>
+        {% if call_or_get(current_user.is_authenticated) %}
+        Home
+        {% else %}
+        <a href="{{ url_for('home_page')}}">Home</a>
+        {% endif %}
+        &nbsp; > &nbsp;<a href="{{ url_for('member_page') }}">Member's Page</a>&nbsp; > &nbsp;<a href="{{ url_for('search_book')}}">Search Books</a>&nbsp; > &nbsp;<a href="{{ url_for('search_results') }}">Results Page</a>&nbsp;<i
+            class="material-icons prefix tooltipped blue-text text-darken-4" data-position="bottom" role="tooltip"
+            tabindex="10"
+            data-tooltip="<p class='left-align'>To view a book, click on the 'book spine' or eye icon.</p><br>
+        <p class='left-align'>To edit a book's details, click on the pencil icon for the book you want to edit.</p><br>
+        <p class='left-align'>To delete a book, click on the rubbish bin/dust-bin icon and answer yes or no to the question.</p><br>
+        <p class='left-align'>Use the page numbers to navigate to a different page.</p><br>
+        <p class='left-align'>To add a book, or search for books, click on the 'Book' icon under the naviagation menu.</p>">help</i>
+
+        <span class="book-dropdown right">
+            <span class="white-text btn waves-effect waves-light right blue darken-4"><i
+                    class="material-icons white-text">import_contacts</i></span>
+            <span class="book-dropdown-content">
+                <span><a href="{{ url_for('add_book')}}" class="blue-text btn text-darken-4 white">Add Book&nbsp;<i
+                            class="material-icons blue-text text-darken-4 right">import_contacts</i><i
+                            class="material-icons blue-text text-darken-4 right">plus_one</i></a></span>
+                <span><br>&nbsp;<br></span>
+                <span><a href="{{ url_for('search_book')}}" class="blue-text btn text-darken-4 white">Search
+                        Books&nbsp;<i class="material-icons blue-text text-darken-4 right">search</i></a></span>
+            </span>
+        </span>
+    </h6>
+    {# Macro for creating navigation links #}
+    {% macro render_navigation(pagination, endpoint) %}
+    <div class="pagination">Page #:
+        {% if page_prev == 0 %}
+        &lt;&nbsp;
+        {% else %}
+        <a href="{{ url_for(endpoint, page=page_prev) }}">&lt;&nbsp;</a>
+        {% endif %}
+        {% if pagination.has_next %}
+        <a href="{{ url_for(endpoint, page=page_next) }}">&gt;&nbsp;</a>
+        {% else %}
+        &gt;&nbsp;
+        {% endif %}
+        {% for page in pagination.iter_pages() %}
+        {% if page %}
+        {% if page != pagination.page %}
+        <a href="{{ url_for(endpoint, page=page) }}">{{ page }}</a>
+        {% else %}
+        <span style="background-color: #0D47A1; color: white; padding: 1px 5px;">{{ page }}</span>
+        {% endif %}
+        {% else %}
+        <span class="ellipsis">…</span>
+        {% endif %}
+        {% endfor %}
+    </div>
+    {% endmacro %}
+
+    {{ render_navigation(book_query_results, 'search_results') }}
+
+    <ul class="collapsible popout">
+        {% if book_query_results %}
+        {% for book in book_query_results.items %}
+        {% if book.private_view and book.user != current_user.username %}
+        <li>
+            <div class="collapsible-header">
+                <div class="book_spine">
+                    <a href="{{url_for('edit_book', book_id=book.id)}}"><i
+                            class="material-icons blue-text text-darken-4">create</i></a>
+                    <a class="modal-trigger" href="#delete_book_{{book.id}}"><i
+                            class="material-icons pink-text text-darken-1">delete_forever</i></a>
+                    <i class="material-icons teal-text text-lighten-1">visibility</i>
+        
+                    <div id="delete_book_{{book.id}}" class="modal">
+                        <div class="modal-content">
+                            <h6>Deleting Book: HIDDEN, by HIDDEN</h6>
+                            <p>This action will permanently delete this book from your Book Repository. Are you sure you
+                                wish to
+                                do this?</p>
+                        </div>
+                        <div class="modal-footer">
+                            <a href="{{url_for('delete_book', book_id=book.id)}}" class="modal-close btn blue darken-4"><i
+                                    class="material-icons white-text">delete_forever</i>&nbsp;Yes</a>
+                            <a href="#!" class="modal-close btn blue darken-4"><i
+                                    class="material-icons white-text">pan_tool</i>&nbsp;No</a>
+                        </div>
+                    </div>
+        
+                </div>
+                <div>
+                    <h6>HIDDEN, by HIDDEN</h6>
+                </div>
+            </div>
+            <div class="collapsible-body">
+                <p>This book is hidden from public searches by the user.</p>
+            </div>
+        </li>
+        {% else %}
+        <li>
+            <div class="collapsible-header">
+                <div class="book_spine">
+                    <a href="{{url_for('edit_book', book_id=book.id)}}"><i
+                            class="material-icons blue-text text-darken-4">create</i></a>
+                    <a class="modal-trigger" href="#delete_book_{{book.id}}"><i
+                            class="material-icons pink-text text-darken-1">delete_forever</i></a>
+                    <i class="material-icons teal-text text-lighten-1">visibility</i>
+
+                    <div id="delete_book_{{book.id}}" class="modal">
+                        <div class="modal-content">
+                            <h6>Deleting Book: {{book.title}}, by {{book.author}}</h6>
+                            <p>This action will permanently delete this book from your Book Repository. Are you sure you
+                                wish to
+                                do this?</p>
+                        </div>
+                        <div class="modal-footer">
+                            <a href="{{url_for('delete_book', book_id=book.id)}}"
+                                class="modal-close btn blue darken-4"><i
+                                    class="material-icons white-text">delete_forever</i>&nbsp;Yes</a>
+                            <a href="#!" class="modal-close btn blue darken-4"><i
+                                    class="material-icons white-text">pan_tool</i>&nbsp;No</a>
+                        </div>
+                    </div>
+
+                </div>
+                <div>
+                    <h6>{{book.title}}, by {{book.author}}</h6>
+                </div>
+            </div>
+            <div class="collapsible-body">
+                <p>Published: {{book.year}}, ISBN: {{book.ISBN}}</p>
+                <p>Description: {{book.short_description}}</p>
+                <p>Comments: {{book.comments}}</p>
+                {% if book.rating > 7 %}
+                <p>Rating: {{ book.rating }} <span class="green book_spine">&nbsp;&nbsp;&nbsp;</span></p>
+                {% elif book.rating > 5 %}
+                <p>Rating: {{ book.rating }} <span class="orange book_spine">&nbsp;&nbsp;&nbsp;</span></p>
+                {% else %}
+                <p>Rating: {{ book.rating }} <span class="red book_spine">&nbsp;&nbsp;&nbsp;</span></p>
+                {% endif %}
+                <p>Genre: {{book.genre}}</p>
+                {% if book.private_view %}
+                <p>Private View: Book is HIDDEN from Public Searches.<i
+                        class="material-icons pink-text text-accent-2">lock</i>
+                </p>
+                {% else %}
+                <p>Private View: Book is SEEN in Public Searches.<i
+                        class="material-icons teal-text text-lighten-1">lock_open</i></p>
+                {% endif %}
+            </div>
+        </li>
+        {% endif %}
+        {% endfor %}
+        {% endif %}
+    </ul>
+
+
+
+</div>
+{% endblock %}
