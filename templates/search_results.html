@@ -64,28 +64,9 @@
         {% if book.private_view and book.user != current_user.username %}
         <li>
             <div class="collapsible-header">
-                <div class="book_spine">
-                    <a href="{{url_for('edit_book', book_id=book.id)}}"><i
-                            class="material-icons blue-text text-darken-4">create</i></a>
-                    <a class="modal-trigger" href="#delete_book_{{book.id}}"><i
-                            class="material-icons pink-text text-darken-1">delete_forever</i></a>
-                    <i class="material-icons teal-text text-lighten-1">visibility</i>
-        
-                    <div id="delete_book_{{book.id}}" class="modal">
-                        <div class="modal-content">
-                            <h6>Deleting Book: HIDDEN, by HIDDEN</h6>
-                            <p>This action will permanently delete this book from your Book Repository. Are you sure you
-                                wish to
-                                do this?</p>
-                        </div>
-                        <div class="modal-footer">
-                            <a href="{{url_for('delete_book', book_id=book.id)}}" class="modal-close btn blue darken-4"><i
-                                    class="material-icons white-text">delete_forever</i>&nbsp;Yes</a>
-                            <a href="#!" class="modal-close btn blue darken-4"><i
-                                    class="material-icons white-text">pan_tool</i>&nbsp;No</a>
-                        </div>
-                    </div>
-        
+                <div class="book_spine"><i class="material-icons grey-text">create</i>
+                    <i class="material-icons grey-text">delete_forever</i></a>
+                    <i class="material-icons grey-text">visibility</i>
                 </div>
                 <div>
                     <h6>HIDDEN, by HIDDEN</h6>
@@ -99,6 +80,11 @@
         <li>
             <div class="collapsible-header">
                 <div class="book_spine">
+                    {% if book.user !=  current_user.username %}
+                        <i class="material-icons grey-text">create</i>
+                        <i class="material-icons grey-text">delete_forever</i></a>
+                        <i class="material-icons grey-text">visibility</i>
+                    {% else %}
                     <a href="{{url_for('edit_book', book_id=book.id)}}"><i
                             class="material-icons blue-text text-darken-4">create</i></a>
                     <a class="modal-trigger" href="#delete_book_{{book.id}}"><i
@@ -120,32 +106,33 @@
                                     class="material-icons white-text">pan_tool</i>&nbsp;No</a>
                         </div>
                     </div>
+                    {% endif %}
 
                 </div>
                 <div>
-                    <h6>{{book.title}}, by {{book.author}}</h6>
+                    <h6><a href="https://www.amazon.co.uk/s?k={{book.ISBN}}" target="_blank" rel="noopener" class="tooltipped" data-position="right" role="tooltip" tabindex="10" data-tooltip="Link to the book at Amazon UK.">{{book.title}}</a>, by {{book.author}}</h6>
                 </div>
             </div>
             <div class="collapsible-body">
-                <p>Published: {{book.year}}, ISBN: {{book.ISBN}}</p>
-                <p>Description: {{book.short_description}}</p>
-                <p>Comments: {{book.comments}}</p>
-                {% if book.rating > 7 %}
-                <p>Rating: {{ book.rating }} <span class="green book_spine">&nbsp;&nbsp;&nbsp;</span></p>
-                {% elif book.rating > 5 %}
-                <p>Rating: {{ book.rating }} <span class="orange book_spine">&nbsp;&nbsp;&nbsp;</span></p>
+                {% if book.private_view %}
+                <p>HIDDEN from Public Searches.<i class="material-icons pink-text darken-1">lock</i></p>
                 {% else %}
-                <p>Rating: {{ book.rating }} <span class="red book_spine">&nbsp;&nbsp;&nbsp;</span></p>
+                <p>SEEN in Public Searches.<i class="material-icons teal-text text-lighten-1">lock_open</i></p>
+                {% endif %}
+                <p>&nbsp;</p>
+                <p>Published: {{book.year}}</p>
+                <p>ISBN: <a href="https://isbnsearch.org/isbn/{{book.ISBN}}" target="_blank" rel="noopener" class="tooltipped" data-position="right" role="tooltip" tabindex="20" data-tooltip="Link to the book at ISBN Search.">{{book.ISBN}}</a></p>
+                {% if book.rating > 7 %}
+                <p>Rating: {{ book.rating }} <span class="teal lighten-1 book_spine">&nbsp;&nbsp;&nbsp;</span></p>
+                {% elif book.rating > 5 %}
+                <p>Rating: {{ book.rating }} <span class="blue darken-4 book_spine">&nbsp;&nbsp;&nbsp;</span></p>
+                {% else %}
+                <p>Rating: {{ book.rating }} <span class="pink darken-1 book_spine">&nbsp;&nbsp;&nbsp;</span></p>
                 {% endif %}
                 <p>Genre: {{book.genre}}</p>
-                {% if book.private_view %}
-                <p>Private View: Book is HIDDEN from Public Searches.<i
-                        class="material-icons pink-text text-accent-2">lock</i>
-                </p>
-                {% else %}
-                <p>Private View: Book is SEEN in Public Searches.<i
-                        class="material-icons teal-text text-lighten-1">lock_open</i></p>
-                {% endif %}
+                <p>&nbsp;</p>
+                <p>Description: {{book.short_description}}</p>
+                <p>Comments: {{book.comments}}</p>
             </div>
         </li>
         {% endif %}
