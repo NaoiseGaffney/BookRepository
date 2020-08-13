@@ -2,7 +2,6 @@ import logging  # Enable logging of application events (info, warning, error)
 import os
 from flask import Flask, render_template_string, render_template, redirect, url_for, request, flash, session
 from flask_mongoengine import MongoEngine, MongoEngineSession, MongoEngineSessionInterface
-# from mongoengine.queryset.visitor import Q
 from flask_user import login_required, UserManager, UserMixin, current_user, roles_required
 import datetime
 from flask_debugtoolbar import DebugToolbarExtension
