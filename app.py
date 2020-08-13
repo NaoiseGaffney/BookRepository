@@ -18,7 +18,7 @@ load_dotenv(dotenv_path=env_path)
 # Setup Flask and load app.config
 app = Flask(__name__, static_folder="static", template_folder="templates")
 app.config.from_object(__name__+".ConfigClass")
-app.debug = True
+# app.debug = True
 
 # Initialize logging - set after app initialisation
 app.logger.setLevel(logging.INFO)
