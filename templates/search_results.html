@@ -83,7 +83,7 @@
                     {% if book.user !=  current_user.username %}
                         <i class="material-icons grey-text">create</i>
                         <i class="material-icons grey-text">delete_forever</i></a>
-                        <i class="material-icons grey-text">visibility</i>
+                        <i class="material-icons teal-text text-lighten-1">visibility</i>
                     {% else %}
                     <a href="{{url_for('edit_book', book_id=book.id)}}"><i
                             class="material-icons blue-text text-darken-4">create</i></a>
