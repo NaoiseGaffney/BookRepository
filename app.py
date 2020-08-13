@@ -1,16 +1,11 @@
-import logging
+import logging  # Enable logging of application events (info, warning, error)
 import os
 from flask import Flask, render_template_string, render_template, redirect, url_for, request, flash, session
 from flask_mongoengine import MongoEngine, MongoEngineSession, MongoEngineSessionInterface
+# from mongoengine.queryset.visitor import Q
 from flask_user import login_required, UserManager, UserMixin, current_user, roles_required
-# from wtforms.validators import DataRequired
-# from mongoengine.errors import NotUniqueError
 import datetime
 from flask_debugtoolbar import DebugToolbarExtension
-
-# generates WTForms from MongoEngine models
-# from flask_mongoengine.wtf import model_form
-
 
 from config import ConfigClass
 
@@ -18,8 +13,6 @@ from dotenv import load_dotenv
 from pathlib import Path
 env_path = Path(".") / ".env"
 load_dotenv(dotenv_path=env_path)
-
-# Enable logging of application events (info, warning, error)
 
 """ Flask application factory """
 
@@ -78,9 +71,6 @@ class Book(db.Document):
     rating = db.IntField(choices=[1, 2, 3, 4, 5, 6, 7, 8, 9, 10])
     genre = db.StringField(default="")
     private_view = db.StringField(default="")
-
-    # def calc_votes(self):
-    # self.rating = mean(n for n in self.votes if n is not None)
 
     meta = {
         "auto_create_index": True,
@@ -376,41 +366,8 @@ def save_search():
 @app.route("/search_results/<int:page>")
 @login_required
 def search_results(page=1):
-    # Get search form data
-    print("Request Cookies:", request.cookies)
-    print("Request View Args:", request.view_args)
-    print("Request URL:", request.url)
-    print("Session Fields:", session.get("fields"))
-
-    """ 
-    Request Cookies: ImmutableMultiDict([('session', '5b968b5a-bda1-4673-a518-a9892299f1a1')])
-    Request View Args: {}
-    Request URL: http://127.0.0.1:5000/search_results
-
-    Request Cookies: ImmutableMultiDict([('session', '5b968b5a-bda1-4673-a518-a9892299f1a1')])
-    Request View Args: {}
-    Request URL: http://127.0.0.1:5000/search_results?page=2
-
-    Request Cookies: ImmutableMultiDict([('session', '5b968b5a-bda1-4673-a518-a9892299f1a1')])
-    Request View Args: {'page': 3}
-    Request URL: http://127.0.0.1:5000/search_results/3
-
-    Request Cookies: ImmutableMultiDict([('cookieconsent_status', 'dismiss'), ('session', 'eb23efc3-2e8c-4bc1-a48d-200e383ec5cc'), ('fldt', 'hide')])
-    Request View Args: {}
-    Request URL: http://127.0.0.1:5000/search_results
-    Session Fields: {'title': '', 'author': '', 'year': None, 'ISBN': '', 'short_description': None, 'comments': None, 'rating': '', 'genre': None, 'private_view': None}
-    """
-
-
-    # form_title = "art"
-    # form_author = "sun"
-    # form_isbn = None
-    # form_rating = 1
-    # form_genre = None
-    # form_private_view = "on"
-
+    # Get search form data from session cookie
     fields = session.get("fields")
-    print("Get Session Fields:", fields)
 
     form_title = fields["title"]
     form_author = fields["author"]
@@ -429,63 +386,35 @@ def search_results(page=1):
     form_genre = fields["genre"]
     form_private_view = fields["private_view"]
 
-
-    # form_title = request.form.get("title")
-    print("\n\nForm Title", type(form_title), form_title)
-    # form_author = request.form.get("author")
-    print("\n\nForm Author", type(form_author), form_author)
-    # try:
-    #     form_isbn = int(request.form.get("isbn"))
-    # except ValueError:
-    #     form_isbn = 0
-    # except TypeError:
-    #     form_isbn = 0
-    print("\n\nForm ISBN", type(form_isbn), form_isbn)
-
-    # try:
-    #     form_rating = int(request.form.get("rating"))
-    # except ValueError:
-    #     form_rating = 1
-    # except TypeError:
-    #     form_rating = 0
-    print("\n\nForm Rating", type(form_rating), form_rating)
-
-    # form_genre = request.form.get("genre")
-    print("\n\nForm Genre", type(form_genre), form_genre)
-    # form_private_view = request.form.get("private_view")
-    print("\n\nForm Private View", type(form_private_view), form_private_view)
-
     # Query Book Repository based on the search form data
     # Private Search "form_private_view == "on"
     if form_private_view == "on":
         if form_isbn:
             book_query_results = Book.objects.filter(user=current_user.username, ISBN=form_isbn).paginate(page=page, per_page=7)
+            app.logger.info(f"1: Private & ISBN Search: {book_query_results}")
             return render_template("search_results.html", book_query_results=book_query_results, page_prev=(page-1), page_next=(page+1))
-            print("1: user=current_user.username, ISBN=form_isbn")
         elif form_genre == None:
             book_query_results = Book.objects.filter(user=current_user.username, title__icontains=form_title, author__icontains=form_author, rating__gte=form_rating).order_by("+title", "+author", "-rating").paginate(page=page, per_page=7)
+            app.logger.info(f"2: Private, no Genre, no ISBN, Title, Author, and Rating Search: {book_query_results}")
             return render_template("search_results.html", book_query_results=book_query_results, page_prev=(page-1), page_next=(page+1))
-            print("2: user=current_user.username, title__icontains=form_title, author__icontains=form_author, rating__gte=form_rating")
         else:
             book_query_results = Book.objects.filter(user=current_user.username, title__icontains=form_title, author__icontains=form_author, rating__gte=form_rating, genre=form_genre).order_by("+title", "+author", "-rating").paginate(page=page, per_page=7)
+            app.logger.info(f"3: Private, no ISBN, Title, Author, Rating, and Genre Search: {book_query_results}")
             return render_template("search_results.html", book_query_results=book_query_results, page_prev=(page-1), page_next=(page+1))
-            print("3: user=current_user.username, title__icontains=form_title, author__icontains=form_author, rating__gte=form_rating, genre=form_genre")
     # Public Search "form_private_view == None"
     else:
         if form_isbn:
             book_query_results = Book.objects.filter(ISBN=form_isbn, private_view="").paginate(page=page, per_page=7)
+            app.logger.info(f"4: Public & ISBN Search: {book_query_results}")
             return render_template("search_results.html", book_query_results=book_query_results, page_prev=(page-1), page_next=(page+1))
-            print("4: ISBN=form_isbn, private_view="").paginate(page=page, per_page=7")
         elif form_genre == None:
             book_query_results = Book.objects.filter(title__icontains=form_title, author__icontains=form_author, rating__gte=form_rating).order_by("+title", "+author", "-rating").paginate(page=page, per_page=7)
+            app.logger.info(f"5: Public, no Genre, no ISBN, Title, Author, and Rating Search: {book_query_results}")
             return render_template("search_results.html", book_query_results=book_query_results, page_prev=(page-1), page_next=(page+1))
-            print("5: title__icontains=form_title, author__icontains=form_author, rating__gte=form_rating")
         else:
             book_query_results = Book.objects.filter(title__icontains=form_title, author__icontains=form_author, rating__gte=form_rating, genre=form_genre).order_by("+title", "+author", "-rating").paginate(page=page, per_page=7)
+            app.logger.info(f"6: Public, no ISBN, Title, Author, Rating, and Genre Search: {book_query_results}")
             return render_template("search_results.html", book_query_results=book_query_results, page_prev=(page-1), page_next=(page+1))
-            print("6: title__icontains=form_title, author__icontains=form_author, rating__gte=form_rating, genre=form_genre")
-
-    # book_query_results = Book.objects.filter(user=current_user.username, title__icontains=form_title, author__icontains=form_author, ISBN=form_isbn, rating__lte=form_rating, genre=form_genre).order_by("+title", "+author", "-rating").paginate(page=page, per_page=7)
 
 
 # export PRODUCTION=ON | OFF in TEST

@@ -7,7 +7,7 @@
         {% else %}
         <a href="{{ url_for('home_page')}}">Home</a>
         {% endif %}
-        &nbsp; > &nbsp;<a href="{{ url_for('search_results') }}">Results Page</a>&nbsp;<i
+        &nbsp; > &nbsp;<a href="{{ url_for('member_page') }}">Member's Page</a>&nbsp; > &nbsp;<a href="{{ url_for('search_book')}}">Search Books</a>&nbsp; > &nbsp;<a href="{{ url_for('search_results') }}">Results Page</a>&nbsp;<i
             class="material-icons prefix tooltipped blue-text text-darken-4" data-position="bottom" role="tooltip"
             tabindex="10"
             data-tooltip="<p class='left-align'>To view a book, click on the 'book spine' or eye icon.</p><br>
@@ -62,6 +62,39 @@
         {% if book_query_results %}
         {% for book in book_query_results.items %}
         {% if book.private_view and book.user != current_user.username %}
+        <li>
+            <div class="collapsible-header">
+                <div class="book_spine">
+                    <a href="{{url_for('edit_book', book_id=book.id)}}"><i
+                            class="material-icons blue-text text-darken-4">create</i></a>
+                    <a class="modal-trigger" href="#delete_book_{{book.id}}"><i
+                            class="material-icons pink-text text-darken-1">delete_forever</i></a>
+                    <i class="material-icons teal-text text-lighten-1">visibility</i>
+        
+                    <div id="delete_book_{{book.id}}" class="modal">
+                        <div class="modal-content">
+                            <h6>Deleting Book: HIDDEN, by HIDDEN</h6>
+                            <p>This action will permanently delete this book from your Book Repository. Are you sure you
+                                wish to
+                                do this?</p>
+                        </div>
+                        <div class="modal-footer">
+                            <a href="{{url_for('delete_book', book_id=book.id)}}" class="modal-close btn blue darken-4"><i
+                                    class="material-icons white-text">delete_forever</i>&nbsp;Yes</a>
+                            <a href="#!" class="modal-close btn blue darken-4"><i
+                                    class="material-icons white-text">pan_tool</i>&nbsp;No</a>
+                        </div>
+                    </div>
+        
+                </div>
+                <div>
+                    <h6>HIDDEN, by HIDDEN</h6>
+                </div>
+            </div>
+            <div class="collapsible-body">
+                <p>This book is hidden from public searches by the user.</p>
+            </div>
+        </li>
         {% else %}
         <li>
             <div class="collapsible-header">
