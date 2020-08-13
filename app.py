@@ -361,6 +361,13 @@ def save_search():
     return redirect(url_for("search_results"))
 
 
+@app.route("/administration", methods=["GET", "POST"])
+@roles_required("Admin")
+def administration():
+
+    return render_template_string("Administration Page")
+
+
 @app.route("/search_results", methods=["GET", "POST"])
 @app.route("/search_results/<int:page>")
 @login_required
