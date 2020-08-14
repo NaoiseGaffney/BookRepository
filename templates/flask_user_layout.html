@@ -5,6 +5,13 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="Description"
+        content="Developer and Designer: Naoise Gaffney - 'Gaff'. Title: Book Repository. Reason: third 
+        milestone project for the Code Institute's Diploma in Full Stack Development. Description: The 
+        Book Repository is a digital or virtual library to store information about your books, such as 
+        title, author, year published, ISBN, rating, description, and your personal reflection and comments.
+        The Book Repository provides a private and public search function too, using any combination of title, 
+        author, ISBN, and rating.">
     <link rel="apple-touch-icon" sizes="180x180" href="/static/images/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="/static/images/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/static/images/favicon-16x16.png">
@@ -32,7 +39,8 @@
     {# *** Allow sub-templates to insert extra html to the head section *** #}
     {% block extra_css %}{% endblock %}
     <!-- Cookie Consent by Osano: https://www.osano.com/cookieconsent/download/ -->
-    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/cookieconsent@3/build/cookieconsent.min.css" />
+    <link rel="stylesheet" type="text/css"
+        href="https://cdn.jsdelivr.net/npm/cookieconsent@3/build/cookieconsent.min.css" />
 </head>
 
 
@@ -49,7 +57,8 @@
                 <ul class="right hide-on-med-and-down blue darken-4 waves-effect" id="nav-mobile">
                     {% if call_or_get(current_user.is_authenticated) %}
                     <li>
-                        <a href="{{ url_for('member_page')}}">Member's Page<i class="material-icons right">dashboard</i></a>
+                        <a href="{{ url_for('member_page')}}">Member's Page<i
+                                class="material-icons right">dashboard</i></a>
                     </li>
                     <li>
                         <a href="{{ url_for('user.edit_user_profile') }}">{{ current_user.username or current_user.email }}<i
@@ -83,7 +92,8 @@
                         class="material-icons white-text left">dashboard</i></a>
             </li>
             <li>
-                <a href="{{ url_for('user.edit_user_profile') }}" class="white-text">{{ current_user.username or current_user.email }}<i
+                <a href="{{ url_for('user.edit_user_profile') }}"
+                    class="white-text">{{ current_user.username or current_user.email }}<i
                         class="material-icons white-text left">account_box</i></a>
             </li>
             <li>
@@ -132,8 +142,8 @@
     <footer class="page-footer transparent">
         <div class="footer-copyright blue darken-4">
             <div class="left-align">{{ user_manager.USER_APP_NAME }} {{ user_manager.USER_APP_VERSION }}</div>
-            <div class="center-align"><a class="modal-trigger" href="#about"><i
-                        class="material-icons white-text" id="menu_book">menu_book</i></a></div>
+            <div class="center-align"><a class="modal-trigger" href="#about"><i class="material-icons white-text"
+                        id="menu_book">menu_book</i></a></div>
             <div class="right-align">&copy; {{ user_manager.USER_COPYRIGHT_YEAR }}
                 {{ user_manager.USER_CORPORATION_NAME }}</div>
         </div>
@@ -163,7 +173,8 @@
                     <div id="gaff" class="flow-text">
                         <p class="flow-text blue-text text-darken-4">Naoise Gaffney - "Gaff"</p>
                         <p><img src="/static/images/Gaff.png" height="150" alt="Gaff"></p>
-                        <p>Code Institute Learner and Developer of this Book Repository Milestone Project 3 for the Code Institute Diploma in Full Stack Development.</p>
+                        <p>Code Institute Learner and Developer of this Book Repository Milestone Project 3 for the Code
+                            Institute Diploma in Full Stack Development.</p>
                         <p>UX Designer, Python Programmer...</p>
                     </div>
                     <div id="ecs_logo" class="flow-text">
@@ -175,7 +186,8 @@
                     <div id="code" class="flow-text">
                         <p class="flow-text blue-text text-darken-4">Code on GitHub</p>
                         <p>Code on GitHub...</p>
-                        <p><a href="https://github.com/NaoiseGaffney/BookRepository" target="_blank" rel="noopener" class="blue darken-4 waves-effect">Link to the Book Repository Repository on GitHub.</a>
+                        <p><a href="https://github.com/NaoiseGaffney/BookRepository" target="_blank" rel="noopener"
+                                class="blue darken-4 waves-effect">Link to the Book Repository Repository on GitHub.</a>
                         </p>
                     </div>
                     <div class="modal-footer">
@@ -199,9 +211,9 @@
     {# *** Allow sub-templates to insert extra html to the bottom of the body *** #}
     {% block extra_js %}{% endblock %}
 
-<!-- Cookie Consent by Osano: https://www.osano.com/cookieconsent/download/ -->
-<script src="https://cdn.jsdelivr.net/npm/cookieconsent@3/build/cookieconsent.min.js" data-cfasync="false"></script>
-<script src="/static/scripts/cookies.js"></script>
+    <!-- Cookie Consent by Osano: https://www.osano.com/cookieconsent/download/ -->
+    <script src="https://cdn.jsdelivr.net/npm/cookieconsent@3/build/cookieconsent.min.js" data-cfasync="false"></script>
+    <script src="/static/scripts/cookies.js"></script>
 </body>
 
 </html>

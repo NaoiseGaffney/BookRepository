@@ -169,8 +169,9 @@ if not Genre.objects:
         {"genre": "(NF) Cooking", "icon": "",
             "description": "Collections of recipes and the history of food."},
         {"genre": "(NF) Crime", "icon": "",
+            "description": "Books that tell the story of a specific crime or criminal, collect stories of various criminals, or tell of a historical crime."},
+        {"genre": "Other", "icon": "",
             "description": "Book's genre is not in the list."},
-        {"genre": "Other", "icon": "", "description": "Books that tell the story of a specific crime or criminal, collect stories of various criminals, or tell of a historical crime."},
     ]
     genre_instances = [Genre(**data) for data in genre_array]
     Genre.objects.insert(genre_instances, load_bulk=False)
@@ -194,7 +195,6 @@ def home_page():
 @login_required
 def member_page(page=1):
     # The "R" in CRUD
-
     """ book = Book(
         title="Fresh Spice",
         author="Arun Kapil",
@@ -228,15 +228,81 @@ def member_page(page=1):
         ISBN=9780717164448,
         user=current_user.username,
         short_description="Recipes and recollections.",
-        comments="An veritable feast of Italian dishes.",
+        comments="A veritable feast of Italian dishes.",
         rating=7,
         genre="(NF) Cooking",
+        private_view=""
+    ).save()
+
+    book = Book(
+        title="PERL by Example",
+        author="Ellie Quigley",
+        year=2008,
+        ISBN=9780132381826,
+        user=current_user.username,
+        short_description="The World's easiest PERL tutorial.",
+        comments="A bit dated, sadly.",
+        rating=4,
+        genre="(NF) Reference",
+        private_view=""
+    ).save()
+    
+    book = Book(
+        title="Knife",
+        author="Tim Hayward",
+        year=2016,
+        ISBN=9781849498913,
+        user=current_user.username,
+        short_description="The culture, craft and cut of the cook's knife.",
+        comments="",
+        rating=7,
+        genre="(NF) Cooking",
+        private_view=""
+    ).save()
+
+    book = Book(
+        title="Cracking the Coding Interview,  6th Edition",
+        author="Gayle Laakmann McDowell",
+        year=2016,
+        ISBN=9780984782857,
+        user=current_user.username,
+        short_description="189 programming questions and solutions.",
+        comments="",
+        rating=7,
+        genre="(NF) Reference",
+        private_view=""
+    ).save()
+
+    book = Book(
+        title="Sapiens, a Brief History of Mankind",
+        author="Yuval Noah Harari",
+        year=2011,
+        ISBN=9780099590088,
+        user=current_user.username,
+        short_description="This is the thrilling account of our extraordinary history - from insignificant apes to rulers of the World.",
+        comments="",
+        rating=7,
+        genre="(F) History",
+        private_view=""
+    ).save()
+
+    book = Book(
+        title="Talking with Psychopaths and Savages",
+        author="Christopher Berry-Dee",
+        year=2017,
+        ISBN=9781786061225,
+        user=current_user.username,
+        short_description="A journey into the evil mind.",
+        comments="",
+        rating=7,
+        genre="(NF) Psychology",
         private_view=""
     ).save() """
 
     app.logger.info(f"Member Page Accessed by {current_user.username}.")
 
-    books_pagination = Book.objects.filter(user=current_user.username).paginate(page=page, per_page=7)
+    books_pagination = Book.objects.filter(
+        user=current_user.username).paginate(page=page, per_page=7)
     return render_template("members.html", books_pagination=books_pagination, page_prev=(page-1), page_next=(page+1))
 
 
@@ -389,30 +455,40 @@ def search_results(page=1):
     # Private Search "form_private_view == "on"
     if form_private_view == "on":
         if form_isbn:
-            book_query_results = Book.objects.filter(user=current_user.username, ISBN=form_isbn).paginate(page=page, per_page=7)
+            book_query_results = Book.objects.filter(
+                user=current_user.username, ISBN=form_isbn).paginate(page=page, per_page=7)
             app.logger.info(f"1: Private & ISBN Search: {book_query_results}")
             return render_template("search_results.html", book_query_results=book_query_results, page_prev=(page-1), page_next=(page+1))
         elif form_genre == None:
-            book_query_results = Book.objects.filter(user=current_user.username, title__icontains=form_title, author__icontains=form_author, rating__gte=form_rating).order_by("+title", "+author", "-rating").paginate(page=page, per_page=7)
-            app.logger.info(f"2: Private, no Genre, no ISBN, Title, Author, and Rating Search: {book_query_results}")
+            book_query_results = Book.objects.filter(user=current_user.username, title__icontains=form_title, author__icontains=form_author, rating__gte=form_rating).order_by(
+                "+title", "+author", "-rating").paginate(page=page, per_page=7)
+            app.logger.info(
+                f"2: Private, no Genre, no ISBN, Title, Author, and Rating Search: {book_query_results}")
             return render_template("search_results.html", book_query_results=book_query_results, page_prev=(page-1), page_next=(page+1))
         else:
-            book_query_results = Book.objects.filter(user=current_user.username, title__icontains=form_title, author__icontains=form_author, rating__gte=form_rating, genre=form_genre).order_by("+title", "+author", "-rating").paginate(page=page, per_page=7)
-            app.logger.info(f"3: Private, no ISBN, Title, Author, Rating, and Genre Search: {book_query_results}")
+            book_query_results = Book.objects.filter(user=current_user.username, title__icontains=form_title, author__icontains=form_author,
+                                                     rating__gte=form_rating, genre=form_genre).order_by("+title", "+author", "-rating").paginate(page=page, per_page=7)
+            app.logger.info(
+                f"3: Private, no ISBN, Title, Author, Rating, and Genre Search: {book_query_results}")
             return render_template("search_results.html", book_query_results=book_query_results, page_prev=(page-1), page_next=(page+1))
     # Public Search "form_private_view == None"
     else:
         if form_isbn:
-            book_query_results = Book.objects.filter(ISBN=form_isbn, private_view="").paginate(page=page, per_page=7)
+            book_query_results = Book.objects.filter(
+                ISBN=form_isbn, private_view="").paginate(page=page, per_page=7)
             app.logger.info(f"4: Public & ISBN Search: {book_query_results}")
             return render_template("search_results.html", book_query_results=book_query_results, page_prev=(page-1), page_next=(page+1))
         elif form_genre == None:
-            book_query_results = Book.objects.filter(title__icontains=form_title, author__icontains=form_author, rating__gte=form_rating).order_by("+title", "+author", "-rating").paginate(page=page, per_page=7)
-            app.logger.info(f"5: Public, no Genre, no ISBN, Title, Author, and Rating Search: {book_query_results}")
+            book_query_results = Book.objects.filter(title__icontains=form_title, author__icontains=form_author, rating__gte=form_rating).order_by(
+                "+title", "+author", "-rating").paginate(page=page, per_page=7)
+            app.logger.info(
+                f"5: Public, no Genre, no ISBN, Title, Author, and Rating Search: {book_query_results}")
             return render_template("search_results.html", book_query_results=book_query_results, page_prev=(page-1), page_next=(page+1))
         else:
-            book_query_results = Book.objects.filter(title__icontains=form_title, author__icontains=form_author, rating__gte=form_rating, genre=form_genre).order_by("+title", "+author", "-rating").paginate(page=page, per_page=7)
-            app.logger.info(f"6: Public, no ISBN, Title, Author, Rating, and Genre Search: {book_query_results}")
+            book_query_results = Book.objects.filter(title__icontains=form_title, author__icontains=form_author, rating__gte=form_rating, genre=form_genre).order_by(
+                "+title", "+author", "-rating").paginate(page=page, per_page=7)
+            app.logger.info(
+                f"6: Public, no ISBN, Title, Author, Rating, and Genre Search: {book_query_results}")
             return render_template("search_results.html", book_query_results=book_query_results, page_prev=(page-1), page_next=(page+1))
 
 
