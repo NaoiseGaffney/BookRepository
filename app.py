@@ -104,6 +104,7 @@ user_manager = UserManager(app, db, User)
 
 # Create admin user as first/default user, if admin does not exist. Password is set using an environment variable.
 if not User.objects.filter(User.username == "admin").first():
+    app.logger.info("Admin user is created on application startup if user does not exist.")
     user = User(
         username="admin",
         first_name="Administrator",
@@ -118,7 +119,7 @@ if not User.objects.filter(User.username == "admin").first():
 
 # Create the Genre Collection if it does not exist. Taken from https://bookriot.com/guide-to-book-genres/
 if not Genre.objects:
-    print("No Genre Objects exist.")
+    app.logger.info("Genre Collection is created on application startup if it does not exist.")
     genre_array = [
         {"genre": "(F) Classic", "icon": "", "description": "A book or author that’s stood the test of time and has continued to inspire meaningful discussion and thought across generations. As gruesome as it sounds, I argue that the author needs to be dead for a book of theirs to be considered a classic."},
         {"genre": "(F) Literary", "icon": "", "description": "Books deemed as having artistic qualities. Often subtle in theme and contain some kind of social/political/personal commentary on what it means to be human. Can contain other genre elements, but the author uses those elements not to be parts of that community, but to highlight an important theme in their work."},
@@ -202,6 +203,7 @@ def home_page():
 @login_required
 def member_page(page=1):
     # The "R" in CRUD, a virtual library or stack of books to browse.
+    app.logger.info(f"{current_user.username} is accessing the Member's Page (members.html). Endpoint: member_page.")
     """ book = Book(
         title="Fresh Spice",
         author="Arun Kapil",
@@ -306,8 +308,6 @@ def member_page(page=1):
         private_view=""
     ).save() """
 
-    app.logger.info(f"Member Page Accessed by {current_user.username}.")
-
     books_pagination = Book.objects.filter(
         user=current_user.username).paginate(page=page, per_page=7)
     return render_template("members.html", books_pagination=books_pagination, page_prev=(page-1), page_next=(page+1))
@@ -317,8 +317,8 @@ def member_page(page=1):
 @login_required
 def add_book():
     # Preparing for the "C" in CRUD, filling in the add book form.
+    app.logger.info(f"{current_user.username} is adding a book (add_book.html) by filling out the add book form. Endpoint: add_book.")
     genre = Genre.objects()
-    app.logger.info(f"{current_user.username} is about to add a book.")
     return render_template("add_book.html", genre=genre)
 
 
@@ -342,11 +342,9 @@ def save_book():
     try:
         book.save()
         flash(f"The book {book.title} was saved!", "success")
-        app.logger.info(
-            f"{book.title} with id {book.id} created by {current_user.username}.")
+        app.logger.info(f"{current_user.username} is saving the book {book.title} with the id {book.id} (add_book.html). Endpoint: save_book.")
     except:
-        app.logger.error(
-            f"{book.title} with id {book.id} not created by {current_user.username}.")
+        app.logger.warning(f"{current_user.username} did not succeed in saving the {book.title} (add_book.html). Endpoint: save_book.")
         flash(f"The book {book.title} was NOT saved!", "danger")
     return redirect(url_for("member_page"))
 
@@ -357,8 +355,7 @@ def edit_book(book_id):
     # Preparing for the "U" in CRUD, updating the book form fields.
     book = Book.objects.get(id=book_id)
     genre = Genre.objects()
-    app.logger.info(
-        f"{book.title} with id {book.id} to be edited by {current_user.username}.")
+    app.logger.info(f"{current_user.username} is updating the book {book.title} with the id {book.id} (edit_book.html). Endpoint: edit_book.")
     return render_template("edit_book.html", book=book, genre=genre)
 
 
@@ -381,11 +378,9 @@ def update_book(book_id):
     try:
         book.update(**fields)
         flash(f"The book {book.title} is updated!", "success")
-        app.logger.info(
-            f"{book.title} with id {book.id} edited by {current_user.username}.")
+        app.logger.info(f"{current_user.username} updated the book {book.title} with the id {book.id} (edit_book.html). Endpoint: update_book.")
     except:
-        app.logger.error(
-            f"{book.title} with id {book.id} NOT updated by {current_user.username}.")
+        app.logger.warning(f"{current_user.username} did not update the book {book.title} with the id {book.id} (edit_book.html). Endpoint: update_book.")
         flash(f"The book {book.title} was NOT updated!", "danger")
     return redirect(url_for("member_page"))
 
@@ -398,12 +393,10 @@ def delete_book(book_id):
     try:
         book.delete()
         flash(f"The book {book.title} is deleted!", "success")
-        app.logger.info(
-            f"{book.title} with id {book.id} deleted by {current_user.username}.")
+        app.logger.info(f"{current_user.username} deleted the book {book.title} with the id {book.id} (members.html). Endpoint: delete_book.")
     except:
-        app.logger.error(
-            f"{book.title} with id {book.id} NOT deleted by {current_user.username}.")
         flash(f"The book {book.title} was NOT deleted!", "danger")
+        app.logger.warning(f"{current_user.username} did not delete the book {book.title} with the id {book.id} (members.html). Endpoint: delete_book.")
     return redirect(url_for("member_page"))
 
 
@@ -412,6 +405,7 @@ def delete_book(book_id):
 def search_book():
     # Preparing for the book search in Book Repository, filling in the search book form.
     genre = Genre.objects()
+    app.logger.info(f"{current_user.username} is filling out the book search form. (search_book.html). Endpoint: search_book.")
     return render_template("search_book.html", genre=genre)
 
 
@@ -432,6 +426,8 @@ def save_search():
     }
     session["fields"] = fields
     # {'title': '', 'author': '', 'year': None, 'ISBN': '', 'short_description': None, 'comments': None, 'rating': '', 'genre': None, 'private_view': None}
+
+    app.logger.info(f"{current_user.username} is searching (saving search in session cookie) for books matching {fields} (search_results.html). Endpoint: save_search.")
 
     return redirect(url_for("search_results"))
 
@@ -466,38 +462,34 @@ def search_results(page=1):
         if form_isbn:
             book_query_results = Book.objects.filter(
                 user=current_user.username, ISBN=form_isbn).paginate(page=page, per_page=7)
-            app.logger.info(f"1: Private & ISBN Search: {book_query_results}")
+            app.logger.info(f"{current_user.username} found books matching {book_query_results} - 1: Private & ISBN Search (search_results.html). Endpoint: search_results.")
             return render_template("search_results.html", book_query_results=book_query_results, page_prev=(page-1), page_next=(page+1))
         elif form_genre == None:
             book_query_results = Book.objects.filter(user=current_user.username, title__icontains=form_title, author__icontains=form_author, rating__gte=form_rating).order_by(
                 "+title", "+author", "-rating").paginate(page=page, per_page=7)
-            app.logger.info(
-                f"2: Private, no Genre, no ISBN, Title, Author, and Rating Search: {book_query_results}")
+            app.logger.info(f"{current_user.username} found books matching {book_query_results} - 2: Private, no Genre, no ISBN, Title, Author, and Rating Search (search_results.html). Endpoint: search_results.")
             return render_template("search_results.html", book_query_results=book_query_results, page_prev=(page-1), page_next=(page+1))
         else:
             book_query_results = Book.objects.filter(user=current_user.username, title__icontains=form_title, author__icontains=form_author,
                                                      rating__gte=form_rating, genre=form_genre).order_by("+title", "+author", "-rating").paginate(page=page, per_page=7)
-            app.logger.info(
-                f"3: Private, no ISBN, Title, Author, Rating, and Genre Search: {book_query_results}")
+            app.logger.info(f"{current_user.username} found books matching {book_query_results} - 3: Private, no ISBN, Title, Author, Rating, and Genre Search (search_results.html). Endpoint: search_results.")
             return render_template("search_results.html", book_query_results=book_query_results, page_prev=(page-1), page_next=(page+1))
     # Public Search "form_private_view == None"
     else:
         if form_isbn:
             book_query_results = Book.objects.filter(
                 ISBN=form_isbn, private_view="").paginate(page=page, per_page=7)
-            app.logger.info(f"4: Public & ISBN Search: {book_query_results}")
+            app.logger.info(f"{current_user.username} found books matching {book_query_results} - 4: Public & ISBN Search (search_results.html). Endpoint: search_results.")
             return render_template("search_results.html", book_query_results=book_query_results, page_prev=(page-1), page_next=(page+1))
         elif form_genre == None:
             book_query_results = Book.objects.filter(title__icontains=form_title, author__icontains=form_author, rating__gte=form_rating, private_view="").order_by(
                 "+title", "+author", "-rating").paginate(page=page, per_page=7)
-            app.logger.info(
-                f"5: Public, no Genre, no ISBN, Title, Author, and Rating Search: {book_query_results}")
+            app.logger.info(f"{current_user.username} found books matching {book_query_results} - 5: Public, no Genre, no ISBN, Title, Author, and Rating Search (search_results.html). Endpoint: search_results.")
             return render_template("search_results.html", book_query_results=book_query_results, page_prev=(page-1), page_next=(page+1))
         else:
             book_query_results = Book.objects.filter(title__icontains=form_title, author__icontains=form_author, rating__gte=form_rating, genre=form_genre, private_view="").order_by(
                 "+title", "+author", "-rating").paginate(page=page, per_page=7)
-            app.logger.info(
-                f"6: Public, no ISBN, Title, Author, Rating, and Genre Search: {book_query_results}")
+            app.logger.info(f"{current_user.username} found books matching {book_query_results} - 6: Public, no ISBN, Title, Author, Rating, and Genre Search (search_results.html). Endpoint: search_results.")
             return render_template("search_results.html", book_query_results=book_query_results, page_prev=(page-1), page_next=(page+1))
 
 
