@@ -182,6 +182,7 @@ if not Genre.objects:
 
 @app.route("/")
 def home_page():
+    # Landing/Home Page, accessible before signing/logging in.
     if current_user.is_authenticated:
         return redirect(url_for("member_page"))
     return render_template("index.html")
@@ -194,7 +195,7 @@ def home_page():
 @app.route("/members/<int:page>")
 @login_required
 def member_page(page=1):
-    # The "R" in CRUD
+    # The "R" in CRUD, a virtual library or stack of books to browse.
     """ book = Book(
         title="Fresh Spice",
         author="Arun Kapil",
@@ -246,7 +247,7 @@ def member_page(page=1):
         genre="(NF) Reference",
         private_view=""
     ).save()
-    
+
     book = Book(
         title="Knife",
         author="Tim Hayward",
@@ -309,7 +310,7 @@ def member_page(page=1):
 @app.route("/add_book")
 @login_required
 def add_book():
-    # Preparing for the "C" in CRUD
+    # Preparing for the "C" in CRUD, filling in the add book form.
     genre = Genre.objects()
     app.logger.info(f"{current_user.username} is about to add a book.")
     return render_template("add_book.html", genre=genre)
@@ -318,7 +319,7 @@ def add_book():
 @app.route("/save_book", methods=["POST"])
 @login_required
 def save_book():
-    # The "C" in CRUD
+    # The "C" in CRUD, save the filled in add book form.
     book = Book(
         title=request.form.get("title"),
         author=request.form.get("author"),
@@ -347,7 +348,7 @@ def save_book():
 @app.route("/edit_book/<book_id>")
 @login_required
 def edit_book(book_id):
-    # Preparing for the "U" in CRUD
+    # Preparing for the "U" in CRUD, updating the book form fields.
     book = Book.objects.get(id=book_id)
     genre = Genre.objects()
     app.logger.info(
@@ -358,7 +359,7 @@ def edit_book(book_id):
 @app.route("/update_book/<book_id>", methods=["POST"])
 @login_required
 def update_book(book_id):
-    # The "U" in CRUD
+    # The "U" in CRUD, saving the changes made to the update book form fields.
     book = Book.objects.get(id=book_id)
     fields = {
         "title": request.form.get("title"),
@@ -386,7 +387,7 @@ def update_book(book_id):
 @app.route("/delete_book/<book_id>")
 @login_required
 def delete_book(book_id):
-    # The "D" in CRUD
+    # The "D" in CRUD, deleting the book based on 'id' after delete modal confirmation.
     book = Book.objects.get(id=book_id)
     try:
         book.delete()
@@ -403,6 +404,7 @@ def delete_book(book_id):
 @app.route("/search_book")
 @login_required
 def search_book():
+    # Preparing for the book search in Book Repository, filling in the search book form.
     genre = Genre.objects()
     return render_template("search_book.html", genre=genre)
 
@@ -410,6 +412,7 @@ def search_book():
 @app.route("/save_search", methods=["GET", "POST"])
 @login_required
 def save_search():
+    # Save the search book results in a session cookie, to use by 'search_results' repeatedly to display the paginated search results.
     fields = {
         "title": request.form.get("title"),
         "author": request.form.get("author"),
@@ -431,7 +434,7 @@ def save_search():
 @app.route("/search_results/<int:page>")
 @login_required
 def search_results(page=1):
-    # Get search form data from session cookie
+    # Book search using a combination of form fields saved in the session cookie in 'save_search', and based on the values in some key fields decide which Book Repository BaseQuerySet to run.
     fields = session.get("fields")
 
     form_title = fields["title"]
@@ -479,13 +482,13 @@ def search_results(page=1):
             app.logger.info(f"4: Public & ISBN Search: {book_query_results}")
             return render_template("search_results.html", book_query_results=book_query_results, page_prev=(page-1), page_next=(page+1))
         elif form_genre == None:
-            book_query_results = Book.objects.filter(title__icontains=form_title, author__icontains=form_author, rating__gte=form_rating).order_by(
+            book_query_results = Book.objects.filter(title__icontains=form_title, author__icontains=form_author, rating__gte=form_rating, private_view="").order_by(
                 "+title", "+author", "-rating").paginate(page=page, per_page=7)
             app.logger.info(
                 f"5: Public, no Genre, no ISBN, Title, Author, and Rating Search: {book_query_results}")
             return render_template("search_results.html", book_query_results=book_query_results, page_prev=(page-1), page_next=(page+1))
         else:
-            book_query_results = Book.objects.filter(title__icontains=form_title, author__icontains=form_author, rating__gte=form_rating, genre=form_genre).order_by(
+            book_query_results = Book.objects.filter(title__icontains=form_title, author__icontains=form_author, rating__gte=form_rating, genre=form_genre, private_view="").order_by(
                 "+title", "+author", "-rating").paginate(page=page, per_page=7)
             app.logger.info(
                 f"6: Public, no ISBN, Title, Author, Rating, and Genre Search: {book_query_results}")
