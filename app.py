@@ -1,4 +1,5 @@
 import logging  # Enable logging of application events (info, warning, error)
+from logging.handlers import RotatingFileHandler
 import os
 from flask import Flask, render_template_string, render_template, redirect, url_for, request, flash, session
 from flask_mongoengine import MongoEngine, MongoEngineSession, MongoEngineSessionInterface
@@ -20,8 +21,13 @@ app = Flask(__name__, static_folder="static", template_folder="templates")
 app.config.from_object(__name__+".ConfigClass")
 # app.debug = True
 
-# Initialize logging - set after app initialisation
-app.logger.setLevel(logging.INFO)
+# Initialise rotating file logging - set after app initialisation
+logging.basicConfig(
+    handlers=[RotatingFileHandler("./logs/book_repository.log", maxBytes=100000, backupCount=10)],
+    level=os.environ.get("LOGGING_LEVEL"),
+    format="%(name)s - %(levelname)s - %(message)s"
+    )
+
 
 # Setup Flask-MongoEngine
 db = MongoEngine(app)
@@ -48,7 +54,7 @@ class User(db.Document, UserMixin):
     email_confirmed_at = db.DateTimeField()
     # Required for the e-mail confirmation, and subsequent login.
 
-    # Relationships
+    # Relationships  (Roles: user or user and Admin)
     roles = db.ListField(db.StringField(), default=["user"])
 
     meta = {
@@ -379,7 +385,7 @@ def update_book(book_id):
             f"{book.title} with id {book.id} edited by {current_user.username}.")
     except:
         app.logger.error(
-            f"{book.title} with id {book.id} edited by {current_user.username}.")
+            f"{book.title} with id {book.id} NOT updated by {current_user.username}.")
         flash(f"The book {book.title} was NOT updated!", "danger")
     return redirect(url_for("member_page"))
 
