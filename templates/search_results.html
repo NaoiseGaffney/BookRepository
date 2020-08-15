@@ -116,13 +116,13 @@
                 </div>
             </div>
             <div class="collapsible-body">
-                <p>Reader: {{book.user}}</p>
                 {% if book.private_view %}
                 <p>HIDDEN from Public Searches.<i class="material-icons pink-text darken-1">lock</i></p>
                 {% else %}
                 <p>SEEN in Public Searches.<i class="material-icons teal-text text-lighten-1">lock_open</i></p>
                 {% endif %}
                 <p>&nbsp;</p>
+                <p>Reader: {{book.user}}</p>
                 <p>Published: {{book.year}}</p>
                 <p>ISBN: <a href="https://isbnsearch.org/isbn/{{book.ISBN}}" target="_blank" rel="noopener" class="tooltipped" data-position="right" tabindex="20" data-tooltip="Link to the book at ISBN Search.">{{book.ISBN}}</a></p>
                 {% if book.rating > 7 %}
