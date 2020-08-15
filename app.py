@@ -22,13 +22,9 @@ load_dotenv(dotenv_path=env_path)
 
 # Setup Flask and load app.config
 app = Flask(__name__, static_folder="static", template_folder="templates")
-app.config.from_object(ConfigClass)
+# app.config.from_object(ConfigClass)
+app.config.from_object(__name__+".ConfigClass")
 # app.debug = True
-
-
-print(ConfigClass.MAIL_SERVER)
-print(ConfigClass.MAIL_PORT)
-
 
 
 """ # Initialise rotating file logging - set after app initialisation
