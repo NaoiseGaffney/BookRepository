@@ -2,5 +2,8 @@
     "python.pythonPath": ".venv/bin/python",
     "python.linting.pylintEnabled": true,
     "python.linting.enabled": true,
-    "python.linting.flake8Enabled": false
+    "python.linting.flake8Enabled": false,
+    "python.formatting.autopep8Args": [
+        "--ignore=E501"
+    ]
 }
