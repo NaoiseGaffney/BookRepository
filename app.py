@@ -5,6 +5,7 @@ from flask import Flask, render_template_string, render_template, redirect, url_
 from flask_mongoengine import MongoEngine, MongoEngineSession, MongoEngineSessionInterface
 from flask_user import login_required, UserManager, UserMixin, current_user, roles_required
 import datetime
+import requests
 from flask_debugtoolbar import DebugToolbarExtension
 
 from config import ConfigClass
@@ -78,6 +79,7 @@ class Book(db.Document):
     rating = db.IntField(choices=[1, 2, 3, 4, 5, 6, 7, 8, 9, 10])
     genre = db.StringField(default="")
     private_view = db.StringField(default="")
+    book_thumbnail = db.StringField(default="")
 
     meta = {
         "auto_create_index": True,
@@ -223,6 +225,7 @@ def member_page(page=1):
         rating=8,
         genre="(NF) Cooking",
         private_view=""
+        book_thumbnail=""
     ).save()
 
     book = Book(
@@ -236,6 +239,7 @@ def member_page(page=1):
         rating=4,
         genre="(NF) Philosophy",
         private_view=""
+        book_thumbnail=""
     ).save()
 
     book = Book(
@@ -249,6 +253,7 @@ def member_page(page=1):
         rating=7,
         genre="(NF) Cooking",
         private_view=""
+        book_thumbnail=""
     ).save()
 
     book = Book(
@@ -262,6 +267,7 @@ def member_page(page=1):
         rating=4,
         genre="(NF) Reference",
         private_view=""
+        book_thumbnail=""
     ).save()
 
     book = Book(
@@ -275,6 +281,7 @@ def member_page(page=1):
         rating=7,
         genre="(NF) Cooking",
         private_view=""
+        book_thumbnail=""
     ).save()
 
     book = Book(
@@ -288,6 +295,7 @@ def member_page(page=1):
         rating=7,
         genre="(NF) Reference",
         private_view=""
+        book_thumbnail=""
     ).save()
 
     book = Book(
@@ -301,6 +309,7 @@ def member_page(page=1):
         rating=7,
         genre="(F) History",
         private_view=""
+        book_thumbnail=""
     ).save()
 
     book = Book(
@@ -314,6 +323,7 @@ def member_page(page=1):
         rating=7,
         genre="(NF) Psychology",
         private_view=""
+        book_thumbnail=""
     ).save() """
 
     books_pagination = Book.objects.filter(
@@ -353,6 +363,20 @@ def save_book():
         genre=request.form.get("genre"),
         private_view=request.form.get("private_view")
     )
+
+    payload = {}
+    isbn_key = f"isbn:{book.ISBN}"
+    payload["q"] = isbn_key
+    payload["key"] = "AIzaSyC63AOgIhSH-DxdfryU-v6kmGh04RbLjc0"
+    print(payload)
+    try:
+        book_request = requests.get("https://www.googleapis.com/books/v1/volumes", params=payload, headers={'User-agent': 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:61.0) Gecko/20100101 Firefox/61.0'})
+    except BaseException:
+        book_request = "/static/images/BR_logo_no_thumbnail.png"
+    print(book_request.json()["items"][0]["volumeInfo"]["imageLinks"]["thumbnail"])
+
+    book.book_thumbnail = book_request.json()["items"][0]["volumeInfo"]["imageLinks"]["thumbnail"]
+
 
     try:
         book.save()
