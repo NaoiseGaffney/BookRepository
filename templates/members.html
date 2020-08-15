@@ -54,6 +54,8 @@
     
     {{ render_navigation(books_pagination, 'member_page') }}
 
+    {% if books_pagination.items %}
+
     <ul class="collapsible popout">
         {% if books_pagination %}
         {% for book in books_pagination.items %}
@@ -107,6 +109,9 @@
         </li>
 
         {% endfor %}
+        {% endif %}
+        {% else %}
+        <h4 class="container">Please add books to your Book Repository by hovering over the 'Book' icon <span class="white-text btn waves-effect waves-light blue darken-4"><i class="material-icons white-text">import_contacts</i></span> on the top right corner under the navigation menu, and then click on Add Book.</h4>
         {% endif %}
     </ul>
 
