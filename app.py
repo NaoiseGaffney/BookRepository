@@ -5,6 +5,7 @@ from flask import Flask, render_template_string, render_template, redirect, url_
 from flask_mongoengine import MongoEngine, MongoEngineSession, MongoEngineSessionInterface
 from flask_user import login_required, UserManager, UserMixin, current_user, roles_required
 import datetime
+from  datetime import timedelta
 import requests
 from flask_debugtoolbar import DebugToolbarExtension
 
@@ -17,10 +18,18 @@ load_dotenv(dotenv_path=env_path)
 
 """ Flask application factory """
 
+
+
 # Setup Flask and load app.config
 app = Flask(__name__, static_folder="static", template_folder="templates")
-app.config.from_object(__name__ + ".ConfigClass")
+app.config.from_object(ConfigClass)
 # app.debug = True
+
+
+print(ConfigClass.MAIL_SERVER)
+print(ConfigClass.MAIL_PORT)
+
+
 
 """ # Initialise rotating file logging - set after app initialisation
 logging.basicConfig(
