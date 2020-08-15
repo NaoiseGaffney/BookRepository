@@ -58,6 +58,8 @@
 
     {{ render_navigation(book_query_results, 'search_results') }}
 
+    {% if book_query_results.items %}
+
     <ul class="collapsible popout">
         {% if book_query_results %}
         {% for book in book_query_results.items %}
@@ -137,6 +139,10 @@
         </li>
         {% endif %}
         {% endfor %}
+        {% endif %}
+        {% else %}
+        <h4 class="container">Your search did not find any books in the Book Repository. Please try again with new search parameters: <span><a href="{{ url_for('search_book')}}" class="blue-text btn text-darken-4 white">Search
+                Books&nbsp;<i class="material-icons blue-text text-darken-4 right">search</i></a></span></h4>
         {% endif %}
     </ul>
 
