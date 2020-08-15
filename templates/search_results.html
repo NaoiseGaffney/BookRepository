@@ -7,7 +7,9 @@
         {% else %}
         <a href="{{ url_for('home_page')}}">Home</a>
         {% endif %}
-        &nbsp; > &nbsp;<a href="{{ url_for('member_page') }}">Member's Page</a>&nbsp; > &nbsp;<a href="{{ url_for('search_book')}}">Search Books</a>&nbsp; > &nbsp;<a href="{{ url_for('search_results') }}">Results Page</a>&nbsp;<i
+        &nbsp; > &nbsp;<a href="{{ url_for('member_page') }}">Member's Page</a>&nbsp; > &nbsp;<a
+            href="{{ url_for('search_book')}}">Search Books</a>&nbsp; > &nbsp;<a
+            href="{{ url_for('search_results') }}">Results Page</a>&nbsp;<i
             class="material-icons prefix tooltipped blue-text text-darken-4" data-position="bottom" role="tooltip"
             tabindex="10"
             data-tooltip="<p class='left-align'>To view a book, click on the 'book spine' or eye icon.</p><br>
@@ -63,87 +65,93 @@
     <ul class="collapsible popout">
         {% if book_query_results %}
         {% for book in book_query_results.items %}
-        {% if book.private_view and book.user != current_user.username %}
-        <li>
-            <div class="collapsible-header">
-                <div class="book_spine"><i class="material-icons grey-text">create</i>
-                    <i class="material-icons grey-text">delete_forever</i></a>
-                    <i class="material-icons grey-text">visibility</i>
-                </div>
-                <div>
-                    <h6>HIDDEN, by HIDDEN</h6>
-                </div>
-            </div>
-            <div class="collapsible-body">
-                <p>This book is hidden from public searches by the user.</p>
-            </div>
-        </li>
-        {% else %}
-        <li>
+        <li class="row">
             <div class="collapsible-header">
                 <div class="book_spine">
-                    {% if book.user !=  current_user.username %}
+                    <div class="book_actions">
+                        {% if book.user !=  current_user.username %}
                         <i class="material-icons grey-text">create</i>
                         <i class="material-icons grey-text">delete_forever</i></a>
                         <i class="material-icons teal-text text-lighten-1">visibility</i>
-                    {% else %}
-                    <a href="{{url_for('edit_book', book_id=book.id)}}"><i
-                            class="material-icons blue-text text-darken-4">create</i></a>
-                    <a class="modal-trigger" href="#delete_book_{{book.id}}"><i
-                            class="material-icons pink-text text-darken-1">delete_forever</i></a>
-                    <i class="material-icons teal-text text-lighten-1">visibility</i>
+                        {% else %}
+                        <a href="{{url_for('edit_book', book_id=book.id)}}"><i
+                                class="material-icons blue-text text-darken-4">create</i></a>
+                        <a class="modal-trigger" href="#delete_book_{{book.id}}"><i
+                                class="material-icons pink-text text-darken-1">delete_forever</i></a>
+                        <i class="material-icons teal-text text-lighten-1">visibility</i>
 
-                    <div id="delete_book_{{book.id}}" class="modal">
-                        <div class="modal-content">
-                            <h6>Deleting Book: {{book.title}}, by {{book.author}}</h6>
-                            <p>This action will permanently delete this book from your Book Repository. Are you sure you
-                                wish to
-                                do this?</p>
+                        <div id="delete_book_{{book.id}}" class="modal">
+                            <div class="modal-content">
+                                <h6>Deleting Book: {{book.title}}, by {{book.author}}</h6>
+                                <p>This action will permanently delete this book from your Book Repository. Are you sure
+                                    you
+                                    wish to
+                                    do this?</p>
+                            </div>
+                            <div class="modal-footer">
+                                <a href="{{url_for('delete_book', book_id=book.id)}}"
+                                    class="modal-close btn blue darken-4"><i
+                                        class="material-icons white-text">delete_forever</i>&nbsp;Yes</a>
+                                <a href="#!" class="modal-close btn blue darken-4"><i
+                                        class="material-icons white-text">pan_tool</i>&nbsp;No</a>
+                            </div>
                         </div>
-                        <div class="modal-footer">
-                            <a href="{{url_for('delete_book', book_id=book.id)}}"
-                                class="modal-close btn blue darken-4"><i
-                                    class="material-icons white-text">delete_forever</i>&nbsp;Yes</a>
-                            <a href="#!" class="modal-close btn blue darken-4"><i
-                                    class="material-icons white-text">pan_tool</i>&nbsp;No</a>
-                        </div>
+                        {% endif %}
                     </div>
-                    {% endif %}
-
                 </div>
-                <div>
-                    <h6><a href="https://www.amazon.co.uk/s?k={{book.ISBN}}" target="_blank" rel="noopener" class="tooltipped" data-position="right" tabindex="10" data-tooltip="Link to the book at Amazon UK.">{{book.title}}</a>, by {{book.author}}</h6>
+                <div class="col s12">
+                    <h6><a href="https://www.amazon.co.uk/s?k={{book.ISBN}}" target="_blank" rel="noopener"
+                            class="tooltipped" data-position="right" tabindex="10"
+                            data-tooltip="Link to the book at Amazon UK.">{{book.title}}</a>, by
+                        {{book.author}}</h6>
                 </div>
             </div>
             <div class="collapsible-body">
-                {% if book.private_view %}
-                <p>HIDDEN from Public Searches.<i class="material-icons pink-text darken-1">lock</i></p>
-                {% else %}
-                <p>SEEN in Public Searches.<i class="material-icons teal-text text-lighten-1">lock_open</i></p>
-                {% endif %}
-                <p>&nbsp;</p>
-                <p>Reader: {{book.user}}</p>
-                <p>Published: {{book.year}}</p>
-                <p>ISBN: <a href="https://isbnsearch.org/isbn/{{book.ISBN}}" target="_blank" rel="noopener" class="tooltipped" data-position="right" tabindex="20" data-tooltip="Link to the book at ISBN Search.">{{book.ISBN}}</a></p>
-                {% if book.rating > 7 %}
-                <p>Rating: {{ book.rating }} <span class="teal lighten-1 book_spine">&nbsp;&nbsp;&nbsp;</span></p>
-                {% elif book.rating > 5 %}
-                <p>Rating: {{ book.rating }} <span class="blue darken-4 book_spine">&nbsp;&nbsp;&nbsp;</span></p>
-                {% else %}
-                <p>Rating: {{ book.rating }} <span class="pink darken-1 book_spine">&nbsp;&nbsp;&nbsp;</span></p>
-                {% endif %}
-                <p>Genre: {{book.genre}}</p>
-                <p>&nbsp;</p>
-                <p>Description: {{book.short_description}}</p>
-                <p>Comments: {{book.comments}}</p>
+                <div class="row">
+                    <div class="col s12 m4 l3 center">
+                        <img src="{{book.book_thumbnail}}" />
+                        <p>&nbsp;</p>
+                    </div>
+
+                    <div class="col s12 m8 l9">
+                        {% if book.private_view == "on" %}
+                        <p>HIDDEN from Public Searches.<i class="material-icons pink-text darken-1">lock</i></p>
+                        {% else %}
+                        <p>SEEN in Public Searches.<i class="material-icons teal-text text-lighten-1">lock_open</i></p>
+                        {% endif %}
+                        <p>&nbsp;</p>
+                        <p>Reader: {{book.user}}</p>
+                        <p>Published: {{book.year}}</p>
+                        <p>ISBN: <a href="https://isbnsearch.org/isbn/{{book.ISBN}}" target="_blank" rel="noopener"
+                                class="tooltipped" data-position="right" tabindex="20"
+                                data-tooltip="Link to the book at ISBN Search.">{{book.ISBN}}</a></p>
+                        {% if book.rating > 7 %}
+                        <p>Rating: {{ book.rating }} <span class="teal lighten-1 book_spine">&nbsp;&nbsp;&nbsp;</span>
+                        </p>
+                        {% elif book.rating > 5 %}
+                        <p>Rating: {{ book.rating }} <span class="blue darken-4 book_spine">&nbsp;&nbsp;&nbsp;</span>
+                        </p>
+                        {% else %}
+                        <p>Rating: {{ book.rating }} <span class="pink darken-1 book_spine">&nbsp;&nbsp;&nbsp;</span>
+                        </p>
+                        {% endif %}
+                        <p>Genre: {{book.genre}}</p>
+                        <p>&nbsp;</p>
+                    </div>
+                    <div class="col s12 m12 l12">
+                        <p>Description: {{book.short_description}}</p>
+                        <p>Comments: {{book.comments}}</p>
+                    </div>
+                </div>
             </div>
         </li>
-        {% endif %}
         {% endfor %}
         {% endif %}
         {% else %}
-        <h4 class="container">Your search did not find any books in the Book Repository. Please try again with new search parameters: <span><a href="{{ url_for('search_book')}}" class="blue-text btn text-darken-4 white">Search
-                Books&nbsp;<i class="material-icons blue-text text-darken-4 right">search</i></a></span></h4>
+        <h4 class="container">Your search did not find any books in the Book Repository. Please try again with new
+            search parameters: <span><a href="{{ url_for('search_book')}}"
+                    class="blue-text btn text-darken-4 white">Search
+                    Books&nbsp;<i class="material-icons blue-text text-darken-4 right">search</i></a></span></h4>
         {% endif %}
     </ul>
 
