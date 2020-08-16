@@ -18,11 +18,11 @@
         {% if not field.flags.hidden %}
             {% if field.type=='SubmitField' %}
             <div class="button_top_padding">
-                {{ render_submit_field(field, tabindex=loop.index*10) }}
+                {{ render_submit_field(field) }}
             </div>
             {% else %}
             <div class="button_top_padding">
-                {{ render_field(field, tabindex=loop.index*10) }}
+                {{ render_field(field) }}
             </div>
             {% endif %}
         {% endif %}
