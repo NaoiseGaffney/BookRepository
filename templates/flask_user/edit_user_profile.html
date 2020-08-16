@@ -38,5 +38,16 @@
         <p><a href="{{ url_for('user.change_password') }}">{%trans%}Change password{%endtrans%}</a></p>
     {% endif %}
 {% endif %}
-
+    <a class="modal-trigger pink-text text-darken-1" href="#delete_user">Delete user</a>
+    <div id="delete_user" class="modal">
+        <div class="modal-content center">
+            <h6 class="pink-text text-darken-1">Deleting your User account and all your Books: {{current_user.username}}</h6>
+            <p>This action will permanently delete your User account and all your Books from the Book Repository. Are you sure you wish to do this?</p>
+        </div>
+        <div class="modal-footer">
+            <a href="{{ url_for('delete_user') }}" class="modal-close btn blue darken-4"><i
+                    class="material-icons white-text">delete_forever</i>&nbsp;Yes</a>
+            <a href="#!" class="modal-close btn blue darken-4"><i class="material-icons white-text">pan_tool</i>&nbsp;No</a>
+        </div>
+    </div>
 {% endblock %}

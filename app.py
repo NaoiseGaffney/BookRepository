@@ -4,6 +4,7 @@ import os
 from flask import Flask, render_template_string, render_template, redirect, url_for, request, flash, session
 from flask_mongoengine import MongoEngine, MongoEngineSession, MongoEngineSessionInterface
 from flask_user import login_required, UserManager, UserMixin, current_user, roles_required
+from flask_login import logout_user
 import datetime
 from  datetime import timedelta
 import requests
@@ -369,7 +370,9 @@ def save_book():
 
     try:
         book_request = requests.get("https://www.googleapis.com/books/v1/volumes", params=payload, headers={'User-agent': 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:61.0) Gecko/20100101 Firefox/61.0'})
-        book.book_thumbnail = book_request.json()["items"][0]["volumeInfo"]["imageLinks"]["thumbnail"]
+        book_thumbnail_w_http = book_request.json()["items"][0]["volumeInfo"]["imageLinks"]["thumbnail"]
+        book_thumbnail_w_https = book_thumbnail_w_http.replace("http://", "https://")
+        book.book_thumbnail = book_thumbnail_w_https
         app.logger.info(f"{current_user.username} has successfully requested the thumbnail image {book.book_thumbnail} for the book {book.title} with the id {book.id} (add_book.html). Endpoint: save_book.")
         print(book_request.json()["items"][0]["volumeInfo"]["imageLinks"]["thumbnail"])
     except BaseException:
@@ -426,7 +429,9 @@ def update_book(book_id):
 
     try:
         book_request = requests.get("https://www.googleapis.com/books/v1/volumes", params=payload, headers={'User-agent': 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:61.0) Gecko/20100101 Firefox/61.0'})
-        fields["book_thumbnail"] = book_request.json()["items"][0]["volumeInfo"]["imageLinks"]["thumbnail"]
+        book_thumbnail_w_http = book_request.json()["items"][0]["volumeInfo"]["imageLinks"]["thumbnail"]
+        book_thumbnail_w_https = book_thumbnail_w_http.replace("http://", "https://")
+        fields["book_thumbnail"] = book_thumbnail_w_https
         app.logger.info(f"{current_user.username} has successfully requested the thumbnail image {book.book_thumbnail} for the book {book.title} with the id {book.id} (add_book.html). Endpoint: save_book.")
         print(book_request.json()["items"][0]["volumeInfo"]["imageLinks"]["thumbnail"])
     except BaseException:
@@ -548,6 +553,30 @@ def search_results(page=1):
             book_query_results = Book.objects.filter(title__icontains=form_title, author__icontains=form_author, rating__gte=form_rating, genre=form_genre, private_view="off").order_by("+title", "+author", "-rating").paginate(page=page, per_page=7)
             app.logger.info(f"{current_user.username} found books matching {book_query_results} - 6: Public, no ISBN, Title, Author, Rating, and Genre Search (search_results.html). Endpoint: search_results.")
             return render_template("search_results.html", book_query_results=book_query_results, page_prev=(page - 1), page_next=(page + 1))
+
+
+@app.route("/delete_user.html")
+@login_required
+def delete_user():
+    deleted_user = current_user.username
+    find_user_books = Book.objects.filter(user=current_user.username)
+    for book in find_user_books:
+        print("\n\nBook:", book.to_json())
+    find_user = User.objects.filter(username=current_user.username)
+    print("\n\nUser:", find_user.to_json())
+    print(deleted_user)
+
+    try:
+        logout_user()
+        find_user_books.delete()
+        find_user.delete()
+        flash(f"We're sad to see you go {deleted_user}!", "success")
+        app.logger.warning(f"{deleted_user} is has left the Book Repository (delete_user.html). Endpoint: delete_user.")
+    except:
+        flash(f"Your account is still alive and active {find_user.username}!", "danger")
+        app.logger.warning(f"{deleted_user} is still alive and active on the Book Repository (delete_user.html). Endpoint: delete_user.")
+
+    return redirect(url_for("home_page"))
 
 
 # export PRODUCTION=ON | OFF in TEST

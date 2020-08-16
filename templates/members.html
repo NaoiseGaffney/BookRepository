@@ -8,9 +8,7 @@
         <a href="{{ url_for('home_page')}}">Home</a>
         {% endif %}
         &nbsp; > &nbsp;<a href="{{ url_for('member_page') }}">Member's Page</a>&nbsp;<i
-            class="material-icons prefix tooltipped blue-text text-darken-4" data-position="bottom" role="tooltip"
-            tabindex="10"
-            data-tooltip="<p class='left-align'>To view a book, click on the 'book spine' or eye icon.</p><br>
+            class="material-icons prefix tooltipped blue-text text-darken-4" data-position="bottom" role="tooltip" data-tooltip="<p class='left-align'>To view a book, click on the 'book spine' or eye icon.</p><br>
         <p class='left-align'>To edit a book's details, click on the pencil icon for the book you want to edit.</p><br>
         <p class='left-align'>To delete a book, click on the rubbish bin/dust-bin icon and answer yes or no to the question.</p><br>
         <p class='left-align'>Use the page numbers to navigate to a different page.</p><br>
@@ -76,7 +74,7 @@
                     </div>
                     <div id="delete_book_{{book.id}}" class="modal">
                         <div class="modal-content">
-                            <h6>Deleting Book: {{book.title}}, by {{book.author}}</h6>
+                            <h6 class="pink-text text-darken-1">Deleting Book: {{book.title}}, by {{book.author}}</h6>
                             <p>This action will permanently delete this book from your Book Repository. Are you sure you
                                 wish to
                                 do this?</p>
@@ -92,8 +90,7 @@
                 </div>
                 <div class="col s12">
                     <h6><a href="https://www.amazon.co.uk/s?k={{book.ISBN}}" target="_blank" rel="noopener"
-                            class="tooltipped" data-position="right" tabindex="10"
-                            data-tooltip="Link to the book at Amazon UK.">{{book.title}}</a>, by {{book.author}}</h6>
+                            class="tooltipped" data-position="right" data-tooltip="Link to the book at Amazon UK.">{{book.title}}</a>, by {{book.author}}</h6>
                 </div>
             </div>
             <div class="collapsible-body">
@@ -112,9 +109,7 @@
                         <p>&nbsp;</p>
                         <p>Reader: {{book.user}}</p>
                         <p>Published: {{book.year}}</p>
-                        <p>ISBN: <a href="https://isbnsearch.org/isbn/{{book.ISBN}}" target="_blank" rel="noopener"
-                                class="tooltipped" data-position="right" tabindex="20"
-                                data-tooltip="Link to the book at ISBN Search.">{{book.ISBN}}</a></p>
+                        <p>ISBN: <a href="https://isbnsearch.org/isbn/{{book.ISBN}}" target="_blank" rel="noopener" class="tooltipped" data-position="right" data-tooltip="Link to the book at ISBN Search.">{{book.ISBN}}</a></p>
                         {% if book.rating > 7 %}
                         <p>Rating: {{ book.rating }} <span class="teal lighten-1 book_spine">&nbsp;&nbsp;&nbsp;</span>
                         </p>
