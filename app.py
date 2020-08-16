@@ -579,6 +579,12 @@ def delete_user():
     return redirect(url_for("home_page"))
 
 
+@app.route("/admin_dashboard.html")
+@roles_required("Admin")
+def admin_dashboard():
+    return render_template_string("Admin Dashboard!")
+
+
 # export PRODUCTION=ON | OFF in TEST
 # PRODUCTION App -> Settings -> Reveal Config Vars -> KEY: PRODUCTION,
 # VALUE: ON
