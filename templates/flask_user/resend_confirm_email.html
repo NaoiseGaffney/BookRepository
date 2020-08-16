@@ -2,7 +2,8 @@
 
 {% block content %}
 {% from "flask_user/_macros.html" import render_field, render_submit_field %}
-<h6><a href="{{ url_for('home_page')}}">Home</a>&nbsp; > &nbsp;<a href="{{ url_for('user.login') }}">{%trans%}Sign In Page{%endtrans%}</a>&nbsp; > &nbsp;<a href="{{ url_for('user.resend_email_confirmation') }}">{%trans%}Resend Confirmation Email{%endtrans%}</a></h6>
+<h6><a href="{{ url_for('home_page')}}">Home</a>&nbsp; > &nbsp;<a href="{{ url_for('user.login') }}">{%trans%}Sign In Page{%endtrans%}</a>&nbsp; > &nbsp;<a href="{{ url_for('user.resend_email_confirmation') }}">{%trans%}Resend Confirmation Email{%endtrans%}</a>&nbsp;<i class="material-icons prefix tooltipped blue-text text-darken-4" data-position="bottom"
+    data-tooltip="<p class='left-align'>Please enter your e-mail address, the same one you used when you registered.</p>">help</i></h6>
 
 <form method="POST" class="form">
     {{ form.hidden_tag() }}

@@ -50,9 +50,13 @@
                 </a>
                 <ul class="right hide-on-med-and-down blue darken-4 waves-effect" id="nav-mobile">
                     {% if call_or_get(current_user.is_authenticated) %}
+                    {% if current_user.username == "admin"%}
                     <li>
-                        <a href="{{ url_for('member_page')}}">Member's Page<i
-                                class="material-icons right">dashboard</i></a>
+                        <a href="{{ url_for('admin_dashboard')}}">Admin Page<i class="material-icons right">table_chart</i></a>
+                    </li>
+                    {% endif %}
+                    <li>
+                        <a href="{{ url_for('member_page')}}">Member's Page<i class="material-icons right">dashboard</i></a>
                     </li>
                     <li>
                         <a href="{{ url_for('user.edit_user_profile') }}">{{ current_user.username or current_user.email }}<i
@@ -81,6 +85,11 @@
         <!-- Naviagtion for Mobile devices using a "Hamburger-menu" which must be defined outside of <nav></nav> to function in Materialize 1.0.0 -->
         <ul class="sidenav blue darken-4" id="mobile-links">
             {% if call_or_get(current_user.is_authenticated) %}
+            {% if current_user.username == "admin"%}
+            <li>
+                <a href="{{ url_for('admin_dashboard')}}" class="white-text">Admin Page<i class="material-icons white-text left">table_chart</i></a>
+            </li>
+            {% endif %}
             <li>
                 <a href="{{ url_for('member_page')}}" class="white-text">Member's Page<i
                         class="material-icons white-text left">dashboard</i></a>
