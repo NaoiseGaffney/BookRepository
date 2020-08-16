@@ -10,9 +10,7 @@
         &nbsp; > &nbsp;<a href="{{ url_for('member_page') }}">Member's Page</a>&nbsp; > &nbsp;<a
             href="{{ url_for('search_book')}}">Search Books</a>&nbsp; > &nbsp;<a
             href="{{ url_for('search_results') }}">Results Page</a>&nbsp;<i
-            class="material-icons prefix tooltipped blue-text text-darken-4" data-position="bottom" role="tooltip"
-            tabindex="10"
-            data-tooltip="<p class='left-align'>To view a book, click on the 'book spine' or eye icon.</p><br>
+            class="material-icons prefix tooltipped blue-text text-darken-4" data-position="bottom" role="tooltip" data-tooltip="<p class='left-align'>To view a book, click on the 'book spine' or eye icon.</p><br>
         <p class='left-align'>To edit a book's details, click on the pencil icon for the book you want to edit.</p><br>
         <p class='left-align'>To delete a book, click on the rubbish bin/dust-bin icon and answer yes or no to the question.</p><br>
         <p class='left-align'>Use the page numbers to navigate to a different page.</p><br>
@@ -101,8 +99,7 @@
                 </div>
                 <div class="col s12">
                     <h6><a href="https://www.amazon.co.uk/s?k={{book.ISBN}}" target="_blank" rel="noopener"
-                            class="tooltipped" data-position="right" tabindex="10"
-                            data-tooltip="Link to the book at Amazon UK.">{{book.title}}</a>, by
+                            class="tooltipped" data-position="right" data-tooltip="Link to the book at Amazon UK.">{{book.title}}</a>, by
                         {{book.author}}</h6>
                 </div>
             </div>
@@ -123,8 +120,7 @@
                         <p>Reader: {{book.user}}</p>
                         <p>Published: {{book.year}}</p>
                         <p>ISBN: <a href="https://isbnsearch.org/isbn/{{book.ISBN}}" target="_blank" rel="noopener"
-                                class="tooltipped" data-position="right" tabindex="20"
-                                data-tooltip="Link to the book at ISBN Search.">{{book.ISBN}}</a></p>
+                                class="tooltipped" data-position="right" data-tooltip="Link to the book at ISBN Search.">{{book.ISBN}}</a></p>
                         {% if book.rating > 7 %}
                         <p>Rating: {{ book.rating }} <span class="teal lighten-1 book_spine">&nbsp;&nbsp;&nbsp;</span>
                         </p>

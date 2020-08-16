@@ -7,7 +7,7 @@
         {% else %}
         <a href="{{ url_for('home_page')}}">Home</a>
         {% endif %}
-        &nbsp; > &nbsp;<a href="{{ url_for('member_page') }}">Member's Page</a>&nbsp; > &nbsp;<a href="{{ url_for('add_book')}}">Add Book</a>&nbsp;<i class="material-icons prefix tooltipped blue-text text-darken-4" data-position="bottom" role="tooltip" tabindex="10" data-tooltip="<p class='left-align'>Please hover over the icons on the left of each field for further help on what to do.</p><br>
+        &nbsp; > &nbsp;<a href="{{ url_for('member_page') }}">Member's Page</a>&nbsp; > &nbsp;<a href="{{ url_for('add_book')}}">Add Book</a>&nbsp;<i class="material-icons prefix tooltipped blue-text text-darken-4" data-position="bottom" role="tooltip" data-tooltip="<p class='left-align'>Please hover over the icons on the left of each field for further help on what to do.</p><br>
         <p class='left-align'>All fields, except the Book Description, Book Comments and the Private View are mandatory to fill out.</p>">help</i>
     </h6>
 
@@ -82,9 +82,10 @@
                         <option value="{{g.genre}}">{{g.genre}}</option>
                         {% endfor %}
                     </select>
+                    <label hidden for="genre">Genre</label>
                 </div>
                 <div class="switch col s2">
-                    <label>
+                    <label for="private_view">
                         <input id="private_view" name="private_view" type="checkbox">
                         <span class="lever tooltipped" data-position="right"
                             data-tooltip="Please toggle this switch if you want to keep this book hidden from public book searches."></span>
