@@ -113,7 +113,7 @@
                         </div>
                         <div class="input-field col s12">
                             <i class="material-icons prefix tooltipped" data-position="bottom"
-                                data-tooltip="Please update the e-mail address if required, and then click on Save.">email</i>
+                                data-tooltip="Please update the e-mail address if required.">email</i>
                             <input id="email" name="email" type="email" maxlength="64" value="{{user.email}}" required>
                             <label for="email">User E-mail</label>
                         </div>
@@ -122,7 +122,7 @@
                         {% if user.username != "admin" %}
                         <div class="left">
                             <a href="{{ url_for('admin_delete_user', user_id=user.id) }}"
-                                class="modal-close btn waves-effect waves-light pink darken-1"><i
+                                class="modal-close btn waves-effect waves-light pink darken-1 tooltipped" data-position="right" data-tooltip="This will PERMANENTLY delete the user and associated books!"><i
                                     class="material-icons white-text right">delete_forever</i>&nbsp;Delete</a>
                         </div>
                         {% endif %}

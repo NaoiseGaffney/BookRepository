@@ -622,9 +622,12 @@ def admin_delete_user(user_id):
     # The "D" in CRUD, deleting the user based on 'id' after delete modal
     # with NO confirmation.
     user = User.objects.get(id=user_id)
+    user_books = Book.objects.filter(user=user.username)
+    print(user_books.to_json())
     if user.username != "admin":
         deleted_username = user.username
         try:
+            user_books.delete()
             user.delete()
             flash(f"The user {deleted_username} is deleted!", "success")
             app.logger.info(f"{current_user.username} deleted the user {deleted_username} (admin_dashboard.html). Endpoint: admin_delete_user.")
