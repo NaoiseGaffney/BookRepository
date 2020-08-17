@@ -1,0 +1,22 @@
+{% extends "flask_user_layout.html" %}
+{% block content %}
+<section>
+    <div class="container">
+        <div class="row">
+            <div class="col s6 m6 l6">
+                {% for user in user_details_query %}
+                <p>User: {{user.username}}</p>
+                <p>&nbsp;</p>
+                {% endfor %}
+            </div>
+            <div class="col s6 m6 l6">
+                {% for genre in genre_list %}
+                <p>Genre: {{genre.genre}}</p>
+                <p>Description: {{genre.description}}</p>
+                <p>&nbsp;</p>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

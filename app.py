@@ -586,6 +586,26 @@ def delete_user():
     return redirect(url_for("home_page"))
 
 
+@app.route("/admin_dashboard.html")
+@roles_required("Admin")
+def admin_dashboard():
+    user_details_query = User.objects()
+    genre_list = Genre.objects()
+    return render_template("admin_dashboard.html", user_details_query=user_details_query, genre_list=genre_list)
+
+
+@app.errorhandler(404)
+def not_found(error):
+    excuse = "Apologies, we can't seem to find the Book Repository database or worse, we've lost access to the Internet. Please click on the pink pulsating buoy to go to the Home Page (registering or signing in) or Member's Page (signed in), or click on Sign Out below."
+    return render_template("oops.html", error=error, excuse=excuse, error_type="Client: 404 - Bad Request")
+
+
+@app.errorhandler(500)
+def internal_error(error):
+    excuse = "Apologies, something serious occurred and the Leprechauns are working on resolving the issue. It's most likely Google Mail (GMail) acting up...again. Please click on the pink pulsating buoy to go to the Home Page (registering or signing in) or Member's Page (signed in), or click on Sign Out below."
+    return render_template("oops.html", error=error, excuse=excuse, error_type="Server: 500 - Internal Server Error")
+
+
 # export PRODUCTION=ON | OFF in TEST
 # PRODUCTION App -> Settings -> Reveal Config Vars -> KEY: PRODUCTION,
 # VALUE: ON
