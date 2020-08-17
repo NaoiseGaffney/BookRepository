@@ -1,0 +1,26 @@
+{% extends "flask_user_layout.html" %}
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col s12 offset-m1 m10 offset-l1 l10">
+            <div class="card center">
+                <div class="card-image">
+                    <img src="/static/images/fred-kearney-enkfvvZkKv0-unsplash.jpg" alt="burning book">
+                    <a href="{{ url_for('home_page')}}" class="halfway-fab btn-floating pink pink-darken-1 pulse">
+                        <i class="material-icons">support</i>
+                    </a>
+                </div>
+                <div class="card-content">
+                    <span class="card-title pink-text text-darken-1">{{error_type}}</span>
+                    <p>{{excuse}}</p>
+                    <p>&nbsp;</p>
+                    <p>Book Repository Message - {{error}}</p>
+                </div>
+                <div class="card-action">
+                    <a href="{{ url_for('user.logout') }}">[ Sign Out <i class="material-icons">pan_tool</i> ]</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
