@@ -25,7 +25,7 @@ load_dotenv(dotenv_path=env_path)
 app = Flask(__name__, static_folder="static", template_folder="templates")
 # app.config.from_object(ConfigClass)
 app.config.from_object(__name__+".ConfigClass")
-# app.debug = True
+app.debug = True
 
 
 """ # Initialise rotating file logging - set after app initialisation
@@ -580,12 +580,58 @@ def delete_user():
 
 
 @app.route("/admin_dashboard.html")
+@app.route("/admin_dashboard.html/<int:page>")
 @roles_required("Admin")
-def admin_dashboard():
-    user_details_query = User.objects()
+def admin_dashboard(page=1):
+    user_details_query = User.objects().order_by("username").paginate(page=page, per_page=10)
     genre_list = Genre.objects()
     # app_db_log = Log.objects()
-    return render_template("admin_dashboard.html", user_details_query=user_details_query, genre_list=genre_list)
+    return render_template("admin_dashboard.html", user_details_query=user_details_query, page_prev=(page - 1), page_next=(page + 1))
+
+
+@app.route("/update_user.html/<user_id>", methods=["POST"])
+@roles_required("Admin")
+def update_user(user_id):
+    print(user_id)
+    user = User.objects.get(id=user_id)
+    admin_user_form = {
+        "active": request.form.get("active"),
+        "email": request.form.get("email"),
+        "first_name": request.form.get("first_name"),
+        "last_name": request.form.get("last_name")
+    }
+
+    if user.username == "admin":
+        admin_user_form["active"] = True
+    elif admin_user_form["active"] == "on":
+        admin_user_form["active"] = True
+    else:
+        admin_user_form["active"] = False
+
+    print(user.username)
+    print(admin_user_form["active"])
+    print(admin_user_form)
+    user.update(**admin_user_form)
+    
+    return redirect(url_for("admin_dashboard"))
+
+
+@app.route("/admin_delete_user/<user_id>", methods=["GET"])
+@roles_required("Admin")
+def admin_delete_user(user_id):
+    # The "D" in CRUD, deleting the user based on 'id' after delete modal
+    # with NO confirmation.
+    user = User.objects.get(id=user_id)
+    if user.username != "admin":
+        deleted_username = user.username
+        try:
+            user.delete()
+            flash(f"The user {deleted_username} is deleted!", "success")
+            app.logger.info(f"{current_user.username} deleted the user {deleted_username} (admin_dashboard.html). Endpoint: admin_delete_user.")
+        except BaseException:
+            flash(f"The user {deleted_username} was NOT deleted!", "danger")
+            app.logger.warning(f"{current_user.username} did not delete the user {deleted_username} (admin_dashboard.html). Endpoint: admin_delete_user.")
+    return redirect(url_for("admin_dashboard"))
 
 
 @app.errorhandler(404)

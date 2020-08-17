@@ -1,31 +1,144 @@
 {% extends "flask_user_layout.html" %}
 {% block content %}
-<div class="input-field col s10">
-    <i class="material-icons prefix tooltipped" data-position="right"
-        data-tooltip="Please select a suitable genre for the book.">subject</i>
-    <select id="genre" name="genre">
-        <option disabled selected>Select User</option>
-        {% for user in user_details_query %}
-        <option value="{{user.username}}">{{user.username}}</option>
+{# Macro for creating navigation links #}
+{% macro render_navigation(pagination, endpoint) %}
+<div class="container">
+    <h6>
+        {% if call_or_get(current_user.is_authenticated) %}
+        Home
+        {% else %}
+        <a href="{{ url_for('home_page')}}">Home</a>
+        {% endif %}
+        &nbsp; > &nbsp;<a href="{{ url_for('admin_dashboard') }}">Admin Page</a>&nbsp;<i
+            class="material-icons prefix tooltipped blue-text text-darken-4" data-position="bottom" role="tooltip"
+            data-tooltip="<p class='left-align'>To update a user's e-mail, or inactivate/activate their account, please click on the user link in the table.</p><br>
+        <p class='left-align'>In the user modal, toggle the switch to inactive (user can't sign in)/active (user can sign in) if required.</p><br>
+        <p class='left-align'>The admin account has no switch as this account must always be active.</p><br>
+        <p class='left-align'>Update the e-mail in the e-mail field.</p><br>
+        <p class='left-align'>Either click on Update to save the changes or Cancel to leave the modal.</p><br>
+        <p class='left-align'>Admin: PLEASE note the MongoDB sort order is integers first, UPPER-CASE second, and lower-case third.</p>">help</i>
+
+        <span class="book-dropdown right">
+            <span class="white-text btn waves-effect waves-light right blue darken-4"><i
+                    class="material-icons white-text">import_contacts</i></span>
+            <span class="book-dropdown-content">
+                <span><a href="{{ url_for('add_book')}}" class="blue-text btn text-darken-4 white">Add Book&nbsp;<i
+                            class="material-icons blue-text text-darken-4 right">import_contacts</i><i
+                            class="material-icons blue-text text-darken-4 right">plus_one</i></a></span>
+                <span><br>&nbsp;<br></span>
+                <span><a href="{{ url_for('search_book')}}" class="blue-text btn text-darken-4 white">Search
+                        Books&nbsp;<i class="material-icons blue-text text-darken-4 right">search</i></a></span>
+            </span>
+        </span>
+    </h6>
+    <div class="pagination">Page #:
+        {% if page_prev == 0 %}
+        &lt;&nbsp;
+        {% else %}
+        <a href="{{ url_for(endpoint, page=page_prev) }}">&lt;&nbsp;</a>
+        {% endif %}
+        {% if pagination.has_next %}
+        <a href="{{ url_for(endpoint, page=page_next) }}">&gt;&nbsp;</a>
+        {% else %}
+        &gt;&nbsp;
+        {% endif %}
+        {% for page in pagination.iter_pages() %}
+        {% if page %}
+        {% if page != pagination.page %}
+        <a href="{{ url_for(endpoint, page=page) }}">{{ page }}</a>
+        {% else %}
+        <span style="background-color: #0D47A1; color: white; padding: 1px 5px;">{{ page }}</span>
+        {% endif %}
+        {% else %}
+        <span class="ellipsis">…</span>
+        {% endif %}
         {% endfor %}
-    </select>
-    <label hidden for="genre">Genre</label>
+    </div>
 </div>
-    <div class="container">
-        <div class="row">
-            <div class="col s6 m6 l6">
-                {% for user in user_details_query %}
-                <p>User: {{user.username}}</p>
-                <p>&nbsp;</p>
-                {% endfor %}
-            </div>
-            <div class="col s6 m6 l6">
-                {% for genre in genre_list %}
-                <p>Genre: {{genre.genre}}</p>
-                <p>Description: {{genre.description}}</p>
-                <p>&nbsp;</p>
-                {% endfor %}
+{% endmacro %}
+
+{{ render_navigation(user_details_query, 'admin_dashboard') }}
+
+<div class="container">
+    {% if user_details_query %}
+    <table>
+        <tr class="white-text blue darken-4">
+            <th>User</th>
+            <th>Full Name</th>
+            <th>Active</th>
+            <th>E-mail</th>
+        </tr>
+        {% if user_details_query %}
+        {% for user in user_details_query.items %}
+        <tr class="{{loop.cycle('white','blue-grey lighten-5')}}">
+            <td><a class="modal-trigger" href="#edit_user_{{user.username}}">{{user.username}}</a></td>
+            <td>{{user.first_name}} {{user.last_name}}</td>
+            <td>{{user.active}}</td>
+            <td>{{user.email}}</td>
+        </tr>
+        <div id="edit_user_{{user.username}}" class="modal center">
+            <div class="modal-content">
+                <h6>User: {{user.username}}</h6>
+                <form action="{{ url_for('update_user', user_id=user.id) }}" method="POST" class="col s12">
+                    {% if user.username != "admin" %}
+                    <div class="row switch">
+                        Inactive
+                        {% if user.active == true %}
+                        <label for="active_{{user.username}}">
+                            <input id="active_{{user.username}}" name="active" type="checkbox" checked>
+                            {% else %}
+                            <label for="active_{{user.username}}">
+                                <input id="active_{{user.username}}" name="active" type="checkbox">
+                                {% endif%}
+                                <span class="lever tooltipped" data-position="bottom"
+                                    data-tooltip="Please toggle this switch if you want to inactivate (grey) this user account (the user will not be able to sign in to the Book Repository)."></span>
+                            </label>
+                            Active
+                    </div>
+                    {% endif %}
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <i class="material-icons prefix tooltipped" data-position="bottom"
+                                data-tooltip="Please update the first name if required.">person</i>
+                            <input id="first_name" name="first_name" type="text" maxlength="250"
+                                value="{{user.first_name}}" required>
+                            <label for="first_name">User First Name</label>
+                        </div>
+                        <div class="input-field col s12">
+                            <i class="material-icons prefix tooltipped" data-position="bottom"
+                                data-tooltip="Please update the last name if required.">group</i>
+                            <input id="last_name" name="last_name" type="text" maxlength="250"
+                                value="{{user.last_name}}" required>
+                            <label for="email">User Last Name</label>
+                        </div>
+                        <div class="input-field col s12">
+                            <i class="material-icons prefix tooltipped" data-position="bottom"
+                                data-tooltip="Please update the e-mail address if required, and then click on Save.">email</i>
+                            <input id="email" name="email" type="email" maxlength="64" value="{{user.email}}" required>
+                            <label for="email">User E-mail</label>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        {% if user.username != "admin" %}
+                        <div class="left">
+                            <a href="{{ url_for('admin_delete_user', user_id=user.id) }}"
+                                class="modal-close btn waves-effect waves-light pink darken-1"><i
+                                    class="material-icons white-text right">delete_forever</i>&nbsp;Delete</a>
+                        </div>
+                        {% endif %}
+                        <div class="right">
+                            <button class="btn waves-effect waves-light blue darken-4" type="submit"
+                                name="action">Update<i class="material-icons right">playlist_add</i></button>
+                            <a href="#!" class="modal-close btn waves-effect waves-light blue darken-4"><i
+                                    class="material-icons white-text right">pan_tool</i>&nbsp;Cancel</a>
+                        </div>
+                    </div>
+                </form>
             </div>
         </div>
-    </div>
+        {% endfor %}
+        {% endif %}
+    </table>
+    {% endif %}
+</div>
 {% endblock %}

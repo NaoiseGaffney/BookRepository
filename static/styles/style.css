@@ -124,7 +124,7 @@ footer .right-align {
 }
 
 .collapsible-body {
-    background: rgba(255,255,255,0.3);
+    background: rgba(255,255,255,0.35);
 }
 
 .book_spine {
@@ -164,20 +164,8 @@ footer .right-align {
 /* Taken from 'materialize.css' (1.0.0) to style the input fields to match the Book Repository UX Design */
 /* Checkbox when selected is the same colour as the rest of the form elements */
 [type="checkbox"]:checked+span:not(.lever):before {
-    top: -4px;
-    left: -5px;
-    width: 12px;
-    height: 22px;
-    border-top: 2px solid transparent;
-    border-left: 2px solid transparent;
     border-right: 2px solid #0d47a1;
     border-bottom: 2px solid #0d47a1;
-    -webkit-transform: rotate(40deg);
-    transform: rotate(40deg);
-    -webkit-backface-visibility: hidden;
-    backface-visibility: hidden;
-    -webkit-transform-origin: 100% 100%;
-    transform-origin: 100% 100%;
 }
 
 input:not([type]):focus:not([readonly]),
