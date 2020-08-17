@@ -123,6 +123,10 @@ footer .right-align {
     background-size: 150%
 }
 
+.collapsible-body {
+    background: rgba(255,255,255,0.3);
+}
+
 .book_spine {
     text-align: center;
 }
