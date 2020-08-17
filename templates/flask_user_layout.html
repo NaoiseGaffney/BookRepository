@@ -52,7 +52,7 @@
                     {% if call_or_get(current_user.is_authenticated) %}
                     {% if current_user.username == "admin"%}
                     <li>
-                        <a href="{{ url_for('admin_dashboard')}}">Admin Page<i class="material-icons right">table_chart</i></a>
+                        <a href="{{ url_for('admin_dashboard')}}">Admin Page<i class="material-icons right">admin_panel_settings</i></a>
                     </li>
                     {% endif %}
                     <li>
