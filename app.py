@@ -584,6 +584,7 @@ def delete_user():
 def admin_dashboard():
     user_details_query = User.objects()
     genre_list = Genre.objects()
+    # app_db_log = Log.objects()
     return render_template("admin_dashboard.html", user_details_query=user_details_query, genre_list=genre_list)
 
 

@@ -1,6 +1,16 @@
 {% extends "flask_user_layout.html" %}
 {% block content %}
-<section>
+<div class="input-field col s10">
+    <i class="material-icons prefix tooltipped" data-position="right"
+        data-tooltip="Please select a suitable genre for the book.">subject</i>
+    <select id="genre" name="genre">
+        <option disabled selected>Select User</option>
+        {% for user in user_details_query %}
+        <option value="{{user.username}}">{{user.username}}</option>
+        {% endfor %}
+    </select>
+    <label hidden for="genre">Genre</label>
+</div>
     <div class="container">
         <div class="row">
             <div class="col s6 m6 l6">
@@ -18,5 +28,4 @@
             </div>
         </div>
     </div>
-</section>
 {% endblock %}
