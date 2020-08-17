@@ -2,26 +2,29 @@
 {% block content %}
 <div class="container">
     <h6>
-    {% if call_or_get(current_user.is_authenticated) %}
-    Home
-    {% else %}
-    <a href="{{ url_for('home_page')}}">Home</a>
-    {% endif %}
-    &nbsp; > &nbsp;<a href="{{ url_for('member_page') }}">Member's Page</a>&nbsp;<i class="material-icons prefix tooltipped blue-text text-darken-4" data-position="bottom" role="tooltip"
-        tabindex="10"
-        data-tooltip="<p class='left-align'>To view a book, click on the 'book spine' or eye icon.</p><br>
+        {% if call_or_get(current_user.is_authenticated) %}
+        Home
+        {% else %}
+        <a href="{{ url_for('home_page')}}">Home</a>
+        {% endif %}
+        &nbsp; > &nbsp;<a href="{{ url_for('member_page') }}">Member's Page</a>&nbsp;<i
+            class="material-icons prefix tooltipped blue-text text-darken-4" data-position="bottom" role="tooltip" data-tooltip="<p class='left-align'>To view a book, click on the 'book spine' or eye icon.</p><br>
         <p class='left-align'>To edit a book's details, click on the pencil icon for the book you want to edit.</p><br>
         <p class='left-align'>To delete a book, click on the rubbish bin/dust-bin icon and answer yes or no to the question.</p><br>
         <p class='left-align'>Use the page numbers to navigate to a different page.</p><br>
         <p class='left-align'>Click on the book title link to view the book on Amazon UK. Click on the ISBN link in the book details section to view the book on ISBN Search.</p><br>
         <p class='left-align'>To add a book, or search for books, click on the 'Book' icon under the navigation menu.</p>">help</i>
-        
+
         <span class="book-dropdown right">
-            <span class="white-text btn waves-effect waves-light right blue darken-4"><i class="material-icons white-text">import_contacts</i></span>
+            <span class="white-text btn waves-effect waves-light right blue darken-4"><i
+                    class="material-icons white-text">import_contacts</i></span>
             <span class="book-dropdown-content">
-                <span><a href="{{ url_for('add_book')}}" class="blue-text btn text-darken-4 white">Add Book&nbsp;<i class="material-icons blue-text text-darken-4 right">import_contacts</i><i class="material-icons blue-text text-darken-4 right">plus_one</i></a></span>
+                <span><a href="{{ url_for('add_book')}}" class="blue-text btn text-darken-4 white">Add Book&nbsp;<i
+                            class="material-icons blue-text text-darken-4 right">import_contacts</i><i
+                            class="material-icons blue-text text-darken-4 right">plus_one</i></a></span>
                 <span><br>&nbsp;<br></span>
-                <span><a href="{{ url_for('search_book')}}" class="blue-text btn text-darken-4 white">Search Books&nbsp;<i class="material-icons blue-text text-darken-4 right">search</i></a></span>
+                <span><a href="{{ url_for('search_book')}}" class="blue-text btn text-darken-4 white">Search
+                        Books&nbsp;<i class="material-icons blue-text text-darken-4 right">search</i></a></span>
             </span>
         </span>
     </h6>
@@ -51,7 +54,7 @@
         {% endfor %}
     </div>
     {% endmacro %}
-    
+
     {{ render_navigation(books_pagination, 'member_page') }}
 
     {% if books_pagination.items %}
@@ -59,63 +62,79 @@
     <ul class="collapsible popout">
         {% if books_pagination %}
         {% for book in books_pagination.items %}
-        <li>
+        <li class="row">
             <div class="collapsible-header">
                 <div class="book_spine">
-                    <a href="{{url_for('edit_book', book_id=book.id)}}"><i
-                            class="material-icons blue-text text-darken-4">create</i></a>
-                    <a class="modal-trigger" href="#delete_book_{{book.id}}"><i
-                            class="material-icons pink-text text-darken-1">delete_forever</i></a>
-                    <i class="material-icons teal-text text-lighten-1">visibility</i>
-        
+                    <div class="book_actions">
+                        <a href="{{url_for('edit_book', book_id=book.id)}}"><i
+                                class="material-icons blue-text text-darken-4">create</i></a>
+                        <a class="modal-trigger" href="#delete_book_{{book.id}}"><i
+                                class="material-icons pink-text text-darken-1">delete_forever</i></a>
+                        <i class="material-icons teal-text text-lighten-1">visibility</i>
+                    </div>
                     <div id="delete_book_{{book.id}}" class="modal">
                         <div class="modal-content">
-                            <h6>Deleting Book: {{book.title}}, by {{book.author}}</h6>
-                            <p>This action will permanently delete this book from your Book Repository. Are you sure you wish to
+                            <h6 class="pink-text text-darken-1">Deleting Book: {{book.title}}, by {{book.author}}</h6>
+                            <p>This action will permanently delete this book from your Book Repository. Are you sure you
+                                wish to
                                 do this?</p>
                         </div>
                         <div class="modal-footer">
-                            <a href="{{url_for('delete_book', book_id=book.id)}}" class="modal-close btn blue darken-4"><i class="material-icons white-text">delete_forever</i>&nbsp;Yes</a>
-                            <a href="#!" class="modal-close btn blue darken-4"><i class="material-icons white-text">pan_tool</i>&nbsp;No</a>
+                            <a href="{{url_for('delete_book', book_id=book.id)}}"
+                                class="modal-close btn blue darken-4"><i
+                                    class="material-icons white-text">delete_forever</i>&nbsp;Yes</a>
+                            <a href="#!" class="modal-close btn blue darken-4"><i
+                                    class="material-icons white-text">pan_tool</i>&nbsp;No</a>
                         </div>
                     </div>
-        
                 </div>
-                <div>
-                    <h6><a href="https://www.amazon.co.uk/s?k={{book.ISBN}}" target="_blank" rel="noopener" class="tooltipped" data-position="right" role="tooltip" tabindex="10" data-tooltip="Link to the book at Amazon UK.">{{book.title}}</a>, by {{book.author}}</h6>
+                <div class="col s12">
+                    <h6><a href="https://www.amazon.co.uk/s?k={{book.ISBN}}" target="_blank" rel="noopener"
+                            class="tooltipped" data-position="right" data-tooltip="Link to the book at Amazon UK.">{{book.title}}</a>, by {{book.author}}</h6>
                 </div>
             </div>
             <div class="collapsible-body">
-                {% if book.private_view %}
-                <p>HIDDEN from Public Searches.<i class="material-icons pink-text darken-1">lock</i></p>
-                {% else %}
-                <p>SEEN in Public Searches.<i class="material-icons teal-text text-lighten-1">lock_open</i></p>
-                {% endif %}
-                <p>&nbsp;</p>
-                <p>Published: {{book.year}}</p>
-                <p>ISBN: <a href="https://isbnsearch.org/isbn/{{book.ISBN}}" target="_blank" rel="noopener" class="tooltipped" data-position="right" role="tooltip" tabindex="20" data-tooltip="Link to the book at ISBN Search.">{{book.ISBN}}</a></p>
-                {% if book.rating > 7 %}
-                <p>Rating: {{ book.rating }} <span class="teal lighten-1 book_spine">&nbsp;&nbsp;&nbsp;</span></p>
-                {% elif book.rating > 5 %}
-                <p>Rating: {{ book.rating }} <span class="blue darken-4 book_spine">&nbsp;&nbsp;&nbsp;</span></p>
-                {% else %}
-                <p>Rating: {{ book.rating }} <span class="pink darken-1 book_spine">&nbsp;&nbsp;&nbsp;</span></p>
-                {% endif %}
-                <p>Genre: {{book.genre}}</p>
-                <p>&nbsp;</p>
-                <p>Description: {{book.short_description}}</p>
-                <p>Comments: {{book.comments}}</p>
+                <div class="row">
+                    <div class="col s12 m4 l3 center">
+                        <img src="{{book.book_thumbnail}}" alt="book image"/>
+                        <p>&nbsp;</p>
+                    </div>
+
+                    <div class="col s12 m8 l9">
+                        {% if book.private_view == "on" %}
+                        <p>HIDDEN from Public Searches.<i class="material-icons pink-text darken-1">lock</i></p>
+                        {% else %}
+                        <p>SEEN in Public Searches.<i class="material-icons teal-text text-lighten-1">lock_open</i></p>
+                        {% endif %}
+                        <p>&nbsp;</p>
+                        <p>Reader: {{book.user}}</p>
+                        <p>Published: {{book.year}}</p>
+                        <p>ISBN: <a href="https://isbnsearch.org/isbn/{{book.ISBN}}" target="_blank" rel="noopener" class="tooltipped" data-position="right" data-tooltip="Link to the book at ISBN Search.">{{book.ISBN}}</a></p>
+                        {% if book.rating > 7 %}
+                        <p>Rating: {{ book.rating }} <span class="teal lighten-1 book_spine">&nbsp;&nbsp;&nbsp;</span>
+                        </p>
+                        {% elif book.rating > 5 %}
+                        <p>Rating: {{ book.rating }} <span class="blue darken-4 book_spine">&nbsp;&nbsp;&nbsp;</span>
+                        </p>
+                        {% else %}
+                        <p>Rating: {{ book.rating }} <span class="pink darken-1 book_spine">&nbsp;&nbsp;&nbsp;</span>
+                        </p>
+                        {% endif %}
+                        <p>Genre: {{book.genre}}</p>
+                        <p>&nbsp;</p>
+                    </div>
+                    <div class="col s12 m12 l12">
+                        <p>Description: {{book.short_description}}</p>
+                        <p>Comments: {{book.comments}}</p>
+                    </div>
+                </div>
             </div>
         </li>
-
         {% endfor %}
         {% endif %}
         {% else %}
-        <h4 class="container">Please add books to your Book Repository by hovering over the 'Book' icon <span class="white-text btn waves-effect waves-light blue darken-4"><i class="material-icons white-text">import_contacts</i></span> on the top right corner under the navigation menu, and then click on Add Book.</h4>
+        <h4 class="container">Please add books to your Book Repository by clicking this 'Book' icon: <span><a href="{{ url_for('add_book')}}" class="blue-text btn text-darken-4 white">Add Book&nbsp;<i class="material-icons blue-text text-darken-4 right">import_contacts</i><i class="material-icons blue-text text-darken-4 right">plus_one</i></a></span></h4>
         {% endif %}
     </ul>
-
-    
-
 </div>
 {% endblock %}

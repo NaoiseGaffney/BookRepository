@@ -11,7 +11,7 @@ window.cookieconsent.initialise({
     },
     "position": "bottom-right",
     "content": {
-        "message": "The Book Repository uses 🍪🍪 , solely for the purpose of session management (user registration, login, and access to restricted areas), and are a requirement to use the Book Repository.<br><br>No information is shared with third parties.<br><br>",
+        "message": "The Book Repository uses 🍪🍪 (cookies), solely for the purpose of session management (user registration, login, and access to restricted areas), and are a requirement to use the Book Repository.<br><br>No information is shared with third parties.<br><br>All 🍪🍪 (cookies) are deleted after the browser is closed.<br><br>",
         "dismiss": "I understand and agree!",
         "link": "I want to know more!"
     }

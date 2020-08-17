@@ -18,16 +18,14 @@
     <link rel="manifest" href="/static/images/site.webmanifest">
     <title>{{ user_manager.USER_APP_NAME }}</title>
 
-    <!-- font awesome -->
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css"
-        integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
     <!--Import Google Icon Font-->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <!--Import materialize.css-->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
     <!-- Custom CSS -->
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename = 'styles/style.css') }}">
-
+    <!-- Cookie Consent by Osano: https://www.osano.com/cookieconsent/download/ -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/cookieconsent@3/build/cookieconsent.min.css" />
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -38,11 +36,7 @@
 
     {# *** Allow sub-templates to insert extra html to the head section *** #}
     {% block extra_css %}{% endblock %}
-    <!-- Cookie Consent by Osano: https://www.osano.com/cookieconsent/download/ -->
-    <link rel="stylesheet" type="text/css"
-        href="https://cdn.jsdelivr.net/npm/cookieconsent@3/build/cookieconsent.min.css" />
 </head>
-
 
 <body>
     <header>
@@ -52,13 +46,17 @@
                 <a href="{{url_for('home_page')}}"><img src="/static/images/logo_bookstack_text_96_spacing.png"
                         height="60" alt="Book Repository Logo"></a>
                 <a href="#" class="sidenav-trigger" data-target="mobile-links">
-                    <i class="material-icons" id="matnavbar">menu</i>
+                    <i class="material-icons blue-text text-darken-4" id="matnavbar">menu</i>
                 </a>
                 <ul class="right hide-on-med-and-down blue darken-4 waves-effect" id="nav-mobile">
                     {% if call_or_get(current_user.is_authenticated) %}
+                    {% if current_user.username == "admin"%}
                     <li>
-                        <a href="{{ url_for('member_page')}}">Member's Page<i
-                                class="material-icons right">dashboard</i></a>
+                        <a href="{{ url_for('admin_dashboard')}}">Admin Page<i class="material-icons right">table_chart</i></a>
+                    </li>
+                    {% endif %}
+                    <li>
+                        <a href="{{ url_for('member_page')}}">Member's Page<i class="material-icons right">dashboard</i></a>
                     </li>
                     <li>
                         <a href="{{ url_for('user.edit_user_profile') }}">{{ current_user.username or current_user.email }}<i
@@ -87,6 +85,11 @@
         <!-- Naviagtion for Mobile devices using a "Hamburger-menu" which must be defined outside of <nav></nav> to function in Materialize 1.0.0 -->
         <ul class="sidenav blue darken-4" id="mobile-links">
             {% if call_or_get(current_user.is_authenticated) %}
+            {% if current_user.username == "admin"%}
+            <li>
+                <a href="{{ url_for('admin_dashboard')}}" class="white-text">Admin Page<i class="material-icons white-text left">table_chart</i></a>
+            </li>
+            {% endif %}
             <li>
                 <a href="{{ url_for('member_page')}}" class="white-text">Member's Page<i
                         class="material-icons white-text left">dashboard</i></a>
@@ -207,13 +210,12 @@
     <script src="{{ url_for('static', filename = 'scripts/materialize.js') }}"></script>
     <!-- Message Chip Timeout -->
     <script src="{{ url_for('static', filename = 'scripts/message.js') }}"></script>
-
-    {# *** Allow sub-templates to insert extra html to the bottom of the body *** #}
-    {% block extra_js %}{% endblock %}
-
     <!-- Cookie Consent by Osano: https://www.osano.com/cookieconsent/download/ -->
     <script src="https://cdn.jsdelivr.net/npm/cookieconsent@3/build/cookieconsent.min.js" data-cfasync="false"></script>
     <script src="/static/scripts/cookies.js"></script>
+
+    {# *** Allow sub-templates to insert extra html to the bottom of the body *** #}
+    {% block extra_js %}{% endblock %}
 </body>
 
 </html>

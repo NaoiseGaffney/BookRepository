@@ -124,12 +124,11 @@ footer .right-align {
 }
 
 .book_spine {
-    background: rgba(0, 0, 0, 0.05);
     text-align: center;
 }
 
-div.collapsible-header div h6 {
-    padding-left: 20px;
+.book_actions {
+    padding: 10px 0px 0px 10px;
 }
 
 /* Remember Me Label */

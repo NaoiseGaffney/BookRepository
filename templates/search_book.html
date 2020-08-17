@@ -7,7 +7,7 @@
         {% else %}
         <a href="{{ url_for('home_page')}}">Home</a>
         {% endif %}
-        &nbsp; > &nbsp;<a href="{{ url_for('member_page') }}">Member's Page</a>&nbsp; > &nbsp;<a href="{{ url_for('search_book')}}">Search Books</a>&nbsp;<i class="material-icons prefix tooltipped blue-text text-darken-4" data-position="bottom" role="tooltip" tabindex="10" data-tooltip="<p class='left-align'>To search for a book or books, please fill in the fields below. The more information you enter, the more precise the
+        &nbsp; > &nbsp;<a href="{{ url_for('member_page') }}">Member's Page</a>&nbsp; > &nbsp;<a href="{{ url_for('search_book')}}">Search Books</a>&nbsp;<i class="material-icons prefix tooltipped blue-text text-darken-4" data-position="bottom" role="tooltip" data-tooltip="<p class='left-align'>To search for a book or books, please fill in the fields below. The more information you enter, the more precise the
         search.</p><br>
         <p class='left-align'>If you enter the ISBN, then that will be the only search criteria used for the search as it’s specific (ignoring all other fields).</p><br>
         <p class='left-align'>By default, the book search will include all books in the Book Repository (except those marked private by other users).</p><br>
@@ -62,9 +62,10 @@
                         <option value="{{g.genre}}">{{g.genre}}</option>
                         {% endfor %}
                     </select>
+                    <label hidden for="genre">Genre</label>
                 </div>
                 <div class="switch col s2">
-                    <label>
+                    <label for="private_view">
                         <input id="private_view" name="private_view" type="checkbox">
                         <span class="lever tooltipped" data-position="right"
                             data-tooltip="Please toggle this switch if you want to search your books only."></span>

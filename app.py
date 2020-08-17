@@ -4,7 +4,10 @@ import os
 from flask import Flask, render_template_string, render_template, redirect, url_for, request, flash, session
 from flask_mongoengine import MongoEngine, MongoEngineSession, MongoEngineSessionInterface
 from flask_user import login_required, UserManager, UserMixin, current_user, roles_required
+from flask_login import logout_user
 import datetime
+from  datetime import timedelta
+import requests
 from flask_debugtoolbar import DebugToolbarExtension
 
 from config import ConfigClass
@@ -16,18 +19,24 @@ load_dotenv(dotenv_path=env_path)
 
 """ Flask application factory """
 
+
+
 # Setup Flask and load app.config
 app = Flask(__name__, static_folder="static", template_folder="templates")
+# app.config.from_object(ConfigClass)
 app.config.from_object(__name__+".ConfigClass")
 # app.debug = True
 
-# Initialise rotating file logging - set after app initialisation
+
+""" # Initialise rotating file logging - set after app initialisation
 logging.basicConfig(
     handlers=[RotatingFileHandler("./logs/book_repository.log", maxBytes=100000, backupCount=10)],
     level=os.environ.get("LOGGING_LEVEL"),
     format="%(name)s - %(levelname)s - %(message)s"
     )
-
+ """
+# Initialize logging - set after app initialisation
+app.logger.setLevel(logging.INFO)
 
 # Setup Flask-MongoEngine
 db = MongoEngine(app)
@@ -75,7 +84,8 @@ class Book(db.Document):
     comments = db.StringField(default="", maxlength=3500)
     rating = db.IntField(choices=[1, 2, 3, 4, 5, 6, 7, 8, 9, 10])
     genre = db.StringField(default="")
-    private_view = db.StringField(default="")
+    private_view = db.StringField(default="off")
+    book_thumbnail = db.StringField(default="")
 
     meta = {
         "auto_create_index": True,
@@ -102,9 +112,11 @@ class Genre(db.Document):
 user_manager = UserManager(app, db, User)
 
 
-# Create admin user as first/default user, if admin does not exist. Password is set using an environment variable.
+# Create admin user as first/default user, if admin does not exist.
+# Password is set using an environment variable.
 if not User.objects.filter(User.username == "admin").first():
-    app.logger.info("Admin user is created on application startup if user does not exist.")
+    app.logger.info(
+        "Admin user is created on application startup if user does not exist.")
     user = User(
         username="admin",
         first_name="Administrator",
@@ -117,9 +129,11 @@ if not User.objects.filter(User.username == "admin").first():
     user.save()
 
 
-# Create the Genre Collection if it does not exist. Taken from https://bookriot.com/guide-to-book-genres/
+# Create the Genre Collection if it does not exist. Taken from
+# https://bookriot.com/guide-to-book-genres/
 if not Genre.objects:
-    app.logger.info("Genre Collection is created on application startup if it does not exist.")
+    app.logger.info(
+        "Genre Collection is created on application startup if it does not exist.")
     genre_array = [
         {"genre": "(F) Classic", "icon": "", "description": "A book or author that’s stood the test of time and has continued to inspire meaningful discussion and thought across generations. As gruesome as it sounds, I argue that the author needs to be dead for a book of theirs to be considered a classic."},
         {"genre": "(F) Literary", "icon": "", "description": "Books deemed as having artistic qualities. Often subtle in theme and contain some kind of social/political/personal commentary on what it means to be human. Can contain other genre elements, but the author uses those elements not to be parts of that community, but to highlight an important theme in their work."},
@@ -195,7 +209,8 @@ def home_page():
     return render_template("index.html")
 
 
-# The Members page is only accessible to authenticated users via the @login_required decorator
+# The Members page is only accessible to authenticated users via the
+# @login_required decorator
 
 
 @app.route("/members")
@@ -203,7 +218,8 @@ def home_page():
 @login_required
 def member_page(page=1):
     # The "R" in CRUD, a virtual library or stack of books to browse.
-    app.logger.info(f"{current_user.username} is accessing the Member's Page (members.html). Endpoint: member_page.")
+    app.logger.info(
+        f"{current_user.username} is accessing the Member's Page (members.html). Endpoint: member_page.")
     """ book = Book(
         title="Fresh Spice",
         author="Arun Kapil",
@@ -214,7 +230,8 @@ def member_page(page=1):
         comments="I love reading this book, dreaming of the recipes I can make. I made the Lamb Vindaloo and it was gorgeous. Good Samosas are hard to make.",
         rating=8,
         genre="(NF) Cooking",
-        private_view=""
+        private_view="off",
+        book_thumbnail=""
     ).save()
 
     book = Book(
@@ -227,7 +244,8 @@ def member_page(page=1):
         comments="Nothing like a little management bullshit.",
         rating=4,
         genre="(NF) Philosophy",
-        private_view=""
+        private_view="off",
+        book_thumbnail=""
     ).save()
 
     book = Book(
@@ -240,7 +258,8 @@ def member_page(page=1):
         comments="A veritable feast of Italian dishes.",
         rating=7,
         genre="(NF) Cooking",
-        private_view=""
+        private_view="off",
+        book_thumbnail=""
     ).save()
 
     book = Book(
@@ -253,7 +272,8 @@ def member_page(page=1):
         comments="A bit dated, sadly.",
         rating=4,
         genre="(NF) Reference",
-        private_view=""
+        private_view="off",
+        book_thumbnail=""
     ).save()
 
     book = Book(
@@ -266,7 +286,8 @@ def member_page(page=1):
         comments="",
         rating=7,
         genre="(NF) Cooking",
-        private_view=""
+        private_view="off",
+        book_thumbnail=""
     ).save()
 
     book = Book(
@@ -279,7 +300,8 @@ def member_page(page=1):
         comments="",
         rating=7,
         genre="(NF) Reference",
-        private_view=""
+        private_view="off",
+        book_thumbnail=""
     ).save()
 
     book = Book(
@@ -292,7 +314,8 @@ def member_page(page=1):
         comments="",
         rating=7,
         genre="(F) History",
-        private_view=""
+        private_view="off",
+        book_thumbnail=""
     ).save()
 
     book = Book(
@@ -305,12 +328,12 @@ def member_page(page=1):
         comments="",
         rating=7,
         genre="(NF) Psychology",
-        private_view=""
+        private_view="off",
+        book_thumbnail=""
     ).save() """
 
-    books_pagination = Book.objects.filter(
-        user=current_user.username).paginate(page=page, per_page=7)
-    return render_template("members.html", books_pagination=books_pagination, page_prev=(page-1), page_next=(page+1))
+    books_pagination = Book.objects.filter(user=current_user.username).paginate(page=page, per_page=7)
+    return render_template("members.html", books_pagination=books_pagination, page_prev=(page - 1), page_next=(page + 1))
 
 
 @app.route("/add_book")
@@ -339,11 +362,28 @@ def save_book():
         private_view=request.form.get("private_view")
     )
 
+    payload = {}
+    isbn_key = f"isbn:{book.ISBN}"
+    payload["q"] = isbn_key
+    payload["key"] = os.environ.get("GOOGLE_API_KEY")
+    print(payload)
+
+    try:
+        book_request = requests.get("https://www.googleapis.com/books/v1/volumes", params=payload, headers={'User-agent': 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:61.0) Gecko/20100101 Firefox/61.0'})
+        book_thumbnail_w_http = book_request.json()["items"][0]["volumeInfo"]["imageLinks"]["thumbnail"]
+        book_thumbnail_w_https = book_thumbnail_w_http.replace("http://", "https://")
+        book.book_thumbnail = book_thumbnail_w_https
+        app.logger.info(f"{current_user.username} has successfully requested the thumbnail image {book.book_thumbnail} for the book {book.title} with the id {book.id} (add_book.html). Endpoint: save_book.")
+        print(book_request.json()["items"][0]["volumeInfo"]["imageLinks"]["thumbnail"])
+    except BaseException:
+        book.book_thumbnail = "/static/images/BR_logo_no_thumbnail.png"
+        app.logger.warning(f"{current_user.username} has not successfully requested the thumbnail image for the book {book.title} with the id {book.id} (add_book.html). Endpoint: save_book.")
+
     try:
         book.save()
         flash(f"The book {book.title} was saved!", "success")
         app.logger.info(f"{current_user.username} is saving the book {book.title} with the id {book.id} (add_book.html). Endpoint: save_book.")
-    except:
+    except BaseException:
         app.logger.warning(f"{current_user.username} did not succeed in saving the {book.title} (add_book.html). Endpoint: save_book.")
         flash(f"The book {book.title} was NOT saved!", "danger")
     return redirect(url_for("member_page"))
@@ -375,11 +415,34 @@ def update_book(book_id):
         "genre": request.form.get("genre"),
         "private_view": request.form.get("private_view")
     }
+
+    if fields["private_view"] != "on":
+        fields["private_view"] = "off"
+
+
+    payload = {}
+    isbn_field = fields["ISBN"]
+    isbn_key = f"isbn:{isbn_field}"
+    payload["q"] = isbn_key
+    payload["key"] = os.environ.get("GOOGLE_API_KEY")
+    print(payload)
+
+    try:
+        book_request = requests.get("https://www.googleapis.com/books/v1/volumes", params=payload, headers={'User-agent': 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:61.0) Gecko/20100101 Firefox/61.0'})
+        book_thumbnail_w_http = book_request.json()["items"][0]["volumeInfo"]["imageLinks"]["thumbnail"]
+        book_thumbnail_w_https = book_thumbnail_w_http.replace("http://", "https://")
+        fields["book_thumbnail"] = book_thumbnail_w_https
+        app.logger.info(f"{current_user.username} has successfully requested the thumbnail image {book.book_thumbnail} for the book {book.title} with the id {book.id} (add_book.html). Endpoint: save_book.")
+        print(book_request.json()["items"][0]["volumeInfo"]["imageLinks"]["thumbnail"])
+    except BaseException:
+        fields["book_thumbnail"] = "/static/images/BR_logo_no_thumbnail.png"
+        app.logger.warning(f"{current_user.username} has not successfully requested the thumbnail image for the book {book.title} with the id {book.id} (add_book.html). Endpoint: save_book.")
+
     try:
         book.update(**fields)
         flash(f"The book {book.title} is updated!", "success")
         app.logger.info(f"{current_user.username} updated the book {book.title} with the id {book.id} (edit_book.html). Endpoint: update_book.")
-    except:
+    except BaseException:
         app.logger.warning(f"{current_user.username} did not update the book {book.title} with the id {book.id} (edit_book.html). Endpoint: update_book.")
         flash(f"The book {book.title} was NOT updated!", "danger")
     return redirect(url_for("member_page"))
@@ -388,13 +451,14 @@ def update_book(book_id):
 @app.route("/delete_book/<book_id>")
 @login_required
 def delete_book(book_id):
-    # The "D" in CRUD, deleting the book based on 'id' after delete modal confirmation.
+    # The "D" in CRUD, deleting the book based on 'id' after delete modal
+    # confirmation.
     book = Book.objects.get(id=book_id)
     try:
         book.delete()
         flash(f"The book {book.title} is deleted!", "success")
         app.logger.info(f"{current_user.username} deleted the book {book.title} with the id {book.id} (members.html). Endpoint: delete_book.")
-    except:
+    except BaseException:
         flash(f"The book {book.title} was NOT deleted!", "danger")
         app.logger.warning(f"{current_user.username} did not delete the book {book.title} with the id {book.id} (members.html). Endpoint: delete_book.")
     return redirect(url_for("member_page"))
@@ -403,7 +467,8 @@ def delete_book(book_id):
 @app.route("/search_book")
 @login_required
 def search_book():
-    # Preparing for the book search in Book Repository, filling in the search book form.
+    # Preparing for the book search in Book Repository, filling in the search
+    # book form.
     genre = Genre.objects()
     app.logger.info(f"{current_user.username} is filling out the book search form. (search_book.html). Endpoint: search_book.")
     return render_template("search_book.html", genre=genre)
@@ -412,7 +477,8 @@ def search_book():
 @app.route("/save_search", methods=["GET", "POST"])
 @login_required
 def save_search():
-    # Save the search book results in a session cookie, to use by 'search_results' repeatedly to display the paginated search results.
+    # Save the search book results in a session cookie, to use by
+    # 'search_results' repeatedly to display the paginated search results.
     fields = {
         "title": request.form.get("title"),
         "author": request.form.get("author"),
@@ -443,7 +509,9 @@ def administration():
 @app.route("/search_results/<int:page>")
 @login_required
 def search_results(page=1):
-    # Book search using a combination of form fields saved in the session cookie in 'save_search', and based on the values in some key fields decide which Book Repository BaseQuerySet to run.
+    # Book search using a combination of form fields saved in the session
+    # cookie in 'save_search', and based on the values in some key fields
+    # decide which Book Repository BaseQuerySet to run.
     fields = session.get("fields")
 
     form_title = fields["title"]
@@ -467,41 +535,80 @@ def search_results(page=1):
     # Private Search "form_private_view == "on"
     if form_private_view == "on":
         if form_isbn:
-            book_query_results = Book.objects.filter(
-                user=current_user.username, ISBN=form_isbn).paginate(page=page, per_page=7)
+            book_query_results = Book.objects.filter(user=current_user.username, ISBN=form_isbn).paginate(page=page, per_page=7)
             app.logger.info(f"{current_user.username} found books matching {book_query_results} - 1: Private & ISBN Search (search_results.html). Endpoint: search_results.")
-            return render_template("search_results.html", book_query_results=book_query_results, page_prev=(page-1), page_next=(page+1))
-        elif form_genre == None:
-            book_query_results = Book.objects.filter(user=current_user.username, title__icontains=form_title, author__icontains=form_author, rating__gte=form_rating).order_by(
-                "+title", "+author", "-rating").paginate(page=page, per_page=7)
+            return render_template("search_results.html", book_query_results=book_query_results, page_prev=(page - 1), page_next=(page + 1))
+        elif form_genre is None:
+            book_query_results = Book.objects.filter(user=current_user.username, title__icontains=form_title, author__icontains=form_author, rating__gte=form_rating).order_by("+title", "+author", "-rating").paginate(page=page, per_page=7)
             app.logger.info(f"{current_user.username} found books matching {book_query_results} - 2: Private, no Genre, no ISBN, Title, Author, and Rating Search (search_results.html). Endpoint: search_results.")
-            return render_template("search_results.html", book_query_results=book_query_results, page_prev=(page-1), page_next=(page+1))
+            return render_template("search_results.html", book_query_results=book_query_results, page_prev=(page - 1), page_next=(page + 1))
         else:
-            book_query_results = Book.objects.filter(user=current_user.username, title__icontains=form_title, author__icontains=form_author,
-                                                     rating__gte=form_rating, genre=form_genre).order_by("+title", "+author", "-rating").paginate(page=page, per_page=7)
+            book_query_results = Book.objects.filter(user=current_user.username, title__icontains=form_title, author__icontains=form_author, rating__gte=form_rating, genre=form_genre).order_by("+title", "+author", "-rating").paginate(page=page, per_page=7)
             app.logger.info(f"{current_user.username} found books matching {book_query_results} - 3: Private, no ISBN, Title, Author, Rating, and Genre Search (search_results.html). Endpoint: search_results.")
-            return render_template("search_results.html", book_query_results=book_query_results, page_prev=(page-1), page_next=(page+1))
+            return render_template("search_results.html", book_query_results=book_query_results, page_prev=(page - 1), page_next=(page + 1))
     # Public Search "form_private_view == None"
     else:
         if form_isbn:
-            book_query_results = Book.objects.filter(
-                ISBN=form_isbn, private_view="").paginate(page=page, per_page=7)
+            book_query_results = Book.objects.filter(ISBN=form_isbn, private_view="off").paginate(page=page, per_page=7)
             app.logger.info(f"{current_user.username} found books matching {book_query_results} - 4: Public & ISBN Search (search_results.html). Endpoint: search_results.")
-            return render_template("search_results.html", book_query_results=book_query_results, page_prev=(page-1), page_next=(page+1))
-        elif form_genre == None:
-            book_query_results = Book.objects.filter(title__icontains=form_title, author__icontains=form_author, rating__gte=form_rating, private_view="").order_by(
-                "+title", "+author", "-rating").paginate(page=page, per_page=7)
+            return render_template("search_results.html", book_query_results=book_query_results, page_prev=(page - 1), page_next=(page + 1))
+        elif form_genre is None:
+            book_query_results = Book.objects.filter(title__icontains=form_title, author__icontains=form_author, rating__gte=form_rating, private_view="off").order_by("+title", "+author", "-rating").paginate(page=page, per_page=7)
             app.logger.info(f"{current_user.username} found books matching {book_query_results} - 5: Public, no Genre, no ISBN, Title, Author, and Rating Search (search_results.html). Endpoint: search_results.")
-            return render_template("search_results.html", book_query_results=book_query_results, page_prev=(page-1), page_next=(page+1))
+            return render_template("search_results.html", book_query_results=book_query_results, page_prev=(page - 1), page_next=(page + 1))
         else:
-            book_query_results = Book.objects.filter(title__icontains=form_title, author__icontains=form_author, rating__gte=form_rating, genre=form_genre, private_view="").order_by(
-                "+title", "+author", "-rating").paginate(page=page, per_page=7)
+            book_query_results = Book.objects.filter(title__icontains=form_title, author__icontains=form_author, rating__gte=form_rating, genre=form_genre, private_view="off").order_by("+title", "+author", "-rating").paginate(page=page, per_page=7)
             app.logger.info(f"{current_user.username} found books matching {book_query_results} - 6: Public, no ISBN, Title, Author, Rating, and Genre Search (search_results.html). Endpoint: search_results.")
-            return render_template("search_results.html", book_query_results=book_query_results, page_prev=(page-1), page_next=(page+1))
+            return render_template("search_results.html", book_query_results=book_query_results, page_prev=(page - 1), page_next=(page + 1))
+
+
+@app.route("/delete_user.html")
+@login_required
+def delete_user():
+    deleted_user = current_user.username
+    find_user_books = Book.objects.filter(user=current_user.username)
+    for book in find_user_books:
+        print("\n\nBook:", book.to_json())
+    find_user = User.objects.filter(username=current_user.username)
+    print("\n\nUser:", find_user.to_json())
+    print(deleted_user)
+
+    try:
+        logout_user()
+        find_user_books.delete()
+        find_user.delete()
+        flash(f"We're sad to see you go {deleted_user}!", "success")
+        app.logger.warning(f"{deleted_user} is has left the Book Repository (delete_user.html). Endpoint: delete_user.")
+    except:
+        flash(f"Your account is still alive and active {find_user.username}!", "danger")
+        app.logger.warning(f"{deleted_user} is still alive and active on the Book Repository (delete_user.html). Endpoint: delete_user.")
+
+    return redirect(url_for("home_page"))
+
+
+@app.route("/admin_dashboard.html")
+@roles_required("Admin")
+def admin_dashboard():
+    user_details_query = User.objects()
+    genre_list = Genre.objects()
+    return render_template("admin_dashboard.html", user_details_query=user_details_query, genre_list=genre_list)
+
+
+@app.errorhandler(404)
+def not_found(error):
+    excuse = "Apologies, we can't seem to find the Book Repository database or worse, we've lost access to the Internet. Please click on the pink pulsating buoy to go to the Home Page (registering or signing in) or Member's Page (signed in), or click on Sign Out below."
+    return render_template("oops.html", error=error, excuse=excuse, error_type="Client: 404 - Bad Request")
+
+
+@app.errorhandler(500)
+def internal_error(error):
+    excuse = "Apologies, something serious occurred and the Leprechauns are working on resolving the issue. It's most likely Google Mail (GMail) acting up...again. Please click on the pink pulsating buoy to go to the Home Page (registering or signing in) or Member's Page (signed in), or click on Sign Out below."
+    return render_template("oops.html", error=error, excuse=excuse, error_type="Server: 500 - Internal Server Error")
 
 
 # export PRODUCTION=ON | OFF in TEST
-# PRODUCTION App -> Settings -> Reveal Config Vars -> KEY: PRODUCTION, VALUE: ON
+# PRODUCTION App -> Settings -> Reveal Config Vars -> KEY: PRODUCTION,
+# VALUE: ON
 if __name__ == "__main__":
     if not os.environ.get("MONGO_URI_BR"):
         raise ValueError(
