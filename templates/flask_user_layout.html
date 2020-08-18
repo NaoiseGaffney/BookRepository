@@ -52,7 +52,7 @@
                     {% if call_or_get(current_user.is_authenticated) %}
                     {% if current_user.username == "admin"%}
                     <li>
-                        <a href="{{ url_for('admin_dashboard')}}">Admin Page<i class="material-icons right">table_chart</i></a>
+                        <a href="{{ url_for('admin_dashboard')}}">Admin Page<i class="material-icons right">admin_panel_settings</i></a>
                     </li>
                     {% endif %}
                     <li>
@@ -207,12 +207,12 @@
     <!-- Compiled and minified JavaScript -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
     <!-- Initialise MaterializeCSS 1.0.0 Features -->
-    <script src="{{ url_for('static', filename = 'scripts/materialize.js') }}"></script>
+    <script src="{{ url_for('static', filename = 'scripts/vendor/materialize.js') }}"></script>
     <!-- Message Chip Timeout -->
     <script src="{{ url_for('static', filename = 'scripts/message.js') }}"></script>
     <!-- Cookie Consent by Osano: https://www.osano.com/cookieconsent/download/ -->
     <script src="https://cdn.jsdelivr.net/npm/cookieconsent@3/build/cookieconsent.min.js" data-cfasync="false"></script>
-    <script src="/static/scripts/cookies.js"></script>
+    <script src="{{ url_for('static', filename = 'scripts/vendor/cookies.js') }}"></script>
 
     {# *** Allow sub-templates to insert extra html to the bottom of the body *** #}
     {% block extra_js %}{% endblock %}

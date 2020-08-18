@@ -1,8 +1,0 @@
-This directory contains rotating application file logs for the Book Repository.
-
-# Initialise rotating file logging - set after app initialisation
-logging.basicConfig(
-    handlers=[RotatingFileHandler("./logs/book_repository.log", maxBytes=100000, backupCount=10)],
-    level=os.environ.get("LOGGING_LEVEL"),
-    format="%(name)s - %(levelname)s - %(message)s"
-    )
