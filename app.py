@@ -26,7 +26,7 @@ load_dotenv(dotenv_path=env_path)
 app = Flask(__name__, static_folder="static", template_folder="templates")
 # app.config.from_object(ConfigClass)
 app.config.from_object(__name__+".ConfigClass")
-# app.debug = True
+app.debug = True
 
 
 """ # Initialise rotating file logging - set after app initialisation
@@ -412,13 +412,13 @@ def delete_user():
 
     return redirect(url_for("home_page"))
 
-
+# Admin Dashboard - admin_dashboard.html - for user management and content loading.
 @app.route("/admin_dashboard.html")
 @app.route("/admin_dashboard.html/<int:page>")
 @roles_required("Admin")
 def admin_dashboard(page=1):
     user_details_query = User.objects().order_by("username").paginate(page=page, per_page=10)
-    genre_list = Genre.objects()
+    # genre_list = Genre.objects()
     # app_db_log = Log.objects()
     return render_template("admin_dashboard.html", user_details_query=user_details_query, page_prev=(page - 1), page_next=(page + 1))
 
@@ -434,13 +434,15 @@ def update_user(user_id):
         "active": request.form.get("active"),
         "email": request.form.get(f"email_{user_form_name}"),
         "first_name": request.form.get(f"first_name_{user_form_name}"),
-        "last_name": request.form.get(f"last_name_{user_form_name}")
+        "last_name": request.form.get(f"last_name_{user_form_name}"),
+        "password": request.form.get(f"password_{user_form_name}")
     }
 
     print("Active:", admin_user_form["active"])
     print("Email:", admin_user_form["email"])
     print("first_name:", admin_user_form["first_name"])
     print("last_name:", admin_user_form["last_name"])
+    print("password:", admin_user_form["password"])
 
     if user.username == "admin":
         admin_user_form["active"] = True
@@ -448,6 +450,11 @@ def update_user(user_id):
         admin_user_form["active"] = True
     else:
         admin_user_form["active"] = False
+
+    if admin_user_form["password"].startswith("$2b$12$"):
+        pass
+    else:
+        admin_user_form["password"] = user_manager.hash_password(admin_user_form["password"])
 
     print(user.username)
     print(admin_user_form["active"])

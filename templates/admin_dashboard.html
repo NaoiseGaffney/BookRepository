@@ -120,9 +120,15 @@
                     <div class="input-field col s12">
                         <i class="material-icons prefix tooltipped" data-position="bottom"
                             data-tooltip="Please update the last name if required.">group</i>
-                        <input id="last_name_{{user.username}}" name="last_name_{{user.username}}" type="text" maxlength="250" value="{{user.last_name}}"
-                            required>
+                        <input id="last_name_{{user.username}}" name="last_name_{{user.username}}" type="text" maxlength="250"
+                            value="{{user.last_name}}" required>
                         <label for="last_name_{{user.username}}">User Last Name</label>
+                    </div>
+                    <div class="input-field col s12">
+                        <i class="material-icons prefix tooltipped" data-position="bottom"
+                            data-tooltip="Please update the password if required. The current password is hashed ($2b$12$...), delete it and enter your new password if required.">vpn_key</i>
+                        <input id="password_{{user.username}}" name="password_{{user.username}}" type="password" maxlength="250" value="{{user.password}}" required>
+                        <label for="password_{{user.username}}">User Password</label>
                     </div>
                     <div class="input-field col s12">
                         <i class="material-icons prefix tooltipped" data-position="bottom"
