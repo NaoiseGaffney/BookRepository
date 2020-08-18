@@ -411,12 +411,18 @@ def update_user(user_id):
     # The "U" in CRUD, saving the changes made to the update user modal form fields.
     print(user_id)
     user = User.objects.get(id=user_id)
+    user_form_name = user.username
     admin_user_form = {
-        "active": request.form.get("active"),
-        "email": request.form.get("email"),
-        "first_name": request.form.get("first_name"),
-        "last_name": request.form.get("last_name")
+        "active": request.form.get(f"active_{user_form_name}"),
+        "email": request.form.get(f"email_{user_form_name}"),
+        "first_name": request.form.get(f"first_name_{user_form_name}"),
+        "last_name": request.form.get(f"last_name_{user_form_name}")
     }
+
+    print("Active:", admin_user_form["active"])
+    print("Email:", admin_user_form["email"])
+    print("first_name:", admin_user_form["first_name"])
+    print("last_name:", admin_user_form["last_name"])
 
     if user.username == "admin":
         admin_user_form["active"] = True

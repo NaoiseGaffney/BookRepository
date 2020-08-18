@@ -27,11 +27,13 @@
             <span class="white-text btn waves-effect waves-light right blue darken-4"><i
                     class="material-icons white-text">category</i></span>
             <span class="book-dropdown-content">
-                <span><a href="{{ url_for('load_genres')}}" class="blue-text btn text-darken-4 white">Load Genres&nbsp;&nbsp;&nbsp;<i
+                <span><a href="{{ url_for('load_genres')}}" class="blue-text btn text-darken-4 white">Load
+                        Genres&nbsp;&nbsp;&nbsp;<i
                             class="material-icons blue-text text-darken-4 right">subject</i></a></span>
                 <span><br>&nbsp;<br></span>
                 <span><a href="{{ url_for('load_books')}}" class="blue-text btn text-darken-4 white">Load
-                        Books&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="material-icons blue-text text-darken-4 right">import_contacts</i></a></span>
+                        Books&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i
+                            class="material-icons blue-text text-darken-4 right">import_contacts</i></a></span>
             </span>
         </span>
     </h6>
@@ -72,7 +74,6 @@
             <th>Active</th>
             <th>E-mail</th>
         </tr>
-        {% if user_details_query %}
         {% for user in user_details_query.items %}
         <tr class="{{loop.cycle('white','blue-grey lighten-5')}}">
             <td><a class="modal-trigger" href="#edit_user_{{user.username}}">{{user.username}}</a></td>
@@ -80,69 +81,71 @@
             <td>{{user.active}}</td>
             <td>{{user.email}}</td>
         </tr>
-        <div id="edit_user_{{user.username}}" class="modal center">
-            <div class="modal-content">
-                <h6>User: {{user.username}}</h6>
-                <form action="{{ url_for('update_user', user_id=user.id) }}" method="POST" class="col s12">
-                    {% if user.username != "admin" %}
-                    <div class="row switch">
-                        Inactive
-                        {% if user.active == true %}
-                        <label for="active_{{user.username}}">
-                            <input id="active_{{user.username}}" name="active" type="checkbox" checked>
-                            {% else %}
-                            <label for="active_{{user.username}}">
-                                <input id="active_{{user.username}}" name="active" type="checkbox">
-                                {% endif%}
-                                <span class="lever tooltipped" data-position="bottom"
-                                    data-tooltip="Please toggle this switch if you want to inactivate (grey) this user account (the user will not be able to sign in to the Book Repository)."></span>
-                            </label>
-                            Active
-                    </div>
-                    {% endif %}
-                    <div class="row">
-                        <div class="input-field col s12">
-                            <i class="material-icons prefix tooltipped" data-position="bottom"
-                                data-tooltip="Please update the first name if required.">person</i>
-                            <input id="first_name" name="first_name" type="text" maxlength="250"
-                                value="{{user.first_name}}" required>
-                            <label for="first_name">User First Name</label>
-                        </div>
-                        <div class="input-field col s12">
-                            <i class="material-icons prefix tooltipped" data-position="bottom"
-                                data-tooltip="Please update the last name if required.">group</i>
-                            <input id="last_name" name="last_name" type="text" maxlength="250"
-                                value="{{user.last_name}}" required>
-                            <label for="email">User Last Name</label>
-                        </div>
-                        <div class="input-field col s12">
-                            <i class="material-icons prefix tooltipped" data-position="bottom"
-                                data-tooltip="Please update the e-mail address if required.">email</i>
-                            <input id="email" name="email" type="email" maxlength="64" value="{{user.email}}" required>
-                            <label for="email">User E-mail</label>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        {% if user.username != "admin" %}
-                        <div class="left">
-                            <a href="{{ url_for('admin_delete_user', user_id=user.id) }}"
-                                class="modal-close btn waves-effect waves-light pink darken-1 tooltipped" data-position="right" data-tooltip="This will PERMANENTLY delete the user and associated books!"><i
-                                    class="material-icons white-text right">delete_forever</i>&nbsp;Delete</a>
-                        </div>
-                        {% endif %}
-                        <div class="right">
-                            <button class="btn waves-effect waves-light blue darken-4" type="submit"
-                                name="action">Update<i class="material-icons right">playlist_add</i></button>
-                            <a href="#!" class="modal-close btn waves-effect waves-light blue darken-4"><i
-                                    class="material-icons white-text right">pan_tool</i>&nbsp;Cancel</a>
-                        </div>
-                    </div>
-                </form>
-            </div>
-        </div>
         {% endfor %}
-        {% endif %}
     </table>
     {% endif %}
+    {% for user in user_details_query.items %}
+    <div id="edit_user_{{user.username}}" class="modal center">
+        <div class="modal-content">
+            <h6>User: {{user.username}}</h6>
+            <form action="{{ url_for('update_user', user_id=user.id) }}" method="POST" class="col s12">
+                {% if user.username != "admin" %}
+                <div class="row switch">
+                    Inactive
+                    {% if user.active == true %}
+                    <label for="active_{{user.username}}">
+                        <input id="active_{{user.username}}" name="active" type="checkbox" checked>
+                        {% else %}
+                        <label for="active_{{user.username}}">
+                            <input id="active_{{user.username}}" name="active" type="checkbox">
+                            {% endif%}
+                            <span class="lever tooltipped" data-position="bottom"
+                                data-tooltip="Please toggle this switch if you want to inactivate (grey) this user account (the user will not be able to sign in to the Book Repository)."></span>
+                        </label>
+                        Active
+                </div>
+                {% endif %}
+                <div class="row">
+                    <div class="input-field col s12">
+                        <i class="material-icons prefix tooltipped" data-position="bottom"
+                            data-tooltip="Please update the first name if required.">person</i>
+                        <input id="first_name_{{user.username}}" name="first_name_{{user.username}}" type="text" maxlength="250" value="{{user.first_name}}"
+                            required>
+                        <label for="first_name_{{user.username}}">User First Name</label>
+                    </div>
+                    <div class="input-field col s12">
+                        <i class="material-icons prefix tooltipped" data-position="bottom"
+                            data-tooltip="Please update the last name if required.">group</i>
+                        <input id="last_name_{{user.username}}" name="last_name_{{user.username}}" type="text" maxlength="250" value="{{user.last_name}}"
+                            required>
+                        <label for="last_name_{{user.username}}">User Last Name</label>
+                    </div>
+                    <div class="input-field col s12">
+                        <i class="material-icons prefix tooltipped" data-position="bottom"
+                            data-tooltip="Please update the e-mail address if required.">email</i>
+                        <input id="email_{{user.username}}" name="email_{{user.username}}" type="email" maxlength="64" value="{{user.email}}" required>
+                        <label for="email_{{user.username}}">User E-mail</label>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    {% if user.username != "admin" %}
+                    <div class="left">
+                        <a href="{{ url_for('admin_delete_user', user_id=user.id) }}"
+                            class="modal-close btn waves-effect waves-light pink darken-1 tooltipped" data-position="right"
+                            data-tooltip="This will PERMANENTLY delete the user and associated books!"><i
+                                class="material-icons white-text right">delete_forever</i>&nbsp;Delete</a>
+                    </div>
+                    {% endif %}
+                    <div class="right">
+                        <button class="btn waves-effect waves-light blue darken-4" type="submit" name="action">Update<i
+                                class="material-icons right">playlist_add</i></button>
+                        <a href="#!" class="modal-close btn waves-effect waves-light blue darken-4"><i
+                                class="material-icons white-text right">pan_tool</i>&nbsp;Cancel</a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    {% endfor %}
 </div>
 {% endblock %}
