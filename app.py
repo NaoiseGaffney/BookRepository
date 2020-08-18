@@ -1,6 +1,7 @@
 import logging  # Enable logging of application events (info, warning, error)
 from logging.handlers import RotatingFileHandler
 import os
+import json
 from flask import Flask, render_template_string, render_template, redirect, url_for, request, flash, session
 from flask_mongoengine import MongoEngine, MongoEngineSession, MongoEngineSessionInterface
 from flask_user import login_required, UserManager, UserMixin, current_user, roles_required
@@ -112,28 +113,45 @@ class Genre(db.Document):
 user_manager = UserManager(app, db, User)
 
 
-# Create admin user as first/default user, if admin does not exist.
-# Password is set using an environment variable.
-if not User.objects.filter(User.username == "admin"):
-    app.logger.info(
-        "Admin user is created on application startup if user does not exist.")
-    user = User(
-        username="admin",
-        first_name="Administrator",
-        last_name="Administrator",
-        email=os.environ.get("MAIL_DEFAULT_SENDER"),
-        email_confirmed_at=datetime.datetime.utcnow(),
-        password=user_manager.hash_password(os.environ.get("ADMIN_PASSWORD"))
-    )
-    user.roles.append("Admin")
-    user.save()
-
-
 @app.route("/")
 def home_page():
     # Landing/Home Page, accessible before signing/logging in.
     if current_user.is_authenticated:
         return redirect(url_for("member_page"))
+
+    # Create admin user as first/default user, if admin does not exist.
+    # Password is set using an environment variable.
+    if not User.objects.filter(User.username == "admin"):
+        app.logger.info(
+            "Admin user is created on application startup if user does not exist.")
+        user = User(
+            username="admin",
+            first_name="Administrator",
+            last_name="Administrator",
+            email=os.environ.get("MAIL_DEFAULT_SENDER"),
+            email_confirmed_at=datetime.datetime.utcnow(),
+            password=user_manager.hash_password(os.environ.get("ADMIN_PASSWORD"))
+        )
+        user.roles.append("Admin")
+        user.save()
+
+    # Create the Genre Collection if it does not exist. Taken from
+    # https://bookriot.com/guide-to-book-genres/
+    if not Genre.objects():
+        with open("genre.json", "r", encoding="utf-8") as f:
+            genre_array = json.load(f)
+        
+        try:
+            genre_instances = [Genre(**data) for data in genre_array]
+            Genre.objects.insert(genre_instances, load_bulk=False)
+            flash("Genres Collection successfully created.", "success")
+            app.logger.info("Initial load of the Genre Collection to the Book Repository successful (index.html). Endpoint: home_page.")
+        except BaseException:
+            flash("Genres Collection NOT created.", "danger")
+            app.logger.warning("Initial load of the Genre Collection to the Book Repository failed (index.html). Endpoint: home_page.")
+        finally:
+            render_template("index.html")
+
     return render_template("index.html")
 
 
@@ -466,66 +484,9 @@ def load_genres():
     # Create the Genre Collection if it does not exist. Taken from
     # https://bookriot.com/guide-to-book-genres/
     if not Genre.objects():
-        genre_array = [
-            {"genre": "(F) Classic", "icon": "", "description": "A book or author that’s stood the test of time and has continued to inspire meaningful discussion and thought across generations. As gruesome as it sounds, I argue that the author needs to be dead for a book of theirs to be considered a classic."},
-            {"genre": "(F) Literary", "icon": "", "description": "Books deemed as having artistic qualities. Often subtle in theme and contain some kind of social/political/personal commentary on what it means to be human. Can contain other genre elements, but the author uses those elements not to be parts of that community, but to highlight an important theme in their work."},
-            {"genre": "(F) General", "icon": "", "description": "These books offer fun, engaging stories in a contemporary setting. They’re more approachable than Literary Fiction, and contain none of the genre elements in other categories."},
-            {"genre": "(F) Historical", "icon": "",
-                "description": "Books that take place at least 30 years before the time the author writes them. Subcategories are often broken up by time frames."},
-            {"genre": "(F) Romance", "icon": "",
-                "description": "A book where the primary plot involves falling in love (of the romantic variety) and has a happy or emotionally satisfying ending."},
-            {"genre": "(F) Mystery", "icon": "",
-                "description": "Novels where the plot revolves around solving why something has happened or will happen."},
-            {"genre": "(F) Action", "icon": "",
-                "description": "High-stake novels with frequent scene changes, where the protagonist is constantly being put at risk."},
-            {"genre": "(F) Fantasy", "icon": "",
-                "description": "Novels set in either a completely fictional world, or set in a version of this world that includes magic."},
-            {"genre": "(F) Sci-Fi", "icon": "",
-                "description": "Books that imagine a current possibility’s impact in the future."},
-            {"genre": "(F) Horror", "icon": "",
-                "description": "A novel where supernatural elements create fear and terror, both within the novel and for the reader."},
-            {"genre": "(NF) History", "icon": "", "description": "Books which examine past true events. These can be broad surveys of a specific country, region, and/or time period, or they can focus on a specific event or set of events. They’re often heavily researched and can utilize academic language or be highly narrative."},
-            {"genre": "(NF) Biography", "icon": "",
-                "description": "Relates the story of a person’s life."},
-            {"genre": "(NF) Fine Arts", "icon": "",
-                "description": "Books where the information is primarily concerned with the aesthetic vs the factual."},
-            {"genre": "(NF) Humour", "icon": "",
-                "description": "Books meant to illicit laughter."},
-            {"genre": "(NF) Religion", "icon": "",
-                "description": "Books which examine a specific religion, the history of religions, and/or the practice of worshiping a deity/deities. Includes holy books."},
-            {"genre": "(NF) Folklore", "icon": "",
-                "description": "Collections and studies of fairytales, legends, storytelling, and folklore."},
-            {"genre": "(NF) Philosophy", "icon": "",
-                "description": "Study of the nature of knowledge, existence, and being from an academic perspective."},
-            {"genre": "(NF) New Age", "icon": "",
-                "description": "Books that examine nontraditional spirituality or non-mainstream belief practices."},
-            {"genre": "(NF) Health", "icon": "", "description": "Books that describe ways of staying healthy: how to prevent or fight a specific medical issues; nutritional ideas; alternative medicine; nursing textbooks; sex, etc."},
-            {"genre": "(NF) Science", "icon": "",
-                "description": "Books which explain physical or natural science concepts, including mathematics, technology, chemistry, biology, physics, engineering and more."},
-            {"genre": "(NF) Social", "icon": "",
-                "description": "Books that analyze societies and social relationships."},
-            {"genre": "(NF) Psychology", "icon": "",
-                "description": "Books that examine mental and emotional functions and well-being."},
-            {"genre": "(NF) Education", "icon": "", "description": "Books that look at the education system, including teaching how-to guides, curriculum guides, lesson plan collections, homeschool guides, special education, and test prep."},
-            {"genre": "(NF) Reference", "icon": "",
-                "description": "Books which provide basic, objective information, like dictionaries, encyclopedias, and books of quotations."},
-            {"genre": "(NF) Business", "icon": "",
-                "description": "Books about managing and creating businesses, job skills and career advice, personal and business finance, investing, and how money works."},
-            {"genre": "(NF) Communicate.", "icon": "",
-                "description": "Books about the ways communication occurs, communicating in other languages, the best ways to communicate, and the technical aspects of types of communication."},
-            {"genre": "(NF) Home", "icon": "",
-                "description": "Books about designing, organizing, taking care of, decorating, and otherwise loving homes and gardens."},
-            {"genre": "(NF) Animals", "icon": "",
-                "description": "Books about taking care of and loving animals."},
-            {"genre": "(NF) Leisure", "icon": "",
-                "description": "Books about activities and hobbies done or consumed primarily for enjoyment."},
-            {"genre": "(NF) Cooking", "icon": "",
-                "description": "Collections of recipes and the history of food."},
-            {"genre": "(NF) Crime", "icon": "",
-                "description": "Books that tell the story of a specific crime or criminal, collect stories of various criminals, or tell of a historical crime."},
-            {"genre": "Other", "icon": "",
-                "description": "Book's genre is not in the list."},
-        ]
+        with open("genre.json", "r", encoding="utf-8") as f:
+            genre_array = json.load(f)
+        
         try:
             genre_instances = [Genre(**data) for data in genre_array]
             Genre.objects.insert(genre_instances, load_bulk=False)
@@ -535,7 +496,7 @@ def load_genres():
             flash(f"Genres Collection NOT created.", "danger")
             app.logger.warning(f"{current_user.username} has NOT loaded the Genre Collection to the Book Repository (admin_dashboard.html). Endpoint: load_genres.")
         finally:
-            return redirect(url_for("admin_dashboard"))
+            return redirect(url_for("admin_dashboard") or url_for("home_page"))
     else:
         flash(f"Genres Collection already created.", "success")
         return redirect(url_for("admin_dashboard"))
