@@ -413,7 +413,7 @@ def update_user(user_id):
     user = User.objects.get(id=user_id)
     user_form_name = user.username
     admin_user_form = {
-        "active": request.form.get(f"active_{user_form_name}"),
+        "active": request.form.get("active"),
         "email": request.form.get(f"email_{user_form_name}"),
         "first_name": request.form.get(f"first_name_{user_form_name}"),
         "last_name": request.form.get(f"last_name_{user_form_name}")
