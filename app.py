@@ -466,7 +466,6 @@ def load_genres():
     # Create the Genre Collection if it does not exist. Taken from
     # https://bookriot.com/guide-to-book-genres/
     if not Genre.objects():
-        app.logger.info("Genre Collection is created by admin.")
         genre_array = [
             {"genre": "(F) Classic", "icon": "", "description": "A book or author that’s stood the test of time and has continued to inspire meaningful discussion and thought across generations. As gruesome as it sounds, I argue that the author needs to be dead for a book of theirs to be considered a classic."},
             {"genre": "(F) Literary", "icon": "", "description": "Books deemed as having artistic qualities. Often subtle in theme and contain some kind of social/political/personal commentary on what it means to be human. Can contain other genre elements, but the author uses those elements not to be parts of that community, but to highlight an important theme in their work."},
@@ -527,239 +526,259 @@ def load_genres():
             {"genre": "Other", "icon": "",
                 "description": "Book's genre is not in the list."},
         ]
-        genre_instances = [Genre(**data) for data in genre_array]
-        Genre.objects.insert(genre_instances, load_bulk=False)
-    return redirect(url_for("admin_dashboard"))
+        try:
+            genre_instances = [Genre(**data) for data in genre_array]
+            Genre.objects.insert(genre_instances, load_bulk=False)
+            flash(f"Genres Collection successfully created.", "success")
+            app.logger.info(f"{current_user.username} has successfully loaded the Genre Collection to the Book Repository (admin_dashboard.html). Endpoint: load_genres.")
+        except BaseException:
+            flash(f"Genres Collection NOT created.", "danger")
+            app.logger.warning(f"{current_user.username} has NOT loaded the Genre Collection to the Book Repository (admin_dashboard.html). Endpoint: load_genres.")
+        finally:
+            return redirect(url_for("admin_dashboard"))
+    else:
+        flash(f"Genres Collection already created.", "success")
+        return redirect(url_for("admin_dashboard"))
 
 
 @app.route("/load_books")
 @roles_required("Admin")
 def load_books():
     if not Book.objects():
-        book = Book(
-            title="Fresh Spice",
-            author="Arun Kapil",
-            year=2014,
-            ISBN=9781909108479,
-            user=current_user.username,
-            short_description="Vibrant recipes for bringing flavour, depth, and colour to home cooking.",
-            comments="I love reading this book, dreaming of the recipes I can make. I made the Lamb Vindaloo and it was gorgeous. Good Samosas are hard to make.",
-            rating=8,
-            genre="(NF) Cooking",
-            private_view="off",
-            book_thumbnail="https://books.google.com/books/content?id=RZmKoAEACAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api"
-        ).save()
+        try:            
+            book = Book(
+                title="Fresh Spice",
+                author="Arun Kapil",
+                year=2014,
+                ISBN=9781909108479,
+                user=current_user.username,
+                short_description="Vibrant recipes for bringing flavour, depth, and colour to home cooking.",
+                comments="I love reading this book, dreaming of the recipes I can make. I made the Lamb Vindaloo and it was gorgeous. Good Samosas are hard to make.",
+                rating=8,
+                genre="(NF) Cooking",
+                private_view="off",
+                book_thumbnail="https://books.google.com/books/content?id=RZmKoAEACAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api"
+            ).save()
 
-        book = Book(
-            title="The Art of War",
-            author="Sun Tzu",
-            year=1991,
-            ISBN=9780877735373,
-            user=current_user.username,
-            short_description="Thomas Cleary's translation and commentary of the 2000 year old piece on the Art of War.",
-            comments="Nothing like a little management bullshit.",
-            rating=4,
-            genre="(NF) Philosophy",
-            private_view="off",
-            book_thumbnail="https://books.google.com/books/content?id=r7TuAAAAMAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api"
-        ).save()
+            book = Book(
+                title="The Art of War",
+                author="Sun Tzu",
+                year=1991,
+                ISBN=9780877735373,
+                user=current_user.username,
+                short_description="Thomas Cleary's translation and commentary of the 2000 year old piece on the Art of War.",
+                comments="Nothing like a little management bullshit.",
+                rating=4,
+                genre="(NF) Philosophy",
+                private_view="off",
+                book_thumbnail="https://books.google.com/books/content?id=r7TuAAAAMAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api"
+            ).save()
 
-        book = Book(
-            title="Festa",
-            author="Eileen Dunne Crescenzi",
-            year=2015,
-            ISBN=9780717164448,
-            user=current_user.username,
-            short_description="Recipes and recollections.",
-            comments="A veritable feast of Italian dishes.",
-            rating=7,
-            genre="(NF) Cooking",
-            private_view="off",
-            book_thumbnail="https://books.google.com/books/content?id=C8djrgEACAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api"
-        ).save()
+            book = Book(
+                title="Festa",
+                author="Eileen Dunne Crescenzi",
+                year=2015,
+                ISBN=9780717164448,
+                user=current_user.username,
+                short_description="Recipes and recollections.",
+                comments="A veritable feast of Italian dishes.",
+                rating=7,
+                genre="(NF) Cooking",
+                private_view="off",
+                book_thumbnail="https://books.google.com/books/content?id=C8djrgEACAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api"
+            ).save()
 
-        book = Book(
-            title="PERL by Example",
-            author="Ellie Quigley",
-            year=2008,
-            ISBN=9780132381826,
-            user=current_user.username,
-            short_description="The World's easiest PERL tutorial.",
-            comments="A bit dated, sadly.",
-            rating=4,
-            genre="(NF) Reference",
-            private_view="off",
-            book_thumbnail="https://books.google.com/books/content?id=Ja0gPwAACAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api"
-        ).save()
+            book = Book(
+                title="PERL by Example",
+                author="Ellie Quigley",
+                year=2008,
+                ISBN=9780132381826,
+                user=current_user.username,
+                short_description="The World's easiest PERL tutorial.",
+                comments="A bit dated, sadly.",
+                rating=4,
+                genre="(NF) Reference",
+                private_view="off",
+                book_thumbnail="https://books.google.com/books/content?id=Ja0gPwAACAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api"
+            ).save()
 
-        book = Book(
-            title="Knife",
-            author="Tim Hayward",
-            year=2016,
-            ISBN=9781849498913,
-            user=current_user.username,
-            short_description="The culture, craft and cut of the cook's knife.",
-            comments="",
-            rating=7,
-            genre="(NF) Cooking",
-            private_view="off",
-            book_thumbnail="https://books.google.com/books/content?id=ctyiDAEACAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api"
-        ).save()
+            book = Book(
+                title="Knife",
+                author="Tim Hayward",
+                year=2016,
+                ISBN=9781849498913,
+                user=current_user.username,
+                short_description="The culture, craft and cut of the cook's knife.",
+                comments="",
+                rating=7,
+                genre="(NF) Cooking",
+                private_view="off",
+                book_thumbnail="https://books.google.com/books/content?id=ctyiDAEACAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api"
+            ).save()
 
-        book = Book(
-            title="Cracking the Coding Interview,  6th Edition",
-            author="Gayle Laakmann McDowell",
-            year=2016,
-            ISBN=9780984782857,
-            user=current_user.username,
-            short_description="189 programming questions and solutions.",
-            comments="",
-            rating=7,
-            genre="(NF) Reference",
-            private_view="off",
-            book_thumbnail="https://books.google.com/books/content?id=jD8iswEACAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api"
-        ).save()
+            book = Book(
+                title="Cracking the Coding Interview,  6th Edition",
+                author="Gayle Laakmann McDowell",
+                year=2016,
+                ISBN=9780984782857,
+                user=current_user.username,
+                short_description="189 programming questions and solutions.",
+                comments="",
+                rating=7,
+                genre="(NF) Reference",
+                private_view="off",
+                book_thumbnail="https://books.google.com/books/content?id=jD8iswEACAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api"
+            ).save()
 
-        book = Book(
-            title="Sapiens, a Brief History of Mankind",
-            author="Yuval Noah Harari",
-            year=2011,
-            ISBN=9780099590088,
-            user=current_user.username,
-            short_description="This is the thrilling account of our extraordinary history - from insignificant apes to rulers of the World.",
-            comments="",
-            rating=7,
-            genre="(F) History",
-            private_view="off",
-            book_thumbnail="https://books.google.com/books/content?id=uJ_CoAEACAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api"
-        ).save()
+            book = Book(
+                title="Sapiens, a Brief History of Mankind",
+                author="Yuval Noah Harari",
+                year=2011,
+                ISBN=9780099590088,
+                user=current_user.username,
+                short_description="This is the thrilling account of our extraordinary history - from insignificant apes to rulers of the World.",
+                comments="",
+                rating=7,
+                genre="(F) History",
+                private_view="off",
+                book_thumbnail="https://books.google.com/books/content?id=uJ_CoAEACAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api"
+            ).save()
 
-        book = Book(
-            title="Talking with Psychopaths and Savages",
-            author="Christopher Berry-Dee",
-            year=2017,
-            ISBN=9781786061225,
-            user=current_user.username,
-            short_description="A journey into the evil mind.",
-            comments="",
-            rating=7,
-            genre="(NF) Psychology",
-            private_view="off",
-            book_thumbnail="https://books.google.com/books/content?id=J2PajwEACAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api"
-        ).save()
+            book = Book(
+                title="Talking with Psychopaths and Savages",
+                author="Christopher Berry-Dee",
+                year=2017,
+                ISBN=9781786061225,
+                user=current_user.username,
+                short_description="A journey into the evil mind.",
+                comments="",
+                rating=7,
+                genre="(NF) Psychology",
+                private_view="off",
+                book_thumbnail="https://books.google.com/books/content?id=J2PajwEACAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api"
+            ).save()
 
-        book = Book(
-            title="Curry Easy",
-            author="Madhur Jaffrey",
-            year=2010,
-            ISBN=9780091923143,
-            user=current_user.username,
-            short_description="A journey into the evil mind.",
-            comments="",
-            rating=8,
-            genre="(NF) Cooking",
-            private_view="off",
-            book_thumbnail="https://books.google.com/books/content?id=9aTPBQAAQBAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api"
-        ).save()
+            book = Book(
+                title="Curry Easy",
+                author="Madhur Jaffrey",
+                year=2010,
+                ISBN=9780091923143,
+                user=current_user.username,
+                short_description="A journey into the evil mind.",
+                comments="",
+                rating=8,
+                genre="(NF) Cooking",
+                private_view="off",
+                book_thumbnail="https://books.google.com/books/content?id=9aTPBQAAQBAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api"
+            ).save()
 
-        book = Book(
-            title="Six Thinking Hats",
-            author="Edward de Bono",
-            year=1999,
-            ISBN=9780141033051,
-            user=current_user.username,
-            short_description="A journey into the evil mind.",
-            comments="",
-            rating=7,
-            genre="(NF) Communicate.",
-            private_view="off",
-            book_thumbnail="https://books.google.com/books/content?id=gCBfPgAACAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api"
-        ).save()
+            book = Book(
+                title="Six Thinking Hats",
+                author="Edward de Bono",
+                year=1999,
+                ISBN=9780141033051,
+                user=current_user.username,
+                short_description="A journey into the evil mind.",
+                comments="",
+                rating=7,
+                genre="(NF) Communicate.",
+                private_view="off",
+                book_thumbnail="https://books.google.com/books/content?id=gCBfPgAACAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api"
+            ).save()
 
-        book = Book(
-            title="Voices from the Grave",
-            author="Ed Moloney",
-            year=2010,
-            ISBN=9780571251681,
-            user=current_user.username,
-            short_description="Two men's war in  Ireland.",
-            comments="",
-            rating=7,
-            genre="(NF) History",
-            private_view="off",
-            book_thumbnail="/static/images/BR_logo_no_thumbnail.png"
-        ).save()
+            book = Book(
+                title="Voices from the Grave",
+                author="Ed Moloney",
+                year=2010,
+                ISBN=9780571251681,
+                user=current_user.username,
+                short_description="Two men's war in  Ireland.",
+                comments="",
+                rating=7,
+                genre="(NF) History",
+                private_view="off",
+                book_thumbnail="/static/images/BR_logo_no_thumbnail.png"
+            ).save()
 
-        book = Book(
-            title="Fresh",
-            author="Donal Skehan",
-            year=2015,
-            ISBN=9781473621039,
-            user=current_user.username,
-            short_description="Fresh and vibrant cooking.",
-            comments="",
-            rating=7,
-            genre="(NF) Cooking",
-            private_view="off",
-            book_thumbnail="https://books.google.com/books/content?id=AxprrgEACAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api"
-        ).save()
+            book = Book(
+                title="Fresh",
+                author="Donal Skehan",
+                year=2015,
+                ISBN=9781473621039,
+                user=current_user.username,
+                short_description="Fresh and vibrant cooking.",
+                comments="",
+                rating=7,
+                genre="(NF) Cooking",
+                private_view="off",
+                book_thumbnail="https://books.google.com/books/content?id=AxprrgEACAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api"
+            ).save()
 
-        book = Book(
-            title="Stockholms Kustartilleriförsvar 1914-2000",
-            author="Alexander Wahlund",
-            year=2017,
-            ISBN=9789163927065,
-            user=current_user.username,
-            short_description="En guide till det fasta sjöfrontsartilleriet i Stockholms skärgård.",
-            comments="",
-            rating=6,
-            genre="(NF) Reference",
-            private_view="off",
-            book_thumbnail="/static/images/BR_logo_no_thumbnail.png"
-        ).save()
+            book = Book(
+                title="Stockholms Kustartilleriförsvar 1914-2000",
+                author="Alexander Wahlund",
+                year=2017,
+                ISBN=9789163927065,
+                user=current_user.username,
+                short_description="En guide till det fasta sjöfrontsartilleriet i Stockholms skärgård.",
+                comments="",
+                rating=6,
+                genre="(NF) Reference",
+                private_view="off",
+                book_thumbnail="/static/images/BR_logo_no_thumbnail.png"
+            ).save()
 
-        book = Book(
-            title="An Introduction to Assembly Language Programming for the 8086 Family",
-            author="Thomas P. Skinner",
-            year=1985,
-            ISBN=9780471808251,
-            user=current_user.username,
-            short_description="Assembly Language for the Intel 8086 Microprocessor.",
-            comments="",
-            rating=6,
-            genre="(NF) Reference",
-            private_view="off",
-            book_thumbnail="https://books.google.com/books/content?id=6VYZAQAAIAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api"
-        ).save()
+            book = Book(
+                title="An Introduction to Assembly Language Programming for the 8086 Family",
+                author="Thomas P. Skinner",
+                year=1985,
+                ISBN=9780471808251,
+                user=current_user.username,
+                short_description="Assembly Language for the Intel 8086 Microprocessor.",
+                comments="",
+                rating=6,
+                genre="(NF) Reference",
+                private_view="off",
+                book_thumbnail="https://books.google.com/books/content?id=6VYZAQAAIAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api"
+            ).save()
 
-        book = Book(
-            title="TED Talks: The official TED guide to public speaking",
-            author="Chris Anderson",
-            year=2018,
-            ISBN=9781472228062,
-            user=current_user.username,
-            short_description="Professional Presentation and Communication Skills on TED and TEDx.",
-            comments="",
-            rating=7,
-            genre="(NF) Communicate.",
-            private_view="off",
-            book_thumbnail="https://books.google.com/books/content?id=OBn9jwEACAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api"
-        ).save()
+            book = Book(
+                title="TED Talks: The official TED guide to public speaking",
+                author="Chris Anderson",
+                year=2018,
+                ISBN=9781472228062,
+                user=current_user.username,
+                short_description="Professional Presentation and Communication Skills on TED and TEDx.",
+                comments="",
+                rating=7,
+                genre="(NF) Communicate.",
+                private_view="off",
+                book_thumbnail="https://books.google.com/books/content?id=OBn9jwEACAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api"
+            ).save()
 
-        book = Book(
-            title="Wine Folly",
-            author="Madeline Puckette and Justin Hammack",
-            year=2018,
-            ISBN=9780525533894,
-            user=current_user.username,
-            short_description="Explore undiscovered treasures. Enjoy great food and wine. Experience the wine lifestyle.",
-            comments="",
-            rating=8,
-            genre="(NF) Reference",
-            private_view="off",
-            book_thumbnail="/static/images/BR_logo_no_thumbnail.png"
-        ).save()
-    return redirect(url_for("admin_dashboard"))
+            book = Book(
+                title="Wine Folly",
+                author="Madeline Puckette and Justin Hammack",
+                year=2018,
+                ISBN=9780525533894,
+                user=current_user.username,
+                short_description="Explore undiscovered treasures. Enjoy great food and wine. Experience the wine lifestyle.",
+                comments="",
+                rating=8,
+                genre="(NF) Reference",
+                private_view="off",
+                book_thumbnail="/static/images/BR_logo_no_thumbnail.png"
+            ).save()
+            flash(f"Sample Book Collection successfully created.", "success")
+            app.logger.info(f"{current_user.username} has successfully loaded the Sample Book Collection to the Book Repository (admin_dashboard.html). Endpoint: load_books.")
+        except BaseException:
+            flash(f"Sample Book Collection NOT created.", "danger")
+            app.logger.warning(f"{current_user.username} has NOT loaded the Sample Book Collection to the Book Repository (admin_dashboard.html). Endpoint: load_books.")
+        finally:
+            return redirect(url_for("admin_dashboard"))
+    else:
+        flash(f"Sample Book Collection already created.", "success")
+        return redirect(url_for("admin_dashboard"))
 
 
 @app.errorhandler(404)
