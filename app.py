@@ -498,7 +498,7 @@ def load_genres():
         finally:
             return redirect(url_for("admin_dashboard") or url_for("home_page"))
     else:
-        flash(f"Genres Collection already created.", "success")
+        flash(f"Genres Collection already created.", "info")
         return redirect(url_for("admin_dashboard"))
 
 
@@ -738,7 +738,7 @@ def load_books():
         finally:
             return redirect(url_for("admin_dashboard"))
     else:
-        flash(f"Sample Book Collection already created.", "success")
+        flash(f"Sample Book Collection already created.", "info")
         return redirect(url_for("admin_dashboard"))
 
 
