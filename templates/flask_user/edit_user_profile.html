@@ -38,6 +38,7 @@
         <p><a href="{{ url_for('user.change_password') }}">{%trans%}Change password{%endtrans%}</a></p>
     {% endif %}
 {% endif %}
+    {% if current_user.username != "admin" %}
     <a class="modal-trigger pink-text text-darken-1" href="#delete_user">Delete user</a>
     <div id="delete_user" class="modal">
         <div class="modal-content center">
@@ -50,4 +51,5 @@
             <a href="#!" class="modal-close btn blue darken-4"><i class="material-icons white-text right">pan_tool</i>&nbsp;No</a>
         </div>
     </div>
+    {% endif %}
 {% endblock %}

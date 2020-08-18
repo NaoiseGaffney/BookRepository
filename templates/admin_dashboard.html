@@ -78,7 +78,11 @@
         <tr class="{{loop.cycle('white','blue-grey lighten-5')}}">
             <td><a class="modal-trigger" href="#edit_user_{{user.username}}">{{user.username}}</a></td>
             <td>{{user.first_name}} {{user.last_name}}</td>
-            <td>{{user.active}}</td>
+            {% if user.active is true %}
+            <td class="teal-text text-lighten-1 "><i class="material-icons teal-text text-lighten-1">lock_open</i></td>
+            {% else %}
+            <td class="pink-text text-darken-1 "><i class="material-icons pink-text darken-1">lock</i></td>
+            {% endif %}
             <td>{{user.email}}</td>
         </tr>
         {% endfor %}
@@ -91,7 +95,7 @@
             <form action="{{ url_for('update_user', user_id=user.id) }}" method="POST" class="col s12">
                 {% if user.username != "admin" %}
                 <div class="row switch">
-                    Inactive
+                    <i class="material-icons pink-text darken-1">lock</i> Inactive
                     {% if user.active == true %}
                     <label for="active_{{user.username}}">
                         <input id="active_{{user.username}}" name="active" type="checkbox" checked>
@@ -102,7 +106,7 @@
                             <span class="lever tooltipped" data-position="bottom"
                                 data-tooltip="Please toggle this switch if you want to inactivate (grey) this user account (the user will not be able to sign in to the Book Repository)."></span>
                         </label>
-                        Active
+                        Active <i class="material-icons teal-text text-lighten-1">lock_open</i>
                 </div>
                 {% endif %}
                 <div class="row">
