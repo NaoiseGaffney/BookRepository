@@ -25,7 +25,7 @@ load_dotenv(dotenv_path=env_path)
 app = Flask(__name__, static_folder="static", template_folder="templates")
 # app.config.from_object(ConfigClass)
 app.config.from_object(__name__+".ConfigClass")
-app.debug = True
+# app.debug = True
 
 
 """ # Initialise rotating file logging - set after app initialisation
@@ -603,7 +603,7 @@ def load_books():
             rating=7,
             genre="(NF) Cooking",
             private_view="off",
-            book_thumbnail="/static/images/BR_logo_no_thumbnail.png"
+            book_thumbnail="https://books.google.com/books/content?id=ctyiDAEACAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api"
         ).save()
 
         book = Book(
