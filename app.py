@@ -400,7 +400,6 @@ def delete_user():
     except:
         flash(f"Your account is still alive and active {find_user.username}!", "danger")
         app.logger.warning(f"{deleted_user} is still alive and active on the Book Repository (delete_user.html). Endpoint: delete_user.")
-
     return redirect(url_for("home_page"))
 
 
@@ -409,10 +408,20 @@ def delete_user():
 @app.route("/admin_dashboard/<int:page>")
 @roles_required("Admin")
 def admin_dashboard(page=1):
+    # Admin Dashboard for user management, loading genres and sample books, and display statistics.
     user_details_query = User.objects().order_by("username").paginate(page=page, per_page=10)
-    # genre_list = Genre.objects()
-    # app_db_log = Log.objects()
-    return render_template("admin_dashboard.html", user_details_query=user_details_query, page_prev=(page - 1), page_next=(page + 1))
+    user_details_query_count = User.objects.count()
+    book_list = Book.objects()
+    book_list_count = book_list.count()
+
+    genre_dict = {}
+    for book in book_list:
+        if book.genre in genre_dict:
+            genre_dict[f"{book.genre}"] += 1
+        else:
+            genre_dict[f"{book.genre}"] = 1
+    tuple_in_right_order = sorted(genre_dict.items(), key=lambda kv: (kv[1], kv[0]), reverse=True)
+    return render_template("admin_dashboard.html", user_details_query=user_details_query, page_prev=(page - 1), page_next=(page + 1), user_details_query_count=user_details_query_count, book_list_count=book_list_count, tuple_in_right_order=tuple_in_right_order)
 
 
 @app.route("/update_user/<user_id>", methods=["POST"])

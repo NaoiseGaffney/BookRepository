@@ -27,16 +27,38 @@
             <span class="white-text btn waves-effect waves-light right blue darken-4"><i
                     class="material-icons white-text">category</i></span>
             <span class="book-dropdown-content">
-                <span><a href="{{ url_for('load_genres')}}" class="blue-text btn text-darken-4 white">Load
-                        Genres&nbsp;&nbsp;&nbsp;<i
-                            class="material-icons blue-text text-darken-4 right">subject</i></a></span>
+                <span><a href="{{ url_for('load_genres')}}" class="blue-text btn text-darken-4 white">Load Genres&nbsp;&nbsp;&nbsp;<i class="material-icons blue-text text-darken-4 right">subject</i></a></span>
                 <span><br>&nbsp;<br></span>
-                <span><a href="{{ url_for('load_books')}}" class="blue-text btn text-darken-4 white">Load
-                        Books&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i
-                            class="material-icons blue-text text-darken-4 right">import_contacts</i></a></span>
+                <span><a href="{{ url_for('load_books')}}" class="blue-text btn text-darken-4 white">Load Books&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="material-icons blue-text text-darken-4 right">import_contacts</i></a></span>
+                <span><br>&nbsp;<br></span>
+                <span><a href="#statistics" class="blue-text btn text-darken-4 white modal-trigger">Statistics&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="material-icons blue-text text-darken-4 right">insert_chart</i></a></span>
             </span>
         </span>
     </h6>
+    <div id="statistics" class="modal center">
+        <div class="modal-content">
+            <h6>Book Repository Statistics</h6>
+            <p class="left">Number of Users: {{user_details_query_count}}</p><br>
+            <p class="left">Number of Books: {{book_list_count}}</p><br><br>
+            <table>
+                <tr class="white-text blue darken-4">
+                    <th>Book Genre</th>
+                    <th>Number of Books</th>
+                </tr>
+                {% for key, value in tuple_in_right_order %}
+                <tr class="{{loop.cycle('white','blue-grey lighten-5')}}">
+                    <td>{{key}}</td>
+                    <td>{{value}}</td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+        <div class="modal-footer">
+            <a href="#!" class="modal-close btn waves-effect waves-light blue darken-4"><i
+                    class="material-icons white-text right">done</i>&nbsp;Done!</a>
+        </div>
+    </div>
+    
     <div class="pagination">Page #:
         {% if page_prev == 0 %}
         &lt;&nbsp;
