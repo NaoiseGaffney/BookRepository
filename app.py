@@ -378,7 +378,7 @@ def search_results(page=1):
             return render_template("search_results.html", book_query_results=book_query_results, page_prev=(page - 1), page_next=(page + 1))
 
 
-@app.route("/delete_user.html")
+@app.route("/delete_user")
 @login_required
 def delete_user():
     deleted_user = current_user.username
@@ -399,8 +399,8 @@ def delete_user():
 
 
 # --- // Admin Dashboard for user management and content loading (genre and book collections).
-@app.route("/admin_dashboard.html")
-@app.route("/admin_dashboard.html/<int:page>")
+@app.route("/admin_dashboard")
+@app.route("/admin_dashboard/<int:page>")
 @roles_required("Admin")
 def admin_dashboard(page=1):
     user_details_query = User.objects().order_by("username").paginate(page=page, per_page=10)
@@ -409,7 +409,7 @@ def admin_dashboard(page=1):
     return render_template("admin_dashboard.html", user_details_query=user_details_query, page_prev=(page - 1), page_next=(page + 1))
 
 
-@app.route("/update_user.html/<user_id>", methods=["POST"])
+@app.route("/update_user/<user_id>", methods=["POST"])
 @roles_required("Admin")
 def update_user(user_id):
     # The "U" in CRUD, saving the changes made to the update user modal form fields.
