@@ -1,4 +1,4 @@
-import logging  # Enable logging of application events (info, warning, error)
+import logging
 from logging.handlers import RotatingFileHandler
 import os
 import json
@@ -7,7 +7,7 @@ from flask_mongoengine import MongoEngine, MongoEngineSession, MongoEngineSessio
 from flask_user import login_required, UserManager, UserMixin, current_user, roles_required
 from flask_login import logout_user
 import datetime
-from  datetime import timedelta
+from datetime import timedelta
 import requests
 from flask_debugtoolbar import DebugToolbarExtension
 
@@ -18,28 +18,22 @@ from pathlib import Path
 env_path = Path(".") / ".env"
 load_dotenv(dotenv_path=env_path)
 
-""" Flask application factory """
 
-
-
+# --- // Application Factory Setup (based on the Flask-User example for MongoDB)
 # Setup Flask and load app.config
 app = Flask(__name__, static_folder="static", template_folder="templates")
-# app.config.from_object(ConfigClass)
-app.config.from_object(__name__+".ConfigClass")
+app.config.from_object(__name__ + ".ConfigClass")
 app.debug = True
 
 
-""" # Initialise rotating file logging - set after app initialisation
+# Initialise rotating file logging - set after app initialisation
 logging.basicConfig(
     handlers=[RotatingFileHandler("./logs/book_repository.log", maxBytes=100000, backupCount=10)],
     level=os.environ.get("LOGGING_LEVEL"),
     format="%(name)s - %(levelname)s - %(message)s"
-    )
- """
-# Initialize logging - set after app initialisation
-app.logger.setLevel(logging.INFO)
+)
 
-# Setup Flask-MongoEngine
+# Setup Flask-MongoEngine --> MongoEngine --> PyMongo --> MongoDB
 db = MongoEngine(app)
 
 # Use Flask Sessions with Mongoengine
@@ -49,6 +43,7 @@ app.session_interface = MongoEngineSessionInterface(db)
 toolbar = DebugToolbarExtension(app)
 
 
+# --- // Classes -> MongoDB Collections: User, Book, Genre.
 class User(db.Document, UserMixin):
     # Active set to True to allow login of user
     active = db.BooleanField(default=True)
@@ -113,6 +108,8 @@ class Genre(db.Document):
 user_manager = UserManager(app, db, User)
 
 
+# --- // Routes (Endpoints): 18. Total of 33 with Flask-User Routes.
+# --- // Book Repository Main Routes (Endpoints): CRUD.
 @app.route("/")
 def home_page():
     # Landing/Home Page, accessible before signing/logging in.
@@ -120,7 +117,7 @@ def home_page():
         return redirect(url_for("member_page"))
 
     # Create admin user as first/default user, if admin does not exist.
-    # Password is set using an environment variable.
+    # Password and e-mail are set using environment variables.
     if not User.objects.filter(User.username == "admin"):
         app.logger.info(
             "Admin user is created on application startup if user does not exist.")
@@ -137,10 +134,12 @@ def home_page():
 
     # Create the Genre Collection if it does not exist. Taken from
     # https://bookriot.com/guide-to-book-genres/
+    # The genre.json file contains the genre collection in JSON format and is
+    # used to  create the genre collection in the Book Repository (MongoDB).
     if not Genre.objects():
         with open("genre.json", "r", encoding="utf-8") as f:
             genre_array = json.load(f)
-        
+
         try:
             genre_instances = [Genre(**data) for data in genre_array]
             Genre.objects.insert(genre_instances, load_bulk=False)
@@ -155,17 +154,13 @@ def home_page():
     return render_template("index.html")
 
 
-# The Members page is only accessible to authenticated users via the
-# @login_required decorator
-
-
 @app.route("/members")
 @app.route("/members/<int:page>")
 @login_required
 def member_page(page=1):
     # The "R" in CRUD, a virtual library or stack of books to browse.
     app.logger.info(f"{current_user.username} is accessing the Member's Page (members.html). Endpoint: member_page.")
-    
+
     books_pagination = Book.objects.filter(user=current_user.username).paginate(page=page, per_page=7)
     return render_template("members.html", books_pagination=books_pagination, page_prev=(page - 1), page_next=(page + 1))
 
@@ -200,7 +195,6 @@ def save_book():
     isbn_key = f"isbn:{book.ISBN}"
     payload["q"] = isbn_key
     payload["key"] = os.environ.get("GOOGLE_API_KEY")
-    print(payload)
 
     try:
         book_request = requests.get("https://www.googleapis.com/books/v1/volumes", params=payload, headers={'User-agent': 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:61.0) Gecko/20100101 Firefox/61.0'})
@@ -208,7 +202,6 @@ def save_book():
         book_thumbnail_w_https = book_thumbnail_w_http.replace("http://", "https://")
         book.book_thumbnail = book_thumbnail_w_https
         app.logger.info(f"{current_user.username} has successfully requested the thumbnail image {book.book_thumbnail} for the book {book.title} with the id {book.id} (add_book.html). Endpoint: save_book.")
-        print(book_request.json()["items"][0]["volumeInfo"]["imageLinks"]["thumbnail"])
     except BaseException:
         book.book_thumbnail = "/static/images/BR_logo_no_thumbnail.png"
         app.logger.warning(f"{current_user.username} has not successfully requested the thumbnail image for the book {book.title} with the id {book.id} (add_book.html). Endpoint: save_book.")
@@ -253,13 +246,11 @@ def update_book(book_id):
     if fields["private_view"] != "on":
         fields["private_view"] = "off"
 
-
     payload = {}
     isbn_field = fields["ISBN"]
     isbn_key = f"isbn:{isbn_field}"
     payload["q"] = isbn_key
     payload["key"] = os.environ.get("GOOGLE_API_KEY")
-    print(payload)
 
     try:
         book_request = requests.get("https://www.googleapis.com/books/v1/volumes", params=payload, headers={'User-agent': 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:61.0) Gecko/20100101 Firefox/61.0'})
@@ -267,7 +258,6 @@ def update_book(book_id):
         book_thumbnail_w_https = book_thumbnail_w_http.replace("http://", "https://")
         fields["book_thumbnail"] = book_thumbnail_w_https
         app.logger.info(f"{current_user.username} has successfully requested the thumbnail image {book.book_thumbnail} for the book {book.title} with the id {book.id} (add_book.html). Endpoint: save_book.")
-        print(book_request.json()["items"][0]["volumeInfo"]["imageLinks"]["thumbnail"])
     except BaseException:
         fields["book_thumbnail"] = "/static/images/BR_logo_no_thumbnail.png"
         app.logger.warning(f"{current_user.username} has not successfully requested the thumbnail image for the book {book.title} with the id {book.id} (add_book.html). Endpoint: save_book.")
@@ -325,7 +315,6 @@ def save_search():
         "private_view": request.form.get("private_view")
     }
     session["fields"] = fields
-    # {'title': '', 'author': '', 'year': None, 'ISBN': '', 'short_description': None, 'comments': None, 'rating': '', 'genre': None, 'private_view': None}
 
     app.logger.info(f"{current_user.username} is searching (saving search in session cookie) for books matching {fields} (search_results.html). Endpoint: save_search.")
 
@@ -394,11 +383,7 @@ def search_results(page=1):
 def delete_user():
     deleted_user = current_user.username
     find_user_books = Book.objects.filter(user=current_user.username)
-    for book in find_user_books:
-        print("\n\nBook:", book.to_json())
     find_user = User.objects.filter(username=current_user.username)
-    print("\n\nUser:", find_user.to_json())
-    print(deleted_user)
 
     try:
         logout_user()
@@ -412,7 +397,8 @@ def delete_user():
 
     return redirect(url_for("home_page"))
 
-# Admin Dashboard - admin_dashboard.html - for user management and content loading.
+
+# --- // Admin Dashboard for user management and content loading (genre and book collections).
 @app.route("/admin_dashboard.html")
 @app.route("/admin_dashboard.html/<int:page>")
 @roles_required("Admin")
@@ -427,7 +413,6 @@ def admin_dashboard(page=1):
 @roles_required("Admin")
 def update_user(user_id):
     # The "U" in CRUD, saving the changes made to the update user modal form fields.
-    print(user_id)
     user = User.objects.get(id=user_id)
     user_form_name = user.username
     admin_user_form = {
@@ -438,12 +423,6 @@ def update_user(user_id):
         "password": request.form.get(f"password_{user_form_name}")
     }
 
-    print("Active:", admin_user_form["active"])
-    print("Email:", admin_user_form["email"])
-    print("first_name:", admin_user_form["first_name"])
-    print("last_name:", admin_user_form["last_name"])
-    print("password:", admin_user_form["password"])
-
     if user.username == "admin":
         admin_user_form["active"] = True
     elif admin_user_form["active"] == "on":
@@ -451,16 +430,13 @@ def update_user(user_id):
     else:
         admin_user_form["active"] = False
 
-    if admin_user_form["password"].startswith("$2b$12$"):
+    if admin_user_form["password"].startswith("$2b$"):
         pass
     else:
         admin_user_form["password"] = user_manager.hash_password(admin_user_form["password"])
 
-    print(user.username)
-    print(admin_user_form["active"])
-    print(admin_user_form)
     user.update(**admin_user_form)
-    
+
     return redirect(url_for("admin_dashboard"))
 
 
@@ -471,7 +447,7 @@ def admin_delete_user(user_id):
     # with NO confirmation.
     user = User.objects.get(id=user_id)
     user_books = Book.objects.filter(user=user.username)
-    print(user_books.to_json())
+
     if user.username != "admin":
         deleted_username = user.username
         try:
@@ -493,7 +469,7 @@ def load_genres():
     if not Genre.objects():
         with open("genre.json", "r", encoding="utf-8") as f:
             genre_array = json.load(f)
-        
+
         try:
             genre_instances = [Genre(**data) for data in genre_array]
             Genre.objects.insert(genre_instances, load_bulk=False)
@@ -513,7 +489,7 @@ def load_genres():
 @roles_required("Admin")
 def load_books():
     if not Book.objects():
-        try:            
+        try:
             book = Book(
                 title="Fresh Spice",
                 author="Arun Kapil",
@@ -749,6 +725,7 @@ def load_books():
         return redirect(url_for("admin_dashboard"))
 
 
+# --- // Error Handlers for 404 page not found, and 500 internal error.
 @app.errorhandler(404)
 def not_found(error):
     excuse = "Apologies, we can't seem to find the Book Repository database or worse, we've lost access to the Internet. Please click on the pink pulsating buoy to go to the Home Page (registering or signing in) or Member's Page (signed in), or click on Sign Out below."

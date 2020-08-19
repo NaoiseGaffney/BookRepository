@@ -1,0 +1,11 @@
+RotatingFileHandler is used to log application messages at a log-level defined in the variable "LOGGING_LEVEL".
+
+import logging
+from logging.handlers import RotatingFileHandler
+
+# Initialise rotating file logging - set after app initialisation
+logging.basicConfig(
+    handlers=[RotatingFileHandler("./logs/book_repository.log", maxBytes=100000, backupCount=10)],
+    level=os.environ.get("LOGGING_LEVEL"),
+    format="%(name)s - %(levelname)s - %(message)s"
+)
