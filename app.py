@@ -26,12 +26,14 @@ app.config.from_object(__name__ + ".ConfigClass")
 app.debug = True
 
 
-# Initialise rotating file logging - set after app initialisation
-logging.basicConfig(
-    handlers=[RotatingFileHandler("./logs/book_repository.log", maxBytes=100000, backupCount=10)],
-    level=os.environ.get("LOGGING_LEVEL"),
-    format="%(name)s - %(levelname)s - %(message)s"
-)
+# Initialise rotating file logging in Development, not on Heroku
+# Set after app initialisation
+if os.environ.get("ENABLE_FILE_LOGGING"):
+    logging.basicConfig(
+        handlers=[RotatingFileHandler("./logs/book_repository.log", maxBytes=100000, backupCount=10)],
+        level=os.environ.get("LOGGING_LEVEL"),
+        format="%(name)s - %(levelname)s - %(message)s"
+    )
 
 # Setup Flask-MongoEngine --> MongoEngine --> PyMongo --> MongoDB
 db = MongoEngine(app)
@@ -137,8 +139,11 @@ def home_page():
     # The genre.json file contains the genre collection in JSON format and is
     # used to  create the genre collection in the Book Repository (MongoDB).
     if not Genre.objects():
-        with open("genre.json", "r", encoding="utf-8") as f:
-            genre_array = json.load(f)
+        try:
+            with open("genre.json", "r", encoding="utf-8") as f:
+                genre_array = json.load(f)
+        except FileNotFoundError:
+            flash("Genre file can't be found. The filename is 'genre.json' and contains the 32 Book Genres.","danger")
 
         try:
             genre_instances = [Genre(**data) for data in genre_array]
@@ -381,6 +386,7 @@ def search_results(page=1):
 @app.route("/delete_user")
 @login_required
 def delete_user():
+    # Delete user, user initiated, from edit_user_profile.html. "D" in CRUD.
     deleted_user = current_user.username
     find_user_books = Book.objects.filter(user=current_user.username)
     find_user = User.objects.filter(username=current_user.username)
@@ -423,6 +429,8 @@ def update_user(user_id):
         "password": request.form.get(f"password_{user_form_name}")
     }
 
+    # Paranoia: make sure admin account can't be set to inactive, even though the form does not allow it, 
+    # however the URL can be created and used anyway.
     if user.username == "admin":
         admin_user_form["active"] = True
     elif admin_user_form["active"] == "on":
@@ -430,17 +438,20 @@ def update_user(user_id):
     else:
         admin_user_form["active"] = False
 
-    if request.form.get(f"password_{user_form_name}") == request.form.get(f"password_conf_{user_form_name}"):
-        if admin_user_form["password"].startswith("$2b$"):
-            pass
-        else:
-            admin_user_form["password"] = user_manager.hash_password(admin_user_form["password"])
+    # Validate the password, checking the password to confirm password fields match = no update.
+    if request.form.get(f"password_{user_form_name}") != request.form.get(f"password_conf_{user_form_name}"):
+        flash(f"Passwords did not match for {user.username}, please try again!", "danger")
+        return redirect(url_for("admin_dashboard"))
+
+    # Checking if the password is accidentally changed (the current hash) and the current/original/unchanged 
+    # hashed password ($2b$) = set to original/current password.
+    if admin_user_form["password"] == user.password and admin_user_form["password"].startswith("$2b$"):
+        admin_user_form["password"] == user.password
     else:
-        flash(f"Passwords did not match for {user.username}, please try again!","danger")
+        admin_user_form["password"] = user_manager.hash_password(admin_user_form["password"])
 
     user.update(**admin_user_form)
     flash(f"User {user.username} profile updated.", "success")
-
     return redirect(url_for("admin_dashboard"))
 
 
@@ -471,8 +482,11 @@ def load_genres():
     # Create the Genre Collection if it does not exist. Taken from
     # https://bookriot.com/guide-to-book-genres/
     if not Genre.objects():
-        with open("genre.json", "r", encoding="utf-8") as f:
-            genre_array = json.load(f)
+        try:
+            with open("genre.json", "r", encoding="utf-8") as f:
+                genre_array = json.load(f)
+        except FileNotFoundError:
+            flash("Genre file can't be found. The filename is 'genre.json' and contains the 32 Book Genres.", "danger")
 
         try:
             genre_instances = [Genre(**data) for data in genre_array]
@@ -492,6 +506,7 @@ def load_genres():
 @app.route("/load_books")
 @roles_required("Admin")
 def load_books():
+    # Create the sample Book Collection if it does not exist.
     if not Book.objects():
         try:
             book = Book(

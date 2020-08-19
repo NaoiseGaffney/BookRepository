@@ -4,4 +4,4 @@ notes.py
 __pycache__
 .env
 bfg*
-/logs/*.log
+/logs/*.log*

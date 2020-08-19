@@ -113,35 +113,35 @@
                     <div class="input-field col s12">
                         <i class="material-icons prefix tooltipped" data-position="bottom"
                             data-tooltip="Please update the first name if required.">person</i>
-                        <input id="first_name_{{user.username}}" name="first_name_{{user.username}}" type="text" maxlength="250" value="{{user.first_name}}"
-                            required>
-                        <label for="first_name_{{user.username}}">User First Name</label>
+                        <input id="first_name_{{user.username}}" name="first_name_{{user.username}}" type="text" maxlength="250"
+                            value="{{user.first_name}}" required>
+                        <label for="first_name_{{user.username}}">First Name</label>
                     </div>
                     <div class="input-field col s12">
                         <i class="material-icons prefix tooltipped" data-position="bottom"
                             data-tooltip="Please update the last name if required.">group</i>
                         <input id="last_name_{{user.username}}" name="last_name_{{user.username}}" type="text" maxlength="250"
                             value="{{user.last_name}}" required>
-                        <label for="last_name_{{user.username}}">User Last Name</label>
+                        <label for="last_name_{{user.username}}">Last Name</label>
                     </div>
                     <div class="input-field col s12">
                         <i class="material-icons prefix tooltipped" data-position="bottom"
                             data-tooltip="Please update the password if required. The current password is hashed ($2b$...), delete it and enter your new password if required.">vpn_key</i>
-                        <input id="password_{{user.username}}" name="password_{{user.username}}" type="password" maxlength="250" value="{{user.password}}" required>
-                        <label for="password_{{user.username}}">User Password</label>
+                        <input id="password_{{user.username}}" name="password_{{user.username}}" type="password" min="8" maxlength="250" value="{{user.password}}" required>
+                        <label for="password_{{user.username}}">Password</label>
                     </div>
                     <div class="input-field col s12">
                         <i class="material-icons prefix tooltipped" data-position="bottom"
                             data-tooltip="Please enter the new password again for confirmation.">vpn_key</i>
-                        <input id="password_conf_{{user.username}}" name="password_conf_{{user.username}}" type="password" maxlength="250"
+                        <input id="password_conf_{{user.username}}" name="password_conf_{{user.username}}" type="password" min="8" maxlength="250"
                             value="{{user.password}}" required>
-                        <label for="password_conf_{{user.username}}">User Password Confirmation</label>
+                        <label for="password_conf_{{user.username}}">Password Confirmation</label>
                     </div>
                     <div class="input-field col s12">
                         <i class="material-icons prefix tooltipped" data-position="bottom"
                             data-tooltip="Please update the e-mail address if required.">email</i>
                         <input id="email_{{user.username}}" name="email_{{user.username}}" type="email" maxlength="64" value="{{user.email}}" required>
-                        <label for="email_{{user.username}}">User E-mail</label>
+                        <label for="email_{{user.username}}">E-mail</label>
                     </div>
                 </div>
                 <div class="modal-footer">
