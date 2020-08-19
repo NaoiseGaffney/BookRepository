@@ -126,9 +126,16 @@
                     </div>
                     <div class="input-field col s12">
                         <i class="material-icons prefix tooltipped" data-position="bottom"
-                            data-tooltip="Please update the password if required. The current password is hashed ($2b$12$...), delete it and enter your new password if required.">vpn_key</i>
+                            data-tooltip="Please update the password if required. The current password is hashed ($2b$...), delete it and enter your new password if required.">vpn_key</i>
                         <input id="password_{{user.username}}" name="password_{{user.username}}" type="password" maxlength="250" value="{{user.password}}" required>
                         <label for="password_{{user.username}}">User Password</label>
+                    </div>
+                    <div class="input-field col s12">
+                        <i class="material-icons prefix tooltipped" data-position="bottom"
+                            data-tooltip="Please enter the new password again for confirmation.">vpn_key</i>
+                        <input id="password_conf_{{user.username}}" name="password_conf_{{user.username}}" type="password" maxlength="250"
+                            value="{{user.password}}" required>
+                        <label for="password_conf_{{user.username}}">User Password Confirmation</label>
                     </div>
                     <div class="input-field col s12">
                         <i class="material-icons prefix tooltipped" data-position="bottom"

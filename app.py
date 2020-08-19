@@ -23,7 +23,7 @@ load_dotenv(dotenv_path=env_path)
 # Setup Flask and load app.config
 app = Flask(__name__, static_folder="static", template_folder="templates")
 app.config.from_object(__name__ + ".ConfigClass")
-# app.debug = True
+app.debug = True
 
 
 # Initialise rotating file logging - set after app initialisation
@@ -430,12 +430,16 @@ def update_user(user_id):
     else:
         admin_user_form["active"] = False
 
-    if admin_user_form["password"].startswith("$2b$"):
-        pass
+    if request.form.get(f"password_{user_form_name}") == request.form.get(f"password_conf_{user_form_name}"):
+        if admin_user_form["password"].startswith("$2b$"):
+            pass
+        else:
+            admin_user_form["password"] = user_manager.hash_password(admin_user_form["password"])
     else:
-        admin_user_form["password"] = user_manager.hash_password(admin_user_form["password"])
+        flash(f"Passwords did not match for {user.username}, please try again!","danger")
 
     user.update(**admin_user_form)
+    flash(f"User {user.username} profile updated.", "success")
 
     return redirect(url_for("admin_dashboard"))
 
