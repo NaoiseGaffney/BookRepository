@@ -24,6 +24,7 @@ class ConfigClass(object):
     USER_ENABLE_EMAIL = True      # Enable email authentication
     USER_ENABLE_USERNAME = True    # Enable username authentication
     USER_REQUIRE_RETYPE_PASSWORD = True
+    USER_ENABLE_CHANGE_USERNAME = False
 
     MAIL_SERVER = os.environ.get("MAIL_SERVER")
     MAIL_PORT = os.environ.get("MAIL_PORT")

@@ -124,7 +124,7 @@ footer .right-align {
 }
 
 .collapsible-body {
-    background: rgba(255,255,255,0.35);
+    background: rgba(255, 255, 255, 0.35);
 }
 
 .book_spine {
@@ -138,7 +138,11 @@ footer .right-align {
 /* Remember Me Label */
 #remember_me_label {
     font-size: 0.8rem;
-    color: #9E9E9E;
+    color: #000000;
+}
+
+label {
+    color: #000000;
 }
 
 /* Pagination styling to suit <H6> above on the 'members.html' page */

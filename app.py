@@ -26,12 +26,17 @@ app.config.from_object(__name__ + ".ConfigClass")
 # app.debug = True
 
 
-# Initialise rotating file logging - set after app initialisation
-logging.basicConfig(
-    handlers=[RotatingFileHandler("./logs/book_repository.log", maxBytes=100000, backupCount=10)],
-    level=os.environ.get("LOGGING_LEVEL"),
-    format="%(name)s - %(levelname)s - %(message)s"
-)
+# Initialise rotating file logging in Development, not on Heroku
+# Set after app initialisation
+if os.environ.get("ENABLE_FILE_LOGGING"):
+    logging.basicConfig(
+        handlers=[RotatingFileHandler("./logs/book_repository.log", maxBytes=100000, backupCount=10)],
+        level=os.environ.get("LOGGING_LEVEL"),
+        format="%(name)s - %(levelname)s - %(message)s"
+    )
+else:
+    # Initialize logging to console, works on Heroku
+    app.logger.setLevel(logging.os.environ.get("LOGGING_LEVEL"))
 
 # Setup Flask-MongoEngine --> MongoEngine --> PyMongo --> MongoDB
 db = MongoEngine(app)
@@ -108,9 +113,10 @@ class Genre(db.Document):
 user_manager = UserManager(app, db, User)
 
 
-# --- // Routes (Endpoints): 18. Total of 33 with Flask-User Routes.
 # --- // Book Repository Main Routes (Endpoints): CRUD.
 @app.route("/")
+@app.route("/index")
+@app.route("/index.html")
 def home_page():
     # Landing/Home Page, accessible before signing/logging in.
     if current_user.is_authenticated:
@@ -137,8 +143,11 @@ def home_page():
     # The genre.json file contains the genre collection in JSON format and is
     # used to  create the genre collection in the Book Repository (MongoDB).
     if not Genre.objects():
-        with open("genre.json", "r", encoding="utf-8") as f:
-            genre_array = json.load(f)
+        try:
+            with open("genre.json", "r", encoding="utf-8") as f:
+                genre_array = json.load(f)
+        except FileNotFoundError:
+            flash("Genre file can't be found. The filename is 'genre.json' and contains the 32 Book Genres.","danger")
 
         try:
             genre_instances = [Genre(**data) for data in genre_array]
@@ -385,9 +394,10 @@ def search_results(page=1):
             return render_template("search_results.html", book_query_results=book_query_results, page_prev=(page - 1), page_next=(page + 1))
 
 
-@app.route("/delete_user.html")
+@app.route("/delete_user")
 @login_required
 def delete_user():
+    # Delete user, user initiated, from edit_user_profile.html. "D" in CRUD.
     deleted_user = current_user.username
     find_user_books = Book.objects.filter(user=current_user.username)
     find_user = User.objects.filter(username=current_user.username)
@@ -401,22 +411,31 @@ def delete_user():
     except:
         flash(f"Your account is still alive and active {find_user.username}!", "danger")
         app.logger.warning(f"{deleted_user} is still alive and active on the Book Repository (delete_user.html). Endpoint: delete_user.")
-
     return redirect(url_for("home_page"))
 
 
 # --- // Admin Dashboard for user management and content loading (genre and book collections).
-@app.route("/admin_dashboard.html")
-@app.route("/admin_dashboard.html/<int:page>")
+@app.route("/admin_dashboard")
+@app.route("/admin_dashboard/<int:page>")
 @roles_required("Admin")
 def admin_dashboard(page=1):
+    # Admin Dashboard for user management, loading genres and sample books, and display statistics.
     user_details_query = User.objects().order_by("username").paginate(page=page, per_page=10)
-    # genre_list = Genre.objects()
-    # app_db_log = Log.objects()
-    return render_template("admin_dashboard.html", user_details_query=user_details_query, page_prev=(page - 1), page_next=(page + 1))
+    user_details_query_count = User.objects.count()
+    book_list = Book.objects()
+    book_list_count = book_list.count()
+
+    genre_dict = {}
+    for book in book_list:
+        if book.genre in genre_dict:
+            genre_dict[f"{book.genre}"] += 1
+        else:
+            genre_dict[f"{book.genre}"] = 1
+    tuple_in_right_order = sorted(genre_dict.items(), key=lambda kv: (kv[1], kv[0]), reverse=True)
+    return render_template("admin_dashboard.html", user_details_query=user_details_query, page_prev=(page - 1), page_next=(page + 1), user_details_query_count=user_details_query_count, book_list_count=book_list_count, tuple_in_right_order=tuple_in_right_order)
 
 
-@app.route("/update_user.html/<user_id>", methods=["POST"])
+@app.route("/update_user/<user_id>", methods=["POST"])
 @roles_required("Admin")
 def update_user(user_id):
     # The "U" in CRUD, saving the changes made to the update user modal form fields.
@@ -430,6 +449,8 @@ def update_user(user_id):
         "password": request.form.get(f"password_{user_form_name}")
     }
 
+    # Paranoia: make sure admin account can't be set to inactive, even though the form does not allow it, 
+    # however the URL can be created and used anyway.
     if user.username == "admin":
         admin_user_form["active"] = True
     elif admin_user_form["active"] == "on":
@@ -437,13 +458,20 @@ def update_user(user_id):
     else:
         admin_user_form["active"] = False
 
-    if admin_user_form["password"].startswith("$2b$"):
-        pass
+    # Validate the password, checking the password to confirm password fields match = no update.
+    if request.form.get(f"password_{user_form_name}") != request.form.get(f"password_conf_{user_form_name}"):
+        flash(f"Passwords did not match for {user.username}, please try again!", "danger")
+        return redirect(url_for("admin_dashboard"))
+
+    # Checking if the password is accidentally changed (the current hash) and the current/original/unchanged 
+    # hashed password ($2b$) = set to original/current password.
+    if admin_user_form["password"] == user.password and admin_user_form["password"].startswith("$2b$"):
+        admin_user_form["password"] == user.password
     else:
         admin_user_form["password"] = user_manager.hash_password(admin_user_form["password"])
 
     user.update(**admin_user_form)
-
+    flash(f"User {user.username} profile updated.", "success")
     return redirect(url_for("admin_dashboard"))
 
 
@@ -474,8 +502,11 @@ def load_genres():
     # Create the Genre Collection if it does not exist. Taken from
     # https://bookriot.com/guide-to-book-genres/
     if not Genre.objects():
-        with open("genre.json", "r", encoding="utf-8") as f:
-            genre_array = json.load(f)
+        try:
+            with open("genre.json", "r", encoding="utf-8") as f:
+                genre_array = json.load(f)
+        except FileNotFoundError:
+            flash("Genre file can't be found. The filename is 'genre.json' and contains the 32 Book Genres.", "danger")
 
         try:
             genre_instances = [Genre(**data) for data in genre_array]
@@ -495,238 +526,24 @@ def load_genres():
 @app.route("/load_books")
 @roles_required("Admin")
 def load_books():
+    # Create the sample Book Collection if it does not exist.
     if not Book.objects():
         try:
-            book = Book(
-                title="Fresh Spice",
-                author="Arun Kapil",
-                year=2014,
-                ISBN=9781909108479,
-                user=current_user.username,
-                short_description="Vibrant recipes for bringing flavour, depth, and colour to home cooking.",
-                comments="I love reading this book, dreaming of the recipes I can make. I made the Lamb Vindaloo and it was gorgeous. Good Samosas are hard to make.",
-                rating=8,
-                genre="(NF) Cooking",
-                private_view="off",
-                book_thumbnail="https://books.google.com/books/content?id=RZmKoAEACAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api"
-            ).save()
+            with open("book.json", "r", encoding="utf-8") as f:
+                book_dict = json.load(f)
+        except FileNotFoundError:
+            flash("Book file can't be found. The filename is 'book.json' and contains 15 sample Books.", "danger")
 
-            book = Book(
-                title="The Art of War",
-                author="Sun Tzu",
-                year=1991,
-                ISBN=9780877735373,
-                user=current_user.username,
-                short_description="Thomas Cleary's translation and commentary of the 2000 year old piece on the Art of War.",
-                comments="Nothing like a little management bullshit.",
-                rating=4,
-                genre="(NF) Philosophy",
-                private_view="off",
-                book_thumbnail="https://books.google.com/books/content?id=r7TuAAAAMAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api"
-            ).save()
-
-            book = Book(
-                title="Festa",
-                author="Eileen Dunne Crescenzi",
-                year=2015,
-                ISBN=9780717164448,
-                user=current_user.username,
-                short_description="Recipes and recollections.",
-                comments="A veritable feast of Italian dishes.",
-                rating=7,
-                genre="(NF) Cooking",
-                private_view="off",
-                book_thumbnail="https://books.google.com/books/content?id=C8djrgEACAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api"
-            ).save()
-
-            book = Book(
-                title="PERL by Example",
-                author="Ellie Quigley",
-                year=2008,
-                ISBN=9780132381826,
-                user=current_user.username,
-                short_description="The World's easiest PERL tutorial.",
-                comments="A bit dated, sadly.",
-                rating=4,
-                genre="(NF) Reference",
-                private_view="off",
-                book_thumbnail="https://books.google.com/books/content?id=Ja0gPwAACAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api"
-            ).save()
-
-            book = Book(
-                title="Knife",
-                author="Tim Hayward",
-                year=2016,
-                ISBN=9781849498913,
-                user=current_user.username,
-                short_description="The culture, craft and cut of the cook's knife.",
-                comments="",
-                rating=7,
-                genre="(NF) Cooking",
-                private_view="off",
-                book_thumbnail="https://books.google.com/books/content?id=ctyiDAEACAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api"
-            ).save()
-
-            book = Book(
-                title="Cracking the Coding Interview,  6th Edition",
-                author="Gayle Laakmann McDowell",
-                year=2016,
-                ISBN=9780984782857,
-                user=current_user.username,
-                short_description="189 programming questions and solutions.",
-                comments="",
-                rating=7,
-                genre="(NF) Reference",
-                private_view="off",
-                book_thumbnail="https://books.google.com/books/content?id=jD8iswEACAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api"
-            ).save()
-
-            book = Book(
-                title="Sapiens, a Brief History of Mankind",
-                author="Yuval Noah Harari",
-                year=2011,
-                ISBN=9780099590088,
-                user=current_user.username,
-                short_description="This is the thrilling account of our extraordinary history - from insignificant apes to rulers of the World.",
-                comments="",
-                rating=7,
-                genre="(F) History",
-                private_view="off",
-                book_thumbnail="https://books.google.com/books/content?id=uJ_CoAEACAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api"
-            ).save()
-
-            book = Book(
-                title="Talking with Psychopaths and Savages",
-                author="Christopher Berry-Dee",
-                year=2017,
-                ISBN=9781786061225,
-                user=current_user.username,
-                short_description="A journey into the evil mind.",
-                comments="",
-                rating=7,
-                genre="(NF) Psychology",
-                private_view="off",
-                book_thumbnail="https://books.google.com/books/content?id=J2PajwEACAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api"
-            ).save()
-
-            book = Book(
-                title="Curry Easy",
-                author="Madhur Jaffrey",
-                year=2010,
-                ISBN=9780091923143,
-                user=current_user.username,
-                short_description="A journey into the evil mind.",
-                comments="",
-                rating=8,
-                genre="(NF) Cooking",
-                private_view="off",
-                book_thumbnail="https://books.google.com/books/content?id=9aTPBQAAQBAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api"
-            ).save()
-
-            book = Book(
-                title="Six Thinking Hats",
-                author="Edward de Bono",
-                year=1999,
-                ISBN=9780141033051,
-                user=current_user.username,
-                short_description="A journey into the evil mind.",
-                comments="",
-                rating=7,
-                genre="(NF) Communicate.",
-                private_view="off",
-                book_thumbnail="https://books.google.com/books/content?id=gCBfPgAACAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api"
-            ).save()
-
-            book = Book(
-                title="Voices from the Grave",
-                author="Ed Moloney",
-                year=2010,
-                ISBN=9780571251681,
-                user=current_user.username,
-                short_description="Two men's war in  Ireland.",
-                comments="",
-                rating=7,
-                genre="(NF) History",
-                private_view="off",
-                book_thumbnail="/static/images/BR_logo_no_thumbnail.png"
-            ).save()
-
-            book = Book(
-                title="Fresh",
-                author="Donal Skehan",
-                year=2015,
-                ISBN=9781473621039,
-                user=current_user.username,
-                short_description="Fresh and vibrant cooking.",
-                comments="",
-                rating=7,
-                genre="(NF) Cooking",
-                private_view="off",
-                book_thumbnail="https://books.google.com/books/content?id=AxprrgEACAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api"
-            ).save()
-
-            book = Book(
-                title="Stockholms Kustartilleriförsvar 1914-2000",
-                author="Alexander Wahlund",
-                year=2017,
-                ISBN=9789163927065,
-                user=current_user.username,
-                short_description="En guide till det fasta sjöfrontsartilleriet i Stockholms skärgård.",
-                comments="",
-                rating=6,
-                genre="(NF) Reference",
-                private_view="off",
-                book_thumbnail="/static/images/BR_logo_no_thumbnail.png"
-            ).save()
-
-            book = Book(
-                title="An Introduction to Assembly Language Programming for the 8086 Family",
-                author="Thomas P. Skinner",
-                year=1985,
-                ISBN=9780471808251,
-                user=current_user.username,
-                short_description="Assembly Language for the Intel 8086 Microprocessor.",
-                comments="",
-                rating=6,
-                genre="(NF) Reference",
-                private_view="off",
-                book_thumbnail="https://books.google.com/books/content?id=6VYZAQAAIAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api"
-            ).save()
-
-            book = Book(
-                title="TED Talks: The official TED guide to public speaking",
-                author="Chris Anderson",
-                year=2018,
-                ISBN=9781472228062,
-                user=current_user.username,
-                short_description="Professional Presentation and Communication Skills on TED and TEDx.",
-                comments="",
-                rating=7,
-                genre="(NF) Communicate.",
-                private_view="off",
-                book_thumbnail="https://books.google.com/books/content?id=OBn9jwEACAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api"
-            ).save()
-
-            book = Book(
-                title="Wine Folly",
-                author="Madeline Puckette and Justin Hammack",
-                year=2018,
-                ISBN=9780525533894,
-                user=current_user.username,
-                short_description="Explore undiscovered treasures. Enjoy great food and wine. Experience the wine lifestyle.",
-                comments="",
-                rating=8,
-                genre="(NF) Reference",
-                private_view="off",
-                book_thumbnail="/static/images/BR_logo_no_thumbnail.png"
-            ).save()
-            flash(f"Sample Book Collection successfully created.", "success")
-            app.logger.info(f"{current_user.username} has successfully loaded the Sample Book Collection to the Book Repository (admin_dashboard.html). Endpoint: load_books.")
+        try:
+            book_instances = [Book(**data) for data in book_dict]
+            Book.objects.insert(book_instances, load_bulk=False)
+            flash(f"Book Collection successfully created.", "success")
+            app.logger.info(f"{current_user.username} has successfully loaded the Book Collection to the Book Repository (admin_dashboard.html). Endpoint: load_books.")
         except BaseException:
-            flash(f"Sample Book Collection NOT created.", "danger")
-            app.logger.warning(f"{current_user.username} has NOT loaded the Sample Book Collection to the Book Repository (admin_dashboard.html). Endpoint: load_books.")
+            flash(f"Book Collection NOT created.", "danger")
+            app.logger.warning(f"{current_user.username} has NOT loaded the Book Collection to the Book Repository (admin_dashboard.html). Endpoint: load_books.")
         finally:
-            return redirect(url_for("admin_dashboard"))
+            return redirect(url_for("admin_dashboard") or url_for("home_page"))
     else:
         flash(f"Sample Book Collection already created.", "info")
         return redirect(url_for("admin_dashboard"))
