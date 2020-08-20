@@ -66,10 +66,8 @@
             <div class="collapsible-header">
                 <div class="book_spine">
                     <div class="book_actions">
-                        <a href="{{url_for('edit_book', book_id=book.id)}}"><i
-                                class="material-icons blue-text text-darken-4">create</i></a>
-                        <a class="modal-trigger" href="#delete_book_{{book.id}}"><i
-                                class="material-icons pink-text text-darken-1">delete_forever</i></a>
+                        <a href="{{url_for('edit_book', book_id=book.id)}}"><i class="material-icons blue-text text-darken-4">create</i></a>
+                        <a class="modal-trigger" href="#delete_book_{{book.id}}"><i class="material-icons pink-text text-darken-1">delete_forever</i></a>
                         <i class="material-icons teal-text text-lighten-1">visibility</i>
                     </div>
                     <div id="delete_book_{{book.id}}" class="modal">
@@ -81,10 +79,8 @@
                         </div>
                         <div class="modal-footer">
                             <a href="{{url_for('delete_book', book_id=book.id)}}"
-                                class="modal-close btn blue darken-4"><i
-                                    class="material-icons white-text right">delete_forever</i>&nbsp;Yes</a>
-                            <a href="#!" class="modal-close btn blue darken-4"><i
-                                    class="material-icons white-text right">pan_tool</i>&nbsp;No</a>
+                                class="modal-close btn blue darken-4"><i class="material-icons white-text right">delete_forever</i>&nbsp;Yes</a>
+                            <a href="#!" class="modal-close btn blue darken-4"><i class="material-icons white-text right">pan_tool</i>&nbsp;No</a>
                         </div>
                     </div>
                 </div>
