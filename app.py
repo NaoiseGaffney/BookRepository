@@ -23,7 +23,7 @@ load_dotenv(dotenv_path=env_path)
 # Setup Flask and load app.config
 app = Flask(__name__, static_folder="static", template_folder="templates")
 app.config.from_object(__name__ + ".ConfigClass")
-app.debug = True
+# app.debug = True
 
 
 # Initialise rotating file logging in Development, not on Heroku
@@ -113,7 +113,6 @@ class Genre(db.Document):
 user_manager = UserManager(app, db, User)
 
 
-# --- // Routes (Endpoints): 18. Total of 33 with Flask-User Routes.
 # --- // Book Repository Main Routes (Endpoints): CRUD.
 @app.route("/")
 @app.route("/index")
@@ -526,7 +525,7 @@ def load_books():
             with open("book.json", "r", encoding="utf-8") as f:
                 book_dict = json.load(f)
         except FileNotFoundError:
-            flash("Book file can't be found. The filename is 'book.json' and contains 15v sample Books.", "danger")
+            flash("Book file can't be found. The filename is 'book.json' and contains 15 sample Books.", "danger")
 
         try:
             book_instances = [Book(**data) for data in book_dict]
