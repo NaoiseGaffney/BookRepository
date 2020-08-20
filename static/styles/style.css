@@ -161,7 +161,7 @@ label {
     background-color: #0d47a1;
 }
 
-.btn:hover {
+.btn:hover, .btn:focus {
     background-color: #0c4091;
 }
 
