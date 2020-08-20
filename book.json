@@ -161,7 +161,7 @@
         "year": 1985,
         "ISBN": 9780471808251,
         "user": "admin",
-        "short_description": "Assembly Language for the Intel 8086 Microprocessor.",
+        "short_description": "This hands-on guide helps develop programming skills on the 8086-based microcomputers. Introduces readers to assembly language programming through a comprehensive set of input/output procedures and useful subroutines for the most popular 8086-based operating systems. Covering fundamental data types, segmentation, assembler operation and modular programming, these routines let users apply assembly language ``shortcuts'' and programming techniques to specific applications. Offers a brief outline of the design of the l6-bit microprocessor and the architecture of the 8086 including the 80286 family of chips, presents the essentials on binary and hexadecimal numbers and shows how to write and execute a program. The complete instruction set is presented in the last nine chapters.",
         "comments": "",
         "rating": 6,
         "genre": "(NF) Reference",

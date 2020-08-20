@@ -138,10 +138,8 @@ def home_page():
         user.roles.append("Admin")
         user.save()
 
-    # Create the Genre Collection if it does not exist. Taken from
-    # https://bookriot.com/guide-to-book-genres/
-    # The genre.json file contains the genre collection in JSON format and is
-    # used to  create the genre collection in the Book Repository (MongoDB).
+    # Create the Genre Collection if it does not exist from the JSON file 'genre.json'.
+    # Taken from https://bookriot.com/guide-to-book-genres/
     if not Genre.objects():
         try:
             with open("genre.json", "r", encoding="utf-8") as f:
