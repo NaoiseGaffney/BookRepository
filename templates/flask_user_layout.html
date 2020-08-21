@@ -5,8 +5,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="Description"
-        content="Developer and Designer: Naoise Gaffney - 'Gaff'. Title: Book Repository. Reason: third 
+    <meta name="Description" content="Developer and Designer: Naoise Gaffney - 'Gaff'. Title: Book Repository. Reason: third 
         milestone project for the Code Institute's Diploma in Full Stack Development. Description: The 
         Book Repository is a digital or virtual library to store information about your books, such as 
         title, author, year published, ISBN, rating, description, and your personal reflection and comments.
@@ -25,7 +24,8 @@
     <!-- Custom CSS -->
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename = 'styles/style.css') }}">
     <!-- Cookie Consent by Osano: https://www.osano.com/cookieconsent/download/ -->
-    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/cookieconsent@3/build/cookieconsent.min.css" />
+    <link rel="stylesheet" type="text/css"
+        href="https://cdn.jsdelivr.net/npm/cookieconsent@3/build/cookieconsent.min.css" />
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -52,11 +52,13 @@
                     {% if call_or_get(current_user.is_authenticated) %}
                     {% if "Admin" in current_user.roles %}
                     <li>
-                        <a href="{{ url_for('admin_dashboard')}}">Admin Page<i class="material-icons right">admin_panel_settings</i></a>
+                        <a href="{{ url_for('admin_dashboard')}}">Admin Page<i
+                                class="material-icons right">admin_panel_settings</i></a>
                     </li>
                     {% endif %}
                     <li>
-                        <a href="{{ url_for('member_page')}}">Member's Page<i class="material-icons right">dashboard</i></a>
+                        <a href="{{ url_for('member_page')}}">Member's Page<i
+                                class="material-icons right">dashboard</i></a>
                     </li>
                     <li>
                         <a href="{{ url_for('user.edit_user_profile') }}">{{ current_user.username or current_user.email }}<i
@@ -87,7 +89,8 @@
             {% if call_or_get(current_user.is_authenticated) %}
             {% if "Admin" in current_user.roles %}
             <li>
-                <a href="{{ url_for('admin_dashboard')}}" class="white-text">Admin Page<i class="material-icons white-text left">table_chart</i></a>
+                <a href="{{ url_for('admin_dashboard')}}" class="white-text">Admin Page<i
+                        class="material-icons white-text left">table_chart</i></a>
             </li>
             {% endif %}
             <li>
@@ -161,36 +164,31 @@
                             <a href="#gaff" class="active blue darken-4 white-text waves-effect">Gaff</a>
                         </li>
                         <li class="tab">
-                            <a href="#ecs_logo" class="active blue darken-4 white-text waves-effect">Logo</a>
-                        </li>
-                        <li class="tab">
                             <a href="#code" class="active blue darken-4 white-text waves-effect">Code</a>
                         </li>
                     </ul>
-                    <div id="bookrepo" class="flow-text">
-                        <!-- <p class="flow-text blue-text text-darken-4">Book Repository</p> -->
-                        <p><img src="/static/images/logo_bookstack_text_96_spacing.png" height="75"
+                    <div id="bookrepo">
+                        <p class="tab_content_heading"><img src="/static/images/logo_bookstack_text_96_spacing.png" height="75"
                                 alt="Book Repository Logo"></p>
-                        <p>A safe virtual repository for books...</p>
+                        <p>A safe virtual repository for books, a digital version of your library that is searchable,
+                            and where
+                            you can share your book notes and thoughts with like-minded readers.
+                        </p>
                     </div>
-                    <div id="gaff" class="flow-text">
-                        <p class="flow-text blue-text text-darken-4">Naoise Gaffney - "Gaff"</p>
+                    <div id="gaff">
+                        <p class="flow-text blue-text text-darken-4 tab_content_heading">Naoise Gaffney - "Gaff"</p>
                         <p><img src="/static/images/Gaff.png" height="150" alt="Gaff"></p>
-                        <p>Code Institute Learner and Developer of this Book Repository Milestone Project 3 for the Code
-                            Institute Diploma in Full Stack Development.</p>
-                        <p>UX Designer, Python Programmer...</p>
+                        <p>Code Institute Learner and Developer of this Book Repository, a Milestone Project 3
+                            (Data-Centric) for the Code
+                            Institute Diploma in Full Stack Development. Full Stack Developer and UX Designer.</p>
                     </div>
-                    <div id="ecs_logo" class="flow-text">
-                        <!-- <p class="flow-text blue-text text-darken-4">Logo Description</p> -->
-                        <p><img src="/static/images/logo_bookstack_text_96_spacing.png" height="75"
-                                alt="Book Repository Logo"></p>
-                        <p>A stack of books, stored in a repository, with the text "Book Repository".</p>
-                    </div>
-                    <div id="code" class="flow-text">
-                        <p class="flow-text blue-text text-darken-4">Code on GitHub</p>
-                        <p>Code on GitHub...</p>
+                    <div id="code">
+                        <p class="flow-text blue-text text-darken-4 tab_content_heading">Code on GitHub</p>
+                        <p>Front-end: HTML 5, CSS 3, and JavaScript</p>
+                        <p>Application: Python and Flask</p>
+                        <p>Database: MongoDB</p>
                         <p><a href="https://github.com/NaoiseGaffney/BookRepository" target="_blank" rel="noopener"
-                                class="blue darken-4 waves-effect">Link to the Book Repository Repository on GitHub.</a>
+                                class="pink-text text-darken-1 waves-effect">&nbsp;Book Repository on GitHub&nbsp;</a>
                         </p>
                     </div>
                     <div class="modal-footer">

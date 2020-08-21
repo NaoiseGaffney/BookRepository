@@ -86,6 +86,10 @@ footer .right-align {
     background-color: #0D47A1;
 }
 
+.tab_content_heading {
+    padding: 10px 0px;
+}
+
 /* Message Chips (Flask, MaterializeCSS 1.0.0, custom CSS 3, and a JS Timeout function = Flask Flash Messages) */
 .message-success {
     color: #FFFFFF;
