@@ -14,6 +14,7 @@ body {
     margin-top: 35px;
     margin-bottom: 50px;
     background-image: url("/static/images/sharon-mccutcheon-eMP4sYPJ9x0-unsplash.jpg");
+    /* Photo by <a href="https://unsplash.com/@sharonmccutcheon?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Sharon McCutcheon</a> */
     background-position: center;
     background-size: 4000px;
     background-repeat: no-repeat;
@@ -22,7 +23,6 @@ body {
 
 /* <a href... */
 a {
-    /* color: #d81b60; */
     color: #0D47A1;
 }
 
@@ -77,7 +77,6 @@ footer .right-align {
 /* Modal Colour Schemes to match the Book Repository UX Design */
 .modal,
 .modal-footer {
-    /* background-color: #FFFFFF !important; */
     font-family: 'Raleway', sans-serif;
     color: #0D47A1;
 }
@@ -87,11 +86,10 @@ footer .right-align {
     background-color: #0D47A1;
 }
 
-/* Message Chips (Flask, MaterializeCSS 1.0.0, custom CSS 3, and a JS Timeout function = Flask Flash Messages */
+/* Message Chips (Flask, MaterializeCSS 1.0.0, custom CSS 3, and a JS Timeout function = Flask Flash Messages) */
 .message-success {
     color: #FFFFFF;
     background-color: #26A69A;
-    /* Persian Green (#26A69A, teal lighten-1) */
 }
 
 .message-info {
@@ -107,7 +105,6 @@ footer .right-align {
 .message-danger {
     color: #FFFFFF;
     background-color: #d81b60;
-    /* Ruby, (#d81b60, pink darken-1) */
 }
 
 .help-block {
@@ -116,9 +113,9 @@ footer .right-align {
 }
 
 /* Book Spine background-image for the Member's Page */
-/* Photo by <a href="https://unsplash.com/@christianw?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Christian Wiediger</a> on <a href="https://unsplash.com/s/photos/open-book?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a> */
 .collapsible-header {
     background-image: url("/static/images/christian-wiediger-GWucxGZvO-w-unsplash.jpg");
+    /* Photo by <a href="https://unsplash.com/@christianw?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Christian Wiediger</a> */
     background-position: 95% 55%;
     background-size: 150%
 }
@@ -161,7 +158,8 @@ label {
     background-color: #0d47a1;
 }
 
-.btn:hover, .btn:focus {
+.btn:hover,
+.btn:focus {
     background-color: #0c4091;
 }
 
@@ -235,7 +233,7 @@ textarea.materialize-textarea:focus:not([readonly])+label {
     color: #0D47A1;
 }
 
-/* W3Schools Drop-Down Menu */
+/* W3Schools Drop-Down Menu for the Member's, Search Results, and Admin Pages */
 .book-dropdown {
     position: relative;
     display: inline-block;
