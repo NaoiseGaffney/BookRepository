@@ -143,7 +143,7 @@ def home_page():
 
             flash("'admin' account created.", "success")
             app.logger.info("'admin' account is created at startup if the user doesn't exist: [SUCCESS] - (index.html).")
-        except BaseException:
+        except Exception:
             flash("'admin' account not created.", "danger")
             app.logger.critical("'admin' account is created at startup if the user doesn't exist: [FAILURE] - (index.html).")
 
@@ -162,7 +162,7 @@ def home_page():
             Genre.objects.insert(genre_instances, load_bulk=False)
             flash("Genres Collection successfully created.", "success")
             app.logger.info("Genres Collection created: [SUCCESS] - (index.html)")
-        except BaseException:
+        except Exception:
             flash("Genres Collection NOT created.", "danger")
             app.logger.critical("Genres Collection NOT created: [FAILURE] - (index.html)")
         finally:
@@ -219,7 +219,7 @@ def save_book():
         book_thumbnail_w_https = book_thumbnail_w_http.replace("http://", "https://")
         book.book_thumbnail = book_thumbnail_w_https
         app.logger.info(f"{current_user.username} has successfully requested the thumbnail image {book.book_thumbnail} for the book {book.title} with the id {book.id}: [SUCCESS] - (add_book.html).")
-    except BaseException:
+    except Exception:
         book.book_thumbnail = "/static/images/BR_logo_no_thumbnail.png"
         app.logger.warning(f"{current_user.username} has not successfully requested the thumbnail image for the book {book.title} with the id {book.id}: [WARNING] - (add_book.html).")
 
@@ -227,9 +227,9 @@ def save_book():
         book.save()
         flash(f"The book {book.title} was saved!", "success")
         app.logger.info(f"{current_user.username} is saving the book {book.title} with the id {book.id}: [SUCCESS] - (add_book.html).")
-    except BaseException:
+    except Exception:
         flash(f"The book {book.title} was NOT saved!", "danger")
-        app.logger.warning(f"{current_user.username} did not succeed in saving the {book.title}: [FAILURE] (add_book.html).")
+        app.logger.warning(f"{current_user.username} did not succeed in saving the {book.title}: [FAILURE] - (add_book.html).")
     return redirect(url_for("member_page"))
 
 
@@ -239,7 +239,7 @@ def edit_book(book_id):
     # Preparing for the "U" in CRUD, updating the book form fields.
     book = Book.objects.get(id=book_id)
     genre = Genre.objects()
-    app.logger.info(f"{current_user.username} is updating the book {book.title} with the id {book.id}: [INFO] (edit_book.html).")
+    app.logger.info(f"{current_user.username} is updating the book {book.title} with the id {book.id}: [INFO] - (edit_book.html).")
     return render_template("edit_book.html", book=book, genre=genre)
 
 
@@ -275,7 +275,7 @@ def update_book(book_id):
         book_thumbnail_w_https = book_thumbnail_w_http.replace("http://", "https://")
         fields["book_thumbnail"] = book_thumbnail_w_https
         app.logger.info(f"{current_user.username} has successfully requested the thumbnail image {book.book_thumbnail} for the book {book.title} with the id {book.id}: [SUCCESS] - (add_book.html).")
-    except BaseException:
+    except Exception:
         fields["book_thumbnail"] = "/static/images/BR_logo_no_thumbnail.png"
         app.logger.warning(f"{current_user.username} has not successfully requested the thumbnail image for the book {book.title} with the id {book.id}: [WARNING] (add_book.html).")
 
@@ -283,7 +283,7 @@ def update_book(book_id):
         book.update(**fields)
         flash(f"The book {book.title} is updated!", "success")
         app.logger.info(f"{current_user.username} updated the book {book.title} with the id {book.id}: [SUCCESS] (edit_book.html).")
-    except BaseException:
+    except Exception:
         flash(f"The book {book.title} was NOT updated!", "danger")
         app.logger.warning(f"{current_user.username} did not update the book {book.title} with the id {book.id}: [WARNING] (edit_book.html).")
     return redirect(url_for("member_page"))
@@ -299,7 +299,7 @@ def delete_book(book_id):
         book.delete()
         flash(f"The book {book.title} is deleted!", "success")
         app.logger.info(f"{current_user.username} deleted the book {book.title} with the id {book.id}: [SUCCESS] (members.html).")
-    except BaseException:
+    except Exception:
         flash(f"The book {book.title} was NOT deleted!", "danger")
         app.logger.warning(f"{current_user.username} did not delete the book {book.title} with the id {book.id}: [WARNING] (members.html).")
     return redirect(url_for("member_page"))
@@ -417,7 +417,7 @@ def delete_user():
         app.logger.info(f"{deleted_user} is has left the Book Repository: [SUCCESS] - (delete_user.html).")
     except:
         flash(f"Your account is still alive and active {find_user.username}!", "danger")
-        app.logger.warning(f"{deleted_user} is still alive and active on the Book Repository: [FAILURE] - (delete_user.html).")
+        app.logger.critical(f"{deleted_user} is still alive and active on the Book Repository: [FAILURE] - (delete_user.html).")
     return redirect(url_for("home_page"))
 
 
@@ -477,8 +477,13 @@ def update_user(user_id):
     else:
         admin_user_form["password"] = user_manager.hash_password(admin_user_form["password"])
 
-    user.update(**admin_user_form)
-    flash(f"User {user.username} profile updated.", "success")
+    try:
+        user.update(**admin_user_form)
+        flash(f"User {user.username} profile updated.", "success")
+        app.logger.info(f"User {user.username} profile updated by {current_user.username}: [SUCCESS] - (admin_dashboard.html).")
+    except Exception:
+        flash(f"User {user.username} profile NOT updated.", "danger")
+        app.logger.critical(f"User {user.username} profile NOT updated by {current_user.username}: [FAILURE] - (admin_dashboard.html).")
     return redirect(url_for("admin_dashboard"))
 
 
@@ -499,9 +504,9 @@ def admin_delete_user(user_id):
             user.delete()
             flash(f"The user {deleted_username} is deleted!", "success")
             app.logger.info(f"{current_user.username} deleted the user {deleted_username}: [SUCCESS] - (admin_dashboard.html).")
-        except BaseException:
+        except Exception:
             flash(f"The user {deleted_username} was NOT deleted!", "danger")
-            app.logger.warning(f"{current_user.username} did not delete the user {deleted_username}: [FAILURE] (admin_dashboard.html).")
+            app.logger.critical(f"{current_user.username} did not delete the user {deleted_username}: [FAILURE] - (admin_dashboard.html).")
     return redirect(url_for("admin_dashboard"))
 
 
@@ -523,7 +528,7 @@ def load_genres():
             Genre.objects.insert(genre_instances, load_bulk=False)
             flash(f"Genres Collection successfully created.", "success")
             app.logger.info("Genres Collection created: [SUCCESS] - (index.html)")
-        except BaseException:
+        except Exception:
             flash(f"Genres Collection NOT created.", "danger")
             app.logger.critical("Genres Collection NOT created: [FAILURE] - (index.html)")
         finally:
@@ -550,10 +555,10 @@ def load_books():
             book_instances = [Book(**data) for data in book_dict]
             Book.objects.insert(book_instances, load_bulk=False)
             flash(f"Book Collection successfully created.", "success")
-            app.logger.info(f"{current_user.username} has successfully loaded the Book Collection to the Book Repository: [SUCCESS] (admin_dashboard.html).")
-        except BaseException:
+            app.logger.info(f"{current_user.username} has successfully loaded the Book Collection to the Book Repository: [SUCCESS] - (admin_dashboard.html).")
+        except Exception:
             flash(f"Book Collection NOT created.", "danger")
-            app.logger.warning(f"{current_user.username} has NOT loaded the Book Collection to the Book Repository: [WARNING] (admin_dashboard.html).")
+            app.logger.critical(f"{current_user.username} has NOT loaded the Book Collection to the Book Repository: [FAILURE] - (admin_dashboard.html).")
         finally:
             return redirect(url_for("admin_dashboard") or url_for("home_page"))
     else:
