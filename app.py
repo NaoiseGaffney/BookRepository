@@ -28,15 +28,19 @@ app.config.from_object(__name__ + ".ConfigClass")
 
 # Initialise rotating file logging in Development, not on Heroku
 # Set after app initialisation
-if os.environ.get("ENABLE_FILE_LOGGING"):
+if os.environ.get("ENABLE_FILE_LOGGING") == "True":
     logging.basicConfig(
         handlers=[RotatingFileHandler("./logs/book_repository.log", maxBytes=100000, backupCount=10)],
         level=os.environ.get("LOGGING_LEVEL"),
-        format="%(name)s - %(levelname)s - %(message)s"
+        format="%(asctime)s — %(name)s — %(levelname)s — %(funcName)s:%(lineno)d — %(message)s"
     )
 else:
     # Initialize logging to console, works on Heroku
-    app.logger.setLevel(logging.os.environ.get("LOGGING_LEVEL"))
+    logging.basicConfig(
+        level=os.environ.get("LOGGING_LEVEL"),
+        format="%(asctime)s — %(name)s — %(levelname)s — %(funcName)s:%(lineno)d — %(message)s"
+    )
+
 
 # Setup Flask-MongoEngine --> MongoEngine --> PyMongo --> MongoDB
 db = MongoEngine(app)
@@ -125,36 +129,42 @@ def home_page():
     # Create admin user as first/default user, if admin does not exist.
     # Password and e-mail are set using environment variables.
     if not User.objects.filter(User.username == "admin"):
-        app.logger.info(
-            "Admin user is created on application startup if user does not exist.")
-        user = User(
-            username="admin",
-            first_name="Administrator",
-            last_name="Administrator",
-            email=os.environ.get("MAIL_DEFAULT_SENDER"),
-            email_confirmed_at=datetime.datetime.utcnow(),
-            password=user_manager.hash_password(os.environ.get("ADMIN_PASSWORD"))
-        )
-        user.roles.append("Admin")
-        user.save()
+        try:
+            user = User(
+                username="admin",
+                first_name="Administrator",
+                last_name="Administrator",
+                email=os.environ.get("MAIL_DEFAULT_SENDER"),
+                email_confirmed_at=datetime.datetime.utcnow(),
+                password=user_manager.hash_password(os.environ.get("ADMIN_PASSWORD"))
+            )
+            user.roles.append("Admin")
+            user.save()
+
+            flash("'admin' account created.", "success")
+            app.logger.info("'admin' account is created at startup if the user doesn't exist: [SUCCESS] - (index.html).")
+        except Exception:
+            flash("'admin' account not created.", "danger")
+            app.logger.critical("'admin' account is created at startup if the user doesn't exist: [FAILURE] - (index.html).")
 
     # Create the Genre Collection if it does not exist from the JSON file 'genre.json'.
-    # Taken from https://bookriot.com/guide-to-book-genres/
+    # Information taken from https://bookriot.com/guide-to-book-genres/
     if not Genre.objects():
         try:
             with open("genre.json", "r", encoding="utf-8") as f:
                 genre_array = json.load(f)
         except FileNotFoundError:
             flash("Genre file can't be found. The filename is 'genre.json' and contains the 32 Book Genres.","danger")
+            app.logger.critical("Genre file can't be found. The filename is 'genre.json' and contains the 32 Book Genres: [FAILURE] - (index.html).")
 
         try:
             genre_instances = [Genre(**data) for data in genre_array]
             Genre.objects.insert(genre_instances, load_bulk=False)
             flash("Genres Collection successfully created.", "success")
-            app.logger.info("Initial load of the Genre Collection to the Book Repository successful (index.html). Endpoint: home_page.")
-        except BaseException:
+            app.logger.info("Genres Collection created: [SUCCESS] - (index.html)")
+        except Exception:
             flash("Genres Collection NOT created.", "danger")
-            app.logger.warning("Initial load of the Genre Collection to the Book Repository failed (index.html). Endpoint: home_page.")
+            app.logger.critical("Genres Collection NOT created: [FAILURE] - (index.html)")
         finally:
             render_template("index.html")
 
@@ -166,7 +176,7 @@ def home_page():
 @login_required
 def member_page(page=1):
     # The "R" in CRUD, a virtual library or stack of books to browse.
-    app.logger.info(f"{current_user.username} is accessing the Member's Page (members.html). Endpoint: member_page.")
+    app.logger.info(f"{current_user.username} is accessing the Member's Page: [INFO] - (members.html).")
 
     books_pagination = Book.objects.filter(user=current_user.username).paginate(page=page, per_page=7)
     return render_template("members.html", books_pagination=books_pagination, page_prev=(page - 1), page_next=(page + 1))
@@ -176,7 +186,7 @@ def member_page(page=1):
 @login_required
 def add_book():
     # Preparing for the "C" in CRUD, filling in the add book form.
-    app.logger.info(f"{current_user.username} is adding a book (add_book.html) by filling out the add book form. Endpoint: add_book.")
+    app.logger.info(f"{current_user.username} is adding a book: [INFO] - (add_book.html).")
     genre = Genre.objects()
     return render_template("add_book.html", genre=genre)
 
@@ -208,18 +218,18 @@ def save_book():
         book_thumbnail_w_http = book_request.json()["items"][0]["volumeInfo"]["imageLinks"]["thumbnail"]
         book_thumbnail_w_https = book_thumbnail_w_http.replace("http://", "https://")
         book.book_thumbnail = book_thumbnail_w_https
-        app.logger.info(f"{current_user.username} has successfully requested the thumbnail image {book.book_thumbnail} for the book {book.title} with the id {book.id} (add_book.html). Endpoint: save_book.")
-    except BaseException:
+        app.logger.info(f"{current_user.username} has successfully requested the thumbnail image {book.book_thumbnail} for the book {book.title} with the id {book.id}: [SUCCESS] - (add_book.html).")
+    except Exception:
         book.book_thumbnail = "/static/images/BR_logo_no_thumbnail.png"
-        app.logger.warning(f"{current_user.username} has not successfully requested the thumbnail image for the book {book.title} with the id {book.id} (add_book.html). Endpoint: save_book.")
+        app.logger.warning(f"{current_user.username} has not successfully requested the thumbnail image for the book {book.title} with the id {book.id}: [WARNING] - (add_book.html).")
 
     try:
         book.save()
         flash(f"The book {book.title} was saved!", "success")
-        app.logger.info(f"{current_user.username} is saving the book {book.title} with the id {book.id} (add_book.html). Endpoint: save_book.")
-    except BaseException:
-        app.logger.warning(f"{current_user.username} did not succeed in saving the {book.title} (add_book.html). Endpoint: save_book.")
+        app.logger.info(f"{current_user.username} is saving the book {book.title} with the id {book.id}: [SUCCESS] - (add_book.html).")
+    except Exception:
         flash(f"The book {book.title} was NOT saved!", "danger")
+        app.logger.warning(f"{current_user.username} did not succeed in saving the {book.title}: [FAILURE] - (add_book.html).")
     return redirect(url_for("member_page"))
 
 
@@ -229,7 +239,7 @@ def edit_book(book_id):
     # Preparing for the "U" in CRUD, updating the book form fields.
     book = Book.objects.get(id=book_id)
     genre = Genre.objects()
-    app.logger.info(f"{current_user.username} is updating the book {book.title} with the id {book.id} (edit_book.html). Endpoint: edit_book.")
+    app.logger.info(f"{current_user.username} is updating the book {book.title} with the id {book.id}: [INFO] - (edit_book.html).")
     return render_template("edit_book.html", book=book, genre=genre)
 
 
@@ -264,18 +274,18 @@ def update_book(book_id):
         book_thumbnail_w_http = book_request.json()["items"][0]["volumeInfo"]["imageLinks"]["thumbnail"]
         book_thumbnail_w_https = book_thumbnail_w_http.replace("http://", "https://")
         fields["book_thumbnail"] = book_thumbnail_w_https
-        app.logger.info(f"{current_user.username} has successfully requested the thumbnail image {book.book_thumbnail} for the book {book.title} with the id {book.id} (add_book.html). Endpoint: save_book.")
-    except BaseException:
+        app.logger.info(f"{current_user.username} has successfully requested the thumbnail image {book.book_thumbnail} for the book {book.title} with the id {book.id}: [SUCCESS] - (add_book.html).")
+    except Exception:
         fields["book_thumbnail"] = "/static/images/BR_logo_no_thumbnail.png"
-        app.logger.warning(f"{current_user.username} has not successfully requested the thumbnail image for the book {book.title} with the id {book.id} (add_book.html). Endpoint: save_book.")
+        app.logger.warning(f"{current_user.username} has not successfully requested the thumbnail image for the book {book.title} with the id {book.id}: [WARNING] (add_book.html).")
 
     try:
         book.update(**fields)
         flash(f"The book {book.title} is updated!", "success")
-        app.logger.info(f"{current_user.username} updated the book {book.title} with the id {book.id} (edit_book.html). Endpoint: update_book.")
-    except BaseException:
-        app.logger.warning(f"{current_user.username} did not update the book {book.title} with the id {book.id} (edit_book.html). Endpoint: update_book.")
+        app.logger.info(f"{current_user.username} updated the book {book.title} with the id {book.id}: [SUCCESS] (edit_book.html).")
+    except Exception:
         flash(f"The book {book.title} was NOT updated!", "danger")
+        app.logger.warning(f"{current_user.username} did not update the book {book.title} with the id {book.id}: [WARNING] (edit_book.html).")
     return redirect(url_for("member_page"))
 
 
@@ -288,10 +298,10 @@ def delete_book(book_id):
     try:
         book.delete()
         flash(f"The book {book.title} is deleted!", "success")
-        app.logger.info(f"{current_user.username} deleted the book {book.title} with the id {book.id} (members.html). Endpoint: delete_book.")
-    except BaseException:
+        app.logger.info(f"{current_user.username} deleted the book {book.title} with the id {book.id}: [SUCCESS] (members.html).")
+    except Exception:
         flash(f"The book {book.title} was NOT deleted!", "danger")
-        app.logger.warning(f"{current_user.username} did not delete the book {book.title} with the id {book.id} (members.html). Endpoint: delete_book.")
+        app.logger.warning(f"{current_user.username} did not delete the book {book.title} with the id {book.id}: [WARNING] (members.html).")
     return redirect(url_for("member_page"))
 
 
@@ -301,7 +311,7 @@ def search_book():
     # Preparing for the book search in Book Repository, filling in the search
     # book form.
     genre = Genre.objects()
-    app.logger.info(f"{current_user.username} is filling out the book search form. (search_book.html). Endpoint: search_book.")
+    app.logger.info(f"{current_user.username} is filling out the book search form: [INFO] - (search_book.html).")
     return render_template("search_book.html", genre=genre)
 
 
@@ -323,7 +333,7 @@ def save_search():
     }
     session["fields"] = fields
 
-    app.logger.info(f"{current_user.username} is searching (saving search in session cookie) for books matching {fields} (search_results.html). Endpoint: save_search.")
+    app.logger.info(f"{current_user.username} is searching (saving search in session cookie) for books matching {fields}: [SUCCESS] - (search_results.html).")
 
     return redirect(url_for("search_results"))
 
@@ -365,30 +375,36 @@ def search_results(page=1):
     # Private Search "form_private_view == "on"
     if form_private_view == "on":
         if form_isbn:
-            book_query_results = Book.objects.filter(user=current_user.username, ISBN=form_isbn).paginate(page=page, per_page=7)
-            app.logger.info(f"{current_user.username} found books matching {book_query_results} - 1: Private & ISBN Search (search_results.html). Endpoint: search_results.")
+            book_query_results = Book.objects.filter(user=current_user.username, ISBN=form_isbn)
+            app.logger.info(f"{current_user.username} found books matching {book_query_results.count()} - 1: Private & ISBN Search: [SUCCESS] - (search_results.html).")
+            book_query_results = book_query_results.paginate(page=page, per_page=7)
             return render_template("search_results.html", book_query_results=book_query_results, page_prev=(page - 1), page_next=(page + 1))
         elif form_genre is None:
-            book_query_results = Book.objects.filter(user=current_user.username, title__icontains=form_title, author__icontains=form_author, rating__gte=form_rating).order_by("+title", "+author", "-rating").paginate(page=page, per_page=7)
-            app.logger.info(f"{current_user.username} found books matching {book_query_results} - 2: Private, no Genre, no ISBN, Title, Author, and Rating Search (search_results.html). Endpoint: search_results.")
+            book_query_results = Book.objects.filter(user=current_user.username, title__icontains=form_title, author__icontains=form_author, rating__gte=form_rating).order_by("+title", "+author", "-rating")
+            app.logger.info(f"{current_user.username} found books matching {book_query_results.count()} - 2: Private, no Genre, no ISBN, Title, Author, and Rating Search: [SUCCESS] - (search_results.html).")
+            book_query_results = book_query_results.paginate(page=page, per_page=7)
             return render_template("search_results.html", book_query_results=book_query_results, page_prev=(page - 1), page_next=(page + 1))
         else:
-            book_query_results = Book.objects.filter(user=current_user.username, title__icontains=form_title, author__icontains=form_author, rating__gte=form_rating, genre=form_genre).order_by("+title", "+author", "-rating").paginate(page=page, per_page=7)
-            app.logger.info(f"{current_user.username} found books matching {book_query_results} - 3: Private, no ISBN, Title, Author, Rating, and Genre Search (search_results.html). Endpoint: search_results.")
+            book_query_results = Book.objects.filter(user=current_user.username, title__icontains=form_title, author__icontains=form_author, rating__gte=form_rating, genre=form_genre).order_by("+title", "+author", "-rating")
+            app.logger.info(f"{current_user.username} found books matching {book_query_results.count()} - 3: Private, no ISBN, Title, Author, Rating, and Genre Search: [SUCCESS] - (search_results.html).")
+            book_query_results = book_query_results.paginate(page=page, per_page=7)
             return render_template("search_results.html", book_query_results=book_query_results, page_prev=(page - 1), page_next=(page + 1))
     # Public Search "form_private_view == None"
     else:
         if form_isbn:
-            book_query_results = Book.objects.filter(ISBN=form_isbn, private_view="off").paginate(page=page, per_page=7)
-            app.logger.info(f"{current_user.username} found books matching {book_query_results} - 4: Public & ISBN Search (search_results.html). Endpoint: search_results.")
+            book_query_results = Book.objects.filter(ISBN=form_isbn, private_view="off")
+            app.logger.info(f"{current_user.username} found books matching {book_query_results.count()} - 4: Public & ISBN Search: [SUCCESS] - (search_results.html).")
+            book_query_results = book_query_results.paginate(page=page, per_page=7)
             return render_template("search_results.html", book_query_results=book_query_results, page_prev=(page - 1), page_next=(page + 1))
         elif form_genre is None:
-            book_query_results = Book.objects.filter(title__icontains=form_title, author__icontains=form_author, rating__gte=form_rating, private_view="off").order_by("+title", "+author", "-rating").paginate(page=page, per_page=7)
-            app.logger.info(f"{current_user.username} found books matching {book_query_results} - 5: Public, no Genre, no ISBN, Title, Author, and Rating Search (search_results.html). Endpoint: search_results.")
+            book_query_results = Book.objects.filter(title__icontains=form_title, author__icontains=form_author, rating__gte=form_rating, private_view="off").order_by("+title", "+author", "-rating")
+            app.logger.info(f"{current_user.username} found books matching {book_query_results.count()} - 5: Public, no Genre, no ISBN, Title, Author, and Rating Search: [SUCCESS] - (search_results.html).")
+            book_query_results = book_query_results.paginate(page=page, per_page=7)
             return render_template("search_results.html", book_query_results=book_query_results, page_prev=(page - 1), page_next=(page + 1))
         else:
-            book_query_results = Book.objects.filter(title__icontains=form_title, author__icontains=form_author, rating__gte=form_rating, genre=form_genre, private_view="off").order_by("+title", "+author", "-rating").paginate(page=page, per_page=7)
-            app.logger.info(f"{current_user.username} found books matching {book_query_results} - 6: Public, no ISBN, Title, Author, Rating, and Genre Search (search_results.html). Endpoint: search_results.")
+            book_query_results = Book.objects.filter(title__icontains=form_title, author__icontains=form_author, rating__gte=form_rating, genre=form_genre, private_view="off").order_by("+title", "+author", "-rating")
+            app.logger.info(f"{current_user.username} found books matching {book_query_results.count()} - 6: Public, no ISBN, Title, Author, Rating, and Genre Search: [SUCCESS] - (search_results.html).")
+            book_query_results = book_query_results.paginate(page=page, per_page=7)
             return render_template("search_results.html", book_query_results=book_query_results, page_prev=(page - 1), page_next=(page + 1))
 
 
@@ -405,10 +421,10 @@ def delete_user():
         find_user_books.delete()
         find_user.delete()
         flash(f"We're sad to see you go {deleted_user}!", "success")
-        app.logger.warning(f"{deleted_user} is has left the Book Repository (delete_user.html). Endpoint: delete_user.")
+        app.logger.info(f"{deleted_user} is has left the Book Repository: [SUCCESS] - (delete_user.html).")
     except:
         flash(f"Your account is still alive and active {find_user.username}!", "danger")
-        app.logger.warning(f"{deleted_user} is still alive and active on the Book Repository (delete_user.html). Endpoint: delete_user.")
+        app.logger.critical(f"{deleted_user} is still alive and active on the Book Repository: [FAILURE] - (delete_user.html).")
     return redirect(url_for("home_page"))
 
 
@@ -468,8 +484,13 @@ def update_user(user_id):
     else:
         admin_user_form["password"] = user_manager.hash_password(admin_user_form["password"])
 
-    user.update(**admin_user_form)
-    flash(f"User {user.username} profile updated.", "success")
+    try:
+        user.update(**admin_user_form)
+        flash(f"User {user.username} profile updated.", "success")
+        app.logger.info(f"User {user.username} profile updated by {current_user.username}: [SUCCESS] - (admin_dashboard.html).")
+    except Exception:
+        flash(f"User {user.username} profile NOT updated.", "danger")
+        app.logger.critical(f"User {user.username} profile NOT updated by {current_user.username}: [FAILURE] - (admin_dashboard.html).")
     return redirect(url_for("admin_dashboard"))
 
 
@@ -478,6 +499,8 @@ def update_user(user_id):
 def admin_delete_user(user_id):
     # The "D" in CRUD, deleting the user based on 'id' after delete modal
     # with NO confirmation.
+    app.logger.info(f"{current_user.username} (page {page}) is accessing the Admin Page: [INFO] - (members.html).")
+
     user = User.objects.get(id=user_id)
     user_books = Book.objects.filter(user=user.username)
 
@@ -487,10 +510,10 @@ def admin_delete_user(user_id):
             user_books.delete()
             user.delete()
             flash(f"The user {deleted_username} is deleted!", "success")
-            app.logger.info(f"{current_user.username} deleted the user {deleted_username} (admin_dashboard.html). Endpoint: admin_delete_user.")
-        except BaseException:
+            app.logger.info(f"{current_user.username} deleted the user {deleted_username}: [SUCCESS] - (admin_dashboard.html).")
+        except Exception:
             flash(f"The user {deleted_username} was NOT deleted!", "danger")
-            app.logger.warning(f"{current_user.username} did not delete the user {deleted_username} (admin_dashboard.html). Endpoint: admin_delete_user.")
+            app.logger.critical(f"{current_user.username} did not delete the user {deleted_username}: [FAILURE] - (admin_dashboard.html).")
     return redirect(url_for("admin_dashboard"))
 
 
@@ -505,19 +528,21 @@ def load_genres():
                 genre_array = json.load(f)
         except FileNotFoundError:
             flash("Genre file can't be found. The filename is 'genre.json' and contains the 32 Book Genres.", "danger")
+            app.logger.critical("Genre file can't be found. The filename is 'genre.json' and contains the 32 Book Genres: [FAILURE] - (admin_dashboard.html).")
 
         try:
             genre_instances = [Genre(**data) for data in genre_array]
             Genre.objects.insert(genre_instances, load_bulk=False)
             flash(f"Genres Collection successfully created.", "success")
-            app.logger.info(f"{current_user.username} has successfully loaded the Genre Collection to the Book Repository (admin_dashboard.html). Endpoint: load_genres.")
-        except BaseException:
+            app.logger.info("Genres Collection created: [SUCCESS] - (index.html)")
+        except Exception:
             flash(f"Genres Collection NOT created.", "danger")
-            app.logger.warning(f"{current_user.username} has NOT loaded the Genre Collection to the Book Repository (admin_dashboard.html). Endpoint: load_genres.")
+            app.logger.critical("Genres Collection NOT created: [FAILURE] - (index.html)")
         finally:
             return redirect(url_for("admin_dashboard") or url_for("home_page"))
     else:
         flash(f"Genres Collection already created.", "info")
+        app.logger.info("Genres Collection already created: [INFO] - (index.html)")
         return redirect(url_for("admin_dashboard"))
 
 
@@ -531,19 +556,21 @@ def load_books():
                 book_dict = json.load(f)
         except FileNotFoundError:
             flash("Book file can't be found. The filename is 'book.json' and contains 15 sample Books.", "danger")
+            app.logger.critical("Book file can't be found. The filename is 'book.json' and contains 15 sample Books: [FAILURE] - (admin_dashboard.html).")
 
         try:
             book_instances = [Book(**data) for data in book_dict]
             Book.objects.insert(book_instances, load_bulk=False)
             flash(f"Book Collection successfully created.", "success")
-            app.logger.info(f"{current_user.username} has successfully loaded the Book Collection to the Book Repository (admin_dashboard.html). Endpoint: load_books.")
-        except BaseException:
+            app.logger.info(f"{current_user.username} has successfully loaded the Book Collection to the Book Repository: [SUCCESS] - (admin_dashboard.html).")
+        except Exception:
             flash(f"Book Collection NOT created.", "danger")
-            app.logger.warning(f"{current_user.username} has NOT loaded the Book Collection to the Book Repository (admin_dashboard.html). Endpoint: load_books.")
+            app.logger.critical(f"{current_user.username} has NOT loaded the Book Collection to the Book Repository: [FAILURE] - (admin_dashboard.html).")
         finally:
             return redirect(url_for("admin_dashboard") or url_for("home_page"))
     else:
         flash(f"Sample Book Collection already created.", "info")
+        app.logger.info("Sample Book Collection already created: [INFO] - (index.html)")
         return redirect(url_for("admin_dashboard"))
 
 
