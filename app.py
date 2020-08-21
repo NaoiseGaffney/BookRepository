@@ -492,8 +492,6 @@ def update_user(user_id):
 def admin_delete_user(user_id):
     # The "D" in CRUD, deleting the user based on 'id' after delete modal
     # with NO confirmation.
-    app.logger.info(f"{current_user.username} (page {page}) is accessing the Admin Page: [INFO] - (members.html).")
-
     user = User.objects.get(id=user_id)
     user_books = Book.objects.filter(user=user.username)
 
