@@ -1,7 +1,5 @@
 {% extends "flask_user_layout.html" %}
 {% block content %}
-{# Macro for creating navigation links #}
-{% macro render_navigation(pagination, endpoint) %}
 <div class="container">
     <h6>
         {% if call_or_get(current_user.is_authenticated) %}
@@ -59,7 +57,8 @@
                     class="material-icons white-text right">done</i>&nbsp;Done!</a>
         </div>
     </div>
-    
+    {# Macro for creating navigation links #}
+    {% macro render_navigation(pagination, endpoint) %}
     <div class="pagination">Page #:
         {% if page_prev == 0 %}
         &lt;&nbsp;
