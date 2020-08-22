@@ -9,10 +9,38 @@
         {% endif %}
         &nbsp; > &nbsp;<a href="{{ url_for('member_page') }}">Member's Page</a>&nbsp; > &nbsp;<a href="{{ url_for('add_book')}}">Add Book</a>&nbsp;<i class="material-icons prefix tooltipped blue-text text-darken-4" data-position="bottom" role="tooltip" data-tooltip="<p class='left-align'>Please hover over the icons on the left of each field for further help on what to do.</p><br>
         <p class='left-align'>All fields, except the Book Description, Book Comments and the Private View are mandatory to fill out.</p>">help</i>
+
+        <span class="book-dropdown right">
+            <span class="white-text btn waves-effect waves-light right blue darken-4"><i
+                    class="material-icons white-text">import_contacts</i></span>
+            <span class="book-dropdown-content">
+                <span><a href="#genre_list" class="blue-text btn text-darken-4 white modal-trigger">List
+                        Genres&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i
+                            class="material-icons blue-text text-darken-4 right">list</i></a></span>
+            </span>
+        </span>
     </h6>
-
-
-
+    <div id="genre_list" class="modal center">
+        <div class="modal-content">
+            <h6>Book Repository Genre List</h6>
+            <table>
+                <tr class="white-text blue darken-4">
+                    <th>Book Genre</th>
+                    <th>Genre Description</th>
+                </tr>
+                {% for g in genre %}
+                <tr class="{{loop.cycle('white','blue-grey lighten-5')}}">
+                    <td>{{g.genre}}</td>
+                    <td>{{g.description}}</td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+        <div class="modal-footer">
+            <a href="#!" class="modal-close btn waves-effect waves-light blue darken-4"><i
+                    class="material-icons white-text right">done</i>&nbsp;Done!</a>
+        </div>
+    </div>
     <div class="row">
         <form action="{{ url_for('save_book') }}" method="POST" class="col s12">
             <div class="row">

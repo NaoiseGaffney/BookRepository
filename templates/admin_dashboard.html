@@ -30,6 +30,8 @@
                 <span><br>&nbsp;<br></span>
                 <span><a href="{{ url_for('load_books')}}" class="blue-text btn text-darken-4 white">Load Books&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="material-icons blue-text text-darken-4 right">import_contacts</i></a></span>
                 <span><br>&nbsp;<br></span>
+                <span><a href="#genre_list" class="blue-text btn text-darken-4 white modal-trigger">List Genres&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="material-icons blue-text text-darken-4 right">list</i></a></span>
+                <span><br>&nbsp;<br></span>
                 <span><a href="#statistics" class="blue-text btn text-darken-4 white modal-trigger">Statistics&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="material-icons blue-text text-darken-4 right">insert_chart</i></a></span>
             </span>
         </span>
@@ -48,6 +50,27 @@
                 <tr class="{{loop.cycle('white','blue-grey lighten-5')}}">
                     <td>{{key}}</td>
                     <td>{{value}}</td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+        <div class="modal-footer">
+            <a href="#!" class="modal-close btn waves-effect waves-light blue darken-4"><i
+                    class="material-icons white-text right">done</i>&nbsp;Done!</a>
+        </div>
+    </div>
+    <div id="genre_list" class="modal center">
+        <div class="modal-content">
+            <h6>Book Repository Genre List</h6>
+            <table>
+                <tr class="white-text blue darken-4">
+                    <th>Book Genre</th>
+                    <th>Genre Description</th>
+                </tr>
+                {% for genre in genre_list %}
+                <tr class="{{loop.cycle('white','blue-grey lighten-5')}}">
+                    <td>{{genre.genre}}</td>
+                    <td>{{genre.description}}</td>
                 </tr>
                 {% endfor %}
             </table>
