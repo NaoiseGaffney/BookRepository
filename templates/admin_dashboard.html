@@ -1,7 +1,5 @@
 {% extends "flask_user_layout.html" %}
 {% block content %}
-{# Macro for creating navigation links #}
-{% macro render_navigation(pagination, endpoint) %}
 <div class="container">
     <h6>
         {% if call_or_get(current_user.is_authenticated) %}
@@ -19,7 +17,7 @@
         <p class='left-align'>Admin: PLEASE note the MongoDB sort order is integers first, UPPER-CASE second, and lower-case third.</p><br>
         <p>&nbsp;</p>
         <p class='left-align'>INITIAL LOAD OF GENRES AND SAMPLE BOOKS</p><br>
-        <p class='left-align'>To load book genres or a sample selection of books, please hover over the category icon (triangle, square, circle) and make your selection from the drop-down menu.</p><br>
+        <p class='left-align'>To load book genres or a sample selection of books, please hover over the category icon (triangle, square, circle) and make your selection from the drop-down menu. You can also view the list of genres here.</p><br>
         <p>&nbsp;</p>
         <p class='left-align'>BOOK REPOSITORY STATISTICS</p><br>
         <p class='left-align'>To view Book Repository statistics, please hover over the category icon (triangle, square, circle) and click on Statistics from the drop-down menu.</p>">help</i>
@@ -31,6 +29,8 @@
                 <span><a href="{{ url_for('load_genres')}}" class="blue-text btn text-darken-4 white">Load Genres&nbsp;&nbsp;&nbsp;<i class="material-icons blue-text text-darken-4 right">subject</i></a></span>
                 <span><br>&nbsp;<br></span>
                 <span><a href="{{ url_for('load_books')}}" class="blue-text btn text-darken-4 white">Load Books&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="material-icons blue-text text-darken-4 right">import_contacts</i></a></span>
+                <span><br>&nbsp;<br></span>
+                <span><a href="#genre_list" class="blue-text btn text-darken-4 white modal-trigger">List Genres&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="material-icons blue-text text-darken-4 right">list</i></a></span>
                 <span><br>&nbsp;<br></span>
                 <span><a href="#statistics" class="blue-text btn text-darken-4 white modal-trigger">Statistics&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="material-icons blue-text text-darken-4 right">insert_chart</i></a></span>
             </span>
@@ -59,7 +59,29 @@
                     class="material-icons white-text right">done</i>&nbsp;Done!</a>
         </div>
     </div>
-    
+    <div id="genre_list" class="modal center">
+        <div class="modal-content">
+            <h6>Book Repository Genre List</h6>
+            <table>
+                <tr class="white-text blue darken-4">
+                    <th>Book Genre</th>
+                    <th>Genre Description</th>
+                </tr>
+                {% for genre in genre_list %}
+                <tr class="{{loop.cycle('white','blue-grey lighten-5')}}">
+                    <td>{{genre.genre}}</td>
+                    <td>{{genre.description}}</td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+        <div class="modal-footer">
+            <a href="#!" class="modal-close btn waves-effect waves-light blue darken-4"><i
+                    class="material-icons white-text right">done</i>&nbsp;Done!</a>
+        </div>
+    </div>
+    {# Macro for creating navigation links #}
+    {% macro render_navigation(pagination, endpoint) %}
     <div class="pagination">Page #:
         {% if page_prev == 0 %}
         &lt;&nbsp;

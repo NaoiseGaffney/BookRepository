@@ -178,8 +178,9 @@ def member_page(page=1):
     # The "R" in CRUD, a virtual library or stack of books to browse.
     app.logger.info(f"{current_user.username} is accessing the Member's Page: [INFO] - (members.html).")
 
+    genre_list = Genre.objects()
     books_pagination = Book.objects.filter(user=current_user.username).paginate(page=page, per_page=7)
-    return render_template("members.html", books_pagination=books_pagination, page_prev=(page - 1), page_next=(page + 1))
+    return render_template("members.html", books_pagination=books_pagination, page_prev=(page - 1), page_next=(page + 1), genre_list=genre_list)
 
 
 @app.route("/add_book")
@@ -371,6 +372,8 @@ def search_results(page=1):
     form_genre = fields["genre"]
     form_private_view = fields["private_view"]
 
+    genre_list = Genre.objects()
+
     # Query Book Repository based on the search form data
     # Private Search "form_private_view == "on"
     if form_private_view == "on":
@@ -378,34 +381,34 @@ def search_results(page=1):
             book_query_results = Book.objects.filter(user=current_user.username, ISBN=form_isbn)
             app.logger.info(f"{current_user.username} found books matching {book_query_results.count()} - 1: Private & ISBN Search: [SUCCESS] - (search_results.html).")
             book_query_results = book_query_results.paginate(page=page, per_page=7)
-            return render_template("search_results.html", book_query_results=book_query_results, page_prev=(page - 1), page_next=(page + 1))
+            return render_template("search_results.html", book_query_results=book_query_results, page_prev=(page - 1), page_next=(page + 1), genre_list=genre_list)
         elif form_genre is None:
             book_query_results = Book.objects.filter(user=current_user.username, title__icontains=form_title, author__icontains=form_author, rating__gte=form_rating).order_by("+title", "+author", "-rating")
             app.logger.info(f"{current_user.username} found books matching {book_query_results.count()} - 2: Private, no Genre, no ISBN, Title, Author, and Rating Search: [SUCCESS] - (search_results.html).")
             book_query_results = book_query_results.paginate(page=page, per_page=7)
-            return render_template("search_results.html", book_query_results=book_query_results, page_prev=(page - 1), page_next=(page + 1))
+            return render_template("search_results.html", book_query_results=book_query_results, page_prev=(page - 1), page_next=(page + 1), genre_list=genre_list)
         else:
             book_query_results = Book.objects.filter(user=current_user.username, title__icontains=form_title, author__icontains=form_author, rating__gte=form_rating, genre=form_genre).order_by("+title", "+author", "-rating")
             app.logger.info(f"{current_user.username} found books matching {book_query_results.count()} - 3: Private, no ISBN, Title, Author, Rating, and Genre Search: [SUCCESS] - (search_results.html).")
             book_query_results = book_query_results.paginate(page=page, per_page=7)
-            return render_template("search_results.html", book_query_results=book_query_results, page_prev=(page - 1), page_next=(page + 1))
+            return render_template("search_results.html", book_query_results=book_query_results, page_prev=(page - 1), page_next=(page + 1), genre_list=genre_list)
     # Public Search "form_private_view == None"
     else:
         if form_isbn:
             book_query_results = Book.objects.filter(ISBN=form_isbn, private_view="off")
             app.logger.info(f"{current_user.username} found books matching {book_query_results.count()} - 4: Public & ISBN Search: [SUCCESS] - (search_results.html).")
             book_query_results = book_query_results.paginate(page=page, per_page=7)
-            return render_template("search_results.html", book_query_results=book_query_results, page_prev=(page - 1), page_next=(page + 1))
+            return render_template("search_results.html", book_query_results=book_query_results, page_prev=(page - 1), page_next=(page + 1), genre_list=genre_list)
         elif form_genre is None:
             book_query_results = Book.objects.filter(title__icontains=form_title, author__icontains=form_author, rating__gte=form_rating, private_view="off").order_by("+title", "+author", "-rating")
             app.logger.info(f"{current_user.username} found books matching {book_query_results.count()} - 5: Public, no Genre, no ISBN, Title, Author, and Rating Search: [SUCCESS] - (search_results.html).")
             book_query_results = book_query_results.paginate(page=page, per_page=7)
-            return render_template("search_results.html", book_query_results=book_query_results, page_prev=(page - 1), page_next=(page + 1))
+            return render_template("search_results.html", book_query_results=book_query_results, page_prev=(page - 1), page_next=(page + 1), genre_list=genre_list)
         else:
             book_query_results = Book.objects.filter(title__icontains=form_title, author__icontains=form_author, rating__gte=form_rating, genre=form_genre, private_view="off").order_by("+title", "+author", "-rating")
             app.logger.info(f"{current_user.username} found books matching {book_query_results.count()} - 6: Public, no ISBN, Title, Author, Rating, and Genre Search: [SUCCESS] - (search_results.html).")
             book_query_results = book_query_results.paginate(page=page, per_page=7)
-            return render_template("search_results.html", book_query_results=book_query_results, page_prev=(page - 1), page_next=(page + 1))
+            return render_template("search_results.html", book_query_results=book_query_results, page_prev=(page - 1), page_next=(page + 1), genre_list=genre_list)
 
 
 @app.route("/delete_user")
@@ -438,6 +441,7 @@ def admin_dashboard(page=1):
     user_details_query_count = User.objects.count()
     book_list = Book.objects()
     book_list_count = book_list.count()
+    genre_list = Genre.objects()
 
     genre_dict = {}
     for book in book_list:
@@ -446,7 +450,7 @@ def admin_dashboard(page=1):
         else:
             genre_dict[f"{book.genre}"] = 1
     tuple_in_right_order = sorted(genre_dict.items(), key=lambda kv: (kv[1], kv[0]), reverse=True)
-    return render_template("admin_dashboard.html", user_details_query=user_details_query, page_prev=(page - 1), page_next=(page + 1), user_details_query_count=user_details_query_count, book_list_count=book_list_count, tuple_in_right_order=tuple_in_right_order)
+    return render_template("admin_dashboard.html", user_details_query=user_details_query, page_prev=(page - 1), page_next=(page + 1), user_details_query_count=user_details_query_count, book_list_count=book_list_count, tuple_in_right_order=tuple_in_right_order, genre_list=genre_list)
 
 
 @app.route("/update_user/<user_id>", methods=["POST"])
@@ -499,8 +503,6 @@ def update_user(user_id):
 def admin_delete_user(user_id):
     # The "D" in CRUD, deleting the user based on 'id' after delete modal
     # with NO confirmation.
-    app.logger.info(f"{current_user.username} (page {page}) is accessing the Admin Page: [INFO] - (members.html).")
-
     user = User.objects.get(id=user_id)
     user_books = Book.objects.filter(user=user.username)
 

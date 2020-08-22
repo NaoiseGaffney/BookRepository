@@ -13,7 +13,7 @@
         <p class='left-align'>To delete a book, click on the rubbish bin/dust-bin icon and answer yes or no to the question.</p><br>
         <p class='left-align'>Use the page numbers to navigate to a different page.</p><br>
         <p class='left-align'>Click on the book title link to view the book on Amazon UK. Click on the ISBN link in the book details section to view the book on ISBN Search.</p><br>
-        <p class='left-align'>To add a book, or search for books, click on the 'Book' icon under the navigation menu.</p>">help</i>
+        <p class='left-align'>To add a book, or search for books, or view the list of genres and their description, please click on the 'Book' icon under the navigation menu.</p>">help</i>
 
         <span class="book-dropdown right">
             <span class="white-text btn waves-effect waves-light right blue darken-4"><i
@@ -24,10 +24,34 @@
                             class="material-icons blue-text text-darken-4 right">plus_one</i></a></span>
                 <span><br>&nbsp;<br></span>
                 <span><a href="{{ url_for('search_book')}}" class="blue-text btn text-darken-4 white">Search
-                        Books&nbsp;<i class="material-icons blue-text text-darken-4 right">search</i></a></span>
+                        Books<i class="material-icons blue-text text-darken-4 right">search</i></a></span>
+                <span><br>&nbsp;<br></span>
+                <span><a href="#genre_list" class="blue-text btn text-darken-4 white modal-trigger">List
+                        Genres&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="material-icons blue-text text-darken-4 right">list</i></a></span>
             </span>
         </span>
     </h6>
+    <div id="genre_list" class="modal center">
+        <div class="modal-content">
+            <h6>Book Repository Genre List</h6>
+            <table>
+                <tr class="white-text blue darken-4">
+                    <th>Book Genre</th>
+                    <th>Genre Description</th>
+                </tr>
+                {% for genre in genre_list %}
+                <tr class="{{loop.cycle('white','blue-grey lighten-5')}}">
+                    <td>{{genre.genre}}</td>
+                    <td>{{genre.description}}</td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+        <div class="modal-footer">
+            <a href="#!" class="modal-close btn waves-effect waves-light blue darken-4"><i
+                    class="material-icons white-text right">done</i>&nbsp;Done!</a>
+        </div>
+    </div>
     {# Macro for creating navigation links #}
     {% macro render_navigation(pagination, endpoint) %}
     <div class="pagination">Page #:

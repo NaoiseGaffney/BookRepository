@@ -14,32 +14,36 @@
 
 <form method="POST" class="form">
     {{ form.hidden_tag() }}
-    {% for field in form %}
-        {% if not field.flags.hidden %}
-            {% if field.type=='SubmitField' %}
-            <div class="button_top_padding">
-                {{ render_submit_field(field) }}
+        <div class="button_top_padding">
+            <div class="form-group">
+                <label for="first_name" class="control-label active">First Name</label>
+                <input class="form-control" id="first_name" name="first_name" required="" type="text"
+                    value="{{current_user.first_name}}">
             </div>
-            {% else %}
-            <div class="button_top_padding">
-                {{ render_field(field) }}
+        </div>
+        <div class="button_top_padding">
+            <div class="form-group">
+                <label for="last_name" class="control-label active">Last Name</label>
+                <input class="form-control" id="last_name" name="last_name" required="" type="text"
+                    value="{{current_user.last_name}}">
             </div>
-            {% endif %}
-        {% endif %}
-    {% endfor %}
+        </div>
+        <div class="button_top_padding">
+            <input type="submit" class="btn btn-default btn-primary" value="Update">
+        </div>
 </form>
-<br/>
+<br>
 
 {% if not user_manager.USER_ENABLE_AUTH0 %}
     {% if user_manager.USER_ENABLE_CHANGE_USERNAME %}
-        <p><a href="{{ url_for('user.change_username') }}">{%trans%}Change username{%endtrans%}</a></p>
+        <p><a href="{{ url_for('user.change_username') }}">{%trans%}Change Username{%endtrans%}</a></p>
     {% endif %}
     {% if user_manager.USER_ENABLE_CHANGE_PASSWORD %}
-        <p><a href="{{ url_for('user.change_password') }}">{%trans%}Change password{%endtrans%}</a></p>
+        <p><a href="{{ url_for('user.change_password') }}">{%trans%}Change Password{%endtrans%}</a></p>
     {% endif %}
 {% endif %}
     {% if current_user.username != "admin" %}
-    <a class="modal-trigger pink-text text-darken-1" href="#delete_user">Delete user</a>
+    <a class="modal-trigger pink-text text-darken-1" href="#delete_user">Delete User</a>
     <div id="delete_user" class="modal">
         <div class="modal-content center">
             <h6 class="pink-text text-darken-1">Deleting your User account and all your Books: {{current_user.username}}</h6>
