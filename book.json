@@ -297,5 +297,44 @@
         "genre": "(NF) Reference",
         "private_view": "off",
         "book_thumbnail": "https://books.google.com/books/content?id=TYsVjwEACAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api"
+    },
+    {
+        "title": "8088 Assembler Language Programming: The IBM PC",
+        "author": "David C. Willen, Jeffrey I. Krantz",
+        "year": 1984,
+        "ISBN": 9780672224003,
+        "user": "admin",
+        "short_description": "",
+        "comments": "",
+        "rating": 7,
+        "genre": "(NF) Reference",
+        "private_view": "off",
+        "book_thumbnail": "https://books.google.com/books/content?id=oN8mAAAAMAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api"
+    },
+    {
+        "title": "The Deed of Paksenarrion",
+        "author": "Elizabeth Moon",
+        "year": 1992,
+        "ISBN": 9780671721046,
+        "user": "admin",
+        "short_description": "",
+        "comments": "",
+        "rating": 9,
+        "genre": "(F) Fantasy",
+        "private_view": "off",
+        "book_thumbnail": "https://books.google.com/books/content?id=ojFZAAAAYAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api"
+    },
+    {
+        "title": "The Legacy of Gird",
+        "author": "Elizabeth Moon",
+        "year": 1996,
+        "ISBN": 9780671877477,
+        "user": "admin",
+        "short_description": "",
+        "comments": "",
+        "rating": 8,
+        "genre": "(F) Fantasy",
+        "private_view": "off",
+        "book_thumbnail": "https://books.google.com/books/content?id=TYsVjwEACAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api"
     }
 ]
