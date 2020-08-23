@@ -154,7 +154,7 @@ def home_page():
             with open("genre.json", "r", encoding="utf-8") as f:
                 genre_array = json.load(f)
         except FileNotFoundError:
-            flash("Genre file can't be found. The filename is 'genre.json' and contains the 32 Book Genres.","danger")
+            flash("Genre file can't be found. The filename is 'genre.json' and contains the 32 Book Genres.", "danger")
             app.logger.critical("Genre file can't be found. The filename is 'genre.json' and contains the 32 Book Genres: [FAILURE] - (index.html).")
 
         try:
@@ -467,7 +467,7 @@ def update_user(user_id):
         "password": request.form.get(f"password_{user_form_name}")
     }
 
-    # Paranoia: make sure admin account can't be set to inactive, even though the form does not allow it, 
+    # Paranoia: make sure admin account can't be set to inactive, even though the form does not allow it,
     # however the URL can be created and used anyway.
     if user.username == "admin":
         admin_user_form["active"] = True
@@ -481,7 +481,7 @@ def update_user(user_id):
         flash(f"Passwords did not match for {user.username}, please try again!", "danger")
         return redirect(url_for("admin_dashboard"))
 
-    # Checking if the password is accidentally changed (the current hash) and the current/original/unchanged 
+    # Checking if the password is accidentally changed (the current hash) and the current/original/unchanged
     # hashed password ($2b$) = set to original/current password.
     if admin_user_form["password"] == user.password and admin_user_form["password"].startswith("$2b$"):
         admin_user_form["password"] == user.password
