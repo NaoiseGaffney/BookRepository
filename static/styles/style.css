@@ -23,6 +23,15 @@ html {
     background-size: cover;
 }
 
+.landing_logo {
+    width: 100%;
+}
+
+.landing_page {
+    background: rgba(255, 255, 255, 0.5);
+    padding: 10px;
+}
+
 /* <a href... */
 a {
     color: #0D47A1;
@@ -127,7 +136,7 @@ footer .right-align {
 }
 
 .collapsible-body {
-    background: rgba(255, 255, 255, 0.35);
+    background: rgba(255, 255, 255, 0.5);
 }
 
 .book_spine {
