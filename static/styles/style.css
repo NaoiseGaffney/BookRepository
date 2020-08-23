@@ -9,16 +9,18 @@
 
 html,
 body {
-    background-color: #FFFFFF;
     font-family: 'Raleway', sans-serif;
     margin-top: 35px;
     margin-bottom: 50px;
-    background-image: url("/static/images/sharon-mccutcheon-eMP4sYPJ9x0-unsplash.jpg");
+}
+
+html {
+    background: url("/static/images/sharon-mccutcheon-eMP4sYPJ9x0-unsplash.jpg") no-repeat center center fixed;
     /* Photo by <a href="https://unsplash.com/@sharonmccutcheon?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Sharon McCutcheon</a> */
-    background-position: center;
-    background-size: 4000px;
-    background-repeat: no-repeat;
-    position: relative;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
 }
 
 /* <a href... */

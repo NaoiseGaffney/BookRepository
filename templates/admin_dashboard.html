@@ -190,15 +190,14 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    {% if user.username != "admin" %}
                     <div class="center">
+                    {% if user.username != "admin" %}
+                    
                         <a href="{{ url_for('admin_delete_user', user_id=user.id) }}"
-                            class="modal-close btn waves-effect waves-light pink darken-1 tooltipped" data-position="right"
+                            class="modal-close btn waves-effect waves-light pink darken-1 tooltipped" data-position="bottom"
                             data-tooltip="This will PERMANENTLY delete the user and associated books!"><i
                                 class="material-icons white-text right">delete_forever</i>&nbsp;Delete</a>
-                    </div>
                     {% endif %}
-                    <div class="center">
                         <button class="btn waves-effect waves-light blue darken-4" type="submit" name="action">Update<i
                                 class="material-icons right">playlist_add</i></button>
                         <a href="#!" class="modal-close btn waves-effect waves-light blue darken-4"><i
