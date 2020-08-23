@@ -1,11 +1,19 @@
 {% extends "flask_user_layout.html" %}
 {% block content %}
-<div class="container">
-<h6><a href="{{ url_for('home_page') }}">Home Page</a></h6>
-<p><a href="{{ url_for('user.register') }}">Register</a></p>
-<p><a href="{{ url_for('user.login') }}">Sign In</a></p>
-<p><a href="{{ url_for('home_page') }}">Home Page</a> (accessible to anyone)</p>
-<p><a href="{{ url_for('member_page') }}">Member's Page</a> (login required)</p>
-<p><a href="{{ url_for('user.logout') }}">Sign Out</a></p>
-</div>
+<section class="container center">
+    <br>
+    <div class="landing_page">
+    <img class="landing_logo" src="/static/images/logo_bookstack_text_96_spacing.png" alt="Book Repository Logo" />
+    </div>
+    <br>
+    <div class="landing_page">
+    <h6>Welcome!</h6>
+    <br>
+    <p>The Book Repository is a digital or virtual library to store information about your books, such as
+    title, author, year published, ISBN, genre, rating, description, and your reflection and comments.</p>
+    <br>
+    <p>The Book Repository provides a private and public search function too, using any combination of title,
+    author, ISBN, genre, and rating.</p>
+    </div>
+</section>
 {% endblock %}

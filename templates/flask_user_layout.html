@@ -8,9 +8,9 @@
     <meta name="Description" content="Developer and Designer: Naoise Gaffney - 'Gaff'. Title: Book Repository. Reason: third 
         milestone project for the Code Institute's Diploma in Full Stack Development. Description: The 
         Book Repository is a digital or virtual library to store information about your books, such as 
-        title, author, year published, ISBN, rating, description, and your personal reflection and comments.
+        title, author, year published, ISBN, genre, rating, description, and your reflection and comments.
         The Book Repository provides a private and public search function too, using any combination of title, 
-        author, ISBN, and rating.">
+        author, ISBN, genre, and rating.">
     <link rel="apple-touch-icon" sizes="180x180" href="/static/images/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="/static/images/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/static/images/favicon-16x16.png">
@@ -90,7 +90,7 @@
             {% if "Admin" in current_user.roles %}
             <li>
                 <a href="{{ url_for('admin_dashboard')}}" class="white-text">Admin Page<i
-                        class="material-icons white-text left">table_chart</i></a>
+                        class="material-icons white-text left">admin_panel_settings</i></a>
             </li>
             {% endif %}
             <li>
@@ -125,7 +125,7 @@
     {% block menu %}
     {% endblock %}
 
-    <div id="main-div" class="container">
+    <div id="main-div" class="container center">
         {# One-time system messages called Flash messages #}
         {% block flash_messages %}
         {%- with messages = get_flashed_messages(with_categories=true) -%}
@@ -188,6 +188,7 @@
                         <p>Application: Python, Flask, Flask Extensions, and MongoEngine</p>
                         <p>Database: MongoDB</p>
                         <p>API: Goggle Books API</p>
+                        <p>External Links: Amazon UK and ISBN Search</p>
                         <p><a href="https://github.com/NaoiseGaffney/BookRepository" target="_blank" rel="noopener"
                                 class="pink-text text-darken-1 waves-effect">&nbsp;Book Repository on GitHub&nbsp;</a>
                         </p>
