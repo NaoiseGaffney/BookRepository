@@ -336,5 +336,31 @@
         "genre": "(F) Fantasy",
         "private_view": "off",
         "book_thumbnail": "https://books.google.com/books/content?id=TYsVjwEACAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api"
+    },
+    {
+        "title": "Down and Out in Paris and London",
+        "author": "George Orwell",
+        "year": 2020,
+        "ISBN": 9781787302532,
+        "user": "admin",
+        "short_description": "",
+        "comments": "",
+        "rating": 8,
+        "genre": "(NF) Social",
+        "private_view": "off",
+        "book_thumbnail": "https://books.google.com/books/content?id=H2uyywEACAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api"
+    },
+    {
+        "title": "Burmese Days",
+        "author": "George Orwell",
+        "year": 2001,
+        "ISBN": 9780141185378,
+        "user": "admin",
+        "short_description": "",
+        "comments": "",
+        "rating": 8,
+        "genre": "(NF) Social",
+        "private_view": "off",
+        "book_thumbnail": "https://books.google.com/books/content?id=TYsVjwEACAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api"
     }
 ]
