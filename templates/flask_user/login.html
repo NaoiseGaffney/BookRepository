@@ -2,8 +2,8 @@
 
 {% block content %}
 {% from "flask_user/_macros.html" import render_field, render_checkbox_field, render_submit_field %}
-<h6><a href="{{ url_for('home_page')}}">Home</a>&nbsp; > &nbsp;<a href="{{ url_for('user.login') }}">{%trans%}Sign In
-        Page{%endtrans%}</a>&nbsp;<i class="material-icons prefix tooltipped blue-text text-darken-4" data-position="bottom" role="tooltip" data-tooltip="<p class='left-align'>Please enter your username or e-mail (Username or Email), followed by your password (Password), the same ones you used when you registered.</p><br><p class='left-align'>Please click the checkbox (Remember Me) if you want to remain logged in.</p><br><p class='left-align'>Click on the SIGN IN button when done filling in the username and password fields.</p>">help</i></h6>
+<h6><a href="{{ url_for('home_page')}}">Home</a>&nbsp; > &nbsp;<a href="{{ url_for('user.login') }}">Sign In
+        Page</a>&nbsp;<i class="material-icons prefix tooltipped blue-text text-darken-4" data-position="bottom" role="tooltip" data-tooltip="<p class='left-align'>Please enter your username or e-mail (Username or Email), followed by your password (Password), the same ones you used when you registered.</p><br><p class='left-align'>Please click the checkbox (Remember Me) if you want to remain logged in.</p><br><p class='left-align'>Click on the SIGN IN button when done filling in the username and password fields.</p>">help</i></h6>
 <form method="POST" class="form">
     {{ form.hidden_tag() }}
 
@@ -52,9 +52,9 @@
 </form>
 <br>
     {% if user_manager.USER_ENABLE_REGISTER and not user_manager.USER_REQUIRE_INVITATION %}
-    <p><a href="{{ url_for('user.register') }}">{%trans%}New here? Register.{%endtrans%}</a></p>
+    <p><a href="{{ url_for('user.register') }}">New here? Register.</a></p>
     {% endif %}
     {% if user_manager.USER_ENABLE_FORGOT_PASSWORD %}
-    <p><a href="{{ url_for('user.forgot_password') }}">{%trans%}Forgot your Password?{%endtrans%}</a></p>
+    <p><a href="{{ url_for('user.forgot_password') }}">Forgot your Password?</a></p>
     {% endif %}
 {% endblock %}

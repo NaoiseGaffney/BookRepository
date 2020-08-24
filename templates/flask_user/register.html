@@ -2,7 +2,7 @@
 
 {% block content %}
 {% from "flask_user/_macros.html" import render_field, render_submit_field %}
-<h6><a href="{{ url_for('home_page')}}">Home</a>&nbsp; > &nbsp;<a href="{{ url_for('user.register') }}">{%trans%}Register{%endtrans%}</a>&nbsp;<i class="material-icons prefix tooltipped blue-text text-darken-4" data-position="bottom" data-tooltip="<p class='left-align'>Please enter your username (Username) using 250 characters or less. Letters, digits and @ . + - _ only.</p><br><p class='left-align'>Please enter your e-mail address (Email), for example 'name@domain.com'.</p><br><p class='left-align'>Please enter a password (Password) longer than 8 characters, using a mixture of numbers and letters, and ideally one or more special characters.</p><br><p class='left-align'>Password confirmation: Please enter the same password (Retype Password) again for verification.</p>">help</i></h6>
+<h6><a href="{{ url_for('home_page')}}">Home</a>&nbsp; > &nbsp;<a href="{{ url_for('user.register') }}">Register</a>&nbsp;<i class="material-icons prefix tooltipped blue-text text-darken-4" data-position="bottom" data-tooltip="<p class='left-align'>Please enter your username (Username) using 250 characters or less. Letters, digits and @ . + - _ only.</p><br><p class='left-align'>Please enter your e-mail address (Email), for example 'name@domain.com'.</p><br><p class='left-align'>Please enter a password (Password) longer than 8 characters, using a mixture of numbers and letters, and ideally one or more special characters.</p><br><p class='left-align'>Password confirmation: Please enter the same password (Retype Password) again for verification.</p>">help</i></h6>
 
 <form method="POST" class="form">
     {{ form.hidden_tag() }}
@@ -66,6 +66,6 @@
 </form>
 <br>
     {% if user_manager.USER_ENABLE_REGISTER %}
-    <p><a href="{{ url_for('user.login') }}">{%trans%}Already registered? Sign in.{%endtrans%}</a></p>
+    <p><a href="{{ url_for('user.login') }}">Already registered? Sign in.</a></p>
     {% endif %}
 {% endblock %}

@@ -9,7 +9,7 @@
     {% else %}
     <a href="{{ url_for('home_page')}}">Home</a>
     {% endif %}
-    &nbsp; > &nbsp;<a href="{{ url_for('member_page') }}">Member's Page</a>&nbsp; > &nbsp;<a href="{{ url_for('user.edit_user_profile') }}">{%trans%}User Profile{%endtrans%}: {{ current_user.username or current_user.email }}</a>&nbsp;<i class="material-icons prefix tooltipped blue-text text-darken-4" data-position="bottom" data-tooltip="<p class='left-align'>Please enter your first (First Name) and last name (Last Name) in the fields below, and then click on the UPDATE button when you are done.</p>">help</i>
+    &nbsp; > &nbsp;<a href="{{ url_for('member_page') }}">Member's Page</a>&nbsp; > &nbsp;<a href="{{ url_for('user.edit_user_profile') }}">User Profile: {{ current_user.username or current_user.email }}</a>&nbsp;<i class="material-icons prefix tooltipped blue-text text-darken-4" data-position="bottom" data-tooltip="<p class='left-align'>Please enter your first (First Name) and last name (Last Name) in the fields below, and then click on the UPDATE button when you are done.</p>">help</i>
 </h6>
 
 <form method="POST" class="form">
@@ -38,10 +38,10 @@
 
 {% if not user_manager.USER_ENABLE_AUTH0 %}
     {% if user_manager.USER_ENABLE_CHANGE_USERNAME %}
-        <p><a href="{{ url_for('user.change_username') }}">{%trans%}Change Username{%endtrans%}</a></p>
+        <p><a href="{{ url_for('user.change_username') }}">Change Username</a></p>
     {% endif %}
     {% if user_manager.USER_ENABLE_CHANGE_PASSWORD %}
-        <p><a href="{{ url_for('user.change_password') }}">{%trans%}Change Password{%endtrans%}</a></p>
+        <p><a href="{{ url_for('user.change_password') }}">Change Password</a></p>
     {% endif %}
 {% endif %}
     {% if current_user.username != "admin" %}
