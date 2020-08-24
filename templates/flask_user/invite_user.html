@@ -6,8 +6,10 @@
 
 <form action="" method="POST" class="form" role="form">
     {{ form.hidden_tag() }}
+    <div class="field_top_padding">
     {{ render_field(form.email, tabindex=10) }}
     {{ render_submit_field(form.submit, tabindex=90) }}
+    </div>
 </form>
 
 {% endblock %}

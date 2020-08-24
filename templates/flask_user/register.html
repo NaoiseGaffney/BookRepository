@@ -9,6 +9,7 @@
 
     {# Username or Email #}
     {% set field = form.username if user_manager.USER_ENABLE_USERNAME else form.email %}
+    <div class="field_top_padding">
     <div class="form-group {% if field.errors %}has-error{% endif %}">
         <label for="{{ field.id }}" class="control-label">{{ field.label.text }}</label>
         {{ field(class_='form-control') }}
@@ -18,8 +19,10 @@
         {% endfor %}
         {% endif %}
     </div>
+    </div>
 
     {% if user_manager.USER_ENABLE_EMAIL and user_manager.USER_ENABLE_USERNAME %}
+    <div class="field_top_padding">
     <div class="form-group {% if field.errors %}has-error{% endif %}">
         <div>
             <div class="col-xs-6">
@@ -28,7 +31,9 @@
             <input class="form-control" id="email" name="email" required="" type="text" value="">
         </div>
     </div>
+    </div>
     {% endif %}
+    <div class="field_top_padding">
     <div class="form-group {% if field.errors %}has-error{% endif %}">
         <div>
             <div class="col-xs-6">
@@ -37,9 +42,11 @@
             <input class="form-control" id="password" name="password" required="" type="password" value="">
         </div>
     </div>
+    </div>
 
 
     {% if user_manager.USER_REQUIRE_RETYPE_PASSWORD %}
+    <div class="field_top_padding">
     <div class="form-group {% if field.errors %}has-error{% endif %}">
         <div>
             <div class="col-xs-6">
@@ -47,6 +54,7 @@
             </div>
             <input class="form-control" id="retype_password" name="retype_password" type="password" value="">
         </div>
+    </div>
     </div>
     {% endif %}
 

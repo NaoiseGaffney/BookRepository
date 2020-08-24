@@ -14,14 +14,14 @@
 
 <form method="POST" class="form">
     {{ form.hidden_tag() }}
-        <div class="button_top_padding">
+        <div class="field_top_padding">
             <div class="form-group">
                 <label for="first_name" class="control-label active">First Name</label>
                 <input class="form-control" id="first_name" name="first_name" required="" type="text"
                     value="{{current_user.first_name}}">
             </div>
         </div>
-        <div class="button_top_padding">
+        <div class="field_top_padding">
             <div class="form-group">
                 <label for="last_name" class="control-label active">Last Name</label>
                 <input class="form-control" id="last_name" name="last_name" required="" type="text"

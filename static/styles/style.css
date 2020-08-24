@@ -164,8 +164,8 @@ label {
     margin-bottom: 1rem;
 }
 
-/* "Breathing space between the submit/register/login buttons and the forms */
-.button_top_padding {
+/* "Breathing space between the submit/register/login buttons, the fields and the forms */
+.button_top_padding, .field_top_padding {
     padding-top: 1rem;
 }
 

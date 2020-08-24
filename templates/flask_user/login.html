@@ -9,6 +9,7 @@
 
     {# Username or Email field #}
     {% set field = form.username if user_manager.USER_ENABLE_USERNAME else form.email %}
+    <div class="field_top_padding">
     <div class="form-group {% if field.errors %}has-error{% endif %}">
         <label for="{{ field.id }}" class="control-label">{{ field.label.text }}</label>
         {{ field(class_='form-control') }}
@@ -17,10 +18,12 @@
         <p class="help-block">{{ e }}</p>
         {% endfor %}
         {% endif %}
+    </div>
     </div>
 
     {# Password field #}
     {% set field = form.password %}
+    <div class="field_top_padding">
     <div class="form-group {% if field.errors %}has-error{% endif %}">
         <label for="{{ field.id }}" class="control-label">{{ field.label.text }}</label>
         {{ field(class_='form-control') }}
@@ -30,13 +33,15 @@
         {% endfor %}
         {% endif %}
     </div>
+    </div>
 
     {# Remember me #}
     {% if user_manager.USER_ENABLE_REMEMBER_ME %}
+    <div class="field_top_padding">
         <label id="remember_me_label">Remember Me&nbsp;
         <input id="remember_me" name="remember_me" type="checkbox" /><span></span>
         </label>
-        
+        </div>
     {% endif %}
 
     <div class="button_top_padding">
