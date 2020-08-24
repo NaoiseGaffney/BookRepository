@@ -2,12 +2,14 @@
 
 {% block content %}
 {% from "flask_user/_macros.html" import render_field, render_submit_field %}
-<h6><a href="#">{%trans%}Invite User{%endtrans%}</a></h6>
+<h6><a href="#">Invite User</a></h6>
 
 <form action="" method="POST" class="form" role="form">
     {{ form.hidden_tag() }}
+    <div class="field_top_padding">
     {{ render_field(form.email, tabindex=10) }}
     {{ render_submit_field(form.submit, tabindex=90) }}
+    </div>
 </form>
 
 {% endblock %}
