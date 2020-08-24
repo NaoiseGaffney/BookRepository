@@ -10,18 +10,7 @@
     {# Username or Email field #}
     {% set field = form.username if user_manager.USER_ENABLE_USERNAME else form.email %}
     <div class="form-group {% if field.errors %}has-error{% endif %}">
-        {# Label on left, "New here? Register." on right #}
-        <div class="row">
-            <div class="col-xs-6">
-                <label for="{{ field.id }}" class="control-label">{{ field.label.text }}</label>
-            </div>
-            <div class="col-xs-6 text-right">
-                {% if user_manager.USER_ENABLE_REGISTER and not user_manager.USER_REQUIRE_INVITATION %}
-                <a href="{{ url_for('user.register') }}">
-                    {%trans%}New here? Register.{%endtrans%}</a>
-                {% endif %}
-            </div>
-        </div>
+        <label for="{{ field.id }}" class="control-label">{{ field.label.text }}</label>
         {{ field(class_='form-control') }}
         {% if field.errors %}
         {% for e in field.errors %}
@@ -33,18 +22,7 @@
     {# Password field #}
     {% set field = form.password %}
     <div class="form-group {% if field.errors %}has-error{% endif %}">
-        {# Label on left, "Forgot your Password?" on right #}
-        <div class="row">
-            <div class="col-xs-6">
-                    <label for="{{ field.id }}" class="control-label">{{ field.label.text }}</label>
-            </div>
-            <div class="col-xs-6 text-right">
-                {% if user_manager.USER_ENABLE_FORGOT_PASSWORD %}
-                <a href="{{ url_for('user.forgot_password') }}">
-                    {%trans%}Forgot your Password?{%endtrans%}</a>
-                {% endif %}
-            </div>
-        </div>
+        <label for="{{ field.id }}" class="control-label">{{ field.label.text }}</label>
         {{ field(class_='form-control') }}
         {% if field.errors %}
         {% for e in field.errors %}
@@ -67,5 +45,11 @@
             </button>
     </div>
 </form>
-
+<br>
+    {% if user_manager.USER_ENABLE_REGISTER and not user_manager.USER_REQUIRE_INVITATION %}
+    <p><a href="{{ url_for('user.register') }}">{%trans%}New here? Register.{%endtrans%}</a></p>
+    {% endif %}
+    {% if user_manager.USER_ENABLE_FORGOT_PASSWORD %}
+    <p><a href="{{ url_for('user.forgot_password') }}">{%trans%}Forgot your Password?{%endtrans%}</a></p>
+    {% endif %}
 {% endblock %}

@@ -10,18 +10,7 @@
     {# Username or Email #}
     {% set field = form.username if user_manager.USER_ENABLE_USERNAME else form.email %}
     <div class="form-group {% if field.errors %}has-error{% endif %}">
-        {# Label on left, "Already registered? Sign in." on right #}
-        <div class="row">
-            <div class="col-xs-6">
-                <label for="{{ field.id }}" class="control-label">{{ field.label.text }}</label>
-            </div>
-            <div class="col-xs-6 text-right">
-                {% if user_manager.USER_ENABLE_REGISTER %}
-                <a href="{{ url_for('user.login') }}">
-                    {%trans%}Already registered? Sign in.{%endtrans%}</a>
-                {% endif %}
-            </div>
-        </div>
+        <label for="{{ field.id }}" class="control-label">{{ field.label.text }}</label>
         {{ field(class_='form-control') }}
         {% if field.errors %}
         {% for e in field.errors %}
@@ -67,5 +56,8 @@
         </button>
     </div>
 </form>
-
+<br>
+    {% if user_manager.USER_ENABLE_REGISTER %}
+    <p><a href="{{ url_for('user.login') }}">{%trans%}Already registered? Sign in.{%endtrans%}</a></p>
+    {% endif %}
 {% endblock %}
