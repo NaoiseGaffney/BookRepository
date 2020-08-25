@@ -299,6 +299,7 @@ def update_book(book_id):
 
 @app.route("/delete_book/<book_id>")
 @login_required
+@app.errorhandler(CSRFError)
 def delete_book(book_id):
     # The "D" in CRUD, deleting the book based on 'id' after delete modal
     # confirmation.
