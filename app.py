@@ -11,7 +11,7 @@ import datetime
 from datetime import timedelta
 import requests
 
-if os.environ.get("PRODUCTION") != "ON":
+if "DYNO" not in os.environ:
     from flask_debugtoolbar import DebugToolbarExtension
 
 from config import ConfigClass
@@ -29,7 +29,7 @@ app.config.from_object(__name__ + ".ConfigClass")
 csrf = CSRFProtect(app)
 csrf.init_app(app)
 
-if os.environ.get("PRODUCTION") != "ON":
+if "DYNO" not in os.environ:
     app.debug = True
 
 
@@ -56,7 +56,7 @@ db = MongoEngine(app)
 app.session_interface = MongoEngineSessionInterface(db)
 
 # Initiate the Flask Debug Toolbar Extension
-if os.environ.get("PRODUCTION") != "ON":
+if "DYNO" not in os.environ:
     toolbar = DebugToolbarExtension(app)
 
 
