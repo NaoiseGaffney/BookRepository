@@ -311,9 +311,14 @@ def delete_book(book_id):
         except Exception:
             flash(f"The book {book.title} was NOT deleted!", "danger")
             app.logger.warning(f"{current_user.username} did not delete the book {book.title} with the id {book.id}: [WARNING] (members.html).")
+    elif User.is_authenticated == False:
+        app.logger.critical("Unauthenticated user, please stop 'acting the maggot', trying to delete a book not belonging to you! [WARNING].")
     else:
-        flash(f"{current_user.username}: Please stop 'acting the maggot', trying to delete a book not belonging to you! The Librarian is on to you!","danger")
-        app.logger.critical(f"{current_user.username}, please stop 'acting the maggot', trying to delete a book not belonging to you! [WARNING] (members.html).")
+        try:
+            flash(f"{current_user.username}: Please stop 'acting the maggot', trying to delete a book not belonging to you! The Librarian is on to you!","danger")
+            app.logger.critical(f"{current_user.username}, please stop 'acting the maggot', trying to delete a book not belonging to you! [WARNING] (members.html).")
+        except ReferenceError:
+            pass
     return redirect(url_for("member_page"))
 
 
