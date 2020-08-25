@@ -2,7 +2,11 @@
 
 {% block content %}
 {% from "flask_user/_macros.html" import render_field, render_submit_field %}
-<h6><a href="{{ url_for('home_page')}}">Home</a>&nbsp; > &nbsp;<a href="{{ url_for('user.register') }}">Register</a>&nbsp;<i class="material-icons prefix tooltipped blue-text text-darken-4" data-position="bottom" data-tooltip="<p class='left-align'>Please enter your username (Username) using 250 characters or less. Letters, digits and @ . + - _ only.</p><br><p class='left-align'>Please enter your e-mail address (Email), for example 'name@domain.com'.</p><br><p class='left-align'>Please enter a password (Password) longer than 8 characters, using a mixture of numbers and letters, and ideally one or more special characters.</p><br><p class='left-align'>Password confirmation: Please enter the same password (Retype Password) again for verification.</p>">help</i></h6>
+<h6><a href="{{ url_for('home_page')}}">Home</a>&nbsp; > &nbsp;<a
+        href="{{ url_for('user.register') }}">Register</a>&nbsp;<i
+        class="material-icons prefix tooltipped blue-text text-darken-4" data-position="bottom"
+        data-tooltip="<p class='left-align'>Please enter your username (Username) using 250 characters or less. Letters, digits and @ . + - _ only.</p><br><p class='left-align'>Please enter your email address (Email), for example 'name@domain.com'.</p><br><p class='left-align'>Please enter a password (Password) longer than 8 characters, using a mixture of numbers and letters, and ideally one or more special characters.</p><br><p class='left-align'>Password confirmation: Please enter the same password (Retype Password) again for verification.</p>">help</i>
+</h6>
 
 <form method="POST" class="form">
     {{ form.hidden_tag() }}
@@ -10,51 +14,63 @@
     {# Username or Email #}
     {% set field = form.username if user_manager.USER_ENABLE_USERNAME else form.email %}
     <div class="field_top_padding">
-    <div class="form-group {% if field.errors %}has-error{% endif %}">
-        <label for="{{ field.id }}" class="control-label">{{ field.label.text }}</label>
-        {{ field(class_='form-control') }}
-        {% if field.errors %}
-        {% for e in field.errors %}
-        <p class="help-block">{{ e }}</p>
-        {% endfor %}
-        {% endif %}
-    </div>
+        <div class="form-group {% if field.errors %}has-error{% endif %}">
+            <div class="row">
+                <div class="input-field col s12">
+                    <i class="material-icons prefix tooltipped" data-position="bottom"
+                        data-tooltip="Please enter your username.">person</i>
+                    {{ field(class_='form-control') }}
+                    <label for="{{ field.id }}" class="control-label">{{ field.label.text }}</label>
+                    {% if field.errors %}
+                    {% for e in field.errors %}
+                    <p class="help-block">{{ e }}</p>
+                    {% endfor %}
+                    {% endif %}
+                </div>
+            </div>
+        </div>
     </div>
 
     {% if user_manager.USER_ENABLE_EMAIL and user_manager.USER_ENABLE_USERNAME %}
     <div class="field_top_padding">
-    <div class="form-group {% if field.errors %}has-error{% endif %}">
-        <div>
-            <div class="col-xs-6">
-                <label for="email" class="control-label">Email</label>
+        <div class="form-group {% if field.errors %}has-error{% endif %}">
+            <div class="row">
+                <div class="input-field col s12">
+                    <i class="material-icons prefix tooltipped" data-position="bottom"
+                        data-tooltip="Please enter your email address.">email</i>
+                    <input class="form-control" id="email" name="email" required="" type="text" value="">
+                    <label for="email" class="control-label">Email</label>
+                </div>
             </div>
-            <input class="form-control" id="email" name="email" required="" type="text" value="">
         </div>
-    </div>
     </div>
     {% endif %}
     <div class="field_top_padding">
-    <div class="form-group {% if field.errors %}has-error{% endif %}">
-        <div>
-            <div class="col-xs-6">
-                <label for="password" class="control-label">Password</label>
+        <div class="form-group {% if field.errors %}has-error{% endif %}">
+            <div class="row">
+                <div class="input-field col s12">
+                    <i class="material-icons prefix tooltipped" data-position="bottom"
+                        data-tooltip="Please enter your password.">vpn_key</i>
+                    <input class="form-control" id="password" name="password" required="" type="password" value="">
+                    <label for="password" class="control-label">Password</label>
+                </div>
             </div>
-            <input class="form-control" id="password" name="password" required="" type="password" value="">
         </div>
-    </div>
     </div>
 
 
     {% if user_manager.USER_REQUIRE_RETYPE_PASSWORD %}
     <div class="field_top_padding">
-    <div class="form-group {% if field.errors %}has-error{% endif %}">
-        <div>
-            <div class="col-xs-6">
-                <label for="retype_password" class="control-label">Retype Password</label>
+        <div class="form-group {% if field.errors %}has-error{% endif %}">
+            <div class="row">
+                <div class="input-field col s12">
+                    <i class="material-icons prefix tooltipped" data-position="bottom"
+                        data-tooltip="Please enter your password again.">vpn_key</i>
+                    <input class="form-control" id="retype_password" name="retype_password" type="password" value="">
+                    <label for="retype_password" class="control-label">Retype Password</label>
+                </div>
             </div>
-            <input class="form-control" id="retype_password" name="retype_password" type="password" value="">
         </div>
-    </div>
     </div>
     {% endif %}
 
@@ -65,7 +81,7 @@
     </div>
 </form>
 <br>
-    {% if user_manager.USER_ENABLE_REGISTER %}
-    <p><a href="{{ url_for('user.login') }}">Already registered? Sign in.</a></p>
-    {% endif %}
+{% if user_manager.USER_ENABLE_REGISTER %}
+<p><a href="{{ url_for('user.login') }}">Already registered? Sign in.</a></p>
+{% endif %}
 {% endblock %}
