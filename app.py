@@ -299,18 +299,21 @@ def update_book(book_id):
 
 @app.route("/delete_book/<book_id>")
 @login_required
-@app.errorhandler(CSRFError)
 def delete_book(book_id):
     # The "D" in CRUD, deleting the book based on 'id' after delete modal
     # confirmation.
     book = Book.objects.get(id=book_id)
-    try:
-        book.delete()
-        flash(f"The book {book.title} is deleted!", "success")
-        app.logger.info(f"{current_user.username} deleted the book {book.title} with the id {book.id}: [SUCCESS] (members.html).")
-    except Exception:
-        flash(f"The book {book.title} was NOT deleted!", "danger")
-        app.logger.warning(f"{current_user.username} did not delete the book {book.title} with the id {book.id}: [WARNING] (members.html).")
+    if book.user == current_user.username:
+        try:
+            book.delete()
+            flash(f"The book {book.title} is deleted!", "success")
+            app.logger.info(f"{current_user.username} deleted the book {book.title} with the id {book.id}: [SUCCESS] (members.html).")
+        except Exception:
+            flash(f"The book {book.title} was NOT deleted!", "danger")
+            app.logger.warning(f"{current_user.username} did not delete the book {book.title} with the id {book.id}: [WARNING] (members.html).")
+    else:
+        flash(f"{current_user.username}: Please stop 'acting the maggot', trying to delete a book not belonging to you! The Librarian is on to you!","danger")
+        app.logger.critical(f"{current_user.username}, please stop 'acting the maggot', trying to delete a book not belonging to you! [WARNING] (members.html).")
     return redirect(url_for("member_page"))
 
 
