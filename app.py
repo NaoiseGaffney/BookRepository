@@ -26,7 +26,7 @@ app = Flask(__name__, static_folder="static", template_folder="templates")
 app.config.from_object(__name__ + ".ConfigClass")
 csrf = CSRFProtect(app)
 csrf.init_app(app)
-# app.debug = True
+app.debug = True
 
 
 # Initialise rotating file logging in Development, not on Heroku
@@ -599,7 +599,7 @@ def load_books():
         return redirect(url_for("admin_dashboard"))
 
 
-# --- // Error Handlers for 400 CSRF Error (Bad Request), 404 Page Not Found, and 500 Internal Server Error.
+# --- // Error Handlers for 400 CSRF Error (Bad Request), 404 Page Not Found, 405 Method Not Allowed, and 500 Internal Server Error.
 @app.errorhandler(CSRFError)
 def handle_csrf_error(error):
     excuse = "Apologies, the Librarian Security Detail have omitted to secure this page! We're calling them back from their lunch-break to fix this. Please click on the pink pulsating buoy to go to the Home Page (registering or signing in) or Member's Page (signed in), or click on Sign Out below."
@@ -620,6 +620,17 @@ def not_found(error):
         app.logger.critical(f"Unauthenticated user has encountered a 404 Page Not Found Error, {error}: [FAILURE].")
     finally:
         return render_template("oops.html", error=error, excuse=excuse, error_type="Client: 404 - Page Not Found")
+
+
+@app.errorhandler(405)
+def not_found(error):
+    excuse = "Apologies, our Librarians won't allow you to do this! Please click on the pink pulsating buoy to go to the Home Page (registering or signing in) or Member's Page (signed in), or click on Sign Out below."
+    try:
+        app.logger.critical(f"{current_user.username} has encountered a 405 Method Not Allowed Error, {error}: [FAILURE].")
+    except AttributeError:
+        app.logger.critical(f"Unauthenticated user has encountered a 405 Method Not Allowed Error, {error}: [FAILURE].")
+    finally:
+        return render_template("oops.html", error=error, excuse=excuse, error_type="Client: 405 - Method Not Allowed")
 
 
 @app.errorhandler(500)
