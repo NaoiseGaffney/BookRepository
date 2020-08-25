@@ -10,7 +10,9 @@ from flask_wtf.csrf import CSRFProtect, CSRFError
 import datetime
 from datetime import timedelta
 import requests
-from flask_debugtoolbar import DebugToolbarExtension
+
+if os.environ.get("PRODUCTION") != "ON":
+    from flask_debugtoolbar import DebugToolbarExtension
 
 from config import ConfigClass
 
@@ -26,7 +28,9 @@ app = Flask(__name__, static_folder="static", template_folder="templates")
 app.config.from_object(__name__ + ".ConfigClass")
 csrf = CSRFProtect(app)
 csrf.init_app(app)
-# app.debug = True
+
+if os.environ.get("PRODUCTION") != "ON":
+    app.debug = True
 
 
 # Initialise rotating file logging in Development, not on Heroku
@@ -52,7 +56,8 @@ db = MongoEngine(app)
 app.session_interface = MongoEngineSessionInterface(db)
 
 # Initiate the Flask Debug Toolbar Extension
-toolbar = DebugToolbarExtension(app)
+if os.environ.get("PRODUCTION") != "ON":
+    toolbar = DebugToolbarExtension(app)
 
 
 # --- // Classes -> MongoDB Collections: User, Book, Genre.
