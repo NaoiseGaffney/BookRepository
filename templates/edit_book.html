@@ -15,6 +15,7 @@
 
     <div class="row">
         <form action="{{ url_for('update_book', book_id=book.id) }}" method="POST" class="col s12">
+            <input type="hidden" name="csrf_token" value="{{csrf_token()}}">
             <div class="row">
                 <div class="input-field col s12">
                     <i class="material-icons prefix tooltipped" data-position="right" data-tooltip="Please enter the title of the book.">title</i>
