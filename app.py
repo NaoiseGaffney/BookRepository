@@ -246,8 +246,16 @@ def edit_book(book_id):
     # Preparing for the "U" in CRUD, updating the book form fields.
     book = Book.objects.get(id=book_id)
     genre = Genre.objects()
-    app.logger.info(f"{current_user.username} is updating the book {book.title} with the id {book.id}: [INFO] - (edit_book.html).")
-    return render_template("edit_book.html", book=book, genre=genre)
+    if book.user == current_user.username:
+        app.logger.info(f"{current_user.username} is updating the book {book.title} with the id {book.id}: [INFO] - (edit_book.html).")
+        return render_template("edit_book.html", book=book, genre=genre)
+    else:
+        try:
+            flash(f"{current_user.username}: please stop 'acting the maggot', trying to update a book not belonging to you! The Librarian is on to you!", "danger")
+            app.logger.critical(f"{current_user.username}, please stop 'acting the maggot', trying to update a book not belonging to you! [WARNING] (edit_book.html).")
+        except ReferenceError:
+            pass
+        return redirect(url_for("member_page"))
 
 
 @app.route("/update_book/<book_id>", methods=["POST"])
@@ -315,7 +323,7 @@ def delete_book(book_id):
             app.logger.warning(f"{current_user.username} did not delete the book {book.title} with the id {book.id}: [WARNING] (members.html).")
     else:
         try:
-            flash(f"{current_user.username}: Please stop 'acting the maggot', trying to delete a book not belonging to you! The Librarian is on to you!","danger")
+            flash(f"{current_user.username}: please stop 'acting the maggot', trying to delete a book not belonging to you! The Librarian is on to you!","danger")
             app.logger.critical(f"{current_user.username}, please stop 'acting the maggot', trying to delete a book not belonging to you! [WARNING] (members.html).")
         except ReferenceError:
             pass
