@@ -6,6 +6,7 @@ from flask import Flask, render_template_string, render_template, redirect, url_
 from flask_mongoengine import MongoEngine, MongoEngineSession, MongoEngineSessionInterface
 from flask_user import login_required, UserManager, UserMixin, current_user, roles_required
 from flask_login import logout_user
+from flask_wtf.csrf import CSRFProtect, CSRFError
 import datetime
 from datetime import timedelta
 import requests
@@ -23,6 +24,8 @@ load_dotenv(dotenv_path=env_path)
 # Setup Flask and load app.config
 app = Flask(__name__, static_folder="static", template_folder="templates")
 app.config.from_object(__name__ + ".ConfigClass")
+csrf = CSRFProtect(app)
+csrf.init_app(app)
 # app.debug = True
 
 
@@ -185,6 +188,7 @@ def member_page(page=1):
 
 @app.route("/add_book")
 @login_required
+@app.errorhandler(CSRFError)
 def add_book():
     # Preparing for the "C" in CRUD, filling in the add book form.
     app.logger.info(f"{current_user.username} is adding a book: [INFO] - (add_book.html).")
@@ -194,6 +198,7 @@ def add_book():
 
 @app.route("/save_book", methods=["POST"])
 @login_required
+@app.errorhandler(CSRFError)
 def save_book():
     # The "C" in CRUD, save the filled in add book form.
     book = Book(
@@ -236,16 +241,26 @@ def save_book():
 
 @app.route("/edit_book/<book_id>")
 @login_required
+@app.errorhandler(CSRFError)
 def edit_book(book_id):
     # Preparing for the "U" in CRUD, updating the book form fields.
     book = Book.objects.get(id=book_id)
     genre = Genre.objects()
-    app.logger.info(f"{current_user.username} is updating the book {book.title} with the id {book.id}: [INFO] - (edit_book.html).")
-    return render_template("edit_book.html", book=book, genre=genre)
+    if book.user == current_user.username:
+        app.logger.info(f"{current_user.username} is updating the book {book.title} with the id {book.id}: [INFO] - (edit_book.html).")
+        return render_template("edit_book.html", book=book, genre=genre)
+    else:
+        try:
+            flash(f"{current_user.username}: please stop 'acting the maggot', trying to update a book not belonging to you! The Librarian is on to you!", "danger")
+            app.logger.critical(f"{current_user.username}, please stop 'acting the maggot', trying to update a book not belonging to you! [WARNING] (edit_book.html).")
+        except ReferenceError:
+            pass
+        return redirect(url_for("member_page"))
 
 
 @app.route("/update_book/<book_id>", methods=["POST"])
 @login_required
+@app.errorhandler(CSRFError)
 def update_book(book_id):
     # The "U" in CRUD, saving the changes made to the update book form fields.
     book = Book.objects.get(id=book_id)
@@ -296,18 +311,28 @@ def delete_book(book_id):
     # The "D" in CRUD, deleting the book based on 'id' after delete modal
     # confirmation.
     book = Book.objects.get(id=book_id)
-    try:
-        book.delete()
-        flash(f"The book {book.title} is deleted!", "success")
-        app.logger.info(f"{current_user.username} deleted the book {book.title} with the id {book.id}: [SUCCESS] (members.html).")
-    except Exception:
-        flash(f"The book {book.title} was NOT deleted!", "danger")
-        app.logger.warning(f"{current_user.username} did not delete the book {book.title} with the id {book.id}: [WARNING] (members.html).")
+    if book.user == current_user.username:
+        try:
+            book.delete()
+            flash(f"The book {book.title} is deleted!", "success")
+            app.logger.info(f"{current_user.username} deleted the book {book.title} with the id {book.id}: [SUCCESS] (members.html).")
+        except ReferenceError:
+            pass
+        except Exception:
+            flash(f"The book {book.title} was NOT deleted!", "danger")
+            app.logger.warning(f"{current_user.username} did not delete the book {book.title} with the id {book.id}: [WARNING] (members.html).")
+    else:
+        try:
+            flash(f"{current_user.username}: please stop 'acting the maggot', trying to delete a book not belonging to you! The Librarian is on to you!", "danger")
+            app.logger.critical(f"{current_user.username}, please stop 'acting the maggot', trying to delete a book not belonging to you! [WARNING] (members.html).")
+        except ReferenceError:
+            pass
     return redirect(url_for("member_page"))
 
 
 @app.route("/search_book")
 @login_required
+@app.errorhandler(CSRFError)
 def search_book():
     # Preparing for the book search in Book Repository, filling in the search
     # book form.
@@ -318,6 +343,7 @@ def search_book():
 
 @app.route("/save_search", methods=["GET", "POST"])
 @login_required
+@app.errorhandler(CSRFError)
 def save_search():
     # Save the search book results in a session cookie, to use by
     # 'search_results' repeatedly to display the paginated search results.
@@ -349,6 +375,7 @@ def administration():
 @app.route("/search_results", methods=["GET", "POST"])
 @app.route("/search_results/<int:page>")
 @login_required
+@app.errorhandler(CSRFError)
 def search_results(page=1):
     # Book search using a combination of form fields saved in the session
     # cookie in 'save_search', and based on the values in some key fields
@@ -413,6 +440,7 @@ def search_results(page=1):
 
 @app.route("/delete_user")
 @login_required
+@app.errorhandler(CSRFError)
 def delete_user():
     # Delete user, user initiated, from edit_user_profile.html. "D" in CRUD.
     deleted_user = current_user.username
@@ -424,7 +452,7 @@ def delete_user():
         find_user_books.delete()
         find_user.delete()
         flash(f"We're sad to see you go {deleted_user}!", "success")
-        app.logger.info(f"{deleted_user} is has left the Book Repository: [SUCCESS] - (delete_user.html).")
+        app.logger.info(f"{deleted_user} has left the Book Repository: [SUCCESS] - (delete_user.html).")
     except:
         flash(f"Your account is still alive and active {find_user.username}!", "danger")
         app.logger.critical(f"{deleted_user} is still alive and active on the Book Repository: [FAILURE] - (delete_user.html).")
@@ -455,6 +483,7 @@ def admin_dashboard(page=1):
 
 @app.route("/update_user/<user_id>", methods=["POST"])
 @roles_required("Admin")
+@app.errorhandler(CSRFError)
 def update_user(user_id):
     # The "U" in CRUD, saving the changes made to the update user modal form fields.
     user = User.objects.get(id=user_id)
@@ -500,6 +529,7 @@ def update_user(user_id):
 
 @app.route("/admin_delete_user/<user_id>", methods=["GET"])
 @roles_required("Admin")
+@app.errorhandler(CSRFError)
 def admin_delete_user(user_id):
     # The "D" in CRUD, deleting the user based on 'id' after delete modal
     # with NO confirmation.
@@ -576,17 +606,49 @@ def load_books():
         return redirect(url_for("admin_dashboard"))
 
 
-# --- // Error Handlers for 404 page not found, and 500 internal error.
+# --- // Error Handlers for 400 CSRF Error (Bad Request), 404 Page Not Found, 405 Method Not Allowed, and 500 Internal Server Error.
+@app.errorhandler(CSRFError)
+def handle_csrf_error(error):
+    excuse = "Apologies, the Librarian Security Detail have omitted to secure this page! We're calling them back from their lunch-break to fix this. Please click on the pink pulsating buoy to go to the Home Page (registering or signing in) or Member's Page (signed in), or click on Sign Out below."
+    try:
+        app.logger.critical(f"{current_user.username} has encountered a 400 CSRF Error (Bad Request), {error.description}: [FAILURE].")
+    except AttributeError:
+        app.logger.critical(f"Unauthenticated user has encountered a 400 CSRF Error (Bad Request), {error.description}: [FAILURE].")
+    finally:
+        return render_template("oops.html", error=error.description, excuse=excuse, error_type="Client: 400 - Bad Request")
+
+
 @app.errorhandler(404)
 def not_found(error):
-    excuse = "Apologies, we can't seem to find the Book Repository database or worse, we've lost access to the Internet. Please click on the pink pulsating buoy to go to the Home Page (registering or signing in) or Member's Page (signed in), or click on Sign Out below."
-    return render_template("oops.html", error=error, excuse=excuse, error_type="Client: 404 - Bad Request")
+    excuse = "Apologies, our Librarians are lost in the Library or have lost the book you're looking for! Please click on the pink pulsating buoy to go to the Home Page (registering or signing in) or Member's Page (signed in), or click on Sign Out below."
+    try:
+        app.logger.critical(f"{current_user.username} has encountered a 404 Page Not Found Error, {error}: [FAILURE].")
+    except AttributeError:
+        app.logger.critical(f"Unauthenticated user has encountered a 404 Page Not Found Error, {error}: [FAILURE].")
+    finally:
+        return render_template("oops.html", error=error, excuse=excuse, error_type="Client: 404 - Page Not Found")
+
+
+@app.errorhandler(405)
+def not_found(error):
+    excuse = "Apologies, our Librarians won't allow you to do this! Please click on the pink pulsating buoy to go to the Home Page (registering or signing in) or Member's Page (signed in), or click on Sign Out below."
+    try:
+        app.logger.critical(f"{current_user.username} has encountered a 405 Method Not Allowed Error, {error}: [FAILURE].")
+    except AttributeError:
+        app.logger.critical(f"Unauthenticated user has encountered a 405 Method Not Allowed Error, {error}: [FAILURE].")
+    finally:
+        return render_template("oops.html", error=error, excuse=excuse, error_type="Client: 405 - Method Not Allowed")
 
 
 @app.errorhandler(500)
 def internal_error(error):
-    excuse = "Apologies, something serious occurred and the Leprechauns are working on resolving the issue. It's most likely Google Mail (GMail) acting up...again. Please click on the pink pulsating buoy to go to the Home Page (registering or signing in) or Member's Page (signed in), or click on Sign Out below."
-    return render_template("oops.html", error=error, excuse=excuse, error_type="Server: 500 - Internal Server Error")
+    excuse = "Apologies, something serious occurred and the Librarians are working on resolving the issue! This section is cordoned off for now. Please click on the pink pulsating buoy to go to the Home Page (registering or signing in) or Member's Page (signed in), or click on Sign Out below."
+    try:
+        app.logger.critical(f"{current_user.username} has encountered a 500 Internal Server Error, {error}: [FAILURE].")
+    except AttributeError:
+        app.logger.critical(f"Unauthenticated user has encountered a 500 Internal Server Error, {error}: [FAILURE].")
+    finally:
+        return render_template("oops.html", error=error, excuse=excuse, error_type="Server: 500 - Internal Server Error")
 
 
 # export PRODUCTION=ON | OFF in TEST

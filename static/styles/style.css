@@ -149,8 +149,9 @@ footer .right-align {
 
 /* Remember Me Label */
 #remember_me_label {
-    font-size: 0.8rem;
+    font-size: 1rem;
     color: #000000;
+    margin-left: 15px;
 }
 
 label {
