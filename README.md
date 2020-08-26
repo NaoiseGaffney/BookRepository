@@ -11,8 +11,8 @@ An Admin Dashboard provides user management, loading of genres and books, as wel
 
 ![Book Repository Landing Page - Desktop](https://github.com/NaoiseGaffney/BookRepository/blob/development/documentation/Book%20Repository%20Landing%20Page%20-%20Desktop.png)
 
-![Book Repository Landing Page - Mobile](https://github.com/NaoiseGaffney/BookRepository/blob/development/documentation/Book%20Repository%20Landing%20Page%20-%20Mobile.jpg)
-![Book Repository Landing Page - Mobile Menu](https://github.com/NaoiseGaffney/BookRepository/blob/development/documentation/Book%20Repository%20Landing%20Page%20-%20Mobile%20Menu.jpg)
+![Book Repository Landing Page - Mobile](https://github.com/NaoiseGaffney/BookRepository/blob/development/documentation/Book%20Repository%20Landing%20Page%20-%20Mobile.jpg?s=200)
+![Book Repository Landing Page - Mobile Menu](https://github.com/NaoiseGaffney/BookRepository/blob/development/documentation/Book%20Repository%20Landing%20Page%20-%20Mobile%20Menu.jpg?s=200)
 
 ## Business
 ### External User's Goals
