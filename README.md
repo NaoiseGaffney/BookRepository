@@ -9,10 +9,10 @@ The Book Repository provides a private and public search function too, using any
 
 An Admin Dashboard provides user management, loading of genres and books, as well as Book Repository statistics.
 
-![Book Repository Landing Page - Desktop](https://github.com/NaoiseGaffney/BookRepository/blob/development/documentation/Book%20Repository%20Landing%20Page%20-%20Desktop.png)
+![Book Repository - Member's Page](https://github.com/NaoiseGaffney/BookRepository/blob/development/documentation/Book%20Repository%20-%20Member%20Page.png)
 
-![Book Repository Landing Page - Mobile](https://github.com/NaoiseGaffney/BookRepository/blob/development/documentation/Book%20Repository%20Landing%20Page%20-%20Mobile.jpg)
-![Book Repository Landing Page - Mobile Menu](https://github.com/NaoiseGaffney/BookRepository/blob/development/documentation/Book%20Repository%20Landing%20Page%20-%20Mobile%20Menu.jpg)
+![Book Repository - Landing Page - Mobile](https://github.com/NaoiseGaffney/BookRepository/blob/development/documentation/Book%20Repository%20-%20Landing%20Page%20-%20Mobile.jpg)
+![Book Repository - Landing Page - Mobile Menu](https://github.com/NaoiseGaffney/BookRepository/blob/development/documentation/Book%20Repository%20-%20Landing%20Page%20Menu%20-%20Mobile.jpg)
 
 ## Business
 ### External User's Goals
