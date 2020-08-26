@@ -1,205 +1,83 @@
 # Book Repository
+[Book Repository on Heroku](https://book-repository-virtual.herokuapp.com/)
 
-![Initial Thoughts for the Book Repository](https://github.com/NaoiseGaffney/BookRepository/blob/development/documentation/Initial%20thoughts%20for%20Book%20Repository.jpg)
+"A safe virtual repository for books, a digital version of your library that is searchable, and where you can share your book notes and thoughts with like-minded readers." - Gaff
 
-Milestone Project 3: Data-Centric Development with Python, Flask, JavaScript, CSS, HTML, and MongoDB. Using several Python frameworks and the Google Books API. The Book Repository is a virtual library for the personal storage and sharing of books, sharing of thoughts about books read, via comments and votes, and all through a secure website.
+The Book Repository is a digital or virtual library to store information about your books, such as title, author, year published, ISBN, genre, rating, description, and your reflection and comments.
 
-## Functions
+The Book Repository provides a private and public search function too, using any combination of title, author, ISBN, genre, and rating.
 
-* Authentication (Py) - optional feature
-* Registration (Py) and (Js) {EmailJS} - optional feature
-* Password Reset/Communication: (Js) {EmailJS}
-* Delete User :-( --> Should all comments, votes and books be deleted too? No, though tag user as deleted in comments. Books?
-* CRUD (Py) {[(MongoDB)]}
-	* Create using Google Book API (better choice) and use [ISBN Search](https://isbnsearch.org/) as a backup (?) and `from difflib import get_close_matches`
-	* Search for book, return list of books in DB, as well as Google Books API. Select relevant book. Use `get_close_matches` on existing books (Tery => Terry).
-* Upload Image?
-	* Profile?
-	* Book, if not exist in ISBN Search?
-* Dashboard/Stats (Py) {[(MongoDB)]} - optional feature
-* Votes/Comments (Py) {[(MongoDB)]} - optional feature
-	* Notification badge on comments?
-* Affiliate Link to Amazon (Py) - optional feature
-	* Webscraping `import requests` and `from bs4 import BeautifulSoup`
-* Stats: # of Users, # of Books/User(s), # of. Users/Book, # of Comments/User, # of Comments/Book,  # of Comments/Site, # of Up or Down or "Meh" Votes/Book, Averages & Means & Min & Max
-* Heroku Deployment using gunicorn instead of WSGI
-* Documentation: README.md, User Experience and Design.md, Testing.md (Selenium IDE + ?), Code Walkthrough.md, User Journey Map
-* Git Versioning: Dev/Test/Prod/Doc
-* Layout, Structure, and Design: </> HTML 5, .css{} CSS 3, (Js), (Py)
+An Admin Dashboard provides user management, loading of genres and books, as well as Book Repository statistics.
 
-## Colour Scheme
+![Book Repository Landing Page - Desktop](https://github.com/NaoiseGaffney/BookRepository/blob/development/documentation/Book%20Repository%20Landing%20Page%20-%20Desktop.png)
 
-[Colour Scheme on Coolors] (<https://coolors.co/64ffda-26a69a-ff4081-eceff1-37474f>)
+![Book Repository Landing Page - Mobile](https://github.com/NaoiseGaffney/BookRepository/blob/development/documentation/Book%20Repository%20Landing%20Page%20-%20Mobile.jpg)
 
-* Aquamarine #64FFDA => Materialize: teal accent-2
-* Persian Green #26A69A => Materialize: teal lighten-1
-* French Rose #FF4081 => Materialize: pink accent-2
-* Cultured #ECEFF1 => Materialize: blue-grey lighten-5
-* Charcoal #37474F => Materialize: blue-grey darken-3
+![Book Repository Landing Page - Mobile Menu](https://github.com/NaoiseGaffney/BookRepository/blob/development/documentation/Book%20Repository%20Landing%20Page%20-%20Mobile%20Menu.jpg)
 
-## Features
+## Business
+### External User's Goals
 
-* Open Book: Registration or Login or Password Reset.
-* Left Page:
-	* View list of own books (library).
-	* Search for books, own, site, and Google Books.
-* Right Page:
-	* Book Details, front cover, title, authour, ISBN, description.
-	* Comments and voting, read/not read yet (interested)
-* Statistics Page Left: personal statistics.
-* Statistics Page Right: site statistics.
+### Site Owner's Goals
 
-## Use Cases
+### Features
 
-* Registration --> E-mail confirmation link --> Login --> CRUD --> Stats
-* Login --> CRUD --> Stats
-* Password Reset --> E-mail reset link --> Login --> CRUD --> Stats
-* Delete User --> E-mail delete link for confirmation --> Delete :-(
+#### Future Features
 
-## Technologies
-* </> HTML, .css{} CSS, (Js), (Py), {[(MongoDB)]}
-* {...} API's and Frameworks
-	* (Js):
-		* EmailJS -> Password Reset & Information
-		* GeoLocation -> Country (City)
-	* (Py):
-		* numpy
-		* pandas
-		* bokeh
-		* bs4
-		* Google Books
-		* OpenMap
-		* gunicorn
-		* Flask
-		* ISBN Search (Webscraping)
-	* .css{}
-		* Materialize 1.0 (to materialize or not to materialize, that is the question...)
+## Processess
 
-## Directory Structure (Virtual Environment)
+### User Experience
+User Stories -> Use Cases -> Tasks -> Tests
 
-* *.py
-* README.md
-* assets/
-	* images/
-		* ...
-	* scripts/
-		* sendmail.js
-		* book.js
-		* ...js
-	* styles/
-		* style.css
-		* ...css
-* documentation/
-	* ...md
-	* ...
-* templates/
-	* ...html
-* DEV/...one folder per code snippet (in .gitignore)
+## Solution
+### Features
+### Future Features
 
-## Database Structure
-* Users
-	* Name
-	* Password (hashed)
-	* E-Mail
-	* Country (GeoLocation) -> Country
-	* Comments {dict} -> Book Comments
-	* Votes {dict} -> Book Votes
+### Design Decisions
 
-* Book
-	* Title
-	* Authour
-	* Year
-	* ISBN
-	* Users -> Users
-	* Comments -> Users
-	* Votes -> Users
+### Code
 
-* Comments
-	* Books
-	* Users
+## Technology
+### Code
 
-* Votes
-	* Books
-	* Users
+### Development and Staging Platforms and Environments
 
+### Documentation Tools
 
-* Country
-	* Country -> Users
+### Acknowledgements and Attributions of Used Features and Functions
 
-* Stats
-	* User(s)
-	* Book(s)
-	* Site
-		* Users
-		* Books
-		* Countries
-	* Country
-	* Comments
-	* Votes
+### General Knowledge and Hours of Reading
 
-	
-MongoDB Atlas: Project -> Database(s) -> Collection(s) -> Document(s) -> Field(s)
+## Testing
 
-## Deployment
-1. Code Institute gitpod-full-template
-2. BookRepository
-3. VS Code: https://github.com/NaoiseGaffney/BookRepository on DropBox
-4. bookrepository.py
-5. .env --> GOOGLE_API_KEY (Google Books API), MONGO_URI, MONGO_URI_BR
-6. .gitignore --> .env, .venv, /DEV
-7. Directory Structure: for DEV and Test (promoted to Production)
-8. Stage All Changes --> Commit All --> Push
-9. Google API Keys: during development, IP addresses, in production HTTP referrer
-10. Continuous Delivery: Development (DEV: local store only) --> Development (GitHub Pull) --> Staging (Test: GitHub --> Heroku) --> Production (Heroku)
-11. Heroku - create new app: Dashboard --> New --> Create new app --> App Name: virtual-book-repository, Region: Europe --> Create app --> Deployment method: GitHub --> BookRepository, Enable Automatic Deploys, Deploy Branch --> Settings: Reveal Config Vars => IP = 0.0.0.0, PORT = 5000, PRODUCTION = ON (disables debug, debug=False) --> Restart All Dynos (config vars to take effect) --> Deploy: Create new pipeline - vbookrepo-pipe, staging --> Create pipeline --> Connect GitHub Repository to Pipeline: BookRepository --> Create new review apps for new pull requests automatically (When enabled, every new pull request opened will create a Review app automatically and pull requests that are closed will be deleted.), Choose region: Europe --> Enable Review Apps --> Reveal Config Vars => IP = 0.0.0.0, PORT = 5000, PRODUCTION = ON (disables debug, debug=False), GOOGLE_API_KEY = ..., MONGO_URI = ..., MONGO_URI_BR = ...
-12. Create a new branch in VS Code: Shift-Command-P, Git: create branch. I can now switch between the two branches, 'master' (Staging) and 'review' (Development).
+### Manual BDD
 
-Code Institute gitpod-full-template: BookRepository => VS Code = development files, requirements.txt, .gitignore, Stage-Commit-Push => GitHub = BookRepository:master => Heroku = Create New App --> App Name: virtual-book-repository-stage, Choose a region: Europe, Create App --> Deploy - Deployment Method: GitHub (Connect to GitHub): NaoiseGaffney/BookRepository, Enable Automatic Deploys:master, Deploy Branch:master (no Vars set yet, will crash), Add this app to a pipeline: Create new pipeline, Choose a stage to add to this app:staging, Create pipeleine.
+### Automated BDD
 
-[Adding GitHub Pull Requests and Issues](https://marketplace.visualstudio.com/items?itemName=GitHub.vscode-pull-request-github)
+### Testing Notes
 
-## Odds and Ends
-Meta-tags in HTML to improve Google Searches. Add Favicon. Passwords and keys as environment variables. Colour-blindness: Sim Daltonism (using Orange and Blue).
+### Validation of HTML 5, CSS 3, JS and Python
 
-```
-python3 -m venv .venv
-source .venv/bin/activate
-.gitignore (.env .venv)
-pip install pip --upgrade
+## Continuous Delivery and Deployment
 
-pip3 install requests
-pip3 install python-dotenv
+## Credits
+![GaffCo Consulting Logo](https://github.com/NaoiseGaffney/Professional-Training-Development/blob/master/docs/GaffCo%20-%20Background.png)
 
-pip3 install dnspython
-pip3 install pymongo
-pip3 install gunicorn
-pip3 install flask
+GaffCo Consulting - [Naoise Gaffney: naoise.gaff.gaffney@gmail.com](mailto:naoise.gaff.gaffney@gmail.com)
 
-https://sites.google.com/a/chromium.org/chromedriver/downloads
-cp /Users/gaff/Downloads/chromedriver /usr/local/bin/.
-Run once and allow to run in Security Settings (System Preferences --> Security & Privacy --> Allow apps downloaded from:...)
-pip3 install -U selenium
+![Code Institute Logo](https://github.com/NaoiseGaffney/Professional-Training-Development/blob/master/docs/CodeInstituteLogo.png)
 
-pip3 install bs4 <-- may not be required as I'm not doing any Webscraping
+Code Institute Mentor - [GitHub: 5pence - Spencer Barriball](https://github.com/5pence)
 
-pip3 freeze --local > requirements.txt
-echo web: gunicorn bookrepository:app > Procfile
-```
+### Content
 
-### Google API
-No HTTP Referrer as the GOOGLE_API_KEY is stored in the .env file. I need to look at some form of authentication though.
+### Media
 
+### Acknowledgements
 
-## Testing - Automated
+The Diploma in Full Stack Development provides a great foundation of tools and technologies used to work as a professional developer. It's a case of being a Jack-of-All-Trades, and a Master of None (or Some). It's up to each developer to expand upon the knowledge and skills acquired during the course through additional self-study of elements covered as a part of the course as well as other frameworks, languages, tools, methodologies,  processes, and solutions.
 
-[Selenium Tutorial](https://www.javatpoint.com/selenium-tutorial)
+Thank you Code Institute for allowing me on this journey in life!
 
-### Selenium IDE
+Thank you Spencer Barriball for your unwavering support!
 
-[Selenium IDE: Login Test](https://www.javatpoint.com/selenium-ide-login-test)
-
-### Selenium WebDriver
-
-[Selenium WebDriver](https://www.javatpoint.com/selenium-webdriver)
-
-[Selenium WebDriver and Python](https://www.javatpoint.com/selenium-python)
