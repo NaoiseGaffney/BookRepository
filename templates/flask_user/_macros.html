@@ -4,7 +4,7 @@
         <div class="input-field col s12">
             {% if field.label.text == "password" or "old_password" or "retype_password" %}
             <i class="material-icons prefix tooltipped" data-position="bottom"
-                data-tooltip="Please enter your password.">vpn_key</i>
+                data-tooltip="Please enter your password (old/current in 'old password', and new password in 'new password' and 'retype password').">vpn_key</i>
             {% endif %}
             {% if field.type != 'HiddenField' and label_visible %}
             {% if not label %}{% set label=field.label.text %}{% endif %}
