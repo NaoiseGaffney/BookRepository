@@ -27,10 +27,24 @@ Seeking and finding inspiration on books to read as suggested by other readers.
 ### Site Owner's Goals
 Inspire readers to find books they might not have heard of, and compel them to buy the books on Amazon or other book outlets, potentially providing comission to the site owner (this is not active as this is an educational project only).
 
-### Features
+## User Experience
+
+* **User Story 001:** as a new user/reader I want to join the Book Repository to store details about my books, and share them with a wider audience.
+	* **Use Case 001-001:** as a new user/reader I want to register an account with the Book Repository.
+		*  **Tasks 1:** [Book Repository Home/Landing Page](https://book-repository-virtual.herokuapp.com/) -> read and accept the Consent Cookie (optional) -> click on Register in the naviagtion bar or the hamburger-menu followed by Register [Register](https://book-repository-virtual.herokuapp.com/user/register) -> fill in the form: username, email address, password, password confirmation, and click on the Register button.
+		*  **Tasks 2:** a confirmation email with a link is sent to the email address specified during registration -> click on the link -> you're accepted and signed in at the same time -> Member's Page.
+	*  **Use Case 001-002:** as a user/reader I want to Sign In to the Book Repository to access my stack of books.
+		*  **Tasks 1:** [Book Repository Home/Landing Page](https://book-repository-virtual.herokuapp.com/) -> read and accept the Consent Cookie (optional) -> click on Sign In in the navigation bar or the hamburger-menu followed by Sign In [Sign In](https://book-repository-virtual.herokuapp.com/user/sign-in) -> enter your username and password (the same credentials used when registering), click on the Remember Me box (optional), and click on the Sign In button -> Member's Page.
+	*  **Use Case 001-003 (C in CRUD):** as a user/reader I want to add a book to my virtual library/stack of books.
+		*  **Tasks 1:** [Member's Page](https://book-repository-virtual.herokuapp.com/members) -> click on the Add Book button on the page if you have no books, or hover over the drop-down menu (open book) and click on Add Book -> [Add Book](https://book-repository-virtual.herokuapp.com/add_book) fill in the form: title, author, year published, ISBN (used for book front cover, link to book on Amazon UK, and link to ISBN Search), book description (optional), book comments (ooptional), book rating (from 1 to 10, where 10 is spectacular), genre, and toggle the private switch if you want your book to remain hidden from other users/readers, and click on the Add Book button -> [Member's Page](https://book-repository-virtual.herokuapp.com/members)
+	*  **Use Case 001-004 (R in CRUD):** as a user/reader I want to view a book in my virtual library/stack of books.
+		*  **Tasks 1:** [Member's Page](https://book-repository-virtual.herokuapp.com/members) -> 
+
+
+## Features
 The features are divided into 4 main areas, User Management, Book Repository (the main book and library features), Admin Dashboard, and Shared Features.
 
-User Management:
+### User Management:
 
 * Flask-User extension with:
 	* User/reader registration with email confirmation.
@@ -40,7 +54,7 @@ User Management:
 	* User/reader sign out.
 * Added user/reader delete user/reader modal to Flask-User user profile update.
 
-Book Repository:
+### Book Repository:
 
 * Member's Page with:
 	* The user's/reader's virtual stack of books to ilicit the same feeling as walking into a library at home, or a public library.
@@ -51,7 +65,7 @@ Book Repository:
 	* The ability to view a book on Amazon UK if it exists (using ISBN) via the title link.
 	* The ability to view a book on ISBN Search if it exists (using ISBN) via the ISBN link.
 * Add Book with:
-	* The ability to add books with title, author, year published, ISBN (user for book front cover, link to book on Amazon UK, and link to ISBN Search), book description, book comments (personal thoughts and comments shared with other readers), book rating (1 to 10, where 10 is spectacular), genre (1 of 32 genres), and whether to hide the book from other readers during public book searches.
+	* The ability to add books with title, author, year published, ISBN (used for book front cover, link to book on Amazon UK, and link to ISBN Search), book description, book comments (personal thoughts and comments shared with other readers), book rating (1 to 10, where 10 is spectacular), genre (1 of 32 genres), and whether to hide the book from other readers during public book searches.
 	* List genres via the drop-down menu to aid in selecting the most appropriate genre for the book.
 * Search Books with:
 	* The ability to search for public (all books except those marked private/hidden) or private (own books).
@@ -61,7 +75,7 @@ Book Repository:
 	* The ability to browse and view books matching the search criteria.
 	* The ability to edit/update books belonging to the current user/reader (books belonging to other users/readers can't be edited/updated, nor deleted).
 
-Admin Dashboard:
+### Admin Dashboard:
 
 * Admin Page with:
 	* User Management table, User, Full Name, Active, E-mail.
@@ -71,7 +85,7 @@ Admin Dashboard:
 		* List Genres, to view the 32 genres and their description. Future feature to add, update, and delete genres here.
 		* Book Repository Statistics via the drop-down menu to vie the number of users, number of books, and number of books in each genre.
 
-Shared Features:
+### Shared Features:
 
 * Added:
 	* Help tooltips (? icon).
@@ -94,12 +108,12 @@ Shared Features:
 * Styling and Layout using Materialize CSS 1.0.0 for a clean crisp interface that's easy to view and use.
 * Osano Consent Cookie.
 
-#### Future Features
-User Management:
+## Future Features
+### User Management:
 
 * Username update by user/reader under update user profile, with automatic update of books belonging to the user/reader.
 
-Book Repository:
+### Book Repository:
 
 * Validate ISBN using Python extension isbnlib when books are added and updated.
 * Get full Google Books API details when adding and updating books.
@@ -107,7 +121,7 @@ Book Repository:
 * Shared book comments.
 * User/reader messaging/message board.
 
-Admin Dashboard:
+### Admin Dashboard:
 
 * User 'admin' can activate/revoke Admin role in the Admin Dashboard User Modal to share the administrative responsibilities when the site grows.
 * Number of books per user/reader and genre breakdown per user/reader.
