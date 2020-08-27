@@ -28,7 +28,7 @@ Seeking and finding inspiration on books to read as suggested by other readers.
 Inspire readers to find books they might not have heard of, and compel them to buy the books on Amazon or other book outlets, potentially providing comission to the site owner (this is not active as this is an educational project only).
 
 ### Features
-The features are divided into 3 main areas, User Management, Book Repository (the main book and library features), and Admin Dashboard.
+The features are divided into 4 main areas, User Management, Book Repository (the main book and library features), Admin Dashboard, and Shared Features.
 
 User Management:
 
@@ -39,12 +39,6 @@ User Management:
 	* User/reader user profile update, with first and last name, and password change.
 	* User/reader sign out.
 * Added user/reader delete user/reader modal to Flask-User user profile update.
-* Added:
-	* Help tooltips (? icon)
-	* Breadcrumbs for navigation
-	* Icons with text for fields and buttons for a better user experience and design.
-	* Icon tooltips to guide the user/reader when filling in forms.
-* Styling and Layout using Materialize CSS 1.0.0 for a clean crisp interface that's easy to view and use.
 
 Book Repository:
 
@@ -65,13 +59,40 @@ Book Repository:
 	* Theability to search for books using a combinaition to title (partial or full) and author (partial or full), rating equal to or greater than, and genre (none or 1 of 32).
 * Search Books Results with:
 	* The ability to browse and view books matching the search criteria.
-	* The abilityto 
+	* The ability to edit/update books belonging to the current user/reader (books belonging to other users/readers can't be edited/updated, nor deleted).
+
+Admin Dashboard:
+
+* Admin Page with:
+	* User Management table, User, Full Name, Active, E-mail.
+		* User modal to update user details, set user to active/inactive, and permanently deleter the user/reader and associated books.
+		* Load Genres via the drop-down menu in case the genres collection wasn't created by the first access to the Landind Page or was accidentally deleted.
+		* Load Books via the drop-down menu to load a sample of 28 books to populate the Book Repository and use for testing purposes.
+		* List Genres, to view the 32 genres and their description. Future feature to add, update, and delete genres here.
+		* Book Repository Statistics via the drop-down menu to vie the number of users, number of books, and number of books in each genre.
+
+Shared Features:
+
+* Added:
+	* Help tooltips (? icon).
+	* Breadcrumbs for navigation.
+	* Pagination for Member's Page, Search Results Page, and Admin Page (user table).
+	* Icons with text for fields and buttons for a better user experience and design.
+	* Icon tooltips to guide the user/reader when filling in forms.
+	* Drop-Down Menu.
+* Fixed Navigation Bar (Hamburger-Menu) with:
+	* User/reader:
+		* Unauthenticated - Home, Sign In, Register.
+		* Authenticated - Member's Page, User Profile Update (username), Sign Out.
+	* Admin Role:
+		* Unauthenticated - Home, Sign In, Register.
+		* Authenticated - Admin Page, Member's Page, User Profile Update (username), Sign Out.
 * Fixed Footer About Modal with:
 	* Book Repository explanation.
 	* Short "ego-page".
 	* Code stack description and link to the project on GitHub.
-
-Admin Dashboard:
+* Styling and Layout using Materialize CSS 1.0.0 for a clean crisp interface that's easy to view and use.
+* Osano Consent Cookie.
 
 #### Future Features
 User Management:
@@ -83,6 +104,8 @@ Book Repository:
 * Validate ISBN using Python extension isbnlib when books are added and updated.
 * Get full Google Books API details when adding and updating books.
 * Support for multiple languages using Flask-BabelEx (i18n/i10n).
+* Shared book comments.
+* User/reader messaging/message board.
 
 Admin Dashboard:
 
@@ -90,9 +113,10 @@ Admin Dashboard:
 * Number of books per user/reader and genre breakdown per user/reader.
 * Username update with book updates of new username.
 * Save and load several book JSON files.
-* Undo delete of user/reader and books (within 5 days, placing all deleted items in a separate collection).
+* Undo delete of user/reader and books (within 5 days, placing all deleted items in a separate collection(s)).
 * Create user/reader without the user/reader having to register via the register page.
 * Update, add, delete genres in the genres collection.
+* Application Log view in the Admin Dashboard, primarily to view rogue users/readers and to revoke their access to the Book Repository.
 
 ## Processess
 
