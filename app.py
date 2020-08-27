@@ -2,6 +2,7 @@ import logging
 from logging.handlers import RotatingFileHandler
 import os
 import json
+from json.decoder import JSONDecodeError
 from flask import Flask, render_template_string, render_template, redirect, url_for, request, flash, session
 from flask_mongoengine import MongoEngine, MongoEngineSession, MongoEngineSessionInterface
 from flask_user import login_required, UserManager, UserMixin, current_user, roles_required
@@ -10,9 +11,7 @@ from flask_wtf.csrf import CSRFProtect, CSRFError
 import datetime
 from datetime import timedelta
 import requests
-
-if "DYNO" and "FDT" not in os.environ:
-    from flask_debugtoolbar import DebugToolbarExtension
+from jsonschema import validate, ValidationError
 
 from config import ConfigClass
 
@@ -21,6 +20,8 @@ from pathlib import Path
 env_path = Path(".") / ".env"
 load_dotenv(dotenv_path=env_path)
 
+if os.environ.get("FDT") == "ON":
+    from flask_debugtoolbar import DebugToolbarExtension
 
 # --- // Application Factory Setup (based on the Flask-User example for MongoDB)
 # Setup Flask and load app.config
@@ -29,7 +30,7 @@ app.config.from_object(__name__ + ".ConfigClass")
 csrf = CSRFProtect(app)
 csrf.init_app(app)
 
-if "DYNO" and "FDT" not in os.environ:
+if os.environ.get("FDT") == "ON":
     app.debug = True
 
 
@@ -56,7 +57,7 @@ db = MongoEngine(app)
 app.session_interface = MongoEngineSessionInterface(db)
 
 # Initiate the Flask Debug Toolbar Extension
-if "DYNO" and "FDT" not in os.environ:
+if os.environ.get("FDT") == "ON":
     toolbar = DebugToolbarExtension(app)
 
 
@@ -160,13 +161,35 @@ def home_page():
     if not Genre.objects():
         try:
             with open("genre.json", "r", encoding="utf-8") as f:
-                genre_array = json.load(f)
+                genre_dict = json.load(f)
         except FileNotFoundError:
-            flash("Genre file can't be found. The filename is 'genre.json' and contains the 32 Book Genres.", "danger")
-            app.logger.critical("Genre file can't be found. The filename is 'genre.json' and contains the 32 Book Genres: [FAILURE] - (index.html).")
+            flash("Genre file can't be found. The filename is 'genre.json' and contains the Book Genres.", "danger")
+            app.logger.critical("Genre file can't be found. The filename is 'genre.json' and contains the Book Genres: [FAILURE] - (index.html).")
+            return render_template("index.html")
+        except json.decoder.JSONDecodeError:
+            flash("Genre file isn't a proper JSON file. Please correct the issues with the file 'genre.json' and try to it load again.", "danger")
+            app.logger.critical("Genre file isn't a proper JSON file. Please correct the issues with the file 'genre.json' and try to load it again: [FAILURE] - (admin_dashboard.html).")
+            return render_template("index.html")
+
+        genre_schema = {
+            "type": "object",
+            "properties": {
+                "genre": {"type": "string"},
+                "description": {"type": "string"},
+            },
+        }
 
         try:
-            genre_instances = [Genre(**data) for data in genre_array]
+            for genre in genre_dict:
+                validate(instance=genre, schema=genre_schema)
+        except ValidationError:
+            genre_genre = genre["genre"]
+            flash(f"Genre Collection NOT created, 'genre.json' file has JSON Schema errors. Please correct the genre '{genre_genre}'.", "danger")
+            app.logger.critical(f"{current_user.username} has NOT loaded the Genre Collection to the Book Repository, 'genre.json' file has JSON Schema errors. Please correct the genre '{genre_genre}': [FAILURE] - (admin_dashboard.html).")
+            return render_template("index.html")
+
+        try:
+            genre_instances = [Genre(**data) for data in genre_dict]
             Genre.objects.insert(genre_instances, load_bulk=False)
             flash("Genres Collection successfully created.", "success")
             app.logger.info("Genres Collection created: [SUCCESS] - (index.html)")
@@ -174,7 +197,7 @@ def home_page():
             flash("Genres Collection NOT created.", "danger")
             app.logger.critical("Genres Collection NOT created: [FAILURE] - (index.html)")
         finally:
-            render_template("index.html")
+            return render_template("index.html")
 
     return render_template("index.html")
 
@@ -555,13 +578,35 @@ def load_genres():
     if not Genre.objects():
         try:
             with open("genre.json", "r", encoding="utf-8") as f:
-                genre_array = json.load(f)
+                genre_dict = json.load(f)
         except FileNotFoundError:
-            flash("Genre file can't be found. The filename is 'genre.json' and contains the 32 Book Genres.", "danger")
-            app.logger.critical("Genre file can't be found. The filename is 'genre.json' and contains the 32 Book Genres: [FAILURE] - (admin_dashboard.html).")
+            flash("Genre file can't be found. The filename is 'genre.json' and contains the Book Genres.", "danger")
+            app.logger.critical("Genre file can't be found. The filename is 'genre.json' and contains the Book Genres: [FAILURE] - (admin_dashboard.html).")
+            return redirect(url_for("admin_dashboard"))
+        except json.decoder.JSONDecodeError:
+            flash("Genre file isn't a proper JSON file. Please correct the issues with the file 'genre.json' and try to it load again.", "danger")
+            app.logger.critical("Genre file isn't a proper JSON file. Please correct the issues with the file 'genre.json' and try to load it again: [FAILURE] - (admin_dashboard.html).")
+            return redirect(url_for("admin_dashboard"))
+
+        genre_schema = {
+            "type": "object",
+            "properties": {
+                "genre": {"type": "string"},
+                "description": {"type": "string"},
+            },
+        }
 
         try:
-            genre_instances = [Genre(**data) for data in genre_array]
+            for genre in genre_dict:
+                validate(instance=genre, schema=genre_schema)
+        except ValidationError:
+            genre_genre = genre["genre"]
+            flash(f"Genre Collection NOT created, 'genre.json' file has JSON Schema errors. Please correct the genre '{genre_genre}'.", "danger")
+            app.logger.critical(f"{current_user.username} has NOT loaded the Genre Collection to the Book Repository, 'genre.json' file has JSON Schema errors. Please correct the genre '{genre_genre}': [FAILURE] - (admin_dashboard.html).")
+            return redirect(url_for("admin_dashboard"))
+
+        try:
+            genre_instances = [Genre(**data) for data in genre_dict]
             Genre.objects.insert(genre_instances, load_bulk=False)
             flash(f"Genres Collection successfully created.", "success")
             app.logger.info("Genres Collection created: [SUCCESS] - (index.html)")
@@ -585,8 +630,38 @@ def load_books():
             with open("book.json", "r", encoding="utf-8") as f:
                 book_dict = json.load(f)
         except FileNotFoundError:
-            flash("Book file can't be found. The filename is 'book.json' and contains 15 sample Books.", "danger")
-            app.logger.critical("Book file can't be found. The filename is 'book.json' and contains 15 sample Books: [FAILURE] - (admin_dashboard.html).")
+            flash("Book file can't be found. The filename is 'book.json' and contains sample Books.", "danger")
+            app.logger.critical("Book file can't be found. The filename is 'book.json' and contains sample Books: [FAILURE] - (admin_dashboard.html).")
+        except json.decoder.JSONDecodeError:
+            flash("Book file isn't a proper JSON file. Please correct the issues with the file 'book.json' and try to load it again.", "danger")
+            app.logger.critical("Book file isn't a proper JSON file. Please correct the issues with the file 'book.json' and try to load it again: [FAILURE] - (admin_dashboard.html).")
+            return redirect(url_for("admin_dashboard"))
+
+        book_schema = {
+            "type": "object",
+            "properties": {
+                "title": {"type": "string"},
+                "author": {"type": "string"},
+                "year": {"type": "number"},
+                "ISBN": {"type": "number"},
+                "user": {"type": "string"},
+                "short_description": {"type": "string"},
+                "comments": {"type": "string"},
+                "rating": {"type": "number"},
+                "genre": {"type": "string"},
+                "private_view": {"type": "string"},
+                "book_thumbnail": {"type": "string"},
+            },
+        }
+
+        try:
+            for book in book_dict:
+                validate(instance=book, schema=book_schema)
+        except ValidationError:
+            book_title = book["title"]
+            flash(f"Book Collection NOT created, 'book.json' file has JSON Schema errors. Please correct the book '{book_title}'.", "danger")
+            app.logger.critical(f"{current_user.username} has NOT loaded the Book Collection to the Book Repository, 'book.json' file has JSON Schema errors. Please correct the book '{book_title}': [FAILURE] - (admin_dashboard.html).")
+            return redirect(url_for("admin_dashboard"))
 
         try:
             book_instances = [Book(**data) for data in book_dict]
