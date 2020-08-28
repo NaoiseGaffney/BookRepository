@@ -215,18 +215,7 @@ Future features are planned features that didn't make it into this first release
 | Error    |         |               |                                                              |                                                                                                                                                          |
 | Critical | Danger  | Failure       | Heroku Production                                            | Application Log (rotating file logger and console) = Critical. Flash Message = Danger (pink). Book Repository Message in Application Log = Failure.      |
 
-## Processess
-
-### User Experience
-User Stories -> Use Cases -> Tasks -> Tests
-
-## Solution
-### Features
-### Future Features
-
-### Design Decisions
-
-### Code
+## Design
 
 ## Technology
 ### Code
@@ -239,8 +228,7 @@ User Stories -> Use Cases -> Tasks -> Tests
 
 ### General Knowledge and Hours of Reading
 
-## Testing
-
+## Testing and Validation
 ### Manual BDD
 
 ### Automated BDD
