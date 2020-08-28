@@ -3,13 +3,13 @@
 
 "A safe virtual repository for books, a digital version of your library that is searchable, and where you can share your book notes and thoughts with like-minded readers." - Gaff
 
+![Book Repository Logo](https://github.com/NaoiseGaffney/BookRepository/blob/development/static/images/logo_bookstack_text_96_spacing.png)
+
 The Book Repository is a digital or virtual library to store information about your books, such as title, author, year published, ISBN, genre, rating, description, and your reflection and comments.
 
 The Book Repository provides a private and public search function too, using any combination of title, author, ISBN, genre, and rating.
 
 An Admin Dashboard provides user management, loading of genres and books, as well as Book Repository statistics.
-
-![Book Repository Logo](https://github.com/NaoiseGaffney/BookRepository/blob/development/static/images/logo_bookstack_text_96_spacing.png)
 
 ## Business
 ### External User's Goals
@@ -53,8 +53,12 @@ Inspire readers to find books they might not have heard of, and compel them to b
 		*  **Tasks 1:** [Member's Page](https://book-repository-virtual.herokuapp.com/members) -> via the drop-down menu click on Search Books -> [Search Books](https://book-repository-virtual.herokuapp.com/search_book) -> leave all form fields empty, leave the toggle switch off (public search), and click on the Search Books button -> [Search Results](https://book-repository-virtual.herokuapp.com/search_results) -> stack (list) of books found that are not  marked as private/hidden by users/readers -> Book CRUD operations apply to my books, only R in Book CRUD for books belonging to other users/readers.
 *  **User Story 003 (User/Reader):** as a user/reader I want the ability to manage my user profile.
 	*  **Use Case 003-001:** as a user/reader I want to update my user profile.
+		*  **Tasks 1:** [Member's Page](https://book-repository-virtual.herokuapp.com/members) -> click on the user profile (username) on the navigation bar [Edit User Profile](https://book-repository-virtual.herokuapp.com/user/edit_user_profile) -> add/edit your First and Last Name, click on the Update button -> [Member's Page](https://book-repository-virtual.herokuapp.com/members).
 	*  **Use Case 003-002:** as a user/reader I want to change my password.
+		*  **Tasks 1:** [Member's Page](https://book-repository-virtual.herokuapp.com/members) -> click on the user profile (username) on the navigation bar [Edit User Profile](https://book-repository-virtual.herokuapp.com/user/edit_user_profile) -> click on [Change Password](https://book-repository-virtual.herokuapp.com/user/change-password) -> enter your current/old password, your new password, retype your new password for confirmation, and click on the Change Password button -> [Member's Page](https://book-repository-virtual.herokuapp.com/members).
+		*  **Tasks 2:** an email is sent to the user's/reader's email address, confirming the password change -> if the password change wasn't initiated by the user/reader they can click on the link in the email to change the password.
 	*  **Use Case 003-003:** as a user/reader I want to delete my account.
+		*  **Tasks 1:** [Member's Page](https://book-repository-virtual.herokuapp.com/members) -> click on the user profile (username) on the navigation bar [Edit User Profile](https://book-repository-virtual.herokuapp.com/user/edit_user_profile) -> click on [Delete User](http://127.0.0.1:5000/user/edit_user_profile#delete_user) -> click on yes to permanetly delete the user/reader and associated books from the Book Repository or no to close the delete user modal -> [Landing/Home Page](http://127.0.0.1:5000/index.html).
 
 
 ## Features
