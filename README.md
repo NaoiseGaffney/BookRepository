@@ -29,16 +29,39 @@ Inspire readers to find books they might not have heard of, and compel them to b
 
 ## User Experience
 
-* **User Story 001:** as a new user/reader I want to join the Book Repository to store details about my books, and share them with a wider audience.
-	* **Use Case 001-001:** as a new user/reader I want to register an account with the Book Repository.
+* **User Story 001 (User/Reader):** as a new user/reader I want to join the Book Repository to store details about my books so that I can share them with a wider audience.
+	* **Use Case 001-001 (C in User CRUD):** as a new user/reader I want to register an account with the Book Repository.
 		*  **Tasks 1:** [Book Repository Home/Landing Page](https://book-repository-virtual.herokuapp.com/) -> read and accept the Consent Cookie (optional) -> click on Register in the naviagtion bar or the hamburger-menu followed by Register [Register](https://book-repository-virtual.herokuapp.com/user/register) -> fill in the form: username, email address, password, password confirmation, and click on the Register button.
 		*  **Tasks 2:** a confirmation email with a link is sent to the email address specified during registration -> click on the link -> you're accepted and signed in at the same time -> Member's Page.
 	*  **Use Case 001-002:** as a user/reader I want to Sign In to the Book Repository to access my stack of books.
 		*  **Tasks 1:** [Book Repository Home/Landing Page](https://book-repository-virtual.herokuapp.com/) -> read and accept the Consent Cookie (optional) -> click on Sign In in the navigation bar or the hamburger-menu followed by Sign In [Sign In](https://book-repository-virtual.herokuapp.com/user/sign-in) -> enter your username and password (the same credentials used when registering), click on the Remember Me box (optional), and click on the Sign In button -> Member's Page.
-	*  **Use Case 001-003 (C in CRUD):** as a user/reader I want to add a book to my virtual library/stack of books.
-		*  **Tasks 1:** [Member's Page](https://book-repository-virtual.herokuapp.com/members) -> click on the Add Book button on the page if you have no books, or hover over the drop-down menu (open book) and click on Add Book -> [Add Book](https://book-repository-virtual.herokuapp.com/add_book) fill in the form: title, author, year published, ISBN (used for book front cover, link to book on Amazon UK, and link to ISBN Search), book description (optional), book comments (ooptional), book rating (from 1 to 10, where 10 is spectacular), genre, and toggle the private switch if you want your book to remain hidden from other users/readers, and click on the Add Book button -> [Member's Page](https://book-repository-virtual.herokuapp.com/members)
-	*  **Use Case 001-004 (R in CRUD):** as a user/reader I want to view a book in my virtual library/stack of books.
-		*  **Tasks 1:** [Member's Page](https://book-repository-virtual.herokuapp.com/members) -> 
+	*  **Use Case 001-003:** as a user/reader I want to reset my password as I have forgotten it.
+		*  **Tasks 1:** FILL THIS IN!!! FILL THIS IN!!! FILL THIS IN!!! FILL THIS IN!!!
+	*  **Use Case 001-004 (C in Book CRUD):** as a user/reader I want to add a book to my virtual library/stack of books.
+		*  **Tasks 1:** [Member's Page](https://book-repository-virtual.herokuapp.com/members) -> click on the Add Book button on the page if you have no books, or hover over the drop-down menu (open book) and click on Add Book -> [Add Book](https://book-repository-virtual.herokuapp.com/add_book) fill in the form: title, author, year published, ISBN (used for book front cover, link to book on Amazon UK, and link to ISBN Search), book description (optional), book comments (optional), book rating (from 1 to 10, where 10 is spectacular), genre, and toggle the private switch if you want your book to remain hidden from other users/readers, and click on the Add Book button -> [Member's Page](https://book-repository-virtual.herokuapp.com/members)
+	*  **Use Case 001-005 (R in Book CRUD):** as a user/reader I want to view a book in my virtual library/stack of books.
+		*  **Tasks 1:** [Member's Page](https://book-repository-virtual.herokuapp.com/members) -> click on the "book spine" and it will pop-out displaying the collapsible-content with book details -> click on the title link to view the book in a separate tab on Amazon UK (uses the ISBN as a reference, for example: https://www.amazon.co.uk/s?k=9780141185378 for Burmese Days) -> click on ISBN link to view the book in a separate tab on ISBN Search (uses the ISBN as a reference, for example: https://isbnsearch.org/isbn/9780141185378 for Burmese Days).
+	*  **Use Case 001-006 (U in Book CRUD):** as a user/reader I want to update/edit an existing book in my Book Repository stack.
+		*  **Tasks 1:** [Member's Page](https://book-repository-virtual.herokuapp.com/members) -> click on the dark blue pencil link on the book spine of the book you want to update -> [Edit Book - Burmese Days](https://book-repository-virtual.herokuapp.com/edit_book/5f480c6727f905184bcf1a51) -> make the necessary changes to title, author, year published, ISBN (to update the front cover thumbnail, Amazon UK and ISBN Search links), book description, book comments (add new, update or delete existing comments), rating, genre, and whether the book is hidden (private) from public searches, and click on the Add Book button -> [Member's Page](https://book-repository-virtual.herokuapp.com/members).
+	*  **Use Case 001-007 (D in Book CRUD):** as a user/reader I want to delete an existing book in my Book Repository stack.
+		*  **Tasks 1:** [Member's Page](https://book-repository-virtual.herokuapp.com/members) -> click on the pink dustbin/rubbish bin link on the book spine of the book you want to delete the book -> [Delete Book - Burmese Days](https://book-repository-virtual.herokuapp.com/members#delete_book_5f480c6727f905184bcf1a51) -> the delete book modal provides a yes (permanently delete book: [Delete Book - Yes](https://book-repository-virtual.herokuapp.com/delete_book/5f480c6727f905184bcf1a51)) button and a no (close modal: [Delete Book - No](https://book-repository-virtual.herokuapp.com/members#!)) button -> [Member's Page](https://book-repository-virtual.herokuapp.com/members).
+*  **User Story 002 (User/Reader):** as a user/reader I want to search for books in the Book Repository so that I can find new books to read, inspired by reader comments, and possibly purchase on Amazon UK or from other vendors.
+	*  **Use Case 002-001 ():** as a user/reader I want to search for a specific book in my Book Repository using the ISBN.
+		*  **Tasks 1:** [Member's Page](https://book-repository-virtual.herokuapp.com/members) -> via the drop-down menu click on Search Books -> [Search Books](https://book-repository-virtual.herokuapp.com/search_book) -> enter the ISBN (9780141185378) of the book I'm searching for, toggle the private switch on (private search), and click on the Search Books button -> [Search Results](https://book-repository-virtual.herokuapp.com/search_results) -> Burmese Days by George Orwell -> Book CRUD operations apply as this is my book.
+	*  **Use Case 002-002 ():** as a user/reader I want to search for books in my Book Repository using any combination of title, author, and rating (not genre, nor ISBN).
+		*  **Tasks 1:** [Member's Page](https://book-repository-virtual.herokuapp.com/members) -> via the drop-down menu click on Search Books -> [Search Books](https://book-repository-virtual.herokuapp.com/search_book) -> enter any combination of title (empty, partial, or full), author (empty, partial, or full) of the book I'm searching for, toggle the private switch on (private search), rating (from 1 to 10, value searched for is >= value entered), and click on the Search Books button -> [Search Results](https://book-repository-virtual.herokuapp.com/search_results) -> stack (list) of books found -> Book CRUD operations apply as these are my books.
+	*  **Use Case 002-003 ():** as a user/reader I want to search for all my books in my Book Repository using an empty form search.
+		*  **Tasks 1:** [Member's Page](https://book-repository-virtual.herokuapp.com/members) -> via the drop-down menu click on Search Books -> [Search Books](https://book-repository-virtual.herokuapp.com/search_book) -> leave all form fields empty, toggle the private switch on (private search), and click on the Search Books button -> [Search Results](https://book-repository-virtual.herokuapp.com/search_results) -> stack (list) of books found (same result as my Book Stack in my Member's Page) -> Book CRUD operations apply as these are my books
+	*  **Use Case 002-004 ():** as a user/reader I want to search for a specific book the Book Repository using the ISBN.
+		*  **Tasks 1:** [Member's Page](https://book-repository-virtual.herokuapp.com/members) -> via the drop-down menu click on Search Books -> [Search Books](https://book-repository-virtual.herokuapp.com/search_book) -> enter the ISBN (9780141185378) of the book I'm searching for, leave the toggle switch off (public search), and click on the Search Books button -> [Search Results](https://book-repository-virtual.herokuapp.com/search_results) -> Burmese Days by George Orwell (if the book isn't marked as private/hidden by users/readers) -> Book CRUD operations apply as this is my book, otherwise only R in Book CRUD as the book belongs to someone else.
+	*  **Use Case 002-005 ():** as a user/reader I want to search for books in the Book Repository using any combination of title, author, and rating (not genre, nor ISBN).
+		*  **Tasks 1:** [Member's Page](https://book-repository-virtual.herokuapp.com/members) -> via the drop-down menu click on Search Books -> [Search Books](https://book-repository-virtual.herokuapp.com/search_book) -> enter any combination of title (empty, partial, or full), author (empty, partial, or full) of the book I'm searching for, leave the toggle switch off (public search), rating (from 1 to 10, value searched for is >= value entered), and click on the Search Books button -> [Search Results](https://book-repository-virtual.herokuapp.com/search_results) -> stack (list) of books found that are not  marked as private/hidden by users/readers -> Book CRUD operations apply to my books, only R in Book CRUD for books belonging to other users/readers.
+	*  **Use Case 002-006 ():** as a user/reader I want to search for all the books in the Book Repository using an empty form search.
+		*  **Tasks 1:** [Member's Page](https://book-repository-virtual.herokuapp.com/members) -> via the drop-down menu click on Search Books -> [Search Books](https://book-repository-virtual.herokuapp.com/search_book) -> leave all form fields empty, leave the toggle switch off (public search), and click on the Search Books button -> [Search Results](https://book-repository-virtual.herokuapp.com/search_results) -> stack (list) of books found that are not  marked as private/hidden by users/readers -> Book CRUD operations apply to my books, only R in Book CRUD for books belonging to other users/readers.
+*  **User Story 003 (User/Reader):** as a user/reader I want the ability to manage my user profile.
+	*  **Use Case 003-001:** as a user/reader I want to update my user profile.
+	*  **Use Case 003-002:** as a user/reader I want to change my password.
+	*  **Use Case 003-003:** as a user/reader I want to delete my account.
 
 
 ## Features
@@ -47,27 +70,27 @@ The features are divided into 4 main areas, User Management, Book Repository (th
 ### User Management:
 
 * Flask-User extension with:
-	* User/reader registration with email confirmation.
-	* User/reader sign in after registration.
+	* User/reader registration with email confirmation (C is User CRUD).
+	* User/reader sign in after registration (R in User CRUD).
 	* User/reader password reset with email confirmation.
-	* User/reader user profile update, with first and last name, and password change.
+	* User/reader user profile update, with first and last name, and password change (U in User CRUD).
 	* User/reader sign out.
-* Added user/reader delete user/reader modal to Flask-User user profile update.
+* Added user/reader delete user/reader modal to Flask-User user profile update (D in User CRUD).
 
 ### Book Repository:
 
 * Member's Page with:
 	* The user's/reader's virtual stack of books to ilicit the same feeling as walking into a library at home, or a public library.
-	* The ability to view the stack, the book details, edit/update a book, and delete a book.
-	* The ability to add a new book via the drop-down menu.
-	* The ability to search for books via the drop-down menu.
-	* The ability to view the list of book genres and their descriptions.
+	* The ability to view the stack, the book details, edit/update a book, and delete a book (RUD in Book CRUD).
+	* The ability to add a new book via the drop-down menu (C in Book CRUD).
+	* The ability to search for books via the drop-down menu (R in Book CRUD).
+	* The ability to view the list of book genres and their descriptions (R in Book CRUD).
 	* The ability to view a book on Amazon UK if it exists (using ISBN) via the title link.
 	* The ability to view a book on ISBN Search if it exists (using ISBN) via the ISBN link.
-* Add Book with:
+* Add Book with (C in Book CRUD):
 	* The ability to add books with title, author, year published, ISBN (used for book front cover, link to book on Amazon UK, and link to ISBN Search), book description, book comments (personal thoughts and comments shared with other readers), book rating (1 to 10, where 10 is spectacular), genre (1 of 32 genres), and whether to hide the book from other readers during public book searches.
 	* List genres via the drop-down menu to aid in selecting the most appropriate genre for the book.
-* Search Books with:
+* Search Books with (R in Book CRUD):
 	* The ability to search for public (all books except those marked private/hidden) or private (own books).
 	* The ability to search for books using ISBN.
 	* Theability to search for books using a combinaition to title (partial or full) and author (partial or full), rating equal to or greater than, and genre (none or 1 of 32).
@@ -79,11 +102,11 @@ The features are divided into 4 main areas, User Management, Book Repository (th
 
 * Admin Page with:
 	* User Management table, User, Full Name, Active, E-mail.
-		* User modal to update user details, set user to active/inactive, and permanently deleter the user/reader and associated books.
-		* Load Genres via the drop-down menu in case the genres collection wasn't created by the first access to the Landind Page or was accidentally deleted.
-		* Load Books via the drop-down menu to load a sample of 28 books to populate the Book Repository and use for testing purposes.
-		* List Genres, to view the 32 genres and their description. Future feature to add, update, and delete genres here.
-		* Book Repository Statistics via the drop-down menu to vie the number of users, number of books, and number of books in each genre.
+		* User modal to update user details, set user to active/inactive, and permanently deleter the user/reader and associated books (RUD in User CRUD).
+		* Load Genres via the drop-down menu in case the genres collection wasn't created by the first access to the Landind Page or was accidentally deleted  (C in Book Genre CRUD).
+		* Load Books via the drop-down menu to load a sample of 28 books to populate the Book Repository and use for testing purposes (C in Book CRUD).
+		* List Genres, to view the 32 genres and their description. Future feature to add, update, and delete genres here (R in Book Genre CRUD).
+		* Book Repository Statistics via the drop-down menu to vie the number of users, number of books, and number of books in each genre (R in Statistics CRUD).
 
 ### Shared Features:
 
