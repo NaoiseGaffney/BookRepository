@@ -24,6 +24,7 @@ if os.environ.get("FDT") == "ON":
     from flask_debugtoolbar import DebugToolbarExtension
 
 # --- // Application Factory Setup (based on the Flask-User example for MongoDB)
+# https://flask-user.readthedocs.io/en/latest/mongodb_app.html
 # Setup Flask and load app.config
 app = Flask(__name__, static_folder="static", template_folder="templates")
 app.config.from_object(__name__ + ".ConfigClass")
