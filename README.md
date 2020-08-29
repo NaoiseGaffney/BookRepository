@@ -19,7 +19,7 @@ The Business goals describe the expected user/reader and site owner goals, and d
 ### External User's Goals
 Readers with libraries and/or stacks of books at home that they would like to catalogue online for easier access and overview, and share their ratings, thoughts and comments on their books with other Book Repository readers.
 
-Seeking and finding inspiration on books to read as suggested by other readers.
+Seeking and finding inspiration on books to read as found by reading the book comments and ratings by the other readers.
 
 ### Site Owner's Goals
 Inspire readers to find books they might not have heard of, and compel them to buy the books on Amazon or other book outlets, potentially providing comission to the site owner (this is not active as this is an educational project only).
@@ -30,7 +30,11 @@ Find new books to read, broadening my horizons, and enjoying the excitement of d
 
 User experience (UX) design is the design process used to create applications and websites that provide meaningful and relevant experiences to users. The User Experience links the Business goals of the external user and site owner to a number of user stories. A user story captures a description of a software feature from an end-user perspective. A user story describes the type of user, what they want and why. A use case is a list of actions or event steps describing the interactions between a role and a system to achieve a goal.
 
-A user story has one or more use cases with one or more tasks with steps associated with it, describing how the user story, and subsequent fulfillment of the external user's and site owner's business goals are realised: Business Goals -> User Story -> Use Case(s) -> Task(s) -> Steps.
+A user story has one or more use cases with one or more tasks with steps associated with it, describing how the user story, and subsequent fulfillment of the external user's and site owner's business goals are realised: Business Goals -> User Story -> Use Case(s) -> Task(s).
+
+
+
+---
 
 * **User Story 001 (User/Reader):** as a new user/reader I want to join the Book Repository to store details about my books so that I can share them with a wider audience.
 	* **Use Case 001-001 (C in User CRUD):** as a new user/reader I want to register an account with the Book Repository.
@@ -97,6 +101,8 @@ A user story has one or more use cases with one or more tasks with steps associa
 		*  **Tasks 2:** [Member's Page](https://book-repository-virtual.herokuapp.com/members) -> click on [Admin Page](https://book-repository-virtual.herokuapp.com/admin_dashboard) -> hover over the drop-down (category icon) menu and click on the Load Books button -> if the Book Collection already exists a Flash message will say so, otherwise a Flash message will say successful creation and [Admin Page](https://book-repository-virtual.herokuapp.com/admin_dashboard).
 	*  **Use Case 004-007 (R in Statistics CRUD):** as an admin I want to view the number of users, number of books, and the most popular genres in the Book Repository.
 		*  **Tasks 1:** [Member's Page](https://book-repository-virtual.herokuapp.com/members) -> click on [Admin Page](https://book-repository-virtual.herokuapp.com/admin_dashboard) -> hover over the drop-down (category icon) menu and click on the Statistics button -> scroll through the statitics and click on the Done button to close the modal -> [Admin Page](https://book-repository-virtual.herokuapp.com/admin_dashboard).
+
+---
 
 ## Features
 A feature is some action that can be performed by a user of an application, or is some internal function of an application. The features support the User Experience mentioned above and are implemented based on the business goals, user stories and use cases.
@@ -177,6 +183,7 @@ Future features are planned features that didn't make it into this first release
 ### Book Repository:
 
 * Validate ISBN using Python extension isbnlib when books are added and updated.
+* Support for ISBN with the check digit of 'X'.
 * Get full Google Books API details when adding and updating books.
 * Support for multiple languages using Flask-BabelEx (i18n/i10n).
 * Shared book comments.
@@ -194,9 +201,11 @@ Future features are planned features that didn't make it into this first release
 * Application Log view in the Admin Dashboard, primarily to view rogue users/readers and to revoke their access to the Book Repository.
 
 ### Shared Features
-* Implement [Flask-Paranoid](https://flask-paranoid.readthedocs.io/en/latest/) to protect against stolen user session cookies (Flask-Login 'SESSION_PROTECTION = "strong"' isn't enough).
+* Implement [Flask-Paranoid](https://flask-paranoid.readthedocs.io/en/latest/) to protect against stolen user session cookies (Flask-Login 'SESSION_PROTECTION = "strong"' when "Remember Me" is enabled isn't enough).
 
 ## Features CRUD Table (Views)
+This table is an overview of the CRUD functions for each feature or role or MongoDB collection. It describes the implemented features, the future features, possible future features, and features that are not planned to be implemented. The notes describe where the feature is implemented in the Book Repository.
+
 'X' = CRUD feature implemented
 
 'f' = future CRUD implementation
@@ -215,6 +224,14 @@ Future features are planned features that didn't make it into this first release
 | Application Logs              | X | f |   | X | Application logs provide application endpoint/function information related to each user/reader. In future, viewing these logs, and filtering them per user/reader and severity is useful to identify issues. Rotating logs are deleted after 10 instances. |
 
 ## Application Logging and Flash Messaging Levels
+Application logging is key to gather application usage for statistics and planning, for security reasons to detect potential attempts at disrupting the site, for performance planning as the site grows (increased usage and conversion rates) to ensure the use of the Book Repository is always a pleasant exeperience, and for root-cause and impact-analysis in the event of critical issues disrupting the end-user experience.
+
+Flash messaging keeps the users/readers informed (success, info, failure) through continuous feedback as they use the features of the Book Repository.
+
+Python default logging is used, and additional information is attached to the log message to fulfil the above-mentioned application logging requirements. In future the Admin Dashboard will filter application log messages by user/reader, endpoint/function, and severity.
+
+Local development uses a rotating file handler which makes the logs easier to read (colour-coded) and search as they are saved to files. Heroku places constraints on logging, prefering the use of the exisitng application log and paid for logging tools.
+
 | Logger   | Flash   | Message       | Environments                                                 | Notes                                                                                                                                                    |
 |----------|---------|---------------|--------------------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------|
 | Notset   |         |               |                                                              |                                                                                                                                                          |
@@ -224,7 +241,12 @@ Future features are planned features that didn't make it into this first release
 | Error    |         |               |                                                              |                                                                                                                                                          |
 | Critical | Danger  | Failure       | Heroku Production                                            | Application Log (rotating file logger and console) = Critical. Flash Message = Danger (pink). Book Repository Message in Application Log = Failure.      |
 
-## Design
+## Design Decisions and Technology Choices
+Layout and navigation, colour scheme(s) (progression), typography, icons and text...
+
+Flask-User, application logging, CSRF, FDT, Flask-MongoEngine/MongoEngine, File Handling (JSON), Google Books API (thumbnail images), Session Cookies, Consent Cookie, 'config.py', .env and Heroku variables, CDD, DB Schema, JSON Schema...
+
+Defensive Programming...
 
 ## Technology
 ### Code
