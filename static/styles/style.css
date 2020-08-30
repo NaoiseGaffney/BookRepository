@@ -1,5 +1,7 @@
 @import url('https://fonts.googleapis.com/css?family=Raleway|&display=swap');
 
+/* --- // Main Styling and Layout */
+/* Reset values */
 * {
     margin: 0;
     padding: 0;
@@ -7,6 +9,7 @@
     box-sizing: border-box;
 }
 
+/* Use Raleway font throughout the site, and provide room for the scrolling under the fixed nav-bar and footer */
 html,
 body {
     font-family: 'Raleway', sans-serif;
@@ -14,6 +17,7 @@ body {
     margin-bottom: 50px;
 }
 
+/* Background image setting */
 html {
     background: url("/static/images/sharon-mccutcheon-eMP4sYPJ9x0-unsplash.jpg") no-repeat center center fixed;
     /* Photo by <a href="https://unsplash.com/@sharonmccutcheon?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Sharon McCutcheon</a> */
@@ -37,6 +41,14 @@ a {
     color: #0D47A1;
 }
 
+/* Pagination styling to suit <H6> above on the 'members.html' page */
+.pagination {
+    font-size: 1.15rem;
+    line-height: 110%;
+    margin-bottom: 1rem;
+}
+
+/* --- // Navigation Bar, Hamburger-bar, and Fixed Footer Styling and Layout */
 /* Navigation Bar: fixed and MaterializeCSS styling. */
 nav {
     overflow: hidden;
@@ -85,7 +97,7 @@ footer .right-align {
     padding-right: 15%;
 }
 
-/* Modal Colour Schemes to match the Book Repository UX Design */
+/* --- // Modal Colour Schemes to match the Book Repository UX Design */
 .modal,
 .modal-footer {
     font-family: 'Raleway', sans-serif;
@@ -101,7 +113,7 @@ footer .right-align {
     padding: 10px 0px;
 }
 
-/* Message Chips (Flask, MaterializeCSS 1.0.0, custom CSS 3, and a JS Timeout function = Flask Flash Messages) */
+/* --- // Message Chips (Flask, MaterializeCSS 1.0.0, custom CSS 3, and a JS Timeout function = Flask Flash Messages) */
 .message-success {
     color: #FFFFFF;
     background-color: #26A69A;
@@ -127,7 +139,7 @@ footer .right-align {
     background-color: #d81b60;
 }
 
-/* Book Spine background-image for the Member's Page */
+/* --- // Book Spine background-image for the Member's Page */
 .collapsible-header {
     background-image: url("/static/images/christian-wiediger-GWucxGZvO-w-unsplash.jpg");
     /* Photo by <a href="https://unsplash.com/@christianw?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Christian Wiediger</a> */
@@ -147,6 +159,7 @@ footer .right-align {
     padding: 10px 0px 0px 10px;
 }
 
+/* ---// Form Fields and Buttons Styling */
 /* Remember Me Label */
 #remember_me_label {
     font-size: 1rem;
@@ -158,15 +171,9 @@ label {
     color: #000000;
 }
 
-/* Pagination styling to suit <H6> above on the 'members.html' page */
-.pagination {
-    font-size: 1.15rem;
-    line-height: 110%;
-    margin-bottom: 1rem;
-}
-
 /* "Breathing space between the submit/register/login buttons, the fields and the forms */
-.button_top_padding, .field_top_padding {
+.button_top_padding,
+.field_top_padding {
     padding-top: 1rem;
 }
 
@@ -179,7 +186,7 @@ label {
     background-color: #0c4091;
 }
 
-/* Taken from 'materialize.css' (1.0.0) to style the input fields to match the Book Repository UX Design */
+/* --- // Taken from 'materialize.css' (1.0.0) to style the input fields to match the Book Repository UX Design */
 /* Checkbox when selected is the same colour as the rest of the form elements */
 [type="checkbox"]:checked+span:not(.lever):before {
     border-right: 2px solid #0d47a1;
@@ -249,7 +256,12 @@ textarea.materialize-textarea:focus:not([readonly])+label {
     color: #0D47A1;
 }
 
-/* W3Schools Drop-Down Menu for the Member's, Search Results, and Admin Pages */
+/* Active Label on the Register Page and Jinja render for Flask-User and error handling */
+.input-field>label:not(.label-icon).active {
+    color: #0D47A1;
+}
+
+/* --- // W3Schools Drop-Down Menu for the Member's, Search Results, and Admin Pages */
 .book-dropdown {
     position: relative;
     display: inline-block;

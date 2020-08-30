@@ -13,6 +13,8 @@ An Admin Dashboard provides user management, loading of genres and books, as wel
 
 The Book Repository is inspired by my own love of books and reading, and my propensity to stack my books all over the house (makes it easy to see and read them), much to the annoyance of my wife. This way I have the means to store details of my books online, browse my digital stack and find the inspiration to read a book again, or better yet read a new book based on another reader's stack of books.
 
+![Section Divider: Title and Business](https://github.com/NaoiseGaffney/BookRepository/blob/development/documentation/section%20divider.png)
+
 ## Business
 The Business goals describe the expected user/reader and site owner goals, and drive the design, development, and deployment of the application which in this case is the Book Repository. The fulfillment of these goals detemine the success of the application.
 
@@ -26,13 +28,120 @@ Inspire readers to find books they might not have heard of, and compel them to b
 
 Find new books to read, broadening my horizons, and enjoying the excitement of delving into the mind and perspective of the author.
 
-## User Experience
+![Section Divider: Business and User Experience](https://github.com/NaoiseGaffney/BookRepository/blob/development/documentation/section%20divider.png)
 
-User experience (UX) design is the design process used to create applications and websites that provide meaningful and relevant experiences to users. The User Experience links the Business goals of the external user and site owner to a number of user stories. A user story captures a description of a software feature from an end-user perspective. A user story describes the type of user, what they want and why. A use case is a list of actions or event steps describing the interactions between a role and a system to achieve a goal.
+## User Experience
+User experience (UX) design is the design process used to create applications and websites that provide meaningful and relevant experiences to users. 
+
+### A Persona Summary of the Users/Readers of the Book Repository
+![Persona Summary](https://github.com/NaoiseGaffney/BookRepository/blob/development/documentation/Persona%20Summary.png)
+
+The Book Repository is for readers of all ages, diverse demographics and interests, with a preference for real books as opposed to digital media like Kindle (digital media has online libraries and ways of sorting and sharing their books already), and who want to gain some measure of control over their growing stack or library of books through a Book Repository with the additional means to share their views and ratings on books, while also gaining insights and ideas from fellow readers.
+
+The age limit of 18 exists as some books shared may not be suitable for children, and may not be marked as hidden by the user/reader from public searches. It's recommended that people under the age of 18 use the Book Repository under the supervision of a parent or other guardian.
+
+Since the Book Repository aims to satisfy the requirements of a diverse demographic and age group, ease-of-use is key which is described in the section on Design Decisions and Technology Choices.
+
+* Information Architecture is sequential with modals, leading the user/reader along at every stage. The navigation bar provides a different set of options depending on the role (user or Admin), and whether authenticated or not.
+* Breadcrumbs provide a clear view of where the user/reader is, and has been, with the option to click on any breadcrumb to go back to a previous page (please note, once signed in, the Landing/Home Page redirects to the Member's Page).
+* Pagination is provided in the Member's Page and Search Results if 8 books or more exist. The pagination navigation is placed at the top of the book stack for ease-of-use. 
+* The Book Repository emails for user/reader registration, password change, and password reset all provide ample explanations on what to do and why (click on the email link).
+* Help tooltips (hover) and form field tooltips (hover) exist for every page and form, aiding the user/reader in understanding and using the Book Repository.
+* Flash messages provide instant user/reader feedback on either the success or failure of a task (sign in, sign  out, register, update profile, change or reset password, add book, update book, delete book, and incorrect form field entries). The same Flash message feedback is used for the Admin Dashboard too, to aid an admin in using the existing features without having to read documentation or resort to trial-and-error.
+* All from fields provide immediate user/reader feedback too, when selecting an empty field, when entering an incorrect entry, and when a required entry is needed (notable exception is the Admin Dashboard User Modal where some of the authentication is performed in 'app.py').
+* All buttons (form buttons and navigation bar) combine text and icon consistently to aid in the function recognition and use. For all form fields the icon is to the left of the field. For all buttons the icon is on the right of the text. The navigation bar has the icons on the right of the text, except for the hamburger-menu where the icons ae on the left of the text as it looks nicer from a layout perspective.
+* Responsive Web Design: the Book Repository works across all devices and screen sizes. In fact, it looks somewhat better on mobile device than on the desktop if anything.
+* The colour scheme has changed over the course of the project, aiming to provide a clear and clean user interface with a good contrast.
+* The font used throughout the Book Repository is Raleway, provided by Google Fonts. It's an easy-to-read font on all device/screen sizes and is comfortable to read over long periods of time.
+* The 4 error handlers handle the unfortunate incidents where a user/reader goes astray, or an internal issue has occured. The error handlers provide a means to get back to the Member's Page or Sign Out, as well as an apology for the incident and an explanation of what has occured and potentially why.
+* The Book Repository logo is easily recognisable and simple in its design. It's a stack of books with the text, "Book Repository".
+
+#### Typography
+![Book Repository Typgraphy: Raleway Font](https://github.com/NaoiseGaffney/BookRepository/blob/development/documentation/Raleway%20Font.png)
+
+[Google Fonts: Raleway](https://fonts.google.com/specimen/Raleway#standard-styles)
+
+The font used throughout the Book Repository is Raleway, provided by Google Fonts. It's an easy-to-read font on all device/screen sizes and is comfortable to read over long periods of time.
+
+#### Colour Scheme
+![Book Repository Final Colour Scheme](https://github.com/NaoiseGaffney/BookRepository/blob/development/documentation/Book%20Repository%20-%20Colour%20Scheme%20-%20README.png)
+
+[Coolors Colour Scheme](https://coolors.co/0d47a1-26a69a-d81b60-ffffff-37474f)
+
+The colour scheme has changed over the course of the project, aiming to provide a clear and clean user interface with a good contrast.
+
+Book Repository Logo Colour Scheme:
+
+* Coolors Cobalt Blue #0d47a1
+* MCSS: blue darken-4
+* RGB: 13, 71, 161
+
+Book Repository Colour Scheme:
+
+* Primary and Background Colour (reverse)
+	* Coolors: Cobalt Blue #0D47A1
+	* MCSS: blue darken-4
+	* RGB: 13, 71, 161
+	* Use: together with white and black in some cases - button and navigation bar background, secondary button text over white background, active form field icons and labels, links, active elements.
+
+* Secondary and Font Colour (reverse):
+	* Coolors White #ffffff
+	* MCSS: white
+	* RGB: 255, 255, 255
+	* Use: together with blue - button and navigation bar text and icons, secondary button background over blue background.
+
+* Tertiary Colour:
+	* Coolors: Dark Cornflower Blue #0c4091
+	* MCSS: no equivalent
+	* RGB: 12, 64, 145
+	* Use: toggle switch on background colour.
+
+* Quaternary Colour:
+	* Coolors: Black #000000
+	* MCSS: black
+	* RGB: 0, 0, 0
+	* Use: most text is black, form field, book details, and table text
+
+* Accent Colour 1:
+	* Coolors: Ruby #d81b60
+	* MCSS: pink darken-1
+	* RGB: 216, 27, 96
+	* Use: Flash message failure, delete book, delete user. 
+
+* Accent Colour 2:
+	* Coolors: Persian Green #26a69a
+	* MCSS: teal lighten-1
+	* RGB: 38, 166, 154
+	* Use: Flash message succuess, view book.
+
+* Accent Colour 3:
+	* Coolors: Charcoal #37474f
+	* MCSS: blue-grey darken-3
+	* RGB: 55, 71, 79
+	* Use: Flash message info.
+
+#### Buttons
+
+#### Navigation Bar
+
+#### Fixed Footer
+
+#### Background Image
+
+#### Flash Messages
+
+#### Breadcrumbs
+
+#### Pagination
+
+#### Favicon
+
+#### Materialize CSS 1.0.0
+
+### User Stories, Use Cases, and Tasks
+The User Experience links the Business goals of the external user and site owner to a number of user stories. A user story captures a description of a software feature from an end-user perspective. A user story describes the type of user, what they want and why. A use case is a list of actions or event steps describing the interactions between a role and a system to achieve a goal.
 
 A user story has one or more use cases with one or more tasks with steps associated with it, describing how the user story, and subsequent fulfillment of the external user's and site owner's business goals are realised: Business Goals -> User Story -> Use Case(s) -> Task(s).
-
-
 
 ---
 
@@ -102,14 +211,19 @@ A user story has one or more use cases with one or more tasks with steps associa
 	*  **Use Case 004-007 (R in Statistics CRUD):** as an admin I want to view the number of users, number of books, and the most popular genres in the Book Repository.
 		*  **Tasks 1:** [Member's Page](https://book-repository-virtual.herokuapp.com/members) -> click on [Admin Page](https://book-repository-virtual.herokuapp.com/admin_dashboard) -> hover over the drop-down (category icon) menu and click on the Statistics button -> scroll through the statitics and click on the Done button to close the modal -> [Admin Page](https://book-repository-virtual.herokuapp.com/admin_dashboard).
 
----
+[Initial thoughts and plans for the Book Repository](https://github.com/NaoiseGaffney/BookRepository/wiki/Initial-Project-Design-Thoughts---have-since-changed-with-new-knowledge-and-skills.)
+
+![Section Divider: User Experience and Features](https://github.com/NaoiseGaffney/BookRepository/blob/development/documentation/section%20divider.png)
 
 ## Features
 A feature is some action that can be performed by a user of an application, or is some internal function of an application. The features support the User Experience mentioned above and are implemented based on the business goals, user stories and use cases.
 
 The features are divided into 4 main areas, User Management, Book Repository (the main book and library features), Admin Dashboard, and Shared Features.
 
-### User Management:
+### Existing Features
+Features currrently implemented as a part of the Book Repository.
+
+#### User Management:
 
 * Flask-User extension with:
 	* User/reader registration with email confirmation (C is User CRUD).
@@ -119,7 +233,7 @@ The features are divided into 4 main areas, User Management, Book Repository (th
 	* User/reader sign out.
 * Added user/reader delete user/reader modal to Flask-User user profile update (D in User CRUD).
 
-### Book Repository:
+#### Book Repository:
 
 * Member's Page with:
 	* The user's/reader's virtual stack of books to ilicit the same feeling as walking into a library at home, or a public library.
@@ -140,7 +254,7 @@ The features are divided into 4 main areas, User Management, Book Repository (th
 	* The ability to browse and view books matching the search criteria.
 	* The ability to edit/update books belonging to the current user/reader (books belonging to other users/readers can't be edited/updated, nor deleted).
 
-### Admin Dashboard:
+#### Admin Dashboard:
 
 * Admin Page with:
 	* User Management table, User, Full Name, Active, E-mail.
@@ -150,7 +264,7 @@ The features are divided into 4 main areas, User Management, Book Repository (th
 		* List Genres, to view the 32 genres and their description. Future feature to add, update, and delete genres here (R in Book Genre CRUD).
 		* Book Repository Statistics via the drop-down menu to vie the number of users, number of books, and number of books in each genre (R in Statistics CRUD).
 
-### Shared Features:
+#### Shared Features:
 
 * Added:
 	* Help tooltips (? icon).
@@ -173,14 +287,14 @@ The features are divided into 4 main areas, User Management, Book Repository (th
 * Styling and Layout using Materialize CSS 1.0.0 for a clean crisp interface that's easy to view and use.
 * Osano Consent Cookie.
 
-## Future Features
+### Future Features
 Future features are planned features that didn't make it into this first release due to time, effort, current knowledge and skills constraints (I know it can be done, I haven't yet figured out how).
 
-### User Management:
+#### User Management:
 
 * Username update by user/reader under update user profile, with automatic update of books belonging to the user/reader.
 
-### Book Repository:
+#### Book Repository:
 
 * Validate ISBN using Python extension isbnlib when books are added and updated.
 * Support for ISBN with the check digit of 'X'.
@@ -189,7 +303,7 @@ Future features are planned features that didn't make it into this first release
 * Shared book comments.
 * User/reader messaging/message board.
 
-### Admin Dashboard:
+#### Admin Dashboard:
 
 * User 'admin' can activate/revoke Admin role in the Admin Dashboard User Modal to share the administrative responsibilities when the site grows.
 * Number of books per user/reader and genre breakdown per user/reader.
@@ -200,10 +314,10 @@ Future features are planned features that didn't make it into this first release
 * Update, add, delete genres in the genres collection.
 * Application Log view in the Admin Dashboard, primarily to view rogue users/readers and to revoke their access to the Book Repository.
 
-### Shared Features
+#### Shared Features
 * Implement [Flask-Paranoid](https://flask-paranoid.readthedocs.io/en/latest/) to protect against stolen user session cookies (Flask-Login 'SESSION_PROTECTION = "strong"' when "Remember Me" is enabled isn't enough).
 
-## Features CRUD Table (Views)
+### Features CRUD Table (Views)
 This table is an overview of the CRUD functions for each feature or role or MongoDB collection. It describes the implemented features, the future features, possible future features, and features that are not planned to be implemented. The notes describe where the feature is implemented in the Book Repository.
 
 'X' = CRUD feature implemented
@@ -223,7 +337,7 @@ This table is an overview of the CRUD functions for each feature or role or Mong
 | Admin Statistics              |   | X |   |   | Statistics provided are: number of users/readers, number of books, table of current genres used and number of each in descending order. Future feature includes the number of books and genre per user.                                                    |
 | Application Logs              | X | f |   | X | Application logs provide application endpoint/function information related to each user/reader. In future, viewing these logs, and filtering them per user/reader and severity is useful to identify issues. Rotating logs are deleted after 10 instances. |
 
-## Application Logging and Flash Messaging Levels
+### Application Logging and Flash Messaging Levels
 Application logging is key to gather application usage for statistics and planning, for security reasons to detect potential attempts at disrupting the site, for performance planning as the site grows (increased usage and conversion rates) to ensure the use of the Book Repository is always a pleasant exeperience, and for root-cause and impact-analysis in the event of critical issues disrupting the end-user experience.
 
 Flash messaging keeps the users/readers informed (success, info, failure) through continuous feedback as they use the features of the Book Repository.
@@ -241,12 +355,16 @@ Local development uses a rotating file handler which makes the logs easier to re
 | Error    |         |               |                                                              |                                                                                                                                                          |
 | Critical | Danger  | Failure       | Heroku Production                                            | Application Log (rotating file logger and console) = Critical. Flash Message = Danger (pink). Book Repository Message in Application Log = Failure.      |
 
+![Section Divider: Features and Design Decisions and Technology Choices](https://github.com/NaoiseGaffney/BookRepository/blob/development/documentation/section%20divider.png)
+
 ## Design Decisions and Technology Choices
 Layout and navigation, colour scheme(s) (progression), typography, icons and text...
 
 Flask-User, application logging, CSRF, FDT, Flask-MongoEngine/MongoEngine, File Handling (JSON), Google Books API (thumbnail images), Session Cookies, Consent Cookie, 'config.py', .env and Heroku variables, CDD, DB Schema, JSON Schema...
 
 Defensive Programming...
+
+![Section Divider: Design Decisions and Technology Choices, and Technology](https://github.com/NaoiseGaffney/BookRepository/blob/development/documentation/section%20divider.png)
 
 ## Technology
 ### Code
@@ -259,6 +377,8 @@ Defensive Programming...
 
 ### General Knowledge and Hours of Reading
 
+![Section Divider: Technology and, Testing and Validation](https://github.com/NaoiseGaffney/BookRepository/blob/development/documentation/section%20divider.png)
+
 ## Testing and Validation
 ### Manual BDD
 
@@ -268,7 +388,11 @@ Defensive Programming...
 
 ### Validation of HTML 5, CSS 3, JS and Python
 
+![Section Divider: Testing and Validation, and Continuous Delivery and Deployment](https://github.com/NaoiseGaffney/BookRepository/blob/development/documentation/section%20divider.png)
+
 ## Continuous Delivery and Deployment
+
+![Section Divider: Continuous Delivery and Deployment, and Credits](https://github.com/NaoiseGaffney/BookRepository/blob/development/documentation/section%20divider.png)
 
 ## Credits
 ![GaffCo Consulting Logo](https://github.com/NaoiseGaffney/Professional-Training-Development/blob/master/docs/GaffCo%20-%20Background.png)
