@@ -13,6 +13,8 @@ An Admin Dashboard provides user management, loading of genres and books, as wel
 
 The Book Repository is inspired by my own love of books and reading, and my propensity to stack my books all over the house (makes it easy to see and read them), much to the annoyance of my wife. This way I have the means to store details of my books online, browse my digital stack and find the inspiration to read a book again, or better yet read a new book based on another reader's stack of books.
 
+![Section Divider: Title and Business](https://github.com/NaoiseGaffney/BookRepository/blob/development/documentation/section%20divider.png)
+
 ## Business
 The Business goals describe the expected user/reader and site owner goals, and drive the design, development, and deployment of the application which in this case is the Book Repository. The fulfillment of these goals detemine the success of the application.
 
