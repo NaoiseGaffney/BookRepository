@@ -29,7 +29,7 @@ Find new books to read, broadening my horizons, and enjoying the excitement of d
 ## User Experience
 User experience (UX) design is the design process used to create applications and websites that provide meaningful and relevant experiences to users. 
 
-### A persona summary of the users/readers of the Book Repository
+### A Persona Summary of the Users/Readers of the Book Repository
 ![Persona Summary](https://github.com/NaoiseGaffney/BookRepository/blob/development/documentation/Persona%20Summary.png)
 
 ### User Stories, Use Cases, and Tasks
