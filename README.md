@@ -74,7 +74,8 @@ Book Repository Logo Colour Scheme:
 
 * Coolors Cobalt Blue #0d47a1
 * MCSS: blue darken-4
-* RGB: 13, 71, 161
+* RGB: 13, 71, 161
+
 Book Repository Colour Scheme:
 
 * Primary and Background Colour (reverse)

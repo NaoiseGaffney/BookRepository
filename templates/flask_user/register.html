@@ -8,12 +8,11 @@
         data-tooltip="<p class='left-align'>Please enter your username (Username) using 250 characters or less. Letters, digits and @ . + - _ only.</p><br><p class='left-align'>Please enter your email address (Email), for example 'name@domain.com'.</p><br><p class='left-align'>Please enter a password (Password) longer than 8 characters, using a mixture of numbers and letters, and ideally one or more special characters.</p><br><p class='left-align'>Password confirmation: Please enter the same password (Retype Password) again for verification.</p>">help</i>
 </h6>
 
-<form method="POST" class="form">
-    {{ form.hidden_tag() }}
 
-    {# Username or Email #}
-    {% set field = form.username if user_manager.USER_ENABLE_USERNAME else form.email %}
+<form action="" method="POST" novalidate formnovalidate class="form" role="form">
     <div class="field_top_padding">
+        {{ form.hidden_tag() }}
+        {% set field = form.username if user_manager.USER_ENABLE_USERNAME else form.email %}
         <div class="form-group {% if field.errors %}has-error{% endif %}">
             <div class="row">
                 <div class="input-field col s12">
@@ -29,55 +28,22 @@
                 </div>
             </div>
         </div>
-    </div>
 
-    {% if user_manager.USER_ENABLE_EMAIL and user_manager.USER_ENABLE_USERNAME %}
-    <div class="field_top_padding">
-        <div class="form-group {% if field.errors %}has-error{% endif %}">
-            <div class="row">
-                <div class="input-field col s12">
-                    <i class="material-icons prefix tooltipped" data-position="bottom"
-                        data-tooltip="Please enter your email address.">email</i>
-                    <input class="form-control" id="email" name="email" required="" type="text" value="">
-                    <label for="email" class="control-label">Email</label>
-                </div>
-            </div>
+        {% if user_manager.USER_ENABLE_EMAIL and user_manager.USER_ENABLE_USERNAME %}
+        {{ render_field(form.email) }}
+        {% endif %}
+
+        {{ render_field(form.password) }}
+
+        {% if user_manager.USER_REQUIRE_RETYPE_PASSWORD %}
+        {{ render_field(form.retype_password) }}
+        {% endif %}
+
+        <div class="button_top_padding">
+            <button class="btn waves-effect waves-light" type="submit" name="action">Register
+                <i class="material-icons right">how_to_reg</i>
+            </button>
         </div>
-    </div>
-    {% endif %}
-    <div class="field_top_padding">
-        <div class="form-group {% if field.errors %}has-error{% endif %}">
-            <div class="row">
-                <div class="input-field col s12">
-                    <i class="material-icons prefix tooltipped" data-position="bottom"
-                        data-tooltip="Please enter your password.">vpn_key</i>
-                    <input class="form-control" id="password" name="password" required="" type="password" value="">
-                    <label for="password" class="control-label">Password</label>
-                </div>
-            </div>
-        </div>
-    </div>
-
-
-    {% if user_manager.USER_REQUIRE_RETYPE_PASSWORD %}
-    <div class="field_top_padding">
-        <div class="form-group {% if field.errors %}has-error{% endif %}">
-            <div class="row">
-                <div class="input-field col s12">
-                    <i class="material-icons prefix tooltipped" data-position="bottom"
-                        data-tooltip="Please enter your password again.">vpn_key</i>
-                    <input class="form-control" id="retype_password" name="retype_password" type="password" value="">
-                    <label for="retype_password" class="control-label">Retype Password</label>
-                </div>
-            </div>
-        </div>
-    </div>
-    {% endif %}
-
-    <div class="button_top_padding">
-        <button class="btn waves-effect waves-light" type="submit" name="action">Register
-            <i class="material-icons right">how_to_reg</i>
-        </button>
     </div>
 </form>
 <br>

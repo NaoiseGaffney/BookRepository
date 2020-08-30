@@ -2,9 +2,17 @@
 <div class="form-group {% if field.errors %}has-error{% endif %} {{ kwargs.pop('class_', '') }}">
     <div class="row">
         <div class="input-field col s12">
-            {% if field.label.text == "password" or "old_password" or "retype_password" %}
+            {% if field.label.text == "Old Password" or field.label.text == "New Password" or field.label.text == "Retype New Password" %}
             <i class="material-icons prefix tooltipped" data-position="bottom"
                 data-tooltip="Please enter your password (old/current in 'old password', and new password in 'new password' and 'retype password').">vpn_key</i>
+            {% endif %}
+            {% if field.label.text == "Password" or field.label.text == "Retype Password" %}
+            <i class="material-icons prefix tooltipped" data-position="bottom"
+                data-tooltip="Please enter your password (in 'Password', and 'Retype Password' to confirm).">vpn_key</i>
+            {% endif %}
+            {% if field.label.text == "Email" %}
+            <i class="material-icons prefix tooltipped" data-position="bottom"
+                data-tooltip="Please enter your email address.">email</i>
             {% endif %}
             {% if field.type != 'HiddenField' and label_visible %}
             {% if not label %}{% set label=field.label.text %}{% endif %}
