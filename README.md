@@ -56,6 +56,33 @@ Since the Book Repository aims to satisfy the requirements of a diverse demograp
 * The 4 error handlers handle the unfortunate incidents where a user/reader goes astray, or an internal issue has occured. The error handlers provide a means to get back to the Member's Page or Sign Out, as well as an apology for the incident and an explanation of what has occured and potentially why.
 * The Book Repository logo is easily recognisable and simple in its design. It's a stack of books with the text, "Book Repository".
 
+#### Typography
+
+#### Colour Scheme
+Colour Scheme: Updated logo. Moved up book and repository (cloud), and used a Materialize Colour, Cobalt Blue. MCSS: #0d47a1 blue darken-4RGB: 13, 71, 161Coolors: Cobalt Blue. Changed the website colour scheme to match the change too. Using Cobalt Blue (#0D47A1, blue darken-4) on [ This is too dark -> Cultured (#ECEFF1, blue-grey lighten-5) -> Cultured (#FAFAFA, grey lighten-5)] White (#FFFFFF, White), and Persian Green (#26A69A, teal lighten-1) on Charcoal (#37474F, blue-grey darken-3), with the accent colour being Ruby (#d81b60, pink darken-1).
+
+
+
+[Coolors Colour Scheme](https://coolors.co/0d47a1-26a69a-d81b60-ffffff-37474f)
+
+#### Buttons
+
+#### Navigation Bar
+
+#### Fixed Footer
+
+#### Background Image
+
+#### Flash Messages
+
+#### Breadcrumbs
+
+#### Pagination
+
+#### Favicon
+
+#### Materialize CSS 1.0.0
+
 ### User Stories, Use Cases, and Tasks
 The User Experience links the Business goals of the external user and site owner to a number of user stories. A user story captures a description of a software feature from an end-user perspective. A user story describes the type of user, what they want and why. A use case is a list of actions or event steps describing the interactions between a role and a system to achieve a goal.
 
