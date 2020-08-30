@@ -27,12 +27,15 @@ Inspire readers to find books they might not have heard of, and compel them to b
 Find new books to read, broadening my horizons, and enjoying the excitement of delving into the mind and perspective of the author.
 
 ## User Experience
+User experience (UX) design is the design process used to create applications and websites that provide meaningful and relevant experiences to users. 
 
-User experience (UX) design is the design process used to create applications and websites that provide meaningful and relevant experiences to users. The User Experience links the Business goals of the external user and site owner to a number of user stories. A user story captures a description of a software feature from an end-user perspective. A user story describes the type of user, what they want and why. A use case is a list of actions or event steps describing the interactions between a role and a system to achieve a goal.
+### A persona summary of the users/readers of the Book Repository
+![Persona Summary](https://github.com/NaoiseGaffney/BookRepository/blob/development/documentation/Persona%20Summary.png)
+
+### User Stories, Use Cases, and Tasks
+The User Experience links the Business goals of the external user and site owner to a number of user stories. A user story captures a description of a software feature from an end-user perspective. A user story describes the type of user, what they want and why. A use case is a list of actions or event steps describing the interactions between a role and a system to achieve a goal.
 
 A user story has one or more use cases with one or more tasks with steps associated with it, describing how the user story, and subsequent fulfillment of the external user's and site owner's business goals are realised: Business Goals -> User Story -> Use Case(s) -> Task(s).
-
-
 
 ---
 
