@@ -28,6 +28,8 @@ Inspire readers to find books they might not have heard of, and compel them to b
 
 Find new books to read, broadening my horizons, and enjoying the excitement of delving into the mind and perspective of the author.
 
+![Section Divider: Business and User Experience](https://github.com/NaoiseGaffney/BookRepository/blob/development/documentation/section%20divider.png)
+
 ## User Experience
 User experience (UX) design is the design process used to create applications and websites that provide meaningful and relevant experiences to users. 
 
@@ -109,14 +111,17 @@ A user story has one or more use cases with one or more tasks with steps associa
 	*  **Use Case 004-007 (R in Statistics CRUD):** as an admin I want to view the number of users, number of books, and the most popular genres in the Book Repository.
 		*  **Tasks 1:** [Member's Page](https://book-repository-virtual.herokuapp.com/members) -> click on [Admin Page](https://book-repository-virtual.herokuapp.com/admin_dashboard) -> hover over the drop-down (category icon) menu and click on the Statistics button -> scroll through the statitics and click on the Done button to close the modal -> [Admin Page](https://book-repository-virtual.herokuapp.com/admin_dashboard).
 
----
+![Section Divider: User Experience and Features](https://github.com/NaoiseGaffney/BookRepository/blob/development/documentation/section%20divider.png)
 
 ## Features
 A feature is some action that can be performed by a user of an application, or is some internal function of an application. The features support the User Experience mentioned above and are implemented based on the business goals, user stories and use cases.
 
 The features are divided into 4 main areas, User Management, Book Repository (the main book and library features), Admin Dashboard, and Shared Features.
 
-### User Management:
+### Existing Features
+Features currrently implemented as a part of the Book Repository.
+
+#### User Management:
 
 * Flask-User extension with:
 	* User/reader registration with email confirmation (C is User CRUD).
@@ -126,7 +131,7 @@ The features are divided into 4 main areas, User Management, Book Repository (th
 	* User/reader sign out.
 * Added user/reader delete user/reader modal to Flask-User user profile update (D in User CRUD).
 
-### Book Repository:
+#### Book Repository:
 
 * Member's Page with:
 	* The user's/reader's virtual stack of books to ilicit the same feeling as walking into a library at home, or a public library.
@@ -147,7 +152,7 @@ The features are divided into 4 main areas, User Management, Book Repository (th
 	* The ability to browse and view books matching the search criteria.
 	* The ability to edit/update books belonging to the current user/reader (books belonging to other users/readers can't be edited/updated, nor deleted).
 
-### Admin Dashboard:
+#### Admin Dashboard:
 
 * Admin Page with:
 	* User Management table, User, Full Name, Active, E-mail.
@@ -157,7 +162,7 @@ The features are divided into 4 main areas, User Management, Book Repository (th
 		* List Genres, to view the 32 genres and their description. Future feature to add, update, and delete genres here (R in Book Genre CRUD).
 		* Book Repository Statistics via the drop-down menu to vie the number of users, number of books, and number of books in each genre (R in Statistics CRUD).
 
-### Shared Features:
+#### Shared Features:
 
 * Added:
 	* Help tooltips (? icon).
@@ -180,14 +185,14 @@ The features are divided into 4 main areas, User Management, Book Repository (th
 * Styling and Layout using Materialize CSS 1.0.0 for a clean crisp interface that's easy to view and use.
 * Osano Consent Cookie.
 
-## Future Features
+### Future Features
 Future features are planned features that didn't make it into this first release due to time, effort, current knowledge and skills constraints (I know it can be done, I haven't yet figured out how).
 
-### User Management:
+#### User Management:
 
 * Username update by user/reader under update user profile, with automatic update of books belonging to the user/reader.
 
-### Book Repository:
+#### Book Repository:
 
 * Validate ISBN using Python extension isbnlib when books are added and updated.
 * Support for ISBN with the check digit of 'X'.
@@ -196,7 +201,7 @@ Future features are planned features that didn't make it into this first release
 * Shared book comments.
 * User/reader messaging/message board.
 
-### Admin Dashboard:
+#### Admin Dashboard:
 
 * User 'admin' can activate/revoke Admin role in the Admin Dashboard User Modal to share the administrative responsibilities when the site grows.
 * Number of books per user/reader and genre breakdown per user/reader.
@@ -207,10 +212,10 @@ Future features are planned features that didn't make it into this first release
 * Update, add, delete genres in the genres collection.
 * Application Log view in the Admin Dashboard, primarily to view rogue users/readers and to revoke their access to the Book Repository.
 
-### Shared Features
+#### Shared Features
 * Implement [Flask-Paranoid](https://flask-paranoid.readthedocs.io/en/latest/) to protect against stolen user session cookies (Flask-Login 'SESSION_PROTECTION = "strong"' when "Remember Me" is enabled isn't enough).
 
-## Features CRUD Table (Views)
+### Features CRUD Table (Views)
 This table is an overview of the CRUD functions for each feature or role or MongoDB collection. It describes the implemented features, the future features, possible future features, and features that are not planned to be implemented. The notes describe where the feature is implemented in the Book Repository.
 
 'X' = CRUD feature implemented
@@ -230,7 +235,7 @@ This table is an overview of the CRUD functions for each feature or role or Mong
 | Admin Statistics              |   | X |   |   | Statistics provided are: number of users/readers, number of books, table of current genres used and number of each in descending order. Future feature includes the number of books and genre per user.                                                    |
 | Application Logs              | X | f |   | X | Application logs provide application endpoint/function information related to each user/reader. In future, viewing these logs, and filtering them per user/reader and severity is useful to identify issues. Rotating logs are deleted after 10 instances. |
 
-## Application Logging and Flash Messaging Levels
+### Application Logging and Flash Messaging Levels
 Application logging is key to gather application usage for statistics and planning, for security reasons to detect potential attempts at disrupting the site, for performance planning as the site grows (increased usage and conversion rates) to ensure the use of the Book Repository is always a pleasant exeperience, and for root-cause and impact-analysis in the event of critical issues disrupting the end-user experience.
 
 Flash messaging keeps the users/readers informed (success, info, failure) through continuous feedback as they use the features of the Book Repository.
@@ -248,12 +253,16 @@ Local development uses a rotating file handler which makes the logs easier to re
 | Error    |         |               |                                                              |                                                                                                                                                          |
 | Critical | Danger  | Failure       | Heroku Production                                            | Application Log (rotating file logger and console) = Critical. Flash Message = Danger (pink). Book Repository Message in Application Log = Failure.      |
 
+![Section Divider: Features and Design Decisions and Technology Choices](https://github.com/NaoiseGaffney/BookRepository/blob/development/documentation/section%20divider.png)
+
 ## Design Decisions and Technology Choices
 Layout and navigation, colour scheme(s) (progression), typography, icons and text...
 
 Flask-User, application logging, CSRF, FDT, Flask-MongoEngine/MongoEngine, File Handling (JSON), Google Books API (thumbnail images), Session Cookies, Consent Cookie, 'config.py', .env and Heroku variables, CDD, DB Schema, JSON Schema...
 
 Defensive Programming...
+
+![Section Divider: Design Decisions and Technology Choices, and Technology](https://github.com/NaoiseGaffney/BookRepository/blob/development/documentation/section%20divider.png)
 
 ## Technology
 ### Code
@@ -266,6 +275,8 @@ Defensive Programming...
 
 ### General Knowledge and Hours of Reading
 
+![Section Divider: Technology and, Testing and Validation](https://github.com/NaoiseGaffney/BookRepository/blob/development/documentation/section%20divider.png)
+
 ## Testing and Validation
 ### Manual BDD
 
@@ -275,7 +286,11 @@ Defensive Programming...
 
 ### Validation of HTML 5, CSS 3, JS and Python
 
+![Section Divider: Testing and Validation, and Continuous Delivery and Deployment](https://github.com/NaoiseGaffney/BookRepository/blob/development/documentation/section%20divider.png)
+
 ## Continuous Delivery and Deployment
+
+![Section Divider: Continuous Delivery and Deployment, and Credits](https://github.com/NaoiseGaffney/BookRepository/blob/development/documentation/section%20divider.png)
 
 ## Credits
 ![GaffCo Consulting Logo](https://github.com/NaoiseGaffney/Professional-Training-Development/blob/master/docs/GaffCo%20-%20Background.png)
