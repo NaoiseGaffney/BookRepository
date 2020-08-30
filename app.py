@@ -63,6 +63,8 @@ if os.environ.get("FDT") == "ON":
 
 
 # --- // Classes -> MongoDB Collections: User, Book, Genre.
+# Flask-User User Class (Collection) extended with email_confirmed_at
+# Added username indexing and background-indexing for performance
 class User(db.Document, UserMixin):
     # Active set to True to allow login of user
     active = db.BooleanField(default=True)
@@ -88,6 +90,8 @@ class User(db.Document, UserMixin):
     }
 
 
+# Book Class (Collection) linked to User Class via user=username
+# Title indexing, ordering, and background-indexing for performance
 class Book(db.Document):
     title = db.StringField(default="", maxlength=250)
     author = db.StringField(default="", maxlength=250)
@@ -110,9 +114,10 @@ class Book(db.Document):
     }
 
 
+# Genre Class (Collection), loaded via 'genre.json'
+# Genre indexing,ordering, and background-indexing for performance
 class Genre(db.Document):
     genre = db.StringField(default="")
-    icon = db.StringField(default="")
     description = db.StringField(default="")
 
     meta = {
@@ -132,7 +137,12 @@ user_manager = UserManager(app, db, User)
 @app.route("/index")
 @app.route("/index.html")
 def home_page():
-    # Landing/Home Page, accessible before signing/logging in.
+    """
+    Landing/Home Page, accessible before sign in/login. If logged in, user is redirected to the Member's Page.
+    At first access/touch the user 'admin' is created using environment variables for the password and email address.
+    At first access/touch the genre collection for the books is created based on 'genre.json'. Both the user and genre
+    creations are here as they will be created twice on Heroku if placed in the main code.
+    """
     if current_user.is_authenticated:
         return redirect(url_for("member_page"))
 
@@ -157,8 +167,9 @@ def home_page():
             flash("'admin' account not created.", "danger")
             app.logger.critical("'admin' account is created at startup if the user doesn't exist: [FAILURE] - (index.html).")
 
-    # Create the Genre Collection if it does not exist from the JSON file 'genre.json'.
-    # Information taken from https://bookriot.com/guide-to-book-genres/
+    # Create the Genre Collection if it does not exist. Genre descriptions taken from https://bookriot.com/guide-to-book-genres/
+    # First validation: Genre Collection exists. Second validation: FileNotFound ('genre.json').
+    # Third validation: JSONDecodeError (valid JSON format). Fourth validation: correct JSON Schema = Genre Class.
     if not Genre.objects():
         try:
             with open("genre.json", "r", encoding="utf-8") as f:
@@ -207,9 +218,10 @@ def home_page():
 @app.route("/members/<int:page>")
 @login_required
 def member_page(page=1):
-    # The "R" in CRUD, a virtual library or stack of books to browse.
+    """
+    The "R" in CRUD, a virtual library or stack of books to browse in the Member's Page.
+    """
     app.logger.info(f"{current_user.username} is accessing the Member's Page: [INFO] - (members.html).")
-
     genre_list = Genre.objects()
     books_pagination = Book.objects.filter(user=current_user.username).paginate(page=page, per_page=7)
     return render_template("members.html", books_pagination=books_pagination, page_prev=(page - 1), page_next=(page + 1), genre_list=genre_list)
@@ -219,7 +231,9 @@ def member_page(page=1):
 @login_required
 @app.errorhandler(CSRFError)
 def add_book():
-    # Preparing for the "C" in CRUD, filling in the add book form.
+    """
+    Preparing for the "C" in CRUD, filling in the add book form.
+    """
     app.logger.info(f"{current_user.username} is adding a book: [INFO] - (add_book.html).")
     genre = Genre.objects()
     return render_template("add_book.html", genre=genre)
@@ -229,7 +243,10 @@ def add_book():
 @login_required
 @app.errorhandler(CSRFError)
 def save_book():
-    # The "C" in CRUD, save the filled in add book form.
+    """
+    The "C" in CRUD, save the filled in add book form. The ISBN is used to get the book's thumbnail image from the Google Books API,
+    to create the book's title link to Amazon UK, and the ISBN link to ISBN Search. If no image, the default image is used.
+    """
     book = Book(
         title=request.form.get("title"),
         author=request.form.get("author"),
@@ -272,7 +289,10 @@ def save_book():
 @login_required
 @app.errorhandler(CSRFError)
 def edit_book(book_id):
-    # Preparing for the "U" in CRUD, updating the book form fields.
+    """
+    Preparing for the "U" in CRUD, updating the book form fields. It's possible to use this link to access books not belonging to the current user,
+    this has been fixed, and the culprit is warned as well as the incident logged.
+    """
     book = Book.objects.get(id=book_id)
     genre = Genre.objects()
     if book.user == current_user.username:
@@ -291,7 +311,10 @@ def edit_book(book_id):
 @login_required
 @app.errorhandler(CSRFError)
 def update_book(book_id):
-    # The "U" in CRUD, saving the changes made to the update book form fields.
+    """
+    The "U" in CRUD, saving the changes made to the update book form fields. The ISBN is used to get the book's thumbnail image from the Google Books API,
+    to create the book's title link to Amazon UK, and the ISBN link to ISBN Search. If no image, the default image is used.
+    """
     book = Book.objects.get(id=book_id)
     fields = {
         "title": request.form.get("title"),
@@ -337,8 +360,10 @@ def update_book(book_id):
 @app.route("/delete_book/<book_id>")
 @login_required
 def delete_book(book_id):
-    # The "D" in CRUD, deleting the book based on 'id' after delete modal
-    # confirmation.
+    """
+    The "D" in CRUD, deleting the book based on 'id' after delete modal confirmation. It's possible to use this link to delete books not belonging to the current user,
+    this has been fixed, and the culprit is warned as well as the incident logged.
+    """
     book = Book.objects.get(id=book_id)
     if book.user == current_user.username:
         try:
@@ -363,8 +388,9 @@ def delete_book(book_id):
 @login_required
 @app.errorhandler(CSRFError)
 def search_book():
-    # Preparing for the book search in Book Repository, filling in the search
-    # book form.
+    """
+    Preparing for the book search in Book Repository, filling in the search book form.
+    """
     genre = Genre.objects()
     app.logger.info(f"{current_user.username} is filling out the book search form: [INFO] - (search_book.html).")
     return render_template("search_book.html", genre=genre)
@@ -374,8 +400,9 @@ def search_book():
 @login_required
 @app.errorhandler(CSRFError)
 def save_search():
-    # Save the search book results in a session cookie, to use by
-    # 'search_results' repeatedly to display the paginated search results.
+    """
+    Save the search book results in a session cookie, to use by 'search_results' repeatedly to display the paginated search results.
+    """
     fields = {
         "title": request.form.get("title"),
         "author": request.form.get("author"),
@@ -388,9 +415,7 @@ def save_search():
         "private_view": request.form.get("private_view")
     }
     session["fields"] = fields
-
     app.logger.info(f"{current_user.username} is searching (saving search in session cookie) for books matching {fields}: [SUCCESS] - (search_results.html).")
-
     return redirect(url_for("search_results"))
 
 
@@ -406,9 +431,11 @@ def administration():
 @login_required
 @app.errorhandler(CSRFError)
 def search_results(page=1):
-    # Book search using a combination of form fields saved in the session
-    # cookie in 'save_search', and based on the values in some key fields
-    # decide which Book Repository BaseQuerySet to run.
+    """
+    Book search using a combination of form fields saved in the session cookie in 'save_search', and based on the values in some key fields
+    decide which Book Repository BaseQuerySet to run. As all form fields are returned as strings, the integer fields must be converted to
+    integers before being used. In case of errors they are caught as exceptions and set to valid values. There are 6 BaseQuerySets.
+    """
     fields = session.get("fields")
 
     form_title = fields["title"]
@@ -471,7 +498,9 @@ def search_results(page=1):
 @login_required
 @app.errorhandler(CSRFError)
 def delete_user():
-    # Delete user, user initiated, from edit_user_profile.html. "D" in CRUD.
+    """
+    Delete user, user initiated, from edit_user_profile.html. "D" in CRUD. Books are deleted too, and the user is logged out.
+    """
     deleted_user = current_user.username
     find_user_books = Book.objects.filter(user=current_user.username)
     find_user = User.objects.filter(username=current_user.username)
@@ -493,7 +522,9 @@ def delete_user():
 @app.route("/admin_dashboard/<int:page>")
 @roles_required("Admin")
 def admin_dashboard(page=1):
-    # Admin Dashboard for user management, loading genres and sample books, and display statistics.
+    """
+    Admin Dashboard for user management, loading genres and sample books, and display statistics.
+    """
     user_details_query = User.objects().order_by("username").paginate(page=page, per_page=10)
     user_details_query_count = User.objects.count()
     book_list = Book.objects()
@@ -514,7 +545,9 @@ def admin_dashboard(page=1):
 @roles_required("Admin")
 @app.errorhandler(CSRFError)
 def update_user(user_id):
-    # The "U" in CRUD, saving the changes made to the update user modal form fields.
+    """
+    The "U" in CRUD, saving the changes made to the update user modal form fields.
+    """
     user = User.objects.get(id=user_id)
     user_form_name = user.username
     admin_user_form = {
@@ -560,8 +593,9 @@ def update_user(user_id):
 @roles_required("Admin")
 @app.errorhandler(CSRFError)
 def admin_delete_user(user_id):
-    # The "D" in CRUD, deleting the user based on 'id' after delete modal
-    # with NO confirmation.
+    """
+    The "D" in CRUD, deleting the user based on 'id' after delete modal with NO confirmation. User 'admin' can't be deleted via the application.
+    """
     user = User.objects.get(id=user_id)
     user_books = Book.objects.filter(user=user.username)
 
@@ -581,8 +615,11 @@ def admin_delete_user(user_id):
 @app.route("/load_genres")
 @roles_required("Admin")
 def load_genres():
-    # Create the Genre Collection if it does not exist. Taken from
-    # https://bookriot.com/guide-to-book-genres/
+    """
+    Create the Genre Collection if it does not exist. Genre descriptions taken from https://bookriot.com/guide-to-book-genres/
+    First validation: Genre Collection exists. Second validation: FileNotFound ('genre.json').
+    Third validation: JSONDecodeError (valid JSON format). Fourth validation: correct JSON Schema = Genre Class.
+    """
     if not Genre.objects():
         try:
             with open("genre.json", "r", encoding="utf-8") as f:
@@ -632,7 +669,10 @@ def load_genres():
 @app.route("/load_books")
 @roles_required("Admin")
 def load_books():
-    # Create the sample Book Collection if it does not exist.
+    """
+    Create the sample Book Collection if it does not exist. First validation: Book Collection exists. Second validation: FileNotFound ('book.json').
+    Third validation: JSONDecodeError (valid JSON format). Fourth validation: correct JSON Schema = Book Class.
+    """
     if not Book.objects():
         try:
             with open("book.json", "r", encoding="utf-8") as f:
