@@ -175,11 +175,13 @@ def home_page():
             with open("genre.json", "r", encoding="utf-8") as f:
                 genre_dict = json.load(f)
         except FileNotFoundError:
-            flash("Genre file can't be found. The filename is 'genre.json' and contains the Book Genres.", "danger")
+            # flash("Genre file can't be found. The filename is 'genre.json' and contains the Book Genres.", "danger")
+            flash("'genre.json' can't be found.", "danger")
             app.logger.critical("Genre file can't be found. The filename is 'genre.json' and contains the Book Genres: [FAILURE] - (index.html).")
             return render_template("index.html")
         except json.decoder.JSONDecodeError:
-            flash("Genre file isn't a proper JSON file. Please correct the issues with the file 'genre.json' and try to it load again.", "danger")
+            # flash("Genre file isn't a proper JSON file. Please correct the issues with the file 'genre.json' and try to it load again.", "danger")
+            flash("'genre.json' isn't a proper JSON file.", "danger")
             app.logger.critical("Genre file isn't a proper JSON file. Please correct the issues with the file 'genre.json' and try to load it again: [FAILURE] - (admin_dashboard.html).")
             return render_template("index.html")
 
@@ -196,14 +198,16 @@ def home_page():
                 validate(instance=genre, schema=genre_schema)
         except ValidationError:
             genre_genre = genre["genre"]
-            flash(f"Genre Collection NOT created, 'genre.json' file has JSON Schema errors. Please correct the genre '{genre_genre}'.", "danger")
+            # flash(f"Genre Collection NOT created, 'genre.json' file has JSON Schema errors. Please correct the genre '{genre_genre}'.", "danger")
+            flash(f"'genre.json' has JSON Schema errors.", "danger")
             app.logger.critical(f"{current_user.username} has NOT loaded the Genre Collection to the Book Repository, 'genre.json' file has JSON Schema errors. Please correct the genre '{genre_genre}': [FAILURE] - (admin_dashboard.html).")
             return render_template("index.html")
 
         try:
             genre_instances = [Genre(**data) for data in genre_dict]
             Genre.objects.insert(genre_instances, load_bulk=False)
-            flash("Genres Collection successfully created.", "success")
+            # flash("Genres Collection successfully created.", "success")
+            flash("Genres Collection created.", "success")
             app.logger.info("Genres Collection created: [SUCCESS] - (index.html)")
         except Exception:
             flash("Genres Collection NOT created.", "danger")
@@ -277,10 +281,12 @@ def save_book():
 
     try:
         book.save()
-        flash(f"The book {book.title} was saved!", "success")
+        # flash(f"The book {book.title} was saved!", "success")
+        flash(f"The book was saved!", "success")
         app.logger.info(f"{current_user.username} is saving the book {book.title} with the id {book.id}: [SUCCESS] - (add_book.html).")
     except Exception:
-        flash(f"The book {book.title} was NOT saved!", "danger")
+        # flash(f"The book {book.title} was NOT saved!", "danger")
+        flash(f"The book was NOT saved!", "danger")
         app.logger.warning(f"{current_user.username} did not succeed in saving the {book.title}: [FAILURE] - (add_book.html).")
     return redirect(url_for("member_page"))
 
@@ -300,7 +306,8 @@ def edit_book(book_id):
         return render_template("edit_book.html", book=book, genre=genre)
     else:
         try:
-            flash(f"{current_user.username}: please stop 'acting the maggot', trying to update a book not belonging to you! The Librarian is on to you!", "danger")
+            # flash(f"{current_user.username}: please stop 'acting the maggot', trying to update a book not belonging to you! The Librarian is on to you!", "danger")
+            flash(f"The Librarian is on to you!", "danger")
             app.logger.critical(f"{current_user.username}, please stop 'acting the maggot', trying to update a book not belonging to you! [WARNING] (edit_book.html).")
         except ReferenceError:
             pass
@@ -349,10 +356,12 @@ def update_book(book_id):
 
     try:
         book.update(**fields)
-        flash(f"The book {book.title} is updated!", "success")
+        # flash(f"The book {book.title} is updated!", "success")
+        flash("The book is updated!", "success")
         app.logger.info(f"{current_user.username} updated the book {book.title} with the id {book.id}: [SUCCESS] (edit_book.html).")
     except Exception:
-        flash(f"The book {book.title} was NOT updated!", "danger")
+        # flash(f"The book {book.title} was NOT updated!", "danger")
+        flash("The book was NOT updated!", "danger")
         app.logger.warning(f"{current_user.username} did not update the book {book.title} with the id {book.id}: [WARNING] (edit_book.html).")
     return redirect(url_for("member_page"))
 
@@ -368,16 +377,19 @@ def delete_book(book_id):
     if book.user == current_user.username:
         try:
             book.delete()
-            flash(f"The book {book.title} is deleted!", "success")
+            # flash(f"The book {book.title} is deleted!", "success")
+            flash("The book is deleted!", "success")
             app.logger.info(f"{current_user.username} deleted the book {book.title} with the id {book.id}: [SUCCESS] (members.html).")
         except ReferenceError:
             pass
         except Exception:
-            flash(f"The book {book.title} was NOT deleted!", "danger")
+            # flash(f"The book {book.title} was NOT deleted!", "danger")
+            flash("The book was NOT deleted!", "danger")
             app.logger.warning(f"{current_user.username} did not delete the book {book.title} with the id {book.id}: [WARNING] (members.html).")
     else:
         try:
-            flash(f"{current_user.username}: please stop 'acting the maggot', trying to delete a book not belonging to you! The Librarian is on to you!", "danger")
+            # flash(f"{current_user.username}: please stop 'acting the maggot', trying to delete a book not belonging to you! The Librarian is on to you!", "danger")
+            flash("The Librarian is on to you!", "danger")
             app.logger.critical(f"{current_user.username}, please stop 'acting the maggot', trying to delete a book not belonging to you! [WARNING] (members.html).")
         except ReferenceError:
             pass
@@ -502,10 +514,12 @@ def delete_user():
         logout_user()
         find_user_books.delete()
         find_user.delete()
-        flash(f"We're sad to see you go {deleted_user}!", "success")
+        # flash(f"We're sad to see you go {deleted_user}!", "success")
+        flash("We're sad to see you go!", "success")
         app.logger.info(f"{deleted_user} has left the Book Repository: [SUCCESS] - (delete_user.html).")
     except:
-        flash(f"Your account is still alive and active {find_user.username}!", "danger")
+        # flash(f"Your account is still alive and active {find_user.username}!", "danger")
+        flash("Your account is still alive and active!", "danger")
         app.logger.critical(f"{deleted_user} is still alive and active on the Book Repository: [FAILURE] - (delete_user.html).")
     return redirect(url_for("home_page"))
 
@@ -562,7 +576,8 @@ def update_user(user_id):
 
     # Validate the password, checking the password to confirm password fields match = no update.
     if request.form.get(f"password_{user_form_name}") != request.form.get(f"password_conf_{user_form_name}"):
-        flash(f"Passwords did not match for {user.username}, please try again!", "danger")
+        # flash(f"Passwords did not match for {user.username}, please try again!", "danger")
+        flash(f"Passwords did not match!", "danger")
         return redirect(url_for("admin_dashboard"))
 
     # Checking if the password is accidentally changed (the current hash) and the current/original/unchanged
@@ -574,10 +589,12 @@ def update_user(user_id):
 
     try:
         user.update(**admin_user_form)
-        flash(f"User {user.username} profile updated.", "success")
+        # flash(f"User {user.username} profile updated.", "success")
+        flash("User profile updated.", "success")
         app.logger.info(f"User {user.username} profile updated by {current_user.username}: [SUCCESS] - (admin_dashboard.html).")
     except Exception:
-        flash(f"User {user.username} profile NOT updated.", "danger")
+        # flash(f"User {user.username} profile NOT updated.", "danger")
+        flash("User profile NOT updated.", "danger")
         app.logger.critical(f"User {user.username} profile NOT updated by {current_user.username}: [FAILURE] - (admin_dashboard.html).")
     return redirect(url_for("admin_dashboard"))
 
@@ -597,10 +614,12 @@ def admin_delete_user(user_id):
         try:
             user_books.delete()
             user.delete()
-            flash(f"The user {deleted_username} is deleted!", "success")
+            # flash(f"The user {deleted_username} is deleted!", "success")
+            flash("The user is deleted!", "success")
             app.logger.info(f"{current_user.username} deleted the user {deleted_username}: [SUCCESS] - (admin_dashboard.html).")
         except Exception:
-            flash(f"The user {deleted_username} was NOT deleted!", "danger")
+            # flash(f"The user {deleted_username} was NOT deleted!", "danger")
+            flash("The user was NOT deleted!", "danger")
             app.logger.critical(f"{current_user.username} did not delete the user {deleted_username}: [FAILURE] - (admin_dashboard.html).")
     return redirect(url_for("admin_dashboard"))
 
@@ -618,11 +637,13 @@ def load_genres():
             with open("genre.json", "r", encoding="utf-8") as f:
                 genre_dict = json.load(f)
         except FileNotFoundError:
-            flash("Genre file can't be found. The filename is 'genre.json' and contains the Book Genres.", "danger")
+            # flash("Genre file can't be found. The filename is 'genre.json' and contains the Book Genres.", "danger")
+            flash("'genre.json' can't be found.", "danger")
             app.logger.critical("Genre file can't be found. The filename is 'genre.json' and contains the Book Genres: [FAILURE] - (admin_dashboard.html).")
             return redirect(url_for("admin_dashboard"))
         except json.decoder.JSONDecodeError:
-            flash("Genre file isn't a proper JSON file. Please correct the issues with the file 'genre.json' and try to it load again.", "danger")
+            # flash("Genre file isn't a proper JSON file. Please correct the issues with the file 'genre.json' and try to it load again.", "danger")
+            flash("'genre.json' isn't a proper JSON file.", "danger")
             app.logger.critical("Genre file isn't a proper JSON file. Please correct the issues with the file 'genre.json' and try to load it again: [FAILURE] - (admin_dashboard.html).")
             return redirect(url_for("admin_dashboard"))
 
@@ -639,14 +660,16 @@ def load_genres():
                 validate(instance=genre, schema=genre_schema)
         except ValidationError:
             genre_genre = genre["genre"]
-            flash(f"Genre Collection NOT created, 'genre.json' file has JSON Schema errors. Please correct the genre '{genre_genre}'.", "danger")
+            # flash(f"Genre Collection NOT created, 'genre.json' file has JSON Schema errors. Please correct the genre '{genre_genre}'.", "danger")
+            flash("'genre.json' has JSON Schema errors.", "danger")
             app.logger.critical(f"{current_user.username} has NOT loaded the Genre Collection to the Book Repository, 'genre.json' file has JSON Schema errors. Please correct the genre '{genre_genre}': [FAILURE] - (admin_dashboard.html).")
             return redirect(url_for("admin_dashboard"))
 
         try:
             genre_instances = [Genre(**data) for data in genre_dict]
             Genre.objects.insert(genre_instances, load_bulk=False)
-            flash(f"Genres Collection successfully created.", "success")
+            # flash(f"Genres Collection successfully created.", "success")
+            flash("Genres Collection created.", "success")
             app.logger.info("Genres Collection created: [SUCCESS] - (index.html)")
         except Exception:
             flash(f"Genres Collection NOT created.", "danger")
@@ -671,10 +694,12 @@ def load_books():
             with open("book.json", "r", encoding="utf-8") as f:
                 book_dict = json.load(f)
         except FileNotFoundError:
-            flash("Book file can't be found. The filename is 'book.json' and contains sample Books.", "danger")
+            # flash("Book file can't be found. The filename is 'book.json' and contains sample Books.", "danger")
+            flash("'book.json' can't be found.", "danger")
             app.logger.critical("Book file can't be found. The filename is 'book.json' and contains sample Books: [FAILURE] - (admin_dashboard.html).")
         except json.decoder.JSONDecodeError:
-            flash("Book file isn't a proper JSON file. Please correct the issues with the file 'book.json' and try to load it again.", "danger")
+            # flash("Book file isn't a proper JSON file. Please correct the issues with the file 'book.json' and try to load it again.", "danger")
+            flash("'book.json' isn't a proper JSON file.", "danger")
             app.logger.critical("Book file isn't a proper JSON file. Please correct the issues with the file 'book.json' and try to load it again: [FAILURE] - (admin_dashboard.html).")
             return redirect(url_for("admin_dashboard"))
 
@@ -700,14 +725,16 @@ def load_books():
                 validate(instance=book, schema=book_schema)
         except ValidationError:
             book_title = book["title"]
-            flash(f"Book Collection NOT created, 'book.json' file has JSON Schema errors. Please correct the book '{book_title}'.", "danger")
+            # flash(f"Book Collection NOT created, 'book.json' file has JSON Schema errors. Please correct the book '{book_title}'.", "danger")
+            flash("'book.json' has JSON Schema errors.", "danger")
             app.logger.critical(f"{current_user.username} has NOT loaded the Book Collection to the Book Repository, 'book.json' file has JSON Schema errors. Please correct the book '{book_title}': [FAILURE] - (admin_dashboard.html).")
             return redirect(url_for("admin_dashboard"))
 
         try:
             book_instances = [Book(**data) for data in book_dict]
             Book.objects.insert(book_instances, load_bulk=False)
-            flash(f"Book Collection successfully created.", "success")
+            # flash(f"Book Collection successfully created.", "success")
+            flash(f"Book Collection created.", "success")
             app.logger.info(f"{current_user.username} has successfully loaded the Book Collection to the Book Repository: [SUCCESS] - (admin_dashboard.html).")
         except Exception:
             flash(f"Book Collection NOT created.", "danger")
