@@ -264,7 +264,17 @@ Local development uses a rotating file handler which makes the logs easier to re
 ## Design Decisions and Technology Choices
 Layout and navigation, colour scheme(s) (progression), typography, icons and text...
 
-* Information Architecture is sequential with modals, leading the user/reader along at every stage. The navigation bar provides a different set of options depending on the role (user or Admin), and whether authenticated or not.
+### Strategy: --> Business
+
+### Scope: --> User Experience
+
+### Structure: Information Architecture and Interaction Design
+
+### Skeleton and Surface --> User Experience and Features
+
+### Structure Plane: Information Architecture and Interaction Design
+Information Architecture is sequential with modals, leading the user/reader along at every stage. The navigation bar provides a different set of options depending on the role (user or Admin), and whether authenticated or not. The breadcrumbs provide the "trodden path", making it easy to get back to where the user/reader started while also clarifying where they are. On  pages with many books (Member's Page, Search Results Page) and users/readers (Admin Page) pagination navigation 
+
 * Breadcrumbs provide a clear view of where the user/reader is, and has been, with the option to click on any breadcrumb to go back to a previous page (please note, once signed in, the Landing/Home Page redirects to the Member's Page).
 * Pagination is provided in the Member's Page and Search Results if 8 books or more exist. The pagination navigation is placed at the top of the book stack for ease-of-use. 
 * The Book Repository emails for user/reader registration, password change, and password reset all provide ample explanations on what to do and why (click on the email link).
@@ -306,27 +316,44 @@ The colour scheme has changed over the course of the project, aiming to provide 
 | Accent Colour 3                          | Charcoal #37474F             | blue-grey darken-3 | <p style="color: #37474F;">#37474F</p> | Flash message info.                                                                                                                                                                          |
 
 #### Buttons
-![Buttons - Primary](https://github.com/NaoiseGaffney/BookRepository/blob/development/documentation/Buttons%20-%20Primary.png)
-![Buttons - Secondary (drop-down)](https://github.com/NaoiseGaffney/BookRepository/blob/development/documentation/Buttons%20-%20Secondary%20(drop-down).png)
-
 The buttons are consistent in style and instantly recognisable with both text and icons making it easier for users/readers to understand and recognise their purpose. Text uses the Raleway font, and the icons are [Material Icons](https://material.io/resources/icons/?style=baseline).
 
+![Buttons - Primary](https://github.com/NaoiseGaffney/BookRepository/blob/development/documentation/Buttons%20-%20Primary.png)
+
 All buttons are styled the same, with capitalised text on the left and an icon on the right. Primary buttons have a "blue darken-4" background with white text and icon, except for the Delete (Delete User) button in the Admin Dahsboard User Modal as it doesn't have a "Are you sure you wish to do this?" feature.
+
+![Buttons - Secondary (drop-down)](https://github.com/NaoiseGaffney/BookRepository/blob/development/documentation/Buttons%20-%20Secondary%20(drop-down).png)
 
 The seceondary, drop-down menu buttons have a white background with "blue darken-4" text on the left and icon on the right.
 
 #### Navigation Bar
-![Navigation Bar Unauthenticated](https://github.com/NaoiseGaffney/BookRepository/blob/development/documentation/Unauthenticated%20-%20NavBar.png)
-![Navigation Bar Authenticated User/Reader](https://github.com/NaoiseGaffney/BookRepository/blob/development/documentation/User%20Authenticated%20-%20NavBar.png)
-![Navigation Bar Authenticated Admin](https://github.com/NaoiseGaffney/BookRepository/blob/development/documentation/Admin%20Authenticated%20-%20NavBar.png)
-
 The Navigation Bar is styled the same way as the primary buttons, with white text on the left and icon on the right on a "blue darken-4" background. The Navigation Bar is controlled by the Jinja template 'flask_user_layout.html' where if-else statements check whether the user/reader is authenticated or not, and whether the user is authenticated and has the role of Admin.
 
-![Hamburger Bar Unauthenticated](https://github.com/NaoiseGaffney/BookRepository/blob/development/documentation/Unauthenticated%20-%20HBar.png)
-![Hamburger Bar Authenticated User/Reader](https://github.com/NaoiseGaffney/BookRepository/blob/development/documentation/Authenticated%20User%20-%20HBar.png)
-![Hamburger Bar Authenticated Admin](https://github.com/NaoiseGaffney/BookRepository/blob/development/documentation/Authenticated%20Admin%20-%20HBar.png)
+![Navigation Bar Unauthenticated](https://github.com/NaoiseGaffney/BookRepository/blob/development/documentation/Unauthenticated%20-%20NavBar.png)
+
+Navigation Bar when unauthenticated.
+
+![Navigation Bar Authenticated User/Reader](https://github.com/NaoiseGaffney/BookRepository/blob/development/documentation/User%20Authenticated%20-%20NavBar.png)
+
+Navigation Bar when authenticated as a user/reader.
+
+![Navigation Bar Authenticated Admin](https://github.com/NaoiseGaffney/BookRepository/blob/development/documentation/Admin%20Authenticated%20-%20NavBar.png)
+
+Navigation Bar when authenticated as an Admin.
 
 The hamburger Bar is styled the same way as the primary buttons, however, the white text is on the right and icon on the left on a "blue darken-4" background as it looks nicer from a layout perspective. The Hamburger Bar is controlled by the Jinja template 'flask_user_layout.html' where if-else statements check whether the user/reader is authenticated or not, and whether the user is authenticated and has the role of Admin.
+
+![Hamburger Bar Unauthenticated](https://github.com/NaoiseGaffney/BookRepository/blob/development/documentation/Unauthenticated%20-%20HBar.png)
+
+Hamburger Bar when unauthenticated.
+
+![Hamburger Bar Authenticated User/Reader](https://github.com/NaoiseGaffney/BookRepository/blob/development/documentation/Authenticated%20User%20-%20HBar.png)
+
+Hamburger Bar when authenticated as a user/reader.
+
+![Hamburger Bar Authenticated Admin](https://github.com/NaoiseGaffney/BookRepository/blob/development/documentation/Authenticated%20Admin%20-%20HBar.png)
+
+Hamburger Bar when authenticated as an Admin.
 
 #### Fixed Footer
 ![Fixed Footer](https://github.com/NaoiseGaffney/BookRepository/blob/development/documentation/Fixed%20Footer.png)
@@ -336,6 +363,8 @@ The hamburger Bar is styled the same way as the primary buttons, however, the wh
 
 #### Background Image
 ![Stack of Books on the rigth-hand side by Sharon McCutcheon on Unsplash](https://github.com/NaoiseGaffney/BookRepository/blob/development/static/images/sharon-mccutcheon-eMP4sYPJ9x0-unsplash.jpg)
+
+[Sharon McCutcheon - Photographer](https://unsplash.com/@sharonmccutcheon?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText)
 
 The background image, a stack of books, photographed by Sharon McCutcheon on Unsplash is the perfect shade of blue-white with the books off-centre and to the right which means they are not interfering with the book stack and book details. It's also suitable as it has a stack of books, the Book Repository logo is a stack of books, and the user's/reader's stack of books are viewed on the Member's Page.
 
@@ -355,6 +384,12 @@ The background image, a stack of books, photographed by Sharon McCutcheon on Uns
 The Favicon is the stack of books without the text from the Book Repository Logo.
 
 #### Materialize CSS 1.0.0
+
+#### Forms and Fields
+
+#### Book Stack
+
+#### Admin Dashboard
 
 
 
