@@ -36,107 +36,11 @@ User experience (UX) design is the design process used to create applications an
 ### A Persona Summary of the Users/Readers of the Book Repository
 ![Persona Summary](https://github.com/NaoiseGaffney/BookRepository/blob/development/documentation/Persona%20Summary.png)
 
-The Book Repository is for readers of all ages, diverse demographics and interests, with a preference for real books as opposed to digital media like Kindle (digital media has online libraries and ways of sorting and sharing their books already), and who want to gain some measure of control over their growing stack or library of books through a Book Repository with the additional means to share their views and ratings on books, while also gaining insights and ideas from fellow readers.
+The Book Repository is for readers of all ages (please see next paragraph), diverse demographics and interests, with a preference for real books as opposed to digital media like Kindle (digital media has online libraries and ways of sorting and sharing their books already), and who want to gain some measure of control over their growing stack or library of books through a Book Repository with the additional means to share their views and ratings on books, while also gaining insights and ideas from fellow readers.
 
 The age limit of 18 exists as some books shared may not be suitable for children, and may not be marked as hidden by the user/reader from public searches. It's recommended that people under the age of 18 use the Book Repository under the supervision of a parent or other guardian.
 
 Since the Book Repository aims to satisfy the requirements of a diverse demographic and age group, ease-of-use is key which is described in the section on Design Decisions and Technology Choices.
-
-* Information Architecture is sequential with modals, leading the user/reader along at every stage. The navigation bar provides a different set of options depending on the role (user or Admin), and whether authenticated or not.
-* Breadcrumbs provide a clear view of where the user/reader is, and has been, with the option to click on any breadcrumb to go back to a previous page (please note, once signed in, the Landing/Home Page redirects to the Member's Page).
-* Pagination is provided in the Member's Page and Search Results if 8 books or more exist. The pagination navigation is placed at the top of the book stack for ease-of-use. 
-* The Book Repository emails for user/reader registration, password change, and password reset all provide ample explanations on what to do and why (click on the email link).
-* Help tooltips (hover) and form field tooltips (hover) exist for every page and form, aiding the user/reader in understanding and using the Book Repository.
-* Flash messages provide instant user/reader feedback on either the success or failure of a task (sign in, sign  out, register, update profile, change or reset password, add book, update book, delete book, and incorrect form field entries). The same Flash message feedback is used for the Admin Dashboard too, to aid an admin in using the existing features without having to read documentation or resort to trial-and-error.
-* All from fields provide immediate user/reader feedback too, when selecting an empty field, when entering an incorrect entry, and when a required entry is needed (notable exception is the Admin Dashboard User Modal where some of the authentication is performed in 'app.py').
-* All buttons (form buttons and navigation bar) combine text and icon consistently to aid in the function recognition and use. For all form fields the icon is to the left of the field. For all buttons the icon is on the right of the text. The navigation bar has the icons on the right of the text, except for the hamburger-menu where the icons ae on the left of the text as it looks nicer from a layout perspective.
-* Responsive Web Design: the Book Repository works across all devices and screen sizes. In fact, it looks somewhat better on mobile device than on the desktop if anything.
-* The colour scheme has changed over the course of the project, aiming to provide a clear and clean user interface with a good contrast.
-* The font used throughout the Book Repository is Raleway, provided by Google Fonts. It's an easy-to-read font on all device/screen sizes and is comfortable to read over long periods of time.
-* The 4 error handlers handle the unfortunate incidents where a user/reader goes astray, or an internal issue has occured. The error handlers provide a means to get back to the Member's Page or Sign Out, as well as an apology for the incident and an explanation of what has occured and potentially why.
-* The Book Repository logo is easily recognisable and simple in its design. It's a stack of books with the text, "Book Repository".
-
-#### Typography
-![Book Repository Typgraphy: Raleway Font](https://github.com/NaoiseGaffney/BookRepository/blob/development/documentation/Raleway%20Font.png)
-
-[Google Fonts: Raleway](https://fonts.google.com/specimen/Raleway#standard-styles)
-
-The font used throughout the Book Repository is Raleway, provided by Google Fonts. It's an easy-to-read font on all device/screen sizes and is comfortable to read over long periods of time.
-
-#### Colour Scheme
-![Book Repository Final Colour Scheme](https://github.com/NaoiseGaffney/BookRepository/blob/development/documentation/Book%20Repository%20-%20Colour%20Scheme%20-%20README.png)
-
-[Coolors Colour Scheme](https://coolors.co/0d47a1-26a69a-d81b60-ffffff-37474f)
-
-The colour scheme has changed over the course of the project, aiming to provide a clear and clean user interface with a good contrast.
-
-Book Repository Logo Colour Scheme:
-
-* Coolors Cobalt Blue #0d47a1
-* MCSS: blue darken-4
-* RGB: 13, 71, 161
-
-Book Repository Colour Scheme:
-
-* Primary and Background Colour (reverse)
-	* Coolors: Cobalt Blue #0D47A1
-	* MCSS: blue darken-4
-	* RGB: 13, 71, 161
-	* Use: together with white and black in some cases - button and navigation bar background, secondary button text over white background, active form field icons and labels, links, active elements.
-
-* Secondary and Font Colour (reverse):
-	* Coolors White #ffffff
-	* MCSS: white
-	* RGB: 255, 255, 255
-	* Use: together with blue - button and navigation bar text and icons, secondary button background over blue background.
-
-* Tertiary Colour:
-	* Coolors: Dark Cornflower Blue #0c4091
-	* MCSS: no equivalent
-	* RGB: 12, 64, 145
-	* Use: toggle switch on background colour.
-
-* Quaternary Colour:
-	* Coolors: Black #000000
-	* MCSS: black
-	* RGB: 0, 0, 0
-	* Use: most text is black, form field, book details, and table text
-
-* Accent Colour 1:
-	* Coolors: Ruby #d81b60
-	* MCSS: pink darken-1
-	* RGB: 216, 27, 96
-	* Use: Flash message failure, delete book, delete user. 
-
-* Accent Colour 2:
-	* Coolors: Persian Green #26a69a
-	* MCSS: teal lighten-1
-	* RGB: 38, 166, 154
-	* Use: Flash message succuess, view book.
-
-* Accent Colour 3:
-	* Coolors: Charcoal #37474f
-	* MCSS: blue-grey darken-3
-	* RGB: 55, 71, 79
-	* Use: Flash message info.
-
-#### Buttons
-
-#### Navigation Bar
-
-#### Fixed Footer
-
-#### Background Image
-
-#### Flash Messages
-
-#### Breadcrumbs
-
-#### Pagination
-
-#### Favicon
-
-#### Materialize CSS 1.0.0
 
 ### User Stories, Use Cases, and Tasks
 The User Experience links the Business goals of the external user and site owner to a number of user stories. A user story captures a description of a software feature from an end-user perspective. A user story describes the type of user, what they want and why. A use case is a list of actions or event steps describing the interactions between a role and a system to achieve a goal.
@@ -359,6 +263,76 @@ Local development uses a rotating file handler which makes the logs easier to re
 
 ## Design Decisions and Technology Choices
 Layout and navigation, colour scheme(s) (progression), typography, icons and text...
+
+* Information Architecture is sequential with modals, leading the user/reader along at every stage. The navigation bar provides a different set of options depending on the role (user or Admin), and whether authenticated or not.
+* Breadcrumbs provide a clear view of where the user/reader is, and has been, with the option to click on any breadcrumb to go back to a previous page (please note, once signed in, the Landing/Home Page redirects to the Member's Page).
+* Pagination is provided in the Member's Page and Search Results if 8 books or more exist. The pagination navigation is placed at the top of the book stack for ease-of-use. 
+* The Book Repository emails for user/reader registration, password change, and password reset all provide ample explanations on what to do and why (click on the email link).
+* Help tooltips (hover) and form field tooltips (hover) exist for every page and form, aiding the user/reader in understanding and using the Book Repository.
+* Flash messages provide instant user/reader feedback on either the success or failure of a task (sign in, sign  out, register, update profile, change or reset password, add book, update book, delete book, and incorrect form field entries). The same Flash message feedback is used for the Admin Dashboard too, to aid an admin in using the existing features without having to read documentation or resort to trial-and-error.
+* All from fields provide immediate user/reader feedback too, when selecting an empty field, when entering an incorrect entry, and when a required entry is needed (notable exception is the Admin Dashboard User Modal where some of the authentication is performed in 'app.py').
+* All buttons (form buttons and navigation bar) combine text and icon consistently to aid in the function recognition and use. For all form fields the icon is to the left of the field. For all buttons the icon is on the right of the text. The navigation bar has the icons on the right of the text, except for the hamburger-menu where the icons ae on the left of the text as it looks nicer from a layout perspective.
+* Responsive Web Design: the Book Repository works across all devices and screen sizes. In fact, it looks somewhat better on mobile device than on the desktop if anything.
+* The colour scheme has changed over the course of the project, aiming to provide a clear and clean user interface with a good contrast.
+* The font used throughout the Book Repository is Raleway, provided by Google Fonts. It's an easy-to-read font on all device/screen sizes and is comfortable to read over long periods of time.
+* The 4 error handlers handle the unfortunate incidents where a user/reader goes astray, or an internal issue has occured. The error handlers provide a means to get back to the Member's Page or Sign Out, as well as an apology for the incident and an explanation of what has occured and potentially why.
+* The Book Repository logo is easily recognisable and simple in its design. It's a stack of books with the text, "Book Repository".
+
+#### Typography
+![Book Repository Typgraphy: Raleway Font](https://github.com/NaoiseGaffney/BookRepository/blob/development/documentation/Raleway%20Font.png)
+
+[Google Fonts: Raleway](https://fonts.google.com/specimen/Raleway#standard-styles)
+
+The font used throughout the Book Repository is Raleway, provided by Google Fonts. It's an easy-to-read font on all device/screen sizes and is comfortable to read over long periods of time.
+
+#### Colour Scheme
+![Book Repository Final Colour Scheme](https://github.com/NaoiseGaffney/BookRepository/blob/development/documentation/Book%20Repository%20-%20Colour%20Scheme%20-%20README.png)
+
+[Coolors Colour Scheme](https://coolors.co/0d47a1-26a69a-d81b60-ffffff-37474f)
+
+The colour scheme has changed over the course of the project, aiming to provide a clear and clean user interface with a good contrast.
+
+| Function                                 | Coolors                      | Materialize        | Sample                                 | Use                                                                                                                                                                                          |
+|------------------------------------------|------------------------------|--------------------|----------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| Logo                                     | Cobalt Blue #0D47A1          | blue darken-4      | <p style="color: #0D47A1;">#0D47A1</p> | Logo.                                                                                                                                                                                        |
+| Primary and  Background Colour (reverse) | Cobalt Blue #0D47A1          | blue darken-4      | <p style="color: #0D47A1;">#0D47A1</p> | Together with white and black in some cases - button and navigation bar background, secondary button text over white background, active form field icons and labels, links, active elements. |
+| Secondary and Font Colour (reverse)      | White #FFFFFF                | white              | <p style="color: #FFFFFF;">#FFFFFF</p> | Together with blue - button and navigation bar text and icons, secondary button background over blue background.                                                                             |
+| Tertiary Colour                          | Dark Cornflower Blue #0C4091 | no equivalent      | <p style="color: #0C4091;">#0C4091</p> | Toggle switch on, background colour.                                                                                                                                                         |
+| Quaternary Colour                        | Black #000000                | black              | <p style="color: #000000;">#000000</p> | Most text is black, form field, book details, and table text.                                                                                                                                |
+| Accent Colour 1                          | Ruby #D81B60                 | pink darken-1      | <p style="color: #D81B60;">#D81B60</p> | Flash message failure, delete book, delete user.                                                                                                                                             |
+| Accent Colour 2                          | Persian Green #26A69A        | teal lighten-1     | <p style="color: #26A69A;">#26A69A</p> | Flash message success, view book.                                                                                                                                                            |
+| Accent Colour 3                          | Charcoal #37474F             | blue-grey darken-3 | <p style="color: #37474F;">#37474F</p> | Flash message info.                                                                                                                                                                          |
+
+#### Buttons
+![Buttons - Primary](https://github.com/NaoiseGaffney/BookRepository/blob/development/documentation/Buttons%20-%20Primary.png)
+![Buttons - Secondary (drop-down)](https://github.com/NaoiseGaffney/BookRepository/blob/development/documentation/Buttons%20-%20Secondary%20(drop-down).png)
+
+The buttons are consistent in style and instantly recognisable with both text and icons making it easier for users/readers to understand and recognise their purpose. Text uses the Raleway font, and the icons are [Material Icons](https://material.io/resources/icons/?style=baseline).
+
+All buttons are styled the same, with capitalised text on the left and an icon on the right. Primary buttons have a "blue darken-4" background with white text and icon, except for the Delete (Delete User) button in the Admin Dahsboard User Modal as it doesn't have a "Are you sure you wish to do this?" feature.
+
+The seceondary, drop-down menu buttons have a white background with "blue darken-4" text on the left and icon on the right.
+
+#### Navigation Bar
+
+#### Fixed Footer
+
+#### Background Image
+
+#### Flash Messages
+
+#### Breadcrumbs
+
+#### Pagination
+
+#### Favicon
+![Favicon](https://github.com/NaoiseGaffney/BookRepository/blob/development/static/images/android-chrome-192x192.png)
+
+[Favicon.io Favicon Generator](https://favicon.io/)
+
+The Favicon is the stack of books without the text from the Book Repository Logo.
+
+#### Materialize CSS 1.0.0
 
 Flask-User, application logging, CSRF, FDT, Flask-MongoEngine/MongoEngine, File Handling (JSON), Google Books API (thumbnail images), Session Cookies, Consent Cookie, 'config.py', .env and Heroku variables, CDD, DB Schema, JSON Schema...
 
