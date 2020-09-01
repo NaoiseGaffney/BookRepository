@@ -275,7 +275,7 @@ Layout and navigation, colour scheme(s) (progression), typography, icons and tex
 ### Structure Plane: Information Architecture and Interaction Design
 Information Architecture is sequential with modals, leading the user/reader along at every stage. The navigation bar provides a different set of options depending on the role (user or Admin), and whether authenticated or not. The breadcrumbs provide the "trodden path", making it easy to get back to where the user/reader started while also clarifying where they are (please note, once signed in, the Landing/Home Page redirects to the Member's Page). On pages with many books (Member's Page, Search Results Page) and many users/readers (Admin Page) pagination navigation is provided at the top of the book stack/user table to either select a page directly or go through them using the < (previous page) and (next page) >.
 
-![Information Architecture and Navigation - User Management](https://github.com/NaoiseGaffney/BookRepository/blob/development/documentation/IA%20Nav%20-%20User%20%20Management.png)
+![Information Architecture and Navigation - User Management](https://github.com/NaoiseGaffney/BookRepository/blob/development/documentation/IA%20Nav%20-%20User%20Management.png)
 
 
 
