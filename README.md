@@ -49,6 +49,8 @@ A user story has one or more use cases with one or more tasks with steps associa
 
 ---
 
+![Information Architecture and Navigation - User Management](https://github.com/NaoiseGaffney/BookRepository/blob/development/documentation/IA%20Nav%20-%20Book%20Repository.png)
+
 * **User Story 001 (User/Reader):** as a new user/reader I want to join the Book Repository to store details about my books so that I can share them with a wider audience.
 	* **Use Case 001-001 (C in User CRUD):** as a new user/reader I want to register an account with the Book Repository.
 		*  **Tasks 1:** [Book Repository Home/Landing Page](https://book-repository-virtual.herokuapp.com/) -> read and accept the Consent Cookie (optional) -> click on Register in the naviagtion bar or the hamburger-menu followed by Register [Register](https://book-repository-virtual.herokuapp.com/user/register) -> fill in the form: username, email address, password, password confirmation, and click on the Register button -> if successful: a success Flash message, otherwise a danger Flash message.
@@ -70,32 +72,36 @@ A user story has one or more use cases with one or more tasks with steps associa
 
 ---
 
-*  **User Story 002 (User/Reader):** as a user/reader I want to search for books in the Book Repository so that I can find new books to read, inspired by reader comments, and possibly purchase on Amazon UK or from other vendors.
-	*  **Use Case 002-001 (R in Book CRUD):** as a user/reader I want to search for a specific book in my Book Repository using the ISBN.
+*  **User Story 002 (User/Reader):** as a user/reader I want the ability to manage my user profile so that I can have the best possible user/reader exeperience.
+	*  **Use Case 002-001 (U in User CRUD):** as a user/reader I want to update my user profile.
+		*  **Tasks 1:** [Member's Page](https://book-repository-virtual.herokuapp.com/members) -> click on the user profile (username) on the navigation bar [Edit User Profile](https://book-repository-virtual.herokuapp.com/user/edit_user_profile) -> add/edit your First and Last Name, click on the Update button -> success Flash message and [Member's Page](https://book-repository-virtual.herokuapp.com/members).
+	*  **Use Case 002-002 (U in User CRUD):** as a user/reader I want to change my password.
+		*  **Tasks 1:** [Member's Page](https://book-repository-virtual.herokuapp.com/members) -> click on the user profile (username) on the navigation bar [Edit User Profile](https://book-repository-virtual.herokuapp.com/user/edit_user_profile) -> click on [Change Password](https://book-repository-virtual.herokuapp.com/user/change-password) -> enter your current/old password, your new password, retype your new password for confirmation, and click on the Change Password button -> success Flash message and [Member's Page](https://book-repository-virtual.herokuapp.com/members).
+		*  **Tasks 2:** an email is sent to the user's/reader's email address, confirming the password change -> if the password change wasn't initiated by the user/reader they can click on the link in the email to change the password.
+	*  **Use Case 002-003 (D in User CRUD):** as a user/reader I want to delete my account.
+		*  **Tasks 1:** [Member's Page](https://book-repository-virtual.herokuapp.com/members) -> click on the user profile (username) on the navigation bar [Edit User Profile](https://book-repository-virtual.herokuapp.com/user/edit_user_profile) -> click on [Delete User](https://book-repository-virtual.herokuapp.com/user/edit_user_profile#delete_user) -> click on yes to permanetly delete the user/reader and associated books from the Book Repository or no to close the delete user modal -> success Flash message [Landing/Home Page](https://book-repository-virtual.herokuapp.com/index.html).
+
+---
+
+![Information Architecture and Navigation - User Management](https://github.com/NaoiseGaffney/BookRepository/blob/development/documentation/IA%20Nav%20-%20Admin%20Dashboard.png)
+
+*  **User Story 003 (User/Reader):** as a user/reader I want to search for books in the Book Repository so that I can find new books to read, inspired by reader comments, and possibly purchase on Amazon UK or from other vendors.
+	*  **Use Case 003-001 (R in Book CRUD):** as a user/reader I want to search for a specific book in my Book Repository using the ISBN.
 		*  **Tasks 1:** [Member's Page](https://book-repository-virtual.herokuapp.com/members) -> via the drop-down menu click on Search Books -> [Search Books](https://book-repository-virtual.herokuapp.com/search_book) -> enter the ISBN (9780141185378) of the book I'm searching for, toggle the private switch on (private search), and click on the Search Books button -> [Search Results](https://book-repository-virtual.herokuapp.com/search_results) -> Burmese Days by George Orwell -> Book CRUD operations apply as this is my book.
-	*  **Use Case 002-002 (R in Book CRUD):** as a user/reader I want to search for books in my Book Repository using any combination of title, author, and rating (not genre, nor ISBN).
+	*  **Use Case 003-002 (R in Book CRUD):** as a user/reader I want to search for books in my Book Repository using any combination of title, author, and rating (not genre, nor ISBN).
 		*  **Tasks 1:** [Member's Page](https://book-repository-virtual.herokuapp.com/members) -> via the drop-down menu click on Search Books -> [Search Books](https://book-repository-virtual.herokuapp.com/search_book) -> enter any combination of title (empty, partial, or full), author (empty, partial, or full) of the book I'm searching for, toggle the private switch on (private search), rating (from 1 to 10, value searched for is >= value entered), and click on the Search Books button -> [Search Results](https://book-repository-virtual.herokuapp.com/search_results) -> stack (list) of books found -> Book CRUD operations apply as these are my books.
-	*  **Use Case 002-003 (R in Book CRUD):** as a user/reader I want to search for all my books in my Book Repository using an empty form search.
+	*  **Use Case 003-003 (R in Book CRUD):** as a user/reader I want to search for all my books in my Book Repository using an empty form search.
 		*  **Tasks 1:** [Member's Page](https://book-repository-virtual.herokuapp.com/members) -> via the drop-down menu click on Search Books -> [Search Books](https://book-repository-virtual.herokuapp.com/search_book) -> leave all form fields empty, toggle the private switch on (private search), and click on the Search Books button -> [Search Results](https://book-repository-virtual.herokuapp.com/search_results) -> stack (list) of books found (same result as my Book Stack in my Member's Page) -> Book CRUD operations apply as these are my books
-	*  **Use Case 002-004 (R in Book CRUD):** as a user/reader I want to search for a specific book the Book Repository using the ISBN.
+	*  **Use Case 003-004 (R in Book CRUD):** as a user/reader I want to search for a specific book the Book Repository using the ISBN.
 		*  **Tasks 1:** [Member's Page](https://book-repository-virtual.herokuapp.com/members) -> via the drop-down menu click on Search Books -> [Search Books](https://book-repository-virtual.herokuapp.com/search_book) -> enter the ISBN (9780141185378) of the book I'm searching for, leave the toggle switch off (public search), and click on the Search Books button -> [Search Results](https://book-repository-virtual.herokuapp.com/search_results) -> Burmese Days by George Orwell (if the book isn't marked as private/hidden by users/readers) -> Book CRUD operations apply as this is my book, otherwise only R in Book CRUD as the book belongs to someone else.
-	*  **Use Case 002-005 (R in Book CRUD):** as a user/reader I want to search for books in the Book Repository using any combination of title, author, and rating (not genre, nor ISBN).
+	*  **Use Case 003-005 (R in Book CRUD):** as a user/reader I want to search for books in the Book Repository using any combination of title, author, and rating (not genre, nor ISBN).
 		*  **Tasks 1:** [Member's Page](https://book-repository-virtual.herokuapp.com/members) -> via the drop-down menu click on Search Books -> [Search Books](https://book-repository-virtual.herokuapp.com/search_book) -> enter any combination of title (empty, partial, or full), author (empty, partial, or full) of the book I'm searching for, leave the toggle switch off (public search), rating (from 1 to 10, value searched for is >= value entered), and click on the Search Books button -> [Search Results](https://book-repository-virtual.herokuapp.com/search_results) -> stack (list) of books found that are not  marked as private/hidden by users/readers -> Book CRUD operations apply to my books, only R in Book CRUD for books belonging to other users/readers.
-	*  **Use Case 002-006 (R in Book CRUD):** as a user/reader I want to search for all the books in the Book Repository using an empty form search.
+	*  **Use Case 003-006 (R in Book CRUD):** as a user/reader I want to search for all the books in the Book Repository using an empty form search.
 		*  **Tasks 1:** [Member's Page](https://book-repository-virtual.herokuapp.com/members) -> via the drop-down menu click on Search Books -> [Search Books](https://book-repository-virtual.herokuapp.com/search_book) -> leave all form fields empty, leave the toggle switch off (public search), and click on the Search Books button -> [Search Results](https://book-repository-virtual.herokuapp.com/search_results) -> stack (list) of books found that are not  marked as private/hidden by users/readers -> Book CRUD operations apply to my books, only R in Book CRUD for books belonging to other users/readers.
 
 ---
 
-*  **User Story 003 (User/Reader):** as a user/reader I want the ability to manage my user profile so that I can have the best possible user/reader exeperience.
-	*  **Use Case 003-001 (U in User CRUD):** as a user/reader I want to update my user profile.
-		*  **Tasks 1:** [Member's Page](https://book-repository-virtual.herokuapp.com/members) -> click on the user profile (username) on the navigation bar [Edit User Profile](https://book-repository-virtual.herokuapp.com/user/edit_user_profile) -> add/edit your First and Last Name, click on the Update button -> success Flash message and [Member's Page](https://book-repository-virtual.herokuapp.com/members).
-	*  **Use Case 003-002 (U in User CRUD):** as a user/reader I want to change my password.
-		*  **Tasks 1:** [Member's Page](https://book-repository-virtual.herokuapp.com/members) -> click on the user profile (username) on the navigation bar [Edit User Profile](https://book-repository-virtual.herokuapp.com/user/edit_user_profile) -> click on [Change Password](https://book-repository-virtual.herokuapp.com/user/change-password) -> enter your current/old password, your new password, retype your new password for confirmation, and click on the Change Password button -> success Flash message and [Member's Page](https://book-repository-virtual.herokuapp.com/members).
-		*  **Tasks 2:** an email is sent to the user's/reader's email address, confirming the password change -> if the password change wasn't initiated by the user/reader they can click on the link in the email to change the password.
-	*  **Use Case 003-003 (D in User CRUD):** as a user/reader I want to delete my account.
-		*  **Tasks 1:** [Member's Page](https://book-repository-virtual.herokuapp.com/members) -> click on the user profile (username) on the navigation bar [Edit User Profile](https://book-repository-virtual.herokuapp.com/user/edit_user_profile) -> click on [Delete User](https://book-repository-virtual.herokuapp.com/user/edit_user_profile#delete_user) -> click on yes to permanetly delete the user/reader and associated books from the Book Repository or no to close the delete user modal -> success Flash message [Landing/Home Page](https://book-repository-virtual.herokuapp.com/index.html).
-
----
+![Information Architecture and Navigation - User Management](https://github.com/NaoiseGaffney/BookRepository/blob/development/documentation/IA%20Nav%20-%20User%20Management.png)
 
 *  **User Story 004 (User 'admin' and user/reader with Admin Role):** as an admin or user/reader with the Admin Role I want to manage the users, genres, books, and statistics so that I can provide the best possible Book Repository experince for the users/readers.
 	*  **Use Case 004-001 (R in Admin User CRUD):** as an admin I want to view the users/readers in the Book Repository.
@@ -116,6 +122,146 @@ A user story has one or more use cases with one or more tasks with steps associa
 		*  **Tasks 1:** [Member's Page](https://book-repository-virtual.herokuapp.com/members) -> click on [Admin Page](https://book-repository-virtual.herokuapp.com/admin_dashboard) -> hover over the drop-down (category icon) menu and click on the Statistics button -> scroll through the statitics and click on the Done button to close the modal -> [Admin Page](https://book-repository-virtual.herokuapp.com/admin_dashboard).
 
 [Initial thoughts and plans for the Book Repository](https://github.com/NaoiseGaffney/BookRepository/wiki/Initial-Project-Design-Thoughts---have-since-changed-with-new-knowledge-and-skills.)
+
+## Design Decisions and Technology Choices
+Layout and navigation, colour scheme(s) (progression), typography, icons and text...
+
+### Strategy: --> Business
+
+### Scope: --> User Experience
+
+### Structure: Information Architecture and Interaction Design
+
+### Skeleton and Surface --> User Experience and Features
+
+This document covers the user experience and design of this website based on the 5 Planes from the Elements of User Experience by Jesse James Garrett:
+
+Strategy Plane: User Needs and Business Objectives.
+Scope Plane: Functional Specification (Tasks) and Content Requirements (Information).
+Structure Plane: Interaction Design (Tasks) and Information Design (Information).
+Skeleton Plane: Interface (Tasks), Navigation (Tasks/Information), and Information Design (Information).
+Surface Plane: Visual Design.
+
+### Structure Plane: Information Architecture
+Information Architecture is sequential with modals, leading the user/reader along at every stage. The navigation bar provides a different set of options depending on the role (user or Admin), and whether authenticated or not. The breadcrumbs provide the "trodden path", making it easy to get back to where the user/reader started while also clarifying where they are (please note, once signed in, the Landing/Home Page redirects to the Member's Page). On pages with many books (Member's Page, Search Results Page) and many users/readers (Admin Page) pagination navigation is provided at the top of the book stack/user table to either select a page directly or go through them using the < (previous page) and (next page) >.
+
+### Structure Plane: Interaction Design
+
+* Breadcrumbs provide a clear view of where the user/reader is, and has been, with the option to click on any breadcrumb to go back to a previous page (please note, once signed in, the Landing/Home Page redirects to the Member's Page).
+* Pagination is provided in the Member's Page and Search Results if 8 books or more exist. The pagination navigation is placed at the top of the book stack for ease-of-use. 
+* The Book Repository emails for user/reader registration, password change, and password reset all provide ample explanations on what to do and why (click on the email link).
+* Help tooltips (hover) and form field tooltips (hover) exist for every page and form, aiding the user/reader in understanding and using the Book Repository.
+* Flash messages provide instant user/reader feedback on either the success or failure of a task (sign in, sign  out, register, update profile, change or reset password, add book, update book, delete book, and incorrect form field entries). The same Flash message feedback is used for the Admin Dashboard too, to aid an admin in using the existing features without having to read documentation or resort to trial-and-error.
+* All from fields provide immediate user/reader feedback too, when selecting an empty field, when entering an incorrect entry, and when a required entry is needed (notable exception is the Admin Dashboard User Modal where some of the authentication is performed in 'app.py').
+* All buttons (form buttons and navigation bar) combine text and icon consistently to aid in the function recognition and use. For all form fields the icon is to the left of the field. For all buttons the icon is on the right of the text. The navigation bar has the icons on the right of the text, except for the hamburger-menu where the icons are on the left of the text as it looks nicer from a layout perspective.
+* Responsive Web Design: the Book Repository works across all devices and screen sizes. In fact, it looks somewhat better on mobile device than on the desktop if anything.
+* The colour scheme has changed over the course of the project, aiming to provide a clear and clean user interface with a good contrast.
+* The font used throughout the Book Repository is Raleway, provided by Google Fonts. It's an easy-to-read font on all device/screen sizes and is comfortable to read over long periods of time.
+* The 4 error handlers handle the unfortunate incidents where a user/reader goes astray, or an internal issue has occured. The error handlers provide a means to get back to the Member's Page or Sign Out, as well as an apology for the incident and an explanation of what has occured and potentially why.
+* The Book Repository logo is easily recognisable and simple in its design. It's a stack of books with the text, "Book Repository".
+
+### Design Decisions
+
+#### Typography
+![Book Repository Typgraphy: Raleway Font](https://github.com/NaoiseGaffney/BookRepository/blob/development/documentation/Raleway%20Font.png)
+
+[Google Fonts: Raleway](https://fonts.google.com/specimen/Raleway#standard-styles)
+
+The font used throughout the Book Repository is Raleway, provided by Google Fonts. It's an easy-to-read font on all device/screen sizes and is comfortable to read over long periods of time.
+
+#### Colour Scheme
+![Book Repository Final Colour Scheme](https://github.com/NaoiseGaffney/BookRepository/blob/development/documentation/Book%20Repository%20-%20Colour%20Scheme%20-%20README.png)
+
+[Coolors Colour Scheme](https://coolors.co/0d47a1-26a69a-d81b60-ffffff-37474f)
+
+The colour scheme has changed over the course of the project, aiming to provide a clear and clean user interface with a good contrast.
+
+| Function                                 | Coolors                      | Materialize        | Sample                                 | Use                                                                                                                                                                                          |
+|------------------------------------------|------------------------------|--------------------|----------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| Logo                                     | Cobalt Blue #0D47A1          | blue darken-4      | ![Cobalt Blue](https://github.com/NaoiseGaffney/BookRepository/blob/development/documentation/cobalt%20blue.png) | Logo.                                                                                                                                                                                        |
+| Primary and  Background Colour (reverse) | Cobalt Blue #0D47A1          | blue darken-4      | ![Cobalt Blue](https://github.com/NaoiseGaffney/BookRepository/blob/development/documentation/cobalt%20blue.png) | Together with white and black in some cases - button and navigation bar background, secondary button text over white background, active form field icons and labels, links, active elements. |
+| Secondary and Font Colour (reverse)      | White #FFFFFF                | white              | ![Cobalt Blue](https://github.com/NaoiseGaffney/BookRepository/blob/development/documentation/white.png) | Together with blue - button and navigation bar text and icons, secondary button background over blue background.                                                                             |
+| Tertiary Colour                          | Dark Cornflower Blue #0C4091 | no equivalent      | ![Cobalt Blue](https://github.com/NaoiseGaffney/BookRepository/blob/development/documentation/dark%20cornflower%20blue.png) | Toggle switch on, background colour.                                                                                                                                                         |
+| Quaternary Colour                        | Black #000000                | black              | ![Cobalt Blue](https://github.com/NaoiseGaffney/BookRepository/blob/development/documentation/black.png) | Most text is black, form field, book details, and table text.                                                                                                                                |
+| Accent Colour 1                          | Ruby #D81B60                 | pink darken-1      | ![Cobalt Blue](https://github.com/NaoiseGaffney/BookRepository/blob/development/documentation/ruby.png) | Flash message failure, delete book, delete user.                                                                                                                                             |
+| Accent Colour 2                          | Persian Green #26A69A        | teal lighten-1     | ![Cobalt Blue](https://github.com/NaoiseGaffney/BookRepository/blob/development/documentation/persian%20green.png) | Flash message success, view book.                                                                                                                                                            |
+| Accent Colour 3                          | Charcoal #37474F             | blue-grey darken-3 | ![Cobalt Blue](https://github.com/NaoiseGaffney/BookRepository/blob/development/documentation/charcoal.png) | Flash message info.                                                                                                                                                                          |
+
+#### Buttons
+The buttons are consistent in style and instantly recognisable with both text and icons making it easier for users/readers to understand and recognise their purpose. Text uses the Raleway font, and the icons are [Material Icons](https://material.io/resources/icons/?style=baseline).
+
+![Buttons - Primary](https://github.com/NaoiseGaffney/BookRepository/blob/development/documentation/Buttons%20-%20Primary.png)
+
+All buttons are styled the same, with capitalised text on the left and an icon on the right. Primary buttons have a "blue darken-4" background with white text and icon, except for the Delete (Delete User) button in the Admin Dahsboard User Modal as it doesn't have a "Are you sure you wish to do this?" feature.
+
+![Buttons - Secondary (drop-down)](https://github.com/NaoiseGaffney/BookRepository/blob/development/documentation/Buttons%20-%20Secondary%20(drop-down).png)
+
+The seceondary, drop-down menu buttons have a white background with "blue darken-4" text on the left and icon on the right.
+
+#### Navigation Bar
+The Navigation Bar is styled the same way as the primary buttons, with white text on the left and icon on the right on a "blue darken-4" background. The Navigation Bar is controlled by the Jinja template 'flask_user_layout.html' where if-else statements check whether the user/reader is authenticated or not, and whether the user is authenticated and has the role of Admin.
+
+![Navigation Bar Unauthenticated](https://github.com/NaoiseGaffney/BookRepository/blob/development/documentation/Unauthenticated%20-%20NavBar.png)
+
+Navigation Bar when unauthenticated.
+
+![Navigation Bar Authenticated User/Reader](https://github.com/NaoiseGaffney/BookRepository/blob/development/documentation/User%20Authenticated%20-%20NavBar.png)
+
+Navigation Bar when authenticated as a user/reader.
+
+![Navigation Bar Authenticated Admin](https://github.com/NaoiseGaffney/BookRepository/blob/development/documentation/Admin%20Authenticated%20-%20NavBar.png)
+
+Navigation Bar when authenticated as an Admin.
+
+The hamburger Bar is styled the same way as the primary buttons, however, the white text is on the right and icon on the left on a "blue darken-4" background as it looks nicer from a layout perspective. The Hamburger Bar is controlled by the Jinja template 'flask_user_layout.html' where if-else statements check whether the user/reader is authenticated or not, and whether the user is authenticated and has the role of Admin.
+
+![Hamburger Bar Unauthenticated](https://github.com/NaoiseGaffney/BookRepository/blob/development/documentation/Unauthenticated%20-%20HBar.png)
+
+Hamburger Bar when unauthenticated.
+
+![Hamburger Bar Authenticated User/Reader](https://github.com/NaoiseGaffney/BookRepository/blob/development/documentation/Authenticated%20User%20-%20HBar.png)
+
+Hamburger Bar when authenticated as a user/reader.
+
+![Hamburger Bar Authenticated Admin](https://github.com/NaoiseGaffney/BookRepository/blob/development/documentation/Authenticated%20Admin%20-%20HBar.png)
+
+Hamburger Bar when authenticated as an Admin.
+
+#### Fixed Footer
+![Fixed Footer](https://github.com/NaoiseGaffney/BookRepository/blob/development/documentation/Fixed%20Footer.png)
+
+![Fixed Footer - About Modal](https://github.com/NaoiseGaffney/BookRepository/blob/development/documentation/About%20Modal.png)
+
+
+#### Background Image
+![Stack of Books on the rigth-hand side by Sharon McCutcheon on Unsplash](https://github.com/NaoiseGaffney/BookRepository/blob/development/static/images/sharon-mccutcheon-eMP4sYPJ9x0-unsplash.jpg)
+
+[Sharon McCutcheon - Photographer](https://unsplash.com/@sharonmccutcheon?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText)
+
+The background image, a stack of books, photographed by Sharon McCutcheon on Unsplash is the perfect shade of blue-white with the books off-centre and to the right which means they are not interfering with the book stack and book details. It's also suitable as it has a stack of books, the Book Repository logo is a stack of books, and the user's/reader's stack of books are viewed on the Member's Page.
+
+#### Flash Messages
+
+#### Breadcrumbs
+
+#### Pagination
+
+#### Logo
+
+#### Favicon
+![Favicon](https://github.com/NaoiseGaffney/BookRepository/blob/development/static/images/android-chrome-192x192.png)
+
+[Favicon.io Favicon Generator](https://favicon.io/)
+
+The Favicon is the stack of books without the text from the Book Repository Logo.
+
+#### Materialize CSS 1.0.0
+
+#### Forms and Fields
+
+#### Book Stack
+
+#### Admin Dashboard
 
 ![Section Divider: User Experience and Features](https://github.com/NaoiseGaffney/BookRepository/blob/development/documentation/section%20divider.png)
 
@@ -260,157 +406,6 @@ Local development uses a rotating file handler which makes the logs easier to re
 | Critical | Danger  | Failure       | Heroku Production                                            | Application Log (rotating file logger and console) = Critical. Flash Message = Danger (pink). Book Repository Message in Application Log = Failure.      |
 
 ![Section Divider: Features and Design Decisions and Technology Choices](https://github.com/NaoiseGaffney/BookRepository/blob/development/documentation/section%20divider.png)
-
-## Design Decisions and Technology Choices
-Layout and navigation, colour scheme(s) (progression), typography, icons and text...
-
-### Strategy: --> Business
-
-### Scope: --> User Experience
-
-### Structure: Information Architecture and Interaction Design
-
-### Skeleton and Surface --> User Experience and Features
-
-This document covers the user experience and design of this website based on the 5 Planes from the Elements of User Experience by Jesse James Garrett:
-
-Strategy Plane: User Needs and Business Objectives.
-Scope Plane: Functional Specification (Tasks) and Content Requirements (Information).
-Structure Plane: Interaction Design (Tasks) and Information Design (Information).
-Skeleton Plane: Interface (Tasks), Navigation (Tasks/Information), and Information Design (Information).
-Surface Plane: Visual Design.
-
-### Structure Plane: Information Architecture
-Information Architecture is sequential with modals, leading the user/reader along at every stage. The navigation bar provides a different set of options depending on the role (user or Admin), and whether authenticated or not. The breadcrumbs provide the "trodden path", making it easy to get back to where the user/reader started while also clarifying where they are (please note, once signed in, the Landing/Home Page redirects to the Member's Page). On pages with many books (Member's Page, Search Results Page) and many users/readers (Admin Page) pagination navigation is provided at the top of the book stack/user table to either select a page directly or go through them using the < (previous page) and (next page) >.
-
-![Information Architecture and Navigation - User Management](https://github.com/NaoiseGaffney/BookRepository/blob/development/documentation/IA%20Nav%20-%20User%20Management.png)
-
-![Information Architecture and Navigation - User Management](https://github.com/NaoiseGaffney/BookRepository/blob/development/documentation/IA%20Nav%20-%20Book%20Repository.png)
-
-![Information Architecture and Navigation - User Management](https://github.com/NaoiseGaffney/BookRepository/blob/development/documentation/IA%20Nav%20-%20Admin%20Dashboard.png)
-
-
-### Structure Plane: Interaction Design
-
-* Breadcrumbs provide a clear view of where the user/reader is, and has been, with the option to click on any breadcrumb to go back to a previous page (please note, once signed in, the Landing/Home Page redirects to the Member's Page).
-* Pagination is provided in the Member's Page and Search Results if 8 books or more exist. The pagination navigation is placed at the top of the book stack for ease-of-use. 
-* The Book Repository emails for user/reader registration, password change, and password reset all provide ample explanations on what to do and why (click on the email link).
-* Help tooltips (hover) and form field tooltips (hover) exist for every page and form, aiding the user/reader in understanding and using the Book Repository.
-* Flash messages provide instant user/reader feedback on either the success or failure of a task (sign in, sign  out, register, update profile, change or reset password, add book, update book, delete book, and incorrect form field entries). The same Flash message feedback is used for the Admin Dashboard too, to aid an admin in using the existing features without having to read documentation or resort to trial-and-error.
-* All from fields provide immediate user/reader feedback too, when selecting an empty field, when entering an incorrect entry, and when a required entry is needed (notable exception is the Admin Dashboard User Modal where some of the authentication is performed in 'app.py').
-* All buttons (form buttons and navigation bar) combine text and icon consistently to aid in the function recognition and use. For all form fields the icon is to the left of the field. For all buttons the icon is on the right of the text. The navigation bar has the icons on the right of the text, except for the hamburger-menu where the icons are on the left of the text as it looks nicer from a layout perspective.
-* Responsive Web Design: the Book Repository works across all devices and screen sizes. In fact, it looks somewhat better on mobile device than on the desktop if anything.
-* The colour scheme has changed over the course of the project, aiming to provide a clear and clean user interface with a good contrast.
-* The font used throughout the Book Repository is Raleway, provided by Google Fonts. It's an easy-to-read font on all device/screen sizes and is comfortable to read over long periods of time.
-* The 4 error handlers handle the unfortunate incidents where a user/reader goes astray, or an internal issue has occured. The error handlers provide a means to get back to the Member's Page or Sign Out, as well as an apology for the incident and an explanation of what has occured and potentially why.
-* The Book Repository logo is easily recognisable and simple in its design. It's a stack of books with the text, "Book Repository".
-
-### Design Decisions
-
-#### Typography
-![Book Repository Typgraphy: Raleway Font](https://github.com/NaoiseGaffney/BookRepository/blob/development/documentation/Raleway%20Font.png)
-
-[Google Fonts: Raleway](https://fonts.google.com/specimen/Raleway#standard-styles)
-
-The font used throughout the Book Repository is Raleway, provided by Google Fonts. It's an easy-to-read font on all device/screen sizes and is comfortable to read over long periods of time.
-
-#### Colour Scheme
-![Book Repository Final Colour Scheme](https://github.com/NaoiseGaffney/BookRepository/blob/development/documentation/Book%20Repository%20-%20Colour%20Scheme%20-%20README.png)
-
-[Coolors Colour Scheme](https://coolors.co/0d47a1-26a69a-d81b60-ffffff-37474f)
-
-The colour scheme has changed over the course of the project, aiming to provide a clear and clean user interface with a good contrast.
-
-| Function                                 | Coolors                      | Materialize        | Sample                                 | Use                                                                                                                                                                                          |
-|------------------------------------------|------------------------------|--------------------|----------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| Logo                                     | Cobalt Blue #0D47A1          | blue darken-4      | ![Cobalt Blue](https://github.com/NaoiseGaffney/BookRepository/blob/development/documentation/cobalt%20blue.png) | Logo.                                                                                                                                                                                        |
-| Primary and  Background Colour (reverse) | Cobalt Blue #0D47A1          | blue darken-4      | ![Cobalt Blue](https://github.com/NaoiseGaffney/BookRepository/blob/development/documentation/cobalt%20blue.png) | Together with white and black in some cases - button and navigation bar background, secondary button text over white background, active form field icons and labels, links, active elements. |
-| Secondary and Font Colour (reverse)      | White #FFFFFF                | white              | ![Cobalt Blue](https://github.com/NaoiseGaffney/BookRepository/blob/development/documentation/white.png) | Together with blue - button and navigation bar text and icons, secondary button background over blue background.                                                                             |
-| Tertiary Colour                          | Dark Cornflower Blue #0C4091 | no equivalent      | ![Cobalt Blue](https://github.com/NaoiseGaffney/BookRepository/blob/development/documentation/dark%20cornflower%20blue.png) | Toggle switch on, background colour.                                                                                                                                                         |
-| Quaternary Colour                        | Black #000000                | black              | ![Cobalt Blue](https://github.com/NaoiseGaffney/BookRepository/blob/development/documentation/black.png) | Most text is black, form field, book details, and table text.                                                                                                                                |
-| Accent Colour 1                          | Ruby #D81B60                 | pink darken-1      | ![Cobalt Blue](https://github.com/NaoiseGaffney/BookRepository/blob/development/documentation/ruby.png) | Flash message failure, delete book, delete user.                                                                                                                                             |
-| Accent Colour 2                          | Persian Green #26A69A        | teal lighten-1     | ![Cobalt Blue](https://github.com/NaoiseGaffney/BookRepository/blob/development/documentation/persian%20green.png) | Flash message success, view book.                                                                                                                                                            |
-| Accent Colour 3                          | Charcoal #37474F             | blue-grey darken-3 | ![Cobalt Blue](https://github.com/NaoiseGaffney/BookRepository/blob/development/documentation/charcoal.png) | Flash message info.                                                                                                                                                                          |
-
-#### Buttons
-The buttons are consistent in style and instantly recognisable with both text and icons making it easier for users/readers to understand and recognise their purpose. Text uses the Raleway font, and the icons are [Material Icons](https://material.io/resources/icons/?style=baseline).
-
-![Buttons - Primary](https://github.com/NaoiseGaffney/BookRepository/blob/development/documentation/Buttons%20-%20Primary.png)
-
-All buttons are styled the same, with capitalised text on the left and an icon on the right. Primary buttons have a "blue darken-4" background with white text and icon, except for the Delete (Delete User) button in the Admin Dahsboard User Modal as it doesn't have a "Are you sure you wish to do this?" feature.
-
-![Buttons - Secondary (drop-down)](https://github.com/NaoiseGaffney/BookRepository/blob/development/documentation/Buttons%20-%20Secondary%20(drop-down).png)
-
-The seceondary, drop-down menu buttons have a white background with "blue darken-4" text on the left and icon on the right.
-
-#### Navigation Bar
-The Navigation Bar is styled the same way as the primary buttons, with white text on the left and icon on the right on a "blue darken-4" background. The Navigation Bar is controlled by the Jinja template 'flask_user_layout.html' where if-else statements check whether the user/reader is authenticated or not, and whether the user is authenticated and has the role of Admin.
-
-![Navigation Bar Unauthenticated](https://github.com/NaoiseGaffney/BookRepository/blob/development/documentation/Unauthenticated%20-%20NavBar.png)
-
-Navigation Bar when unauthenticated.
-
-![Navigation Bar Authenticated User/Reader](https://github.com/NaoiseGaffney/BookRepository/blob/development/documentation/User%20Authenticated%20-%20NavBar.png)
-
-Navigation Bar when authenticated as a user/reader.
-
-![Navigation Bar Authenticated Admin](https://github.com/NaoiseGaffney/BookRepository/blob/development/documentation/Admin%20Authenticated%20-%20NavBar.png)
-
-Navigation Bar when authenticated as an Admin.
-
-The hamburger Bar is styled the same way as the primary buttons, however, the white text is on the right and icon on the left on a "blue darken-4" background as it looks nicer from a layout perspective. The Hamburger Bar is controlled by the Jinja template 'flask_user_layout.html' where if-else statements check whether the user/reader is authenticated or not, and whether the user is authenticated and has the role of Admin.
-
-![Hamburger Bar Unauthenticated](https://github.com/NaoiseGaffney/BookRepository/blob/development/documentation/Unauthenticated%20-%20HBar.png)
-
-Hamburger Bar when unauthenticated.
-
-![Hamburger Bar Authenticated User/Reader](https://github.com/NaoiseGaffney/BookRepository/blob/development/documentation/Authenticated%20User%20-%20HBar.png)
-
-Hamburger Bar when authenticated as a user/reader.
-
-![Hamburger Bar Authenticated Admin](https://github.com/NaoiseGaffney/BookRepository/blob/development/documentation/Authenticated%20Admin%20-%20HBar.png)
-
-Hamburger Bar when authenticated as an Admin.
-
-#### Fixed Footer
-![Fixed Footer](https://github.com/NaoiseGaffney/BookRepository/blob/development/documentation/Fixed%20Footer.png)
-
-![Fixed Footer - About Modal](https://github.com/NaoiseGaffney/BookRepository/blob/development/documentation/About%20Modal.png)
-
-
-#### Background Image
-![Stack of Books on the rigth-hand side by Sharon McCutcheon on Unsplash](https://github.com/NaoiseGaffney/BookRepository/blob/development/static/images/sharon-mccutcheon-eMP4sYPJ9x0-unsplash.jpg)
-
-[Sharon McCutcheon - Photographer](https://unsplash.com/@sharonmccutcheon?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText)
-
-The background image, a stack of books, photographed by Sharon McCutcheon on Unsplash is the perfect shade of blue-white with the books off-centre and to the right which means they are not interfering with the book stack and book details. It's also suitable as it has a stack of books, the Book Repository logo is a stack of books, and the user's/reader's stack of books are viewed on the Member's Page.
-
-#### Flash Messages
-
-#### Breadcrumbs
-
-#### Pagination
-
-#### Logo
-
-#### Favicon
-![Favicon](https://github.com/NaoiseGaffney/BookRepository/blob/development/static/images/android-chrome-192x192.png)
-
-[Favicon.io Favicon Generator](https://favicon.io/)
-
-The Favicon is the stack of books without the text from the Book Repository Logo.
-
-#### Materialize CSS 1.0.0
-
-#### Forms and Fields
-
-#### Book Stack
-
-#### Admin Dashboard
-
-
-
-![Section Divider: Design Decisions and Technology Choices, and Technology](https://github.com/NaoiseGaffney/BookRepository/blob/development/documentation/section%20divider.png)
 
 ### Technology Choices
 Flask-User, application logging, CSRF, FDT, Flask-MongoEngine/MongoEngine, File Handling (JSON), Google Books API (thumbnail images), Session Cookies, Consent Cookie, 'config.py', .env and Heroku variables, CDD, DB Schema, JSON Schema...
