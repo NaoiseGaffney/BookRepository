@@ -272,16 +272,25 @@ Layout and navigation, colour scheme(s) (progression), typography, icons and tex
 
 ### Skeleton and Surface --> User Experience and Features
 
-### Structure Plane: Information Architecture and Interaction Design
+This document covers the user experience and design of this website based on the 5 Planes from the Elements of User Experience by Jesse James Garrett:
+
+Strategy Plane: User Needs and Business Objectives.
+Scope Plane: Functional Specification (Tasks) and Content Requirements (Information).
+Structure Plane: Interaction Design (Tasks) and Information Design (Information).
+Skeleton Plane: Interface (Tasks), Navigation (Tasks/Information), and Information Design (Information).
+Surface Plane: Visual Design.
+
+### Structure Plane: Information Architecture
 Information Architecture is sequential with modals, leading the user/reader along at every stage. The navigation bar provides a different set of options depending on the role (user or Admin), and whether authenticated or not. The breadcrumbs provide the "trodden path", making it easy to get back to where the user/reader started while also clarifying where they are (please note, once signed in, the Landing/Home Page redirects to the Member's Page). On pages with many books (Member's Page, Search Results Page) and many users/readers (Admin Page) pagination navigation is provided at the top of the book stack/user table to either select a page directly or go through them using the < (previous page) and (next page) >.
 
 ![Information Architecture and Navigation - User Management](https://github.com/NaoiseGaffney/BookRepository/blob/development/documentation/IA%20Nav%20-%20User%20Management.png)
 
-
-
 ![Information Architecture and Navigation - User Management](https://github.com/NaoiseGaffney/BookRepository/blob/development/documentation/IA%20Nav%20-%20Book%20Repository.png)
 
 ![Information Architecture and Navigation - User Management](https://github.com/NaoiseGaffney/BookRepository/blob/development/documentation/IA%20Nav%20-%20Admin%20Dashboard.png)
+
+
+### Structure Plane: Interaction Design
 
 * Breadcrumbs provide a clear view of where the user/reader is, and has been, with the option to click on any breadcrumb to go back to a previous page (please note, once signed in, the Landing/Home Page redirects to the Member's Page).
 * Pagination is provided in the Member's Page and Search Results if 8 books or more exist. The pagination navigation is placed at the top of the book stack for ease-of-use. 
