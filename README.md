@@ -301,10 +301,22 @@ Features currrently implemented as a part of the Book Repository.
 * Search Books with (R in Book CRUD):
 	* The ability to search for public (all books except those marked private/hidden) or private (own books).
 	* The ability to search for books using ISBN.
-	* Theability to search for books using a combinaition to title (partial or full) and author (partial or full), rating equal to or greater than, and genre (none or 1 of 32).
+	* The ability to search for books using a combinaition to title (partial or full) and author (partial or full), rating equal to or greater than, and genre (none or 1 of 32).
 * Search Books Results with:
 	* The ability to browse and view books matching the search criteria.
 	* The ability to edit/update books belonging to the current user/reader (books belonging to other users/readers can't be edited/updated, nor deleted).
+
+![Book Search 1: Book Search: private (user books) and ISBN ](https://github.com/NaoiseGaffney/BookRepository/blob/development/documentation/Book%20Search%201.png)
+
+![Book search 2: Book Search: private (user books) and title, and author, and gte rating, and not genre](https://github.com/NaoiseGaffney/BookRepository/blob/development/documentation/Book%20Search%202.png)
+
+![Book Search 3: Book Search: private (user books) and title, and author, and gte rating,  and genre](https://github.com/NaoiseGaffney/BookRepository/blob/development/documentation/Book%20Search%203.png)
+
+![Book Search 4: Book Search: public (all books, except hidden) and ISBN ](https://github.com/NaoiseGaffney/BookRepository/blob/development/documentation/Book%20Search%204.png)
+
+![Book Search 5: Book Search: public (all books, except hidden) and title, and author, and gte rating, and not genre](https://github.com/NaoiseGaffney/BookRepository/blob/development/documentation/Book%20Search%205.png)
+
+![Book Search 6: Book Search: public (all books, except hidden) and title, and author, and gte rating,  and genre](https://github.com/NaoiseGaffney/BookRepository/blob/development/documentation/Book%20Search%206.png)
 
 #### Admin Dashboard:
 
