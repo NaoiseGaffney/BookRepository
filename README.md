@@ -123,6 +123,8 @@ A user story has one or more use cases with one or more tasks with steps associa
 
 [Initial thoughts and plans for the Book Repository](https://github.com/NaoiseGaffney/BookRepository/wiki/Initial-Project-Design-Thoughts---have-since-changed-with-new-knowledge-and-skills.)
 
+![Section Divider: Business and User Experience](https://github.com/NaoiseGaffney/BookRepository/blob/development/documentation/section%20divider.png)
+
 ## Design Decisions and Technology Choices
 Layout and navigation, colour scheme(s) (progression), typography, icons and text...
 
