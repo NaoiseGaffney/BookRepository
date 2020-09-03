@@ -3,7 +3,7 @@
 
 "A safe virtual repository for books, a digital version of your library that is searchable, and where you can share your book notes and thoughts with like-minded readers." - Gaff
 
-![Book Repository Logo](https://github.com/NaoiseGaffney/BookRepository/blob/development/static/images/logo_bookstack_text_96_spacing.png)
+![Book Repository Logo](static/images/logo_bookstack_text_96_spacing.png)
 
 The Book Repository is a digital or virtual library to store information about your books, such as title, author, year published, ISBN, genre, rating, description, and your reflection and comments.
 
@@ -13,7 +13,7 @@ An Admin Dashboard provides user management, loading of genres and books, as wel
 
 The Book Repository is inspired by my own love of books and reading, and my propensity to stack my books all over the house (makes it easy to see and read them), much to the annoyance of my wife. This way I have the means to store details of my books online, browse my digital stack and find the inspiration to read a book again, or better yet read a new book based on another reader's stack of books.
 
-![Section Divider: Title and Business](https://github.com/NaoiseGaffney/BookRepository/blob/development/documentation/section%20divider.png)
+![Section Divider: Title and Business](documentation/section%20divider.png)
 
 ## Business
 The Business goals describe the expected user/reader and site owner goals, and drive the design, development, and deployment of the application which in this case is the Book Repository. The fulfillment of these goals detemine the success of the application.
@@ -28,13 +28,13 @@ Inspire readers to find books they might not have heard of, and compel them to b
 
 Find new books to read, broadening my horizons, and enjoying the excitement of delving into the mind and perspective of the author.
 
-![Section Divider: Business and User Experience](https://github.com/NaoiseGaffney/BookRepository/blob/development/documentation/section%20divider.png)
+![Section Divider: Business and User Experience](documentation/section%20divider.png)
 
 ## User Experience
 User experience (UX) design is the design process used to create applications and websites that provide meaningful and relevant experiences to users. 
 
 ### A Persona Summary of the Users/Readers of the Book Repository
-![Persona Summary](https://github.com/NaoiseGaffney/BookRepository/blob/development/documentation/Persona%20Summary.png)
+![Persona Summary](documentation/Persona%20Summary.png)
 
 The Book Repository is for readers of all ages (please see next paragraph), diverse demographics and interests, with a preference for real books as opposed to digital media like Kindle (digital media has online libraries and ways of sorting and sharing their books already), and who want to gain some measure of control over their growing stack or library of books through a Book Repository with the additional means to share their views and ratings on books, while also gaining insights and ideas from fellow readers.
 
@@ -49,7 +49,7 @@ A user story has one or more use cases with one or more tasks with steps associa
 
 ---
 
-![Information Architecture and Navigation - User Management](https://github.com/NaoiseGaffney/BookRepository/blob/development/documentation/IA%20Nav%20-%20User%20Management.png)
+![Information Architecture and Navigation - User Management](documentation/IA%20Nav%20-%20User%20Management.png)
 
 * **User Story 001 (User/Reader):** as a new user/reader I want to join the Book Repository to store details about my books so that I can share them with a wider audience.
 	* **Use Case 001-001 (C in User CRUD):** as a new user/reader I want to register an account with the Book Repository.
@@ -83,7 +83,7 @@ A user story has one or more use cases with one or more tasks with steps associa
 
 ---
 
-![Information Architecture and Navigation - Book Repository](https://github.com/NaoiseGaffney/BookRepository/blob/development/documentation/IA%20Nav%20-%20Book%20Repository.png)
+![Information Architecture and Navigation - Book Repository](documentation/IA%20Nav%20-%20Book%20Repository.png)
 
 *  **User Story 003 (User/Reader):** as a user/reader I want to search for books in the Book Repository so that I can find new books to read, inspired by reader comments, and possibly purchase on Amazon UK or from other vendors.
 	*  **Use Case 003-001 (R in Book CRUD):** as a user/reader I want to search for a specific book in my Book Repository using the ISBN.
@@ -101,7 +101,7 @@ A user story has one or more use cases with one or more tasks with steps associa
 
 ---
 
-![Information Architecture and Navigation - Admin Dashboard](https://github.com/NaoiseGaffney/BookRepository/blob/development/documentation/IA%20Nav%20-%20Admin%20Dashboard.png)
+![Information Architecture and Navigation - Admin Dashboard](documentation/IA%20Nav%20-%20Admin%20Dashboard.png)
 
 *  **User Story 004 (User 'admin' and user/reader with Admin Role):** as an admin or user/reader with the Admin Role I want to manage the users, genres, books, and statistics so that I can provide the best possible Book Repository experince for the users/readers.
 	*  **Use Case 004-001 (R in Admin User CRUD):** as an admin I want to view the users/readers in the Book Repository.
@@ -123,7 +123,7 @@ A user story has one or more use cases with one or more tasks with steps associa
 
 [Initial thoughts and plans for the Book Repository](https://github.com/NaoiseGaffney/BookRepository/wiki/Initial-Project-Design-Thoughts---have-since-changed-with-new-knowledge-and-skills.)
 
-![Section Divider: Business and User Experience](https://github.com/NaoiseGaffney/BookRepository/blob/development/documentation/section%20divider.png)
+![Section Divider: Business and User Experience](documentation/section%20divider.png)
 
 ## Design Decisions and Technology Choices
 Layout and navigation, colour scheme(s) (progression), typography, icons and text...
@@ -165,14 +165,14 @@ Information Architecture is sequential with modals, leading the user/reader alon
 ### Design Decisions
 
 #### Typography
-![Book Repository Typgraphy: Raleway Font](https://github.com/NaoiseGaffney/BookRepository/blob/development/documentation/Raleway%20Font.png)
+![Book Repository Typgraphy: Raleway Font](documentation/Raleway%20Font.png)
 
 [Google Fonts: Raleway](https://fonts.google.com/specimen/Raleway#standard-styles)
 
 The font used throughout the Book Repository is Raleway, provided by Google Fonts. It's an easy-to-read font on all device/screen sizes and is comfortable to read over long periods of time.
 
 #### Colour Scheme
-![Book Repository Final Colour Scheme](https://github.com/NaoiseGaffney/BookRepository/blob/development/documentation/Book%20Repository%20-%20Colour%20Scheme%20-%20README.png)
+![Book Repository Final Colour Scheme](documentation/Book%20Repository%20-%20Colour%20Scheme%20-%20README.png)
 
 [Coolors Colour Scheme](https://coolors.co/0d47a1-26a69a-d81b60-ffffff-37474f)
 
@@ -180,63 +180,63 @@ The colour scheme has changed over the course of the project, aiming to provide 
 
 | Function                                 | Coolors                      | Materialize        | Sample                                 | Use                                                                                                                                                                                          |
 |------------------------------------------|------------------------------|--------------------|----------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| Logo                                     | Cobalt Blue #0D47A1          | blue darken-4      | ![Cobalt Blue](https://github.com/NaoiseGaffney/BookRepository/blob/development/documentation/cobalt%20blue.png) | Logo.                                                                                                                                                                                        |
-| Primary and  Background Colour (reverse) | Cobalt Blue #0D47A1          | blue darken-4      | ![Cobalt Blue](https://github.com/NaoiseGaffney/BookRepository/blob/development/documentation/cobalt%20blue.png) | Together with white and black in some cases - button and navigation bar background, secondary button text over white background, active form field icons and labels, links, active elements. |
-| Secondary and Font Colour (reverse)      | White #FFFFFF                | white              | ![Cobalt Blue](https://github.com/NaoiseGaffney/BookRepository/blob/development/documentation/white.png) | Together with blue - button and navigation bar text and icons, secondary button background over blue background.                                                                             |
-| Tertiary Colour                          | Dark Cornflower Blue #0C4091 | no equivalent      | ![Cobalt Blue](https://github.com/NaoiseGaffney/BookRepository/blob/development/documentation/dark%20cornflower%20blue.png) | Toggle switch on, background colour.                                                                                                                                                         |
-| Quaternary Colour                        | Black #000000                | black              | ![Cobalt Blue](https://github.com/NaoiseGaffney/BookRepository/blob/development/documentation/black.png) | Most text is black, form field, book details, and table text.                                                                                                                                |
-| Accent Colour 1                          | Ruby #D81B60                 | pink darken-1      | ![Cobalt Blue](https://github.com/NaoiseGaffney/BookRepository/blob/development/documentation/ruby.png) | Flash message failure, delete book, delete user.                                                                                                                                             |
-| Accent Colour 2                          | Persian Green #26A69A        | teal lighten-1     | ![Cobalt Blue](https://github.com/NaoiseGaffney/BookRepository/blob/development/documentation/persian%20green.png) | Flash message success, view book.                                                                                                                                                            |
-| Accent Colour 3                          | Charcoal #37474F             | blue-grey darken-3 | ![Cobalt Blue](https://github.com/NaoiseGaffney/BookRepository/blob/development/documentation/charcoal.png) | Flash message info.                                                                                                                                                                          |
+| Logo                                     | Cobalt Blue #0D47A1          | blue darken-4      | ![Cobalt Blue](documentation/cobalt%20blue.png) | Logo.                                                                                                                                                                                        |
+| Primary and  Background Colour (reverse) | Cobalt Blue #0D47A1          | blue darken-4      | ![Cobalt Blue](documentation/cobalt%20blue.png) | Together with white and black in some cases - button and navigation bar background, secondary button text over white background, active form field icons and labels, links, active elements. |
+| Secondary and Font Colour (reverse)      | White #FFFFFF                | white              | ![Cobalt Blue](documentation/white.png) | Together with blue - button and navigation bar text and icons, secondary button background over blue background.                                                                             |
+| Tertiary Colour                          | Dark Cornflower Blue #0C4091 | no equivalent      | ![Cobalt Blue](documentation/dark%20cornflower%20blue.png) | Toggle switch on, background colour.                                                                                                                                                         |
+| Quaternary Colour                        | Black #000000                | black              | ![Cobalt Blue](documentation/black.png) | Most text is black, form field, book details, and table text.                                                                                                                                |
+| Accent Colour 1                          | Ruby #D81B60                 | pink darken-1      | ![Cobalt Blue](documentation/ruby.png) | Flash message failure, delete book, delete user.                                                                                                                                             |
+| Accent Colour 2                          | Persian Green #26A69A        | teal lighten-1     | ![Cobalt Blue](documentation/persian%20green.png) | Flash message success, view book.                                                                                                                                                            |
+| Accent Colour 3                          | Charcoal #37474F             | blue-grey darken-3 | ![Cobalt Blue](documentation/charcoal.png) | Flash message info.                                                                                                                                                                          |
 
 #### Buttons
 The buttons are consistent in style and instantly recognisable with both text and icons making it easier for users/readers to understand and recognise their purpose. Text uses the Raleway font, and the icons are [Material Icons](https://material.io/resources/icons/?style=baseline).
 
-![Buttons - Primary](https://github.com/NaoiseGaffney/BookRepository/blob/development/documentation/Buttons%20-%20Primary.png)
+![Buttons - Primary](documentation/Buttons%20-%20Primary.png)
 
 All buttons are styled the same, with capitalised text on the left and an icon on the right. Primary buttons have a "blue darken-4" background with white text and icon, except for the Delete (Delete User) button in the Admin Dahsboard User Modal as it doesn't have a "Are you sure you wish to do this?" feature.
 
-![Buttons - Secondary (drop-down)](https://github.com/NaoiseGaffney/BookRepository/blob/development/documentation/Buttons%20-%20Secondary%20(drop-down).png)
+![Buttons - Secondary (drop-down)](documentation/Buttons%20-%20Secondary%20(drop-down).png)
 
 The seceondary, drop-down menu buttons have a white background with "blue darken-4" text on the left and icon on the right.
 
 #### Navigation Bar
 The Navigation Bar is styled the same way as the primary buttons, with white text on the left and icon on the right on a "blue darken-4" background. The Navigation Bar is controlled by the Jinja template 'flask_user_layout.html' where if-else statements check whether the user/reader is authenticated or not, and whether the user is authenticated and has the role of Admin.
 
-![Navigation Bar Unauthenticated](https://github.com/NaoiseGaffney/BookRepository/blob/development/documentation/Unauthenticated%20-%20NavBar.png)
+![Navigation Bar Unauthenticated](documentation/Unauthenticated%20-%20NavBar.png)
 
 Navigation Bar when unauthenticated.
 
-![Navigation Bar Authenticated User/Reader](https://github.com/NaoiseGaffney/BookRepository/blob/development/documentation/User%20Authenticated%20-%20NavBar.png)
+![Navigation Bar Authenticated User/Reader](documentation/User%20Authenticated%20-%20NavBar.png)
 
 Navigation Bar when authenticated as a user/reader.
 
-![Navigation Bar Authenticated Admin](https://github.com/NaoiseGaffney/BookRepository/blob/development/documentation/Admin%20Authenticated%20-%20NavBar.png)
+![Navigation Bar Authenticated Admin](documentation/Admin%20Authenticated%20-%20NavBar.png)
 
 Navigation Bar when authenticated as an Admin.
 
 The hamburger Bar is styled the same way as the primary buttons, however, the white text is on the right and icon on the left on a "blue darken-4" background as it looks nicer from a layout perspective. The Hamburger Bar is controlled by the Jinja template 'flask_user_layout.html' where if-else statements check whether the user/reader is authenticated or not, and whether the user is authenticated and has the role of Admin.
 
-![Hamburger Bar Unauthenticated](https://github.com/NaoiseGaffney/BookRepository/blob/development/documentation/Unauthenticated%20-%20HBar.png)
+![Hamburger Bar Unauthenticated](documentation/Unauthenticated%20-%20HBar.png)
 
 Hamburger Bar when unauthenticated.
 
-![Hamburger Bar Authenticated User/Reader](https://github.com/NaoiseGaffney/BookRepository/blob/development/documentation/Authenticated%20User%20-%20HBar.png)
+![Hamburger Bar Authenticated User/Reader](documentation/Authenticated%20User%20-%20HBar.png)
 
 Hamburger Bar when authenticated as a user/reader.
 
-![Hamburger Bar Authenticated Admin](https://github.com/NaoiseGaffney/BookRepository/blob/development/documentation/Authenticated%20Admin%20-%20HBar.png)
+![Hamburger Bar Authenticated Admin](documentation/Authenticated%20Admin%20-%20HBar.png)
 
 Hamburger Bar when authenticated as an Admin.
 
 #### Fixed Footer
-![Fixed Footer](https://github.com/NaoiseGaffney/BookRepository/blob/development/documentation/Fixed%20Footer.png)
+![Fixed Footer](documentation/Fixed%20Footer.png)
 
-![Fixed Footer - About Modal](https://github.com/NaoiseGaffney/BookRepository/blob/development/documentation/About%20Modal.png)
+![Fixed Footer - About Modal](documentation/About%20Modal.png)
 
 
 #### Background Image
-![Stack of Books on the rigth-hand side by Sharon McCutcheon on Unsplash](https://github.com/NaoiseGaffney/BookRepository/blob/development/static/images/sharon-mccutcheon-eMP4sYPJ9x0-unsplash.jpg)
+![Stack of Books on the rigth-hand side by Sharon McCutcheon on Unsplash](static/images/sharon-mccutcheon-eMP4sYPJ9x0-unsplash.jpg)
 
 [Sharon McCutcheon - Photographer](https://unsplash.com/@sharonmccutcheon?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText)
 
@@ -251,7 +251,7 @@ The background image, a stack of books, photographed by Sharon McCutcheon on Uns
 #### Logo
 
 #### Favicon
-![Favicon](https://github.com/NaoiseGaffney/BookRepository/blob/development/static/images/android-chrome-192x192.png)
+![Favicon](static/images/android-chrome-192x192.png)
 
 [Favicon.io Favicon Generator](https://favicon.io/)
 
@@ -265,7 +265,7 @@ The Favicon is the stack of books without the text from the Book Repository Logo
 
 #### Admin Dashboard
 
-![Section Divider: User Experience and Features](https://github.com/NaoiseGaffney/BookRepository/blob/development/documentation/section%20divider.png)
+![Section Divider: User Experience and Features](documentation/section%20divider.png)
 
 ## Features
 A feature is some action that can be performed by a user of an application, or is some internal function of an application. The features support the User Experience mentioned above and are implemented based on the business goals, user stories and use cases.
@@ -306,17 +306,17 @@ Features currrently implemented as a part of the Book Repository.
 	* The ability to browse and view books matching the search criteria.
 	* The ability to edit/update books belonging to the current user/reader (books belonging to other users/readers can't be edited/updated, nor deleted).
 
-![Book Search 1: Book Search: private (user books) and ISBN ](https://github.com/NaoiseGaffney/BookRepository/blob/development/documentation/Book%20Search%201.png)
+![Book Search 1: Book Search: private (user books) and ISBN ](documentation/Book%20Search%201.png)
 
-![Book search 2: Book Search: private (user books) and title, and author, and gte rating, and not genre](https://github.com/NaoiseGaffney/BookRepository/blob/development/documentation/Book%20Search%202.png)
+![Book search 2: Book Search: private (user books) and title, and author, and gte rating, and not genre](documentation/Book%20Search%202.png)
 
-![Book Search 3: Book Search: private (user books) and title, and author, and gte rating,  and genre](https://github.com/NaoiseGaffney/BookRepository/blob/development/documentation/Book%20Search%203.png)
+![Book Search 3: Book Search: private (user books) and title, and author, and gte rating,  and genre](documentation/Book%20Search%203.png)
 
-![Book Search 4: Book Search: public (all books, except hidden) and ISBN ](https://github.com/NaoiseGaffney/BookRepository/blob/development/documentation/Book%20Search%204.png)
+![Book Search 4: Book Search: public (all books, except hidden) and ISBN ](documentation/Book%20Search%204.png)
 
-![Book Search 5: Book Search: public (all books, except hidden) and title, and author, and gte rating, and not genre](https://github.com/NaoiseGaffney/BookRepository/blob/development/documentation/Book%20Search%205.png)
+![Book Search 5: Book Search: public (all books, except hidden) and title, and author, and gte rating, and not genre](documentation/Book%20Search%205.png)
 
-![Book Search 6: Book Search: public (all books, except hidden) and title, and author, and gte rating,  and genre](https://github.com/NaoiseGaffney/BookRepository/blob/development/documentation/Book%20Search%206.png)
+![Book Search 6: Book Search: public (all books, except hidden) and title, and author, and gte rating,  and genre](documentation/Book%20Search%206.png)
 
 #### Admin Dashboard:
 
@@ -419,7 +419,7 @@ Local development uses a rotating file handler which makes the logs easier to re
 | Error    |         |               |                                                              |                                                                                                                                                          |
 | Critical | Danger  | Failure       | Heroku Production                                            | Application Log (rotating file logger and console) = Critical. Flash Message = Danger (pink). Book Repository Message in Application Log = Failure.      |
 
-![Section Divider: Features and Design Decisions and Technology Choices](https://github.com/NaoiseGaffney/BookRepository/blob/development/documentation/section%20divider.png)
+![Section Divider: Features and Design Decisions and Technology Choices](documentation/section%20divider.png)
 
 ### Technology Choices
 Flask-User, application logging, CSRF, FDT, Flask-MongoEngine/MongoEngine, File Handling (JSON), Google Books API (thumbnail images), Session Cookies, Consent Cookie, 'config.py', .env and Heroku variables, CDD, DB Schema, JSON Schema...
@@ -437,7 +437,7 @@ Defensive Programming...
 
 ### General Knowledge and Hours of Reading
 
-![Section Divider: Technology and, Testing and Validation](https://github.com/NaoiseGaffney/BookRepository/blob/development/documentation/section%20divider.png)
+![Section Divider: Technology and, Testing and Validation](documentation/section%20divider.png)
 
 ## Testing and Validation
 ### Manual BDD
@@ -448,18 +448,18 @@ Defensive Programming...
 
 ### Validation of HTML 5, CSS 3, JS and Python
 
-![Section Divider: Testing and Validation, and Continuous Delivery and Deployment](https://github.com/NaoiseGaffney/BookRepository/blob/development/documentation/section%20divider.png)
+![Section Divider: Testing and Validation, and Continuous Delivery and Deployment](documentation/section%20divider.png)
 
 ## Continuous Delivery and Deployment
 
-![Section Divider: Continuous Delivery and Deployment, and Credits](https://github.com/NaoiseGaffney/BookRepository/blob/development/documentation/section%20divider.png)
+![Section Divider: Continuous Delivery and Deployment, and Credits](documentation/section%20divider.png)
 
 ## Credits
-![GaffCo Consulting Logo](https://github.com/NaoiseGaffney/Professional-Training-Development/blob/master/docs/GaffCo%20-%20Background.png)
+![GaffCo Consulting Logo](documentation/GaffCo%20-%20Background.png)
 
 GaffCo Consulting - [Naoise Gaffney: naoise.gaff.gaffney@gmail.com](mailto:naoise.gaff.gaffney@gmail.com)
 
-![Code Institute Logo](https://github.com/NaoiseGaffney/Professional-Training-Development/blob/master/docs/CodeInstituteLogo.png)
+![Code Institute Logo](documentation/CodeInstituteLogo.png)
 
 Code Institute Mentor - [GitHub: 5pence - Spencer Barriball](https://github.com/5pence)
 
