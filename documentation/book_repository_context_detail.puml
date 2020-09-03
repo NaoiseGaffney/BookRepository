@@ -1,0 +1,23 @@
+!includeurl https://raw.githubusercontent.com/RicardoNiepel/C4-PlantUML/release/1-0/C4_Container.puml
+
+Person(userAlias, "User/Reader", "Readers with libraries and/or stacks of books at home that they would like to catalogue online for easier access and overview, and share their ratings, thoughts and comments on their books with other Book Repository readers.")
+Person(adminAlias, "Admin", "As an admin or user/reader with the Admin Role I want to manage the users, genres, books, and statistics so that I can provide the best possible Book Repository experience for the users/readers.")
+System_Boundary(c1, "Book Repository") {
+    Container(user_management, "User Management", "Python, Flask, Flask-User (extended in 'app.py' and configured in 'config.py'), MongoEngine, JS, HTML 5, CSS 3, Materialize 1.0.0", "User: Register, Sign In, Password Reset, Edit User Profile, Sign Out (CRUD)")
+    Container(book_repository, "Book Repository", "Python, Flask, MongoEngine, JS, HTML 5, CSS 3, Materialize 1.0.0", "Book: Add, View, Update, and Delete books (CRUD)")
+    Container(admin_dashboard, "Admin Dashboard", "Python, Flask, MongoEngine, JS, HTML 5, CSS 3, Materialize 1.0.0", "User: View, Update, Delete User/Reader (RUD)")
+}
+Container(database, "MongoDB", "Flask_MongoEngine -> MongoEngine -> PyMongo -> MongoDB" ,"noSQL database for the Book Repository - Collections: book, genre, session, user")
+Container(gmail, "GMail", "GMail 2FA", "Registration confirmation and password reset.")
+
+Rel(userAlias, user_management, "Uses", "HTTPS")
+Rel(userAlias, book_repository, "Uses", "HTTPS")
+Rel(adminAlias, user_management, "Uses", "HTTPS")
+Rel(adminAlias, book_repository, "Uses", "HTTPS")
+Rel(adminAlias, admin_dashboard, "Uses", "HTTPS")
+Rel(user_management, gmail, "Uses", "SMTP: GMail")
+Rel(gmail, userAlias, "Sends", "E-Mail: registration confirmation or password reset")
+Rel(gmail, adminAlias, "Sends", "E-Mail: registration confirmation or password reset")
+Rel(admin_dashboard, database, "Uses", "Flask_MongoEngine -> MongoEngine -> PyMongo")
+Rel(book_repository, database, "Uses", "Flask_MongoEngine -> MongoEngine -> PyMongo")
+Rel(user_management, database, "Uses", "Flask_MongoEngine -> MongoEngine -> PyMongo")
