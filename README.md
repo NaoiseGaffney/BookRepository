@@ -31,7 +31,7 @@ Find new books to read, broadening my horizons, and enjoying the excitement of d
 ![Section Divider: Business and User Experience](documentation/section%20divider.png)
 
 ## User Experience
-User experience (UX) design is the design process used to create applications and websites that provide meaningful and relevant experiences to users. 
+User experience (UX) design is the design process used to create applications and websites that provide meaningful and relevant experiences to users.
 
 ### A Persona Summary of the Users/Readers of the Book Repository
 ![Persona Summary](documentation/Persona%20Summary.png)
@@ -42,7 +42,38 @@ The age limit of 18 exists as some books shared may not be suitable for children
 
 Since the Book Repository aims to satisfy the requirements of a diverse demographic and age group, ease-of-use is key which is described in the section on Design Decisions and Technology Choices.
 
-### User Stories, Use Cases, and Tasks
+### Strategy Trade-Off
+UX Design is driven by business goals and user needs, and features developed are aligned to these. However, each feature requires time and effort, and often time is constrained as is effort as the grater the effort the higher the cost. Therefore some features are prioritised or mandatory, while others are optional and developed pending time and ultimately cost.
+
+The selected features are driven by the opportunity matrix, which helps us understand what is both more important and viable to create. In this case all features mentioned below are implemented as the features made sense to provide in this initial release. Additional and future features are documented under the Features section, and not documented here.
+
+A Trello Board was used to list the Use Cases and Features, and grew over time as new ideas were added inspired by the project development. In other words, not all these ideas came about before the project development began. An Agile methodology was applied throughout this project.
+
+![Opportunity Matrix - User Management - Table](documentation/OppMatrixTable-UserMgmnt.png)
+Opportunity Matrix - User Management - Table
+
+![Opportunity Matrix - User Management - Scatter](documentation/OppMatrixScatter-UserMgmnt.png)
+Opportunity Matrix - User Management - Scatter Diagram
+
+![Opportunity Matrix - Book Repository - Table](documentation/OppMatrixTable-BookRepository.png)
+Opportunity Matrix - Book Repository - Table
+
+![Opportunity Matrix - Book Repository - Scatter](documentation/OppMatrixScatter-BookRepository.png)
+Opportunity Matrix - Book Repository - Scatter Diagram
+
+![Opportunity Matrix - Admin Dashboard - Table](documentation/OppMatrixTable-AdminDashboard.png)
+Opportunity Matrix - Admin Dashboard - Table
+
+![Opportunity Matrix - Admin Dashboard - Scatter](documentation/OppMatrixScatter-AdminDashboard.png)
+Opportunity Matrix - Admin Dashboard - Scatter Diagram
+
+![Opportunity Matrix - Shared Functions - Table](documentation/OppMatrixTable-SharedFunctions.png)
+Opportunity Matrix - Shared Functions - Table
+
+![Opportunity Matrix - Shared Functions - Scatter](documentation/OppMatrixScatter-SharedFunctions.png)
+Opportunity Matrix - Shared Functions - Scatter Diagrams
+
+### User Stories, Use Cases, and Tasks Mapped to Information Architecture and Navigation
 The User Experience links the Business goals of the external user and site owner to a number of user stories. A user story captures a description of a software feature from an end-user perspective. A user story describes the type of user, what they want and why. A use case is a list of actions or event steps describing the interactions between a role and a system to achieve a goal.
 
 A user story has one or more use cases with one or more tasks with steps associated with it, describing how the user story, and subsequent fulfillment of the external user's and site owner's business goals are realised: Business Goals -> User Story -> Use Case(s) -> Task(s).
@@ -271,6 +302,8 @@ The Favicon is the stack of books without the text from the Book Repository Logo
 A feature is some action that can be performed by a user of an application, or is some internal function of an application. The features support the User Experience mentioned above and are implemented based on the business goals, user stories and use cases.
 
 The features are divided into 4 main areas, User Management, Book Repository (the main book and library features), Admin Dashboard, and Shared Features.
+
+![Book Repository - Context/Container C4 Diagram](out/documentation/book_repository_container/book_repository_container.png)
 
 ### Existing Features
 Features currrently implemented as a part of the Book Repository.
