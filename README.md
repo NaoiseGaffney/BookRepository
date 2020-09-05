@@ -15,6 +15,24 @@ The Book Repository is inspired by my own love of books and reading, and my prop
 
 ![Section Divider: Title and Business](documentation/section%20divider.png)
 
+REWRITE THIS - REWRITE THIS - REWRITE THIS - REWRITE THIS - REWRITE THIS
+
+This document covers the user experience and design of this website based on the 5 Planes from the Elements of User Experience by Jesse James Garrett:
+
+> Strategy Plane => Business Section: User Needs and Business Objectives.
+> 
+> Scope Plane => User Experience Section: Functional Specifications (Tasks) and Content Requirements (Information).
+> 
+> Structure Plane => User Experience Section: Interaction Design (Tasks) and Information Architecture (Information).
+> 
+> Skeleton Plane => Features Section: Information Design, Interface Design (Tasks), and Navigation Design (Information).
+> 
+> Surface Plane => Features Section: Visual Design.
+
+**Table of Contents**
+
+![Section Divider: Title and Business](documentation/section%20divider.png)
+
 ## Business
 The Business goals describe the expected user/reader and site owner goals, and drive the design, development, and deployment of the application which in this case is the Book Repository. The fulfillment of these goals detemine the success of the application.
 
@@ -79,6 +97,8 @@ Opportunity Matrix - Shared Functions - Scatter Diagrams
 The User Experience links the Business goals of the external user and site owner to a number of user stories. A user story captures a description of a software feature from an end-user perspective. A user story describes the type of user, what they want and why. A use case is a list of actions or event steps describing the interactions between a role and a system to achieve a goal.
 
 A user story has one or more use cases with one or more tasks with steps associated with it, describing how the user story, and subsequent fulfillment of the external user's and site owner's business goals are realised: Business Goals -> User Story -> Use Case(s) -> Task(s).
+
+Information Architecture is sequential with modals, leading the user/reader along at every stage. The navigation bar provides a different set of options depending on the role (user or Admin), and whether authenticated or not. The breadcrumbs provide the "trodden path", making it easy to get back to where the user/reader started while also clarifying where they are (please note, once signed in, the Landing/Home Page redirects to the Member's Page). On pages with many books (Member's Page, Search Results Page) and many users/readers (Admin Page) pagination navigation is provided at the top of the book stack/user table to either select a page directly or go through them using the < (previous page) and (next page) >.
 
 ---
 
@@ -154,32 +174,13 @@ A user story has one or more use cases with one or more tasks with steps associa
 	*  **Use Case 004-007 (R in Statistics CRUD):** as an admin I want to view the number of users, number of books, and the most popular genres in the Book Repository.
 		*  **Tasks 1:** [Member's Page](https://book-repository-virtual.herokuapp.com/members) -> click on [Admin Page](https://book-repository-virtual.herokuapp.com/admin_dashboard) -> hover over the drop-down (category icon) menu and click on the Statistics button -> scroll through the statitics and click on the Done button to close the modal -> [Admin Page](https://book-repository-virtual.herokuapp.com/admin_dashboard).
 
-![Section Divider: Business and User Experience](documentation/section%20divider.png)
+![Section Divider: Title and Business](documentation/section%20divider.png)
 
-## Design Decisions and Technology Choices
-Layout and navigation, colour scheme(s) (progression), typography, icons and text...
+## Design Decisions
+The design decisions cover the look-and-feel, typography, colour scheme, forms, buttons, navigation elements, tooltips and more. They put "lipstick-on-the-pig", in other words make the Book Repository application appealing to and easy-to-use for a user/reader. They make the functions come alive and provide information and interaction with the user/reader.
 
-### Strategy: --> Business
-
-### Scope: --> User Experience
-
-### Structure: Information Architecture and Interaction Design
-
-### Skeleton and Surface --> User Experience and Features
-
-This document covers the user experience and design of this website based on the 5 Planes from the Elements of User Experience by Jesse James Garrett:
-
-Strategy Plane: User Needs and Business Objectives.
-Scope Plane: Functional Specification (Tasks) and Content Requirements (Information).
-Structure Plane: Interaction Design (Tasks) and Information Design (Information).
-Skeleton Plane: Interface (Tasks), Navigation (Tasks/Information), and Information Design (Information).
-Surface Plane: Visual Design.
-
-### Structure Plane: Information Architecture
-Information Architecture is sequential with modals, leading the user/reader along at every stage. The navigation bar provides a different set of options depending on the role (user or Admin), and whether authenticated or not. The breadcrumbs provide the "trodden path", making it easy to get back to where the user/reader started while also clarifying where they are (please note, once signed in, the Landing/Home Page redirects to the Member's Page). On pages with many books (Member's Page, Search Results Page) and many users/readers (Admin Page) pagination navigation is provided at the top of the book stack/user table to either select a page directly or go through them using the < (previous page) and (next page) >.
-
-### Structure Plane: Interaction Design
-
+### Interface and Navigation Design
+* Information Architecture is sequential with modals, leading the user/reader along at every stage. The navigation bar provides a different set of options depending on the role (user or Admin), and whether authenticated or not.
 * Breadcrumbs provide a clear view of where the user/reader is, and has been, with the option to click on any breadcrumb to go back to a previous page (please note, once signed in, the Landing/Home Page redirects to the Member's Page).
 * Pagination is provided in the Member's Page and Search Results if 8 books or more exist. The pagination navigation is placed at the top of the book stack for ease-of-use. 
 * The Book Repository emails for user/reader registration, password change, and password reset all provide ample explanations on what to do and why (click on the email link).
@@ -192,8 +193,6 @@ Information Architecture is sequential with modals, leading the user/reader alon
 * The font used throughout the Book Repository is Raleway, provided by Google Fonts. It's an easy-to-read font on all device/screen sizes and is comfortable to read over long periods of time.
 * The 4 error handlers handle the unfortunate incidents where a user/reader goes astray, or an internal issue has occured. The error handlers provide a means to get back to the Member's Page or Sign Out, as well as an apology for the incident and an explanation of what has occured and potentially why.
 * The Book Repository logo is easily recognisable and simple in its design. It's a stack of books with the text, "Book Repository".
-
-### Design Decisions
 
 #### Typography
 ![Book Repository Typgraphy: Raleway Font](documentation/Raleway%20Font.png)
