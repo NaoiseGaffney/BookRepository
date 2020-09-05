@@ -15,21 +15,72 @@ The Book Repository is inspired by my own love of books and reading, and my prop
 
 ![Section Divider: Title and Business](documentation/section%20divider.png)
 
-REWRITE THIS - REWRITE THIS - REWRITE THIS - REWRITE THIS - REWRITE THIS
+<details><summary>Please click to expand the ToC</summary>
 
-This document covers the user experience and design of this website based on the 5 Planes from the Elements of User Experience by Jesse James Garrett:
+- [Book Repository](#book-repository)
+  * [Business](#business)
+    + [External User's Goals](#external-user-s-goals)
+    + [Site Owner's Goals](#site-owner-s-goals)
+  * [User Experience](#user-experience)
+    + [A Persona Summary of the Users/Readers of the Book Repository](#a-persona-summary-of-the-users-readers-of-the-book-repository)
+    + [Strategy Trade-Off](#strategy-trade-off)
+    + [User Stories, Use Cases, and Tasks Mapped to Information Architecture and Navigation](#user-stories--use-cases--and-tasks-mapped-to-information-architecture-and-navigation)
+  * [Design Decisions](#design-decisions)
+    + [Design Decisions Overview](#design-decisions-overview)
+    + [Interface and Navigation Design](#interface-and-navigation-design)
+    + [Design Details](#design-details)
+      - [Typography](#typography)
+      - [Colour Scheme](#colour-scheme)
+      - [Buttons](#buttons)
+      - [Navigation Bar](#navigation-bar)
+      - [Fixed Footer](#fixed-footer)
+      - [Background Image](#background-image)
+      - [Flash Messages](#flash-messages)
+      - [Tooltips](#tooltips)
+      - [Breadcrumbs](#breadcrumbs)
+      - [Pagination](#pagination)
+      - [Logo](#logo)
+      - [Favicon](#favicon)
+      - [Book Stack](#book-stack)
+      - [Tables](#tables)
+  * [Features](#features)
+    + [Existing Features](#existing-features)
+      - [User Management:](#user-management-)
+      - [Book Repository:](#book-repository-)
+      - [Admin Dashboard:](#admin-dashboard-)
+      - [Shared Features:](#shared-features-)
+    + [Future Features](#future-features)
+      - [User Management:](#user-management--1)
+      - [Book Repository:](#book-repository--1)
+      - [Admin Dashboard:](#admin-dashboard--1)
+      - [Shared Features](#shared-features)
+    + [Information and Visual Design](#information-and-visual-design)
+    + [Features CRUD Table (Views)](#features-crud-table--views-)
+    + [Application Logging and Flash Messaging Levels](#application-logging-and-flash-messaging-levels)
+    + [Book Repository '.env' and Heroku Variables](#book-repository--env--and-heroku-variables)
+    + [Flask-User and Book Repository Routes](#flask-user-and-book-repository-routes)
+    + [Flask, Flask-User, and Book Repository Configuration Variables](#flask--flask-user--and-book-repository-configuration-variables)
+  * [Technology](#technology)
+    + [Technology Choices](#technology-choices)
+    + [Code](#code)
+    + [Development and Staging Platforms and Environments](#development-and-staging-platforms-and-environments)
+    + [Documentation Tools](#documentation-tools)
+    + [Acknowledgements and Attributions of Used Features and Functions](#acknowledgements-and-attributions-of-used-features-and-functions)
+    + [General Knowledge and Hours of Reading](#general-knowledge-and-hours-of-reading)
+  * [Testing and Validation](#testing-and-validation)
+    + [Manual BDD](#manual-bdd)
+    + [Automated BDD](#automated-bdd)
+    + [Testing Notes](#testing-notes)
+    + [Validation of HTML 5, CSS 3, JS and Python](#validation-of-html-5--css-3--js-and-python)
+  * [Continuous Delivery and Deployment](#continuous-delivery-and-deployment)
+  * [Credits](#credits)
+    + [Content](#content)
+    + [Media](#media)
+    + [Acknowledgements](#acknowledgements)
 
-> Strategy Plane => Business Section: User Needs and Business Objectives.
-> 
-> Scope Plane => User Experience Section: Functional Specifications (Tasks) and Content Requirements (Information).
-> 
-> Structure Plane => User Experience Section: Interaction Design (Tasks) and Information Architecture (Information).
-> 
-> Skeleton Plane => Features Section: Information Design, Interface Design (Tasks), and Navigation Design (Information).
-> 
-> Surface Plane => Features Section: Visual Design.
+<small><i><a href='http://ecotrust-canada.github.io/markdown-toc/'>Table of contents generated with markdown-toc</a></i></small>
 
-**Table of Contents**
+</details>
 
 ![Section Divider: Title and Business](documentation/section%20divider.png)
 
@@ -67,29 +118,37 @@ The selected features are driven by the opportunity matrix, which helps us under
 
 A Trello Board was used to list the Use Cases and Features, and grew over time as new ideas were added inspired by the project development. In other words, not all these ideas came about before the project development began. An Agile methodology was applied throughout this project.
 
+<details><summary>Please click to expand: Opportunity Matrix - User Management - Table and Scatter Diagram</summary>
+
 ![Opportunity Matrix - User Management - Table](documentation/OppMatrixTable-UserMgmnt.png)
-Opportunity Matrix - User Management - Table
 
 ![Opportunity Matrix - User Management - Scatter](documentation/OppMatrixScatter-UserMgmnt.png)
-Opportunity Matrix - User Management - Scatter Diagram
+
+</details>
+
+<details><summary>Please click to expand: Opportunity Matrix - Book Repository - Table and Scatter Diagram</summary>
 
 ![Opportunity Matrix - Book Repository - Table](documentation/OppMatrixTable-BookRepository.png)
-Opportunity Matrix - Book Repository - Table
 
 ![Opportunity Matrix - Book Repository - Scatter](documentation/OppMatrixScatter-BookRepository.png)
-Opportunity Matrix - Book Repository - Scatter Diagram
+
+</details>
+
+<details><summary>Please click to expand: Opportunity Matrix - Admin Dashboard - Table and Scatter Diagram</summary>
 
 ![Opportunity Matrix - Admin Dashboard - Table](documentation/OppMatrixTable-AdminDashboard.png)
-Opportunity Matrix - Admin Dashboard - Table
 
 ![Opportunity Matrix - Admin Dashboard - Scatter](documentation/OppMatrixScatter-AdminDashboard.png)
-Opportunity Matrix - Admin Dashboard - Scatter Diagram
+
+</details>
+
+<details><summary>Please click to expand: Opportunity Matrix - Shared Functions - Table and Scatter Diagram</summary>
 
 ![Opportunity Matrix - Shared Functions - Table](documentation/OppMatrixTable-SharedFunctions.png)
-Opportunity Matrix - Shared Functions - Table
 
 ![Opportunity Matrix - Shared Functions - Scatter](documentation/OppMatrixScatter-SharedFunctions.png)
-Opportunity Matrix - Shared Functions - Scatter Diagrams
+
+</details>
 
 [Initial thoughts and plans for the Book Repository](https://github.com/NaoiseGaffney/BookRepository/wiki/Initial-Project-Design-Thoughts---have-since-changed-with-new-knowledge-and-skills.) The initial plan (scribbled on an A4) is similar to the end result in terms of user outcomes and high-level functions, however, it changed as I wrote things down on the Trello Board and researched some of the technology choices and their capabilities, as technical, functional, and skill contstraints emerged.
 
@@ -394,18 +453,6 @@ Features currrently implemented as a part of the Book Repository.
 	* The ability to browse and view books matching the search criteria.
 	* The ability to edit/update books belonging to the current user/reader (books belonging to other users/readers can't be edited/updated, nor deleted).
 
-![Book Search 1: Book Search: private (user books) and ISBN ](documentation/Book%20Search%201.png)
-
-![Book search 2: Book Search: private (user books) and title, and author, and gte rating, and not genre](documentation/Book%20Search%202.png)
-
-![Book Search 3: Book Search: private (user books) and title, and author, and gte rating,  and genre](documentation/Book%20Search%203.png)
-
-![Book Search 4: Book Search: public (all books, except hidden) and ISBN ](documentation/Book%20Search%204.png)
-
-![Book Search 5: Book Search: public (all books, except hidden) and title, and author, and gte rating, and not genre](documentation/Book%20Search%205.png)
-
-![Book Search 6: Book Search: public (all books, except hidden) and title, and author, and gte rating,  and genre](documentation/Book%20Search%206.png)
-
 #### Admin Dashboard:
 
 * Admin Page with:
@@ -468,6 +515,87 @@ Future features are planned features that didn't make it into this first release
 
 #### Shared Features
 * Implement [Flask-Paranoid](https://flask-paranoid.readthedocs.io/en/latest/) to protect against stolen user session cookies (Flask-Login 'SESSION_PROTECTION = "strong"' when "Remember Me" is enabled isn't enough).
+
+### Information and Visual Design
+
+![Book Search 1: Book Search: private (user books) and ISBN ](documentation/Book%20Search%201.png)
+
+![Book search 2: Book Search: private (user books) and title, and author, and gte rating, and not genre](documentation/Book%20Search%202.png)
+
+![Book Search 3: Book Search: private (user books) and title, and author, and gte rating,  and genre](documentation/Book%20Search%203.png)
+
+![Book Search 4: Book Search: public (all books, except hidden) and ISBN ](documentation/Book%20Search%204.png)
+
+![Book Search 5: Book Search: public (all books, except hidden) and title, and author, and gte rating, and not genre](documentation/Book%20Search%205.png)
+
+![Book Search 6: Book Search: public (all books, except hidden) and title, and author, and gte rating, and genre](documentation/Book%20Search%206.png)
+
+#### Wireframes and Visuals
+The initial wireframe diagram describes the first draft of the Book Repository. Further research and education formed the next release of the Book Repository, the wireframe diagrams below. The Book Reposiory changed over time, as increased knowledge and improved skills were gained, and as the development inspired further improvements.
+
+Trying to come up with all the features up-front leads either to "Paralysis by analysis" or a  severly limited list of features not likely to satisfy any client requirements and needs. The backlog developed over time after each iteration inspired further items to be added to the backlog as the undersanding of the next feature or function to staisfy the overall requirements became clear.
+
+##### Initial Wireframe Diagram of the Book Repository
+
+<details><summary>Please click to expand: Landing / Home Page</summary>
+
+![Wireframe: Initial Wireframe Diagram of the Book Repository](documentation/Initial%20thoughts%20for%20Book%20Repository.jpg)
+
+</details>
+
+##### Landing / Home Page
+
+<details><summary>Please click to expand: Landing / Home Page</summary>
+
+[Link: Landing / Home Page](https://book-repository-virtual.herokuapp.com/)
+
+![Wireframe: Landing / Home Page](documentation/Book%20Repository/Landing%20Home%20Page.png)
+
+![Visual: Landing / Home Page](documentation/Book%20Repository/V%20-%20Landing%20and%20Home%20Page.png)
+
+</details>
+
+##### Register Page
+
+<details><summary>Please click to expand: Register Page</summary>
+
+[Link: Register Page](https://book-repository-virtual.herokuapp.com/user/register)
+
+![Wireframe: Register Page](documentation/Book%20Repository/Register.png)
+
+![Visual: Register Page](documentation/Book%20Repository/V%20-%20Register%20Page.png)
+
+</details>
+
+##### Sign In
+
+<details><summary>Please click to expand: Sign In Page</summary>
+
+![Wireframe: Sign In](documentation/Book%20Repository/Sign%20In.png)
+
+![Visual: Sign In](documentation/Book%20Repository/V%20-%20Sign%20In.png)
+
+</details>
+
+##### Member's Page
+
+<details><summary>Please click to expand: Member's Page</summary>
+
+![Wireframe: Member's Page](documentation/Book%20Repository/Member's%20Page.png)
+
+![Visual: Member's Page](documentation/Book%20Repository/V%20-%20Members%20Page.png)
+
+</details>
+
+##### Admin Dashboard
+
+<details><summary>Please click to expand: Admin Dashboard</summary>
+
+![Wireframe: Admin Dashboard](documentation/Book%20Repository/Admin%20Page.png)
+
+![Visual: Admin Dashboard](documentation/Book%20Repository/V%20-%20Admin%20Dashboard.png)
+
+</details>
 
 ### Features CRUD Table (Views)
 This table is an overview of the CRUD functions for each feature or role or MongoDB collection. It describes the implemented features, the future features, possible future features, and features that are not planned to be implemented. The notes describe where the feature is implemented in the Book Repository.
