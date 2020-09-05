@@ -179,6 +179,23 @@ Information Architecture is sequential with modals, leading the user/reader alon
 ## Design Decisions
 The design decisions cover the look-and-feel, typography, colour scheme, forms, buttons, navigation elements, tooltips and more. They put "lipstick-on-the-pig", in other words make the Book Repository application appealing to and easy-to-use for a user/reader. They make the functions come alive and provide information and interaction with the user/reader.
 
+### Design Decisions Overview
+Flask-User uses Bootstrap-3 by defualt, a CSS Framework, I've opted for [Materialize 1.0.0](https://materializecss.com/) instead as it provides a clean, crisp look and is based on principles of Material Design. While there is a Flask extension called Flask-Materialize, it's based on a previous version of Materialize and doesn't offer the same stable features as a result, nor is it as flexible as using Materialize in this way. It also means that JavaScript is used to initialise the features, and doesn't rely on jQuery which improves performance, and jQuery doesn't need to be loaded.
+
+[Material Icons](https://material.io/resources/icons/?style=baseline) are used too, for their clean, crisp look. They work well together with the CSS Framework Materialize 1.0.0.
+
+The Forms and Fields follow the same look-and-feel consistenly across the Book Repository. The base is Materialize 1.0.0, the icons used are Material Icons, each field has a descriptive label that moves out-of-the-way when the field is selected, and each icon has a hover-tooltip to explain the field's purpose.
+
+The colour scheme has changed over time to provide improved contrast and user feedback. As a general rule the main colours are blue darken-4 and white, used interchangeably to good effect. Teal lighten-1 is used for success messages and views, pink darken-1 is used for failure and delete, and charcoal is used for information.
+
+The buttons are white text on blue darken-4 with icons to the right to provide a clear visual clue and reminder. In one instance the button is pink darken-1 with white text (Delete User in the Admin User Modal). The hamburger-menu for mobile devices has the icons on the left as it looks better than having them on the right of the text.
+
+Flash Messages use the colour scheme to provide additional insights as to the success or failure of the attempted function. Teal lighten-1 for success, pink darken-1 for failure, and charcoal for information.
+
+Text is either white (on blue darken-4), black, blue darken-4 (on white or background), or pink darken-1, depending on function. The text colour decisions were made over time based on the style of the surrounding components.
+
+Error Handlers are displayed on the 'oops.html' page, the title is in pink darken-1, the text in black on a Materialize Card with a burning book image (following the Book Repository book theme).
+
 ### Interface and Navigation Design
 * Information Architecture is sequential with modals, leading the user/reader along at every stage. The navigation bar provides a different set of options depending on the role (user or Admin), and whether authenticated or not.
 * Breadcrumbs provide a clear view of where the user/reader is, and has been, with the option to click on any breadcrumb to go back to a previous page (please note, once signed in, the Landing/Home Page redirects to the Member's Page).
@@ -193,6 +210,9 @@ The design decisions cover the look-and-feel, typography, colour scheme, forms, 
 * The font used throughout the Book Repository is Raleway, provided by Google Fonts. It's an easy-to-read font on all device/screen sizes and is comfortable to read over long periods of time.
 * The 4 error handlers handle the unfortunate incidents where a user/reader goes astray, or an internal issue has occured. The error handlers provide a means to get back to the Member's Page or Sign Out, as well as an apology for the incident and an explanation of what has occured and potentially why.
 * The Book Repository logo is easily recognisable and simple in its design. It's a stack of books with the text, "Book Repository".
+
+### Design Details
+This section describes the visual components in detail, and with examples, to clarify their design and purpose.
 
 #### Typography
 ![Book Repository Typgraphy: Raleway Font](documentation/Raleway%20Font.png)
@@ -261,9 +281,10 @@ Hamburger Bar when authenticated as an Admin.
 
 #### Fixed Footer
 ![Fixed Footer](documentation/Fixed%20Footer.png)
+The fixed footer has grey text and a white icon on a blue darken-4 background. The text is provided by two Flask-User variables defined in 'config.py'.
 
 ![Fixed Footer - About Modal](documentation/About%20Modal.png)
-
+The About Modal contains short descriptions on the purpose of the Book Repository, my "ego-page", and a code overview with a link to the GitHub Repository.
 
 #### Background Image
 ![Stack of Books on the rigth-hand side by Sharon McCutcheon on Unsplash](static/images/sharon-mccutcheon-eMP4sYPJ9x0-unsplash.jpg)
@@ -273,27 +294,62 @@ Hamburger Bar when authenticated as an Admin.
 The background image, a stack of books, photographed by Sharon McCutcheon on Unsplash is the perfect shade of blue-white with the books off-centre and to the right which means they are not interfering with the book stack and book details. It's also suitable as it has a stack of books, the Book Repository logo is a stack of books, and the user's/reader's stack of books are viewed on the Member's Page.
 
 #### Flash Messages
+Flash messages provide immediate user feedback on either the success or failure of a function (sign in, sign out, add book, and more). Teal lighten-1 for success, pink darken-1 for failure, and charcoal for information.
+
+![Flash Message - Success](documentation/FlashMessageSuccess.png)
+
+![Flash Message - Information](documentation/FlashMessageInfo.png)
+
+![Flash Message - Failure](documentation/FlashMessageFailure.png)
+
+#### Tooltips
+Tooltip messages, on hover over the help (? icon) and icons, are white text on charcoal background (good contrast, easy to read).
+
+![Tooltip Help](documentation/TooltipOnHoverHelp.png)
 
 #### Breadcrumbs
+Breadcrumbs provide a path for the user/reader to follow, letting them know where they've been, where they are, and an ability to get back to a previous page.
+
+I had three options in creating the breadcrumbs. Programatically, using Flask-Breadcrumbs (additional overhead), Materialize 1.0.0 (styling), or create my own in HTML. I opted for the latter as it was the easiest choice, easiest to implement.
+
+![Breadcrumbs](documentation/Breadcrumbs.png)
 
 #### Pagination
+Pagination allows for the browsing of pages when there are too many books (Member's Page and Search Results Page) or users (Admin Dashboard table) to display on a single page.
+
+A user/reader/admin can navigate back and forth using the < and >, or by clicking on a page number. The current/active page number is in white text on a blue darken-4 square.
+
+In the case of too many pages, and ellipsis is used which makes it suitable for smaller screens/devices.
+
+The pagination function is a part of Flask-MongoEngine, and rendered in Jinja2 using a macro.
+
+![Pagination](documentation/Pagination.png)
 
 #### Logo
+The Book Repository logo is easily recognisable and simple in its design. It's a stack of books with the text, "Book Repository".
+
+The Book Repository logo is created in Microsoft PowerPoint, using a stock logo of stacked books with the text, "Book Repository". It matches the colour scheme, using the colour blue darken-4.
+
+![Book Repository - Logo](static/images/logo_bookstack_text_96_spacing.png)
 
 #### Favicon
-![Favicon](static/images/android-chrome-192x192.png)
-
-[Favicon.io Favicon Generator](https://favicon.io/)
-
 The Favicon is the stack of books without the text from the Book Repository Logo.
 
-#### Materialize CSS 1.0.0
+![Favicon](static/images/android-chrome-192x192.png)
 
-#### Forms and Fields
+[Favicon.io Favicon Generator](https://favicon.io/) was used to create the Favicon.
 
 #### Book Stack
+The Member's Page and Search Results Page book stack displays virtual book spines. Once clicked on to view it pop-outs to display book details.
 
-#### Admin Dashboard
+The book spine has 3 small icons, teal eye to view the book details, pink bin link to delete a book, and blue pen link to update the book details. The title links to Amazon UK using ISBN, the ISBN link liinks to ISBN Search using ISBN, and the front cover thumbnail uses ISBN to get it from the Google Books API.
+
+![Book Stack](documentation/BookStack.png)
+
+#### Tables
+Tables are an effective way to display and work with large amounts of similar data. List Genres uses a table or the book genres and their descriptions, Admin Dashboard user table is good for when the site grows with many users, and the Statistics Modal uses a table to display the book genres used and their numbers.
+
+![List Genres Table](documentation/ListGenresTable.png)
 
 ![Section Divider: User Experience and Features](documentation/section%20divider.png)
 
