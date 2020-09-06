@@ -594,7 +594,7 @@ Trying to come up with all the features up-front leads either to "Paralysis by a
 ![Visual: Admin Dashboard](documentation/Book%20Repository/V%20-%20Admin%20Dashboard.png)
 
 ##### Visual Design, Information Architecture and Navigation
-These diagrams correspond to the similar diagrams in the User Experience (User Story) section above.
+These diagrams correspond to the similar diagrams in the User Experience (User Story) section above and are screenshots from the Production application.
 
 **Visual Design - User Management**
 ![Visual Design - User Management](documentation/V-IAN-UserManagement.png)
@@ -1618,7 +1618,7 @@ def save_book():
     return redirect(url_for("member_page"))
 ```
 
-'add_book.html'
+add\_book.html
 
 ```
 {% extends "flask_user_layout.html" %}
@@ -1762,13 +1762,11 @@ def save_book():
 [Link: Edit Book (India: Cookbook)](https://book-repository-virtual.herokuapp.com/edit_book/5f54f88b937558f1cf5c1ef6)
 ![Visual: Edit Book](documentation/Visuals%20-%20Edit%20Book.png)
 
-'app.py' edit\_book(<book\_id>) and save\_book(<book\_id>)
+'app.py' edit\_book(<book\_id>) and update\_book(<book\_id>)
 
-Click on the blue pen icon on the book spine to edit a book. A filled in form is provided in edit\_book.html. Updating the fields and then clicking on the update book button saves the updated book to the Book Repository.
+Clicking on the blue pen icon on the book spine to edit a book (`edit_book()`) gets the book details provided the book is owned by the current user (to avoid someone else updating a book by changing the book\_id in the URL). A filled in form is provided in edit\_book.html. Updating the fields and then clicking on the update book button saves the updated book to the Book Repository.
 
-`add_book()` gets the list of book genres and renders the `add_book.html` template with a form of fields to fill in. Once the fields are filled in and the add book button is clicked, `save_book()` is called.
-
-`save_book()` gets the form fields and saves them to the object `book`. A request payload is created with the `GOOGLE_API_KEY` and ISBN used as the search criteria from the Google Books API. If a front cover thumbnail images exists it'll be used, otherwise a default Book Repository logo is used instead. The returned link from the Google Books API uses `http://` and is replaced by `https://` to ensure secure links are used throuhgout the Book Repository.
+`update_book()` gets the form fields and saves them to the object `book`. A request payload is created with the `GOOGLE_API_KEY` and ISBN used as the search criteria from the Google Books API. If a front cover thumbnail images exists it'll be used, otherwise a default Book Repository logo is used instead. The returned link from the Google Books API uses `http://` and is replaced by `https://` to ensure secure links are used throuhgout the Book Repository.
 
 The user/reader is made aware of the result through a Flash message and the event is logged.
 
@@ -1846,6 +1844,7 @@ def update_book(book_id):
         app.logger.warning(f"{current_user.username} did not update the book {book.title} with the id {book.id}: [WARNING] (edit_book.html).")
     return redirect(url_for("member_page"))
 ```
+
 edit\_book.html
 
 ```
@@ -1957,10 +1956,14 @@ edit\_book.html
 </details>
 
 ##### Delete Book
-[]()
-![]()
+[Link: Delete Book (India: Cookbook)](https://book-repository-virtual.herokuapp.com/members#delete_book_5f54f88b937558f1cf5c1ef6)
+![Visual: Delete Book](documentation/Visuals%20-%20Delete%20Book.png)
 
-'app.py' edit_book(<book_id>) and save_book(<book_id>)
+'app.py' delete\_book(<book\_id>)
+
+`delete_book()` takes the book id and opens up the delete book modal where the user/reader can click on yes to delete the book or no to keep it (close the delete book modal). Before the book is permanently deleted it's checked to see that the current user/reader is the owner of the book (to avoid someone else deleteing a book by changing the book\_id in the URL).
+
+The user/reader is made aware of the result through a Flash message and the event is logged.
 
 <details><summary>Please click to expand: 'app.py' Code Snippet for the ...</summary>
 
@@ -2016,10 +2019,16 @@ def delete_book(book_id):
 </details>
 
 ##### Search Books
-[]()
-![]()
+[Link: Search Books](https://book-repository-virtual.herokuapp.com/search_book)
+![Visual: Search Books](documentation/Visuals%20-%20Search%20Books.png)
 
-'app.py' edit_book(<book_id>) and save_book(<book_id>)
+'app.py' search\_book(), save\_search(), and search\_results(page=1)
+
+`search_book()` renders the search books template with the book genres. Once the form is filled in and the search books button is clicked, `save_search()` is called to save the search form fields to a dictionary that is saved as a session cookie (persistent) for the use by `search_results(page=1)` as the pagination requires the use of the form fields for every page iteration.
+
+Book search using a combination of form fields saved in the session cookie in 'save_search', and based on the values in some key fields decide which Book Repository BaseQuerySet to run. As all form fields are returned as strings, the integer fields must be converted to integers before being used. In case of errors they are caught as exceptions and set to valid values. There are 6 BaseQuerySets (please see below).
+
+search\_book.html is similar to members.html in features and functions, with the notable exception of books not belonging to the current user/reader can't edit/update nor delete books not belonging to them. They can't see books marked as hidden either if a public book search was performed.
 
 <details><summary>Please click to expand: 'app.py' Code Snippet for the ...</summary>
 
@@ -2126,6 +2135,8 @@ def search_results(page=1):
             book_query_results = book_query_results.paginate(page=page, per_page=7)
             return render_template("search_results.html", book_query_results=book_query_results, page_prev=(page - 1), page_next=(page + 1), genre_list=genre_list)
 ```
+
+search\_book.html
 
 ```
 {% extends "flask_user_layout.html" %}
@@ -2431,8 +2442,19 @@ def search_results(page=1):
 
 </details>
 
+![Book Search 1: Book Search: private (user books) and ISBN ](documentation/Book%20Search%201.png)
 
-##### Search Books
+![Book search 2: Book Search: private (user books) and title, and author, and gte rating, and not genre](documentation/Book%20Search%202.png)
+
+![Book Search 3: Book Search: private (user books) and title, and author, and gte rating,  and genre](documentation/Book%20Search%203.png)
+
+![Book Search 4: Book Search: public (all books, except hidden) and ISBN ](documentation/Book%20Search%204.png)
+
+![Book Search 5: Book Search: public (all books, except hidden) and title, and author, and gte rating, and not genre](documentation/Book%20Search%205.png)
+
+![Book Search 6: Book Search: public (all books, except hidden) and title, and author, and gte rating, and genre](documentation/Book%20Search%206.png)
+
+##### Delete User - User Management (Gaff extension to Flask-User)
 []()
 ![]()
 
@@ -3026,17 +3048,6 @@ def internal_error(error):
 ##### JavaScript
 
 ### Code...
-![Book Search 1: Book Search: private (user books) and ISBN ](documentation/Book%20Search%201.png)
-
-![Book search 2: Book Search: private (user books) and title, and author, and gte rating, and not genre](documentation/Book%20Search%202.png)
-
-![Book Search 3: Book Search: private (user books) and title, and author, and gte rating,  and genre](documentation/Book%20Search%203.png)
-
-![Book Search 4: Book Search: public (all books, except hidden) and ISBN ](documentation/Book%20Search%204.png)
-
-![Book Search 5: Book Search: public (all books, except hidden) and title, and author, and gte rating, and not genre](documentation/Book%20Search%205.png)
-
-![Book Search 6: Book Search: public (all books, except hidden) and title, and author, and gte rating, and genre](documentation/Book%20Search%206.png)
 
 ### Features CRUD Table (Views)
 This table is an overview of the CRUD functions for each feature or role or MongoDB collection. It describes the implemented features, the future features, possible future features, and features that are not planned to be implemented. The notes describe where the feature is implemented in the Book Repository.
