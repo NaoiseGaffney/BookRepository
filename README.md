@@ -401,12 +401,14 @@ The Favicon is the stack of books without the text from the Book Repository Logo
 #### Book Stack
 The Member's Page and Search Results Page book stack displays virtual book spines. Once clicked on to view it pop-outs to display book details.
 
-The book spine has 3 small icons, teal eye to view the book details, pink bin link to delete a book, and blue pen link to update the book details. The title links to Amazon UK using ISBN, the ISBN link liinks to ISBN Search using ISBN, and the front cover thumbnail uses ISBN to get it from the Google Books API.
+The book spine has 3 small icons, teal eye to view the book details, pink bin link to delete a book, and blue pen link to update the book details. The title links to Amazon UK using ISBN, the ISBN link links to ISBN Search using ISBN, and the front cover thumbnail uses ISBN to get it from the Google Books API.
 
 ![Book Stack](documentation/BookStack.png)
 
 #### Tables
 Tables are an effective way to display and work with large amounts of similar data. List Genres uses a table or the book genres and their descriptions, Admin Dashboard user table is good for when the site grows with many users, and the Statistics Modal uses a table to display the book genres used and their numbers.
+
+One caveat is that tables can become too wide to view comfortably on smaller screens/devices, however, all tables have been tested on an Apple iPhone 5 and work well.
 
 ![List Genres Table](documentation/ListGenresTable.png)
 
@@ -518,17 +520,6 @@ Future features are planned features that didn't make it into this first release
 
 ### Information and Visual Design
 
-![Book Search 1: Book Search: private (user books) and ISBN ](documentation/Book%20Search%201.png)
-
-![Book search 2: Book Search: private (user books) and title, and author, and gte rating, and not genre](documentation/Book%20Search%202.png)
-
-![Book Search 3: Book Search: private (user books) and title, and author, and gte rating,  and genre](documentation/Book%20Search%203.png)
-
-![Book Search 4: Book Search: public (all books, except hidden) and ISBN ](documentation/Book%20Search%204.png)
-
-![Book Search 5: Book Search: public (all books, except hidden) and title, and author, and gte rating, and not genre](documentation/Book%20Search%205.png)
-
-![Book Search 6: Book Search: public (all books, except hidden) and title, and author, and gte rating, and genre](documentation/Book%20Search%206.png)
 
 #### Wireframes and Visuals
 The initial wireframe diagram describes the first draft of the Book Repository. Further research and education formed the next release of the Book Repository, the wireframe diagrams below. The Book Reposiory changed over time, as increased knowledge and improved skills were gained, and as the development inspired further improvements.
@@ -571,6 +562,8 @@ Trying to come up with all the features up-front leads either to "Paralysis by a
 
 <details><summary>Please click to expand: Sign In Page</summary>
 
+[Link: Sign In Page](https://book-repository-virtual.herokuapp.com/user/sign-in)
+
 ![Wireframe: Sign In](documentation/Book%20Repository/Sign%20In.png)
 
 ![Visual: Sign In](documentation/Book%20Repository/V%20-%20Sign%20In.png)
@@ -580,6 +573,8 @@ Trying to come up with all the features up-front leads either to "Paralysis by a
 ##### Member's Page
 
 <details><summary>Please click to expand: Member's Page</summary>
+
+[Link: Member's Page](https://book-repository-virtual.herokuapp.com/members)
 
 ![Wireframe: Member's Page](documentation/Book%20Repository/Member's%20Page.png)
 
@@ -591,11 +586,317 @@ Trying to come up with all the features up-front leads either to "Paralysis by a
 
 <details><summary>Please click to expand: Admin Dashboard</summary>
 
+[Admin Dashboard](https://book-repository-virtual.herokuapp.com/admin_dashboard)
+
 ![Wireframe: Admin Dashboard](documentation/Book%20Repository/Admin%20Page.png)
 
 ![Visual: Admin Dashboard](documentation/Book%20Repository/V%20-%20Admin%20Dashboard.png)
 
 </details>
+
+#### Code Walkthrough and Visual Design
+
+##### '.env'
+'.env' file is local and contains the variables required to run the Book Repository. These variables are configured on the Heroku platform too. These variables are read by 'config.py' and 'app.py' at startup. Please see "Book Repository '.env' and Heroku Variables" below for further details.
+
+```
+MONGO_URI_BR = "mongodb+srv://mdb_c_root:************************************/BookRepositoryDev?retryWrites=true&w=majority"
+GOOGLE_API_KEY = "*****************************************"
+MONGO_DBNAME = "BookRepository"
+SECRET_KEY = "*******************************************************************************************************************************************"
+MAIL_SERVER = "smtp.gmail.com"
+MAIL_PORT = 587
+MAIL_USERNAME = "*****************"
+MAIL_PASSWORD = "*****************"
+MAIL_USE_TLS = True
+MAIL_USE_SSL = False
+MAIL_DEFAULT_SENDER = "*****************"
+USER_EMAIL_SENDER_EMAIL = "*****************"
+ADMIN_PASSWORD = "*****************"
+LOGGING_LEVEL="INFO"
+USER_ENABLE_CHANGE_USERNAME = False
+ENABLE_FILE_LOGGING = True
+PRODUCTION = OFF
+FDT = ON
+APPDEBUG = ON
+```
+
+##### 'config.py'
+
+'config.py' loads the variables from the '.env' file. The secret key is loaded for use by the itdangerous library and sessions. The Book Repository URI to MongoDB Atlas is next (user, password, and database name). Flask-User settings configuring the features to enable, and the mail parameters (GMail) for registration confirmation and password reset. Flask Session settings to enable strong protection and use of HTTPS only, as well as setting the timeout for the "Remember Me" function. Please note that there might still be a vulnerability in this that may be remedied by using Flask-Paranoid (future feature).
+
+```
+import os
+from datetime import timedelta
+
+from dotenv import load_dotenv
+from pathlib import Path
+env_path = Path(".") / ".env"
+load_dotenv(dotenv_path=env_path)
+
+
+class ConfigClass(object):
+    """ Flask application config """
+    # Flask settings
+    SECRET_KEY = os.environ.get("SECRET_KEY")
+
+    # Flask-MongoEngine settings
+    MONGO_DB_URL = os.environ.get("MONGO_URI_BR")
+    MONGODB_SETTINGS = {
+        'host': MONGO_DB_URL
+    }
+
+    # Flask-User settings
+    # Shown in email templates and page footers
+    USER_APP_NAME = "Book Repository"
+    USER_ENABLE_EMAIL = True      # Enable email authentication
+    USER_ENABLE_USERNAME = True    # Enable username authentication
+    USER_ENABLE_CONFIRM_EMAIL = True  # Enable email after registration
+    USER_ENABLE_FORGOT_PASSWORD = True # Enable email after forgot password
+    USER_ENABLE_CHANGE_PASSWORD = True # Enable email after password change
+    USER_SEND_PASSWORD_CHANGED_EMAIL = True # Enable email after password change
+    USER_REQUIRE_RETYPE_PASSWORD = True
+    USER_ENABLE_CHANGE_USERNAME = False
+
+    MAIL_SERVER = os.environ.get("MAIL_SERVER")
+    MAIL_PORT = os.environ.get("MAIL_PORT")
+    # TLS Port: 587, SSL Port: 465 --> TLS or SSL: True/False
+    MAIL_USERNAME = os.environ.get("MAIL_USERNAME")
+    MAIL_PASSWORD = os.environ.get("MAIL_PASSWORD")
+    MAIL_USE_TLS = True
+    MAIL_USE_SSL = False
+    USER_EMAIL_SENDER_EMAIL = os.environ.get("USER_EMAIL_SENDER_EMAIL")
+
+    # Flask Session Configuration for Session Protection and "Remember Me" function
+    SESSION_PROTECTION = "strong"
+    REMEMBER_COOKIE_DURATION = timedelta(seconds=3600) # Logged out after 1 hour (come back in without logging in too)
+    SESSION_COOKIE_SECURE = True
+
+    # Flask User Manager Configuration
+    USER_COPYRIGHT_YEAR = 2020
+    USER_CORPORATION_NAME = "GaffCo Consulting"
+```
+
+##### 'app.py' extensions and shared features.
+Loading of environment variables from '.env' or Heroku variables. The code ensures that the '.env' file is accessed.
+
+```
+import os
+...
+from dotenv import load_dotenv
+from pathlib import Path
+env_path = Path(".") / ".env"
+load_dotenv(dotenv_path=env_path)
+```
+
+**Application Factory Setup:** [based on the Flask-User example for MongoDB](https://flask-user.readthedocs.io/en/latest/mongodb_app.html). `from config import ConfigClass` loads the varibles defined in 'config.py' which gets most variables from '.env', and is used by `app.config.from_object(__name__ + ".ConfigClass")`.
+
+The end checks that all the variables that are crucial to the Book Respository are defined, and if not raise and exception (application won't run). There is also a check to see whether the application is running in debug mode or not. by default, debug is off, unless specifically turned on by `APPDEBUG = ON`. This means it won't be turned on by mistake.
+
+```
+from config import ConfigClass
+...
+# --- // Application Factory Setup (based on the Flask-User example for MongoDB)
+# https://flask-user.readthedocs.io/en/latest/mongodb_app.html
+# Setup Flask and load app.config
+app = Flask(__name__, static_folder="static", template_folder="templates")
+app.config.from_object(__name__ + ".ConfigClass")
+...
+# export PRODUCTION=ON | OFF in TEST
+# PRODUCTION App -> Settings -> Reveal Config Vars -> KEY: PRODUCTION,
+# VALUE: ON
+if __name__ == "__main__":
+    if not os.environ.get("MONGO_URI_BR"):
+        raise ValueError(
+            "MongoDB Uniform Resource Identifier is missing, which means that we can't access the database.")
+    elif not os.environ.get("ADMIN_PASSWORD"):
+        raise ValueError(
+            "Admin Password is not set which means that the Admin user can not be created.")
+    elif not os.environ.get("MAIL_SERVER"):
+        raise ValueError(
+            "Mail Server Configuration error: MAIL_SERVER is not defined.")
+    elif not os.environ.get("MAIL_PORT"):
+        raise ValueError(
+            "Mail Server Configuration error: MAIL_PORT is not defined.")
+    elif not os.environ.get("MAIL_USERNAME"):
+        raise ValueError(
+            "Mail Server Configuration error: MAIL_USERNAME is not defined.")
+    elif not os.environ.get("MAIL_PASSWORD"):
+        raise ValueError(
+            "Mail Server Configuration error: MAIL_PASSWORD is not defined.")
+    elif not os.environ.get("USER_EMAIL_SENDER_EMAIL"):
+        raise ValueError(
+            "Mail Server Configuration error: USER_EMAIL_SENDER_EMAIL is not defined.")
+	elif os.environ.get("APPDEBUG") == "ON":
+        app.run(host=os.environ.get("IP"),
+                port=os.environ.get("PORT"), debug=True)
+    else:
+        app.run(host=os.environ.get("IP"),
+                port=os.environ.get("PORT"), debug=False)
+```
+
+**CSRF for non-Flask-User templates and functions:**
+
+```
+from flask_wtf.csrf import CSRFProtect, CSRFError
+...
+csrf = CSRFProtect(app)
+csrf.init_app(app)
+...
+@app.errorhandler(CSRFError)
+```
+
+In templates (.html):
+
+```
+...
+<input type="hidden" name="csrf_token" value="{{csrf_token()}}">
+...
+```
+
+**Application Log:** Rotating File Handler and Heroku Console. If the app is running locally it uses the Rotating File Log Handler as it's easier to read logs in a log file than on a console. Heroku doesn't approve of log files, prefering it's own console or one of several paid for logging applications. Log files are key to perform root cause and impact analysis over time, and a future feature of the Admin Dashboard of the Book Repository is to view log events related to a specific user filtered by date, time, and severity. Being able to trace a user's/reader's path through the application to the event of the fault is key to root cause analysis.
+
+The log level is set by an environment variable (LOGGING_LEVEL), which makes it easy to modify when furhter analysis and testing is required.
+
+```
+import logging
+from logging.handlers import RotatingFileHandler
+...
+# Initialise rotating file logging in Development, not on Heroku
+# Set after app initialisation
+if os.environ.get("ENABLE_FILE_LOGGING") == "True":
+    logging.basicConfig(
+        handlers=[RotatingFileHandler("./logs/book_repository.log", maxBytes=100000, backupCount=10)],
+        level=os.environ.get("LOGGING_LEVEL"),
+        format="%(asctime)s — %(name)s — %(levelname)s — %(funcName)s:%(lineno)d — %(message)s"
+    )
+else:
+    # Initialize logging to console, works on Heroku
+    logging.basicConfig(
+        level=os.environ.get("LOGGING_LEVEL"),
+        format="%(asctime)s — %(name)s — %(levelname)s — %(funcName)s:%(lineno)d — %(message)s"
+    )
+...
+app.logger.critical("Genre file can't be found. The filename is 'genre.json' and contains the Book Genres: [FAILURE] - (index.html).")
+...
+app.logger.critical("Genre file isn't a proper JSON file. Please correct the issues with the file 'genre.json' and try to load it again: [FAILURE] - (admin_dashboard.html).")
+...
+app.logger.critical(f"{current_user.username} has NOT loaded the Genre Collection to the Book Repository, 'genre.json' file has JSON Schema errors. Please correct the genre '{genre_genre}': [FAILURE] - (admin_dashboard.html).")
+```
+
+**Flask Debug Toolbar:** is based on the original [django-debug-toolbar](https://github.com/jazzband/django-debug-toolbar) and provides useful debugging information. It aided me in solving two bugs, and creating a workaround for a third as I could view the templates and request variables. It also aids greatly in increasing the understanding of the Flask framework.
+
+Security risk: don't enable FDT on Heroku or any other public platform as all configuration variables are revealed in clear-text (passwords)! This is why I removed FDT from 'requirements.txt' and encased the FDT statements in if-statements checking for the variable (FDT = ON).
+
+```
+if os.environ.get("FDT") == "ON":
+    from flask_debugtoolbar import DebugToolbarExtension
+...
+if os.environ.get("FDT") == "ON":
+    app.debug = True
+...
+# Initiate the Flask Debug Toolbar Extension
+if os.environ.get("FDT") == "ON":
+    toolbar = DebugToolbarExtension(app)
+```
+
+**Classes / Collections:** User collection is a Flask-User (Flask-Login) class with mandatory and optional fields. `email_confirmed_at = db.DateTimeField()` is required for the registration confirmation (email), and is activated by `USER_ENABLE_EMAIL = True` in 'config.py'.
+
+`from flask_mongoengine import MongoEngine, MongoEngineSession, MongoEngineSessionInterface` enables MongoDB (database)/server-side session management which is more secure than client-side session management. This is handled solely by MongoEngineSession. It uses the User collection.
+
+Book colletion contains the books added by users/readers and its schema is defined by me. book.user = user.username to link the book to the user/reader that added the book.
+
+All collections have a meta tag, `"auto_create_index": True,` which ensures indexing is performed (default, paranoia-setting), `"index_background": True,` ensures the indexing is performed in the background for performance reasons (once the repository grows), `"indexes": ["..."]` creates an additional index to speed up read access, and `"ordering": ["..."]` orders the documents in the collection by whatever field is defined (for example, no sorting required when listing the book genres).
+
+```
+from flask_mongoengine import MongoEngine, MongoEngineSession, MongoEngineSessionInterface
+...
+# --- // Classes -> MongoDB Collections: User, Book, Genre.
+# Flask-User User Class (Collection) extended with email_confirmed_at
+# Added username indexing and background-indexing for performance
+class User(db.Document, UserMixin):
+    # Active set to True to allow login of user
+    active = db.BooleanField(default=True)
+
+    # User authentication information
+    username = db.StringField(default="")
+    password = db.StringField()
+
+    # User information
+    first_name = db.StringField(default="")
+    last_name = db.StringField(default="")
+    email = db.StringField(default="")
+    email_confirmed_at = db.DateTimeField()
+    # Required for the e-mail confirmation, and subsequent login.
+
+    # Relationships  (Roles: user or user and Admin)
+    roles = db.ListField(db.StringField(), default=["user"])
+
+    meta = {
+        "auto_create_index": True,
+        "index_background": True,
+        "indexes": ["username"]
+    }
+
+
+# Book Class (Collection) linked to User Class via user=username
+# Title indexing, ordering, and background-indexing for performance
+class Book(db.Document):
+    title = db.StringField(default="", maxlength=250)
+    author = db.StringField(default="", maxlength=250)
+    year = db.IntField(maxlength=4)
+    ISBN = db.IntField(maxlength=13)
+    short_description = db.StringField(default="", maxlength=2000)
+    user = db.StringField(required=True)
+    creation_date = db.DateTimeField(default=datetime.datetime.now)
+    comments = db.StringField(default="", maxlength=3500)
+    rating = db.IntField(choices=[1, 2, 3, 4, 5, 6, 7, 8, 9, 10])
+    genre = db.StringField(default="")
+    private_view = db.StringField(default="off")
+    book_thumbnail = db.StringField(default="")
+
+    meta = {
+        "auto_create_index": True,
+        "index_background": True,
+        "indexes": ["title"],
+        "ordering": ["title"]
+    }
+
+
+# Genre Class (Collection), loaded via 'genre.json'
+# Genre indexing,ordering, and background-indexing for performance
+class Genre(db.Document):
+    genre = db.StringField(default="")
+    description = db.StringField(default="")
+
+    meta = {
+        "auto_create_index": True,
+        "index_background": True,
+        "indexes": ["genre"],
+        "ordering": ["genre"]
+    }
+```
+
+![Rotating File Log Example](documentation/RotatingFileLogExample.png)
+
+
+
+![Visuals: User Management](documentation/Visuals%20-%20User%20Management.png)
+
+
+
+### Code...
+![Book Search 1: Book Search: private (user books) and ISBN ](documentation/Book%20Search%201.png)
+
+![Book search 2: Book Search: private (user books) and title, and author, and gte rating, and not genre](documentation/Book%20Search%202.png)
+
+![Book Search 3: Book Search: private (user books) and title, and author, and gte rating,  and genre](documentation/Book%20Search%203.png)
+
+![Book Search 4: Book Search: public (all books, except hidden) and ISBN ](documentation/Book%20Search%204.png)
+
+![Book Search 5: Book Search: public (all books, except hidden) and title, and author, and gte rating, and not genre](documentation/Book%20Search%205.png)
+
+![Book Search 6: Book Search: public (all books, except hidden) and title, and author, and gte rating, and genre](documentation/Book%20Search%206.png)
 
 ### Features CRUD Table (Views)
 This table is an overview of the CRUD functions for each feature or role or MongoDB collection. It describes the implemented features, the future features, possible future features, and features that are not planned to be implemented. The notes describe where the feature is implemented in the Book Repository.
@@ -651,7 +952,7 @@ These variables are required for the Book Repository functions, such as register
 | `MONGO_URI_BR`            | Unique | Unique            | Unique         | Unique            | MongoDB URI for each Book   Repository instance (Dev, Rev, Staging, Production).                                                     |
 | `SECRET_KEY`              | Unique | Unique            | Unique         | Unique            | Secret Key for Flask encryption.                                                                                                     |
 | `USER_EMAIL_SENDER_EMAIL` | Shared | Shared            | Shared         | Shared            | Flask-User/Mail 'from' email   address for the registration and password reset confirmation emails.                                  |
-| `PRODUCTION`              |        |                   |                | On                  | Heroku Production variable to   disable all debugging.                                                                               |
+| `APPDEBUG`              | Unique       | Unique        | Unique         | Unique                  | Variable to enable/disable all debugging.                                                                               |
 | `FDT`                     | Unique |                   |                |                   | Flask Debug Toolbar varibale to   ensure it only runs in local development environment as it contains   clear-text config variables. |
 
 ### Flask-User and Book Repository Routes
