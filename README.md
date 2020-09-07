@@ -986,6 +986,27 @@ user_manager = UserManager(app, db, User)
 ##### [flask\_user\_layout.html](templates/flask_user_layout.html)
 This is the Flask-User Base template for the Book Repository. To override the Flask-User default templates the directory structure and files are copied to the project's template directory. My own templates are in the templates directory, all Flask-User templates are in the /templates/flask_user and /templates/flask_user/emails directories with the notable exception of flask\_user\_layout.html. All files have been updated to suit the Book Repository.
 
+At a high level the following sections make up this template:
+
+* Head
+	* Meta name description to aid search engines.
+	* Google Font CDN for the Raleway Font.
+	* Materialize CSS 1.0.0 CDN.
+	* Style.css, my Book Repository CSS.
+	* Osano Consent Cookie CSS.
+* Body
+	* Navigation Bar and Hamburger-Bar with if-statements to control what is shown to authenticated or admin role.
+	* Flash Messages with categories.
+* Footer
+	* USER\_APP\_NAME and USER\_APP\_VERSION
+	* About Modal with tabs: Book Repository, "ego-page", Code.
+* Scripts
+	* Materialize CSS 1.0.0 JavaScript
+	* materialize.js to auto-initialize Materialize CSS 1.0.0 functions.
+	* Flash message chip timeout, message.js.
+	* Osano Consent Cookie JavaScript.
+	* Osano Concent Cookie configuration, cookies.js.
+
 <details><summary>Please click to expand: 'app.py' Code Snippet for flask\_user\_layout.html</summary>
 
 ```
@@ -1214,7 +1235,7 @@ This is the Flask-User Base template for the Book Repository. To override the Fl
 
 </details>
 
-##### Landing / Home Page - User Management
+##### User Management and Book Repository - Landing / Home Page
 
 [Link: Landing / Home Page](https://book-repository-virtual.herokuapp.com/)
 
@@ -1344,7 +1365,7 @@ def home_page():
 
 </details>
 
-##### Member's Page - User Management and Book Repository
+##### User Management and Book Repository - Member's Page
 [Link: Member's Page](https://book-repository-virtual.herokuapp.com/members)
 
 ![Visual: Member's Page](documentation/Book%20Repository/V%20-%20Members%20Page.png)
@@ -1551,7 +1572,7 @@ members.html
 
 </details>
 
-##### Add and Save Book - Book Repository
+##### Book Repository - Add and Save Book
 [Link: Add Book](https://book-repository-virtual.herokuapp.com/add_book)
 ![Visual: Add Book](documentation/Visuals%20-%20Add%20Book.png)
 
@@ -1764,7 +1785,7 @@ add\_book.html
 
 </details>
 
-##### Edit and Update Book
+##### Book Repository - Edit and Update Book
 [Link: Edit Book (India: Cookbook)](https://book-repository-virtual.herokuapp.com/edit_book/5f54f88b937558f1cf5c1ef6)
 
 ![Visual: Edit Book](documentation/Visuals%20-%20Edit%20Book.png)
@@ -1962,7 +1983,7 @@ edit\_book.html
 
 </details>
 
-##### Delete Book
+##### Book Repository - Delete Book
 [Link: Delete Book (India: Cookbook)](https://book-repository-virtual.herokuapp.com/members#delete_book_5f54f88b937558f1cf5c1ef6)
 
 ![Visual: Delete Book](documentation/Visuals%20-%20Delete%20Book.png)
@@ -2026,7 +2047,7 @@ def delete_book(book_id):
 
 </details>
 
-##### Search Books
+##### Book Repository - Search Books
 [Link: Search Books](https://book-repository-virtual.herokuapp.com/search_book)
 
 ![Visual: Search Books](documentation/Visuals%20-%20Search%20Books.png)
@@ -2465,7 +2486,7 @@ search\_results.html
 
 ![Book Search 6: Book Search: public (all books, except hidden) and title, and author, and gte rating, and genre](documentation/Book%20Search%206.png)
 
-##### Delete User - User Management (Gaff extension to Flask-User)
+##### User Management - Delete User (extension to Flask-User)
 [Link: Delete User Modal](https://book-repository-virtual.herokuapp.com/user/edit_user_profile#delete_user)
 
 ![Visual: Delete User Modal](documentation/Visuals%20-%20Delete%20User%20Modal.png)
@@ -3262,7 +3283,7 @@ register.html
 
 </details>
 
-##### Sign In
+##### User Management - Sign In
 
 [Link: Sign In Page](https://book-repository-virtual.herokuapp.com/user/sign-in)
 
@@ -3446,7 +3467,7 @@ login.html
 
 </details>
 
-##### Edit User Profile
+##### User Management - Edit User Profile
 
 [Link: Edit User Profile](https://book-repository-virtual.herokuapp.com/user/edit_user_profile)
 
@@ -3629,7 +3650,7 @@ edit\_user\_profile.html
 
 </details>
 
-##### Sign Out
+##### User Management - Sign Out
 
 [Link: Sign Out](https://book-repository-virtual.herokuapp.com/user/sign-out)
 
@@ -4016,6 +4037,8 @@ This table is an overview of the CRUD functions for each feature or role or Mong
 
 '' = not planning to implement CRUD feature
 
+<details><summary>Please click to expand: Features CRUD Table</summary>
+
 | Collection or Role or Feature | C | R | U | D | Notes                                                                                                                                                                                                                                                      |
 |-------------------------------|---|---|---|---|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | User                          | X | X | X | X | User/Reader has full CRUD control of their accounts. Creation = Registration. Read = User Profile. Update = Edit User Profile. Delete = Edit User Profile -> Delete User (associated books).                                                               |
@@ -4024,6 +4047,8 @@ This table is an overview of the CRUD functions for each feature or role or Mong
 | Admin User                    | ? | X | X | X | Admin Role can view, update user profile details (except username), set user/reader account to inactive, and permanently delete the user/reader and associated books.                                                                                      |
 | Admin Statistics              |   | X |   |   | Statistics provided are: number of users/readers, number of books, table of current genres used and number of each in descending order. Future feature includes the number of books and genre per user.                                                    |
 | Application Logs              | X | f |   | X | Application logs provide application endpoint/function information related to each user/reader. In future, viewing these logs, and filtering them per user/reader and severity is useful to identify issues. Rotating logs are deleted after 10 instances. |
+
+</details>
 
 ### Application Logging and Flash Messaging Levels
 Application logging is key to gather application usage for statistics and planning, for security reasons to detect potential attempts at disrupting the site, for performance planning as the site grows (increased usage and conversion rates) to ensure the use of the Book Repository is always a pleasant exeperience, and for root-cause and impact-analysis in the event of critical issues disrupting the end-user experience.
@@ -4034,6 +4059,8 @@ Python default logging is used, and additional information is attached to the lo
 
 Local development uses a rotating file handler which makes the logs easier to read (colour-coded) and search as they are saved to files. Heroku places constraints on logging, prefering the use of the exisitng application log and paid for logging tools.
 
+<details><summary>Please click to expand: Application Logging and Flash Messaging Levels Table</summary>
+
 | Logger   | Flash   | Message       | Environments                                                 | Notes                                                                                                                                                    |
 |----------|---------|---------------|--------------------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------|
 | Notset   |         |               |                                                              |                                                                                                                                                          |
@@ -4043,8 +4070,12 @@ Local development uses a rotating file handler which makes the logs easier to re
 | Error    |         |               |                                                              |                                                                                                                                                          |
 | Critical | Danger  | Failure       | Heroku Production                                            | Application Log (rotating file logger and console) = Critical. Flash Message = Danger (pink). Book Repository Message in Application Log = Failure.      |
 
+</details>
+
 ### Book Repository '.env' and Heroku Variables
 These variables are required for the Book Repository functions, such as register confirmation and password reset emails. Some are shared (the same) across all four environments, while some are unique to each environment (for example, the `MONGO_URI_BR` which is the MongoDB URI for each instance).
+
+<details><summary>Please click to expand: '.env' and Heroku Variables Table</summary>
 
 | Variables               | Local  | Heroku Review App | Heroku Staging | Heroku Production | Description                                                                                                                          |
 |-------------------------|--------|-------------------|----------------|-------------------|--------------------------------------------------------------------------------------------------------------------------------------|
@@ -4062,10 +4093,14 @@ These variables are required for the Book Repository functions, such as register
 | APPDEBUG              | Unique       | Unique        | Unique         | Unique                  | Variable to enable/disable all debugging.                                                                               |
 | FDT                     | Unique |                   |                |                   | Flask Debug Toolbar varibale to   ensure it only runs in local development environment as it contains   clear-text config variables. |
 
+</details>
+
 ### Flask-User and Book Repository Routes
 These routes are either a part of the Flask-User extension or created as a part of the Book Repository. The "y", "n", and "" under each heading (Flask User, Book Repo, User / Reader, Admin) denote the following: "y" = is either implemented by (Flask User or Book Repo) or used by (User/Reader or Admin), "n" = is either implemented by but not used (Flask User or Book Repo) nor used by (User/Reader or Admin), "" = is not implemented by (Flask User or Book Repo) nor used by (User/Reader or Admin).
 
 For example, Flask-User implements user.invite_user, though isn't activated through 'config.py' configuration parameters which is why it's marked as "n".
+
+<details><summary>Please click to expand: Routes / End-points</summary>
 
 | URL   route                     | Endpoint name                  | HTTP methods             | Flask User | Book Repo | User / Reader | Admin |
 |---------------------------------|--------------------------------|--------------------------|------------|-----------------|-------------|-------|
@@ -4105,7 +4140,12 @@ For example, Flask-User implements user.invite_user, though isn't activated thro
 | /user/sign-in                   | user.login                     | GET, HEAD, OPTIONS, POST | y          |                 | y           | y     |
 | /user/sign-out                  | user.logout                    | GET, HEAD, OPTIONS, POST | y          |                 | y           | y     |
 
+</details>
+
 ### Flask, Flask-User, and Book Repository Configuration Variables
+
+<details><summary>Please click to expand: Configuration Variables Table</summary>
+
 | Key                           | Value                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         |
 |-------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | APPLICATION\_ROOT              | '/'                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           |
@@ -4167,18 +4207,128 @@ For example, Flask-User implements user.invite_user, though isn't activated thro
 | WTF\_CSRF\_SSL\_STRICT           | TRUE                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          |
 | WTF\_CSRF\_TIME\_LIMIT           | 3600                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          |
 
+</details>
+
 ![Section Divider: Features and Design Decisions and Technology Choices](documentation/section%20divider.png)
 
 ## Technology
+This section covers all technology components and choices.
 
 ### Technology Choices
-Flask-User, application logging, CSRF, FDT, Flask-MongoEngine/MongoEngine, File Handling (JSON), Google Books API (thumbnail images), Session Cookies, Consent Cookie, 'config.py', .env and Heroku variables, CDD, DB Schema, JSON Schema...
+Some of the technology choices are governed by the Milestone Project requirements, while all others are my own choice (good, bad, and downright awful).
 
-### Code
+For the third Milestone Project for the Diploma in Full Stack Development at the Code Institute, the following mandatory technology choices apply: HTML5, CSS 3, JavaScript, Python 3, Flask Framework (and Jinja), and MongoDB.
 
-Defensive Programming...
+#### Flask and Jinja
+[Explore Flask](https://exploreflask.com/en/latest/index.html) and [Flask Palletsproject](https://flask.palletsprojects.com/en/1.1.x/)
 
-### Development and Staging Platforms and Environments
+The Flask micro-framework is a requirement for this Milestone Project. Flask is a micro web framework written in Python, and does not require particular tools or libraries. It has no database abstraction layer, form validation, or any other components where pre-existing third-party libraries provide common functions ([Flask (web framework)](https://en.wikipedia.org/wiki/Flask_(web_framework))).
+
+Jinja templating language is used extensively too, [Jinja](https://jinja.palletsprojects.com/en/2.11.x/).
+
+#### Flask-User
+[Flask-User](https://flask-user.readthedocs.io/en/latest/)
+
+I decided to use the Flask-User extension after taking a Pretty-Printed (Anthony Herbert) overview course on Flask extensions (a bit like dipping a toe in the lake before taking a deep-dive in the Atlantic): [The Flask Extensions Course](https://courses.prettyprinted.com/p/the-flask-extensions-course).
+
+Flask-User handles the User Management extremely well, with registration, sign in, sign out, password reset, edit user profile, role-based authorization, and using email confiirmations. All I did was extend and add features like a user delete modal, and configure the Flask-User features I wanted to use in my 'config.py' file.
+
+I also changed the defualt CSS framework from Bootstrap 3 to Materialize 1.0.0 as I think it has a cleaner and crisper interface.
+
+A good resource for Flask Extensions: [Awesome Flask](https://github.com/humiaozuzu/awesome-flask).
+
+#### Flask-MongoEngine/MongoEngine
+[Flask-MongoEngine](http://docs.mongoengine.org/projects/flask-mongoengine/en/latest/), [MongoDB App](https://flask-user.readthedocs.io/en/latest/mongodb_app.html) and [MongoEngine User Documentation](http://docs.mongoengine.org/)
+
+Thinking that using Flask-User and the example MongoDB App would be a great place to start and make my life easier, I opted to embrace the use of Flask-MongoEngine/MongoEngine thinking there must be plenty of documentation and examples.
+
+While adopting an ODM (Object Document Mapper) was a good choice in the end as I've learned so much through mainly trial-and-error, I struggled for quite a while to get my head around the coding (understanding what happens in the back-end) of the ODM (CRUD) where the BaseQuerySet became to greatest challenge. I finally found a nugget in the Django Framework documentation that guided me in the right direction (where the official MongoEngine and Flask-MongoEngine had failed me or I lacked the initial knowledge to fully understand what I read).
+
+I found the knowledge of ODM MongoEngine CUD from this YouTube set of videos: [Paris Nakita Kejser - MongoEngine](https://www.youtube.com/watch?v=SlmualOsp6I&list=PLLhEJK7fQIxD9Yz3wljWxzkkwyIVtYC1b&ab_channel=ParisNakitaKejser)
+
+Inspiration was found here too [Djongo](https://nesdis.github.io/djongo/), even though it's for a different Web Framework.
+
+Using an ODM like MongoEngine means that I can concentrate on the application logic, and worry less about the intricasies of database statements which is the case is using PyMongo directly.
+
+Flask-MongoEngine -> MongoEngine -> PyMongo -> MongoDB.
+
+#### Flask-MongoEngine Pagination
+[Flask-MongoEngine - Pagination (Custom Queryset)](http://docs.mongoengine.org/projects/flask-mongoengine/en/latest/)
+
+The Pagination feature, just like MongoEngine, hides the complexities and allows the developer to concentrate on the core application logic. I did find that not all pagination properties work, which is why I used my own previous and next page functions.
+
+I used the example Jinja Macro for pagination navigation and extended it with < and > for previous and next pages.
+
+#### Application Logging
+[Python Logging: An In-Depth Tutorial by Son Ngyen Kim](https://www.toptal.com/python/in-depth-python-logging) and [Logging Handlers](https://docs.python.org/3/library/logging.handlers.html)
+
+Having good logs can be very useful, not only when debugging but also to provide insight for application issues/performance. It's a vital part of root-cause-analysis to ascertain what has gone wrong, when, and how, as well as understand who or what has been impacted by the event.
+
+Reading the log file is far easier than reading a scrolling console, in addition a log saves events over time which makes it easy to pinpoint reoccuring events that may indicate an undocumented feature (bug) or an attempt to break something.
+
+The next release of the Book Repository will have log analysis as a part of the Admin Dashboard.
+
+#### CSRF
+[CSRF Protection](https://flask-wtf.readthedocs.io/en/stable/csrf.html)
+
+Flask-User views already have CSRF protection, however, my views require CSRF protection too. Flask-User creates it's own CSRF Token (for example, `csrf_token	<function generate_csrf at 0x7f9d70230160>`), used by the User Management functions and templates. MongoSessionEngine has its own CSRF Token too (for example, `session	<MongoEngineSession {'_permanent': True, 'csrf_token': 'b90b7c0f751cc2ce1125455d1c354df157638067', '_fresh': False}>`), which I could use in my non-Flask-User templates. However, I wanted to use the `@app.errorhandler(CSRFError)` for each function/end_point to catch the error.
+
+#### Flask Debug Toolbar
+[Flask Debug Toolbar](https://flask-debugtoolbar.readthedocs.io/en/latest/)
+
+Flask Debug Toolbar provided invaluable debugging information, and also made it easier o understand what happens in the background with templates, request variables (GET, POST, SESSION, etc), and templates. Seeing what is being posted when submitting a form is invaluable.
+
+Flask Debug Toolbar is based on the original [django-debug-toolbar](https://github.com/jazzband/django-debug-toolbar) and provides useful debugging information. It aided me in solving two bugs, and creating a workaround for a third as I could view the templates and request variables. It also aids greatly in increasing the understanding of the Flask framework.
+
+Security risk: don't enable FDT on Heroku or any other public platform as all configuration variables are revealed in clear-text (passwords)! This is why I removed FDT from 'requirements.txt' and encased the FDT statements in if-statements checking for the variable (FDT = ON).
+
+#### JSON File Handling, Validation, and Schema
+[jsonschema](https://python-jsonschema.readthedocs.io/en/latest/)
+
+To follow good defensive programming practices once I had moved the genre and sample book collections to JSON files I needed to validate the files and their contents before creating the collections. While this won't handle admin error when updating the files, it covers most issues that may occur.
+
+First validation: Genre or Book Collection exists. Second validation: FileNotFound ('genre.json' or 'book.json'). Third validation: JSONDecodeError (valid JSON format). Fourth validation: correct JSON Schema = Genre or Book Class.
+
+In future I want to add the ability to update/delete/create the book genres in the Admin Dashboard, and also allow for the saving and loading of multiple genre and book JSON files.
+
+#### Google Books API
+[Google Books API](https://developers.google.com/books/docs/v1/using)
+
+Google Books API is used to request front cover thumbnails for the books that are either added or updated. It means the user/reader doesn't have to upload images or upload unsuitable images. The search uses ISBN as the search criteria, with my Google API Key, and if a thumbnail exists a link is returned. The link uses HTTP and is repalced by HTTPS. If a thumbnail image doesn't exist, the Book Repository logo without the text is used instead.
+
+In future when a user/reader adds a book, I'd like to add a list of books matching the title and author for the user/reader to pick from, making it increasingly user-friendly.
+
+#### Flask-Session
+[The Flask session object by Julian Nash](https://pythonise.com/series/learning-flask/flask-session-object)
+
+[Session Protection](https://flask-login.readthedocs.io/en/latest/#session-protection)
+
+#### Consent Cookie
+[Osano Consent Cookie](https://www.osano.com/features/consent-management)
+
+#### 'config.py', .env and Heroku variables
+#### CDD
+#### DB Schema
+#### JSON Schema
+[JSON Schema](https://python-jsonschema.readthedocs.io/en/latest/)
+
+#### Gunicorn
+[Gunicorn - WSGI Server](https://docs.gunicorn.org/en/stable/)
+
+### Defensive Programming...
+Try-except-finally
+Form and Field Validation
+Class / Collection specs.
+Function / end-point validation.
+Flask-User
+Flask-MongoEngine/MongoEngine
+CSRF
+Error Handlers
+Flash and form field messages
+@login_required
+@role
+Update and Delete Books Correct User Validation
+Flask Debug Toolbar
 
 ### Documentation Tools
 
@@ -4215,6 +4365,9 @@ Code Institute Mentor - [GitHub: 5pence - Spencer Barriball](https://github.com/
 ### Content
 
 ### Media
+
+### Lessons Learned
+The course provided an introduction to the Flask Framework and Jinja that I've added to in terms of both knowledge and skills
 
 ### Acknowledgements
 
