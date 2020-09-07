@@ -4271,7 +4271,7 @@ The next release of the Book Repository will have log analysis as a part of the 
 #### CSRF
 [CSRF Protection](https://flask-wtf.readthedocs.io/en/stable/csrf.html)
 
-Flask-User views already have CSRF protection, however, my views require CSRF protection too. Flask-User creates it's own CSRF Token (for example, `csrf_token	<function generate_csrf at 0x7f9d70230160>`), used by the User Management functions and templates. MongoSessionEngine has its own CSRF Token too (for example, `session	<MongoEngineSession {'_permanent': True, 'csrf_token': 'b90b7c0f751cc2ce1125455d1c354df157638067', '_fresh': False}>`), which I could use in my non-Flask-User templates. However, I wanted to use the `@app.errorhandler(CSRFError)` for each function/end_point to catch the error.
+Flask-User views already have CSRF protection, however, my views require CSRF protection too. Flask-User creates it's own CSRF Token (for example, `csrf_token	<function generate_csrf at 0x7f9d70230160>`), used by the User Management functions and templates. MongoSessionEngine has its own CSRF Token too (for example, `session	<MongoEngineSession {'_permanent': True, 'csrf_token': 'b90b7c0f751cc2ce1125455d1c354df157638067', '_fresh': False}>`), which I could use in my non-Flask-User templates. However, I wanted to use the `@app.errorhandler(CSRFError)` for each function/end-point to catch the error.
 
 #### Flask Debug Toolbar
 [Flask Debug Toolbar](https://flask-debugtoolbar.readthedocs.io/en/latest/)
@@ -4301,36 +4301,95 @@ In future when a user/reader adds a book, I'd like to add a list of books matchi
 #### Flask-Session
 [The Flask session object by Julian Nash](https://pythonise.com/series/learning-flask/flask-session-object)
 
+The book search form fields are saved in the session cookie as fields to be used for the pagination of the book search results. It's a good way to ensure persistent information for the user/reader performing the book search. The book search function is spread across three functions / end-points: search_book(), save_search(), and search_results().
+
 [Session Protection](https://flask-login.readthedocs.io/en/latest/#session-protection)
+
+Session protection is set to strong in 'config.py' to secure the "Remember Me" cookie. "If the identifiers do not match in strong mode for a non-permanent session, then the entire session (as well as the remember token if it exists) is deleted." - Session Protection Documentation.
 
 #### Consent Cookie
 [Osano Consent Cookie](https://www.osano.com/features/consent-management)
 
+To comply with GDPR I've added a consent cookie using a free one from Osanto. I'm not forcing the user/reader to agree, however, they're at least informed of the cookies used and that there are no third-parties involved. All cookies are deleted when the browser is closed down.
+
 #### 'config.py', .env and Heroku variables
-#### CDD
-#### DB Schema
-#### JSON Schema
-[JSON Schema](https://python-jsonschema.readthedocs.io/en/latest/)
+There are four environments, described further down in the Continuous Delivery and Deployment section: local development, Heroku Review Application, Heroku Staging, and Heroku Production.
+
+Each environment, as described in the environments table previously, has both unique and shared variables. For example, each environment has its own MongoDB database (unique) and each environment has an email sender from address that is shared across all environments.
+
+Placing the majority of the loading of the environment variables and Flask/Flask-User configurations in a separate file makes it easier to maintain.
+
+#### Continuous Delivery and Deployment
+I've opted for a Continuous Delivery and Deployment workflow that uses Visual Studio Code, GitHub development (+) and master branches, and Heroku. This is best described below in greater details in the Continuous Delivery and Deployment section.
+
+I opted for this to make my development easier, while also learning how to configure a proper CDD environment that will come in handy when working with development teams in the future.
+
+#### MongoDB Schema - Book Repository
+![MongoDB Schema - Book Repository](documentation/MongoDB%20Schema.png)
+
+There are four collections in the Book Repository database. One, user, is Flask-User (Flask-Login) related. The user class / collection is defined in 'app.py' based on the Flask-User sample MongoEngine App. The session collection is created by MongoSessionEngine. The book and genre classes / collections are defined by me, as are the user to book to genre relationships. MongoSessionEngine handles the relationship between user and session.
+
+The user class / collection fields are dictated by the Flask-User features that are activated in 'config.py'. I've extended the example with the email_confirmed_at for the registration email confirmation (allowing the user/reader to sign in). The session collection fields are handled by MongoSessionEngine and its fields are related to authentiation, CSRF, expiration, and the session cookie fields data when a book search is executed.
+
+The Book class / collection has fields relevant to storing book data. The creation_date field is intended for future statistics data in the Admin Dashboard. Each book document is linked to it's user/reader: book.user = user.username. Each book document is linked to a genre document: book.genre = genre.genre.
 
 #### Gunicorn
 [Gunicorn - WSGI Server](https://docs.gunicorn.org/en/stable/)
 
-### Defensive Programming...
-Try-except-finally
-Form and Field Validation
-Class / Collection specs.
-Function / end-point validation.
-Flask-User
-Flask-MongoEngine/MongoEngine
-CSRF
-Error Handlers
-Flash and form field messages
-@login_required
-@role
-Update and Delete Books Correct User Validation
-Flask Debug Toolbar
+Gunicorn is used on the Heroku platform for Review Application, Staging,and Production. It has a much better performance than the Flask-WSGI.
+
+### Defensive Programming
+All input data is validated in the templates (form fields), in 'app.py', and by the DB Schema and field validators where applicable. Internal errors are handled gracefully using try-except-finally statements and validations, as well as providing user/reader feedback via field warnings or flash messages.
+
+**Try-except-finally:** all User, Book, and Genre CUD functions are enclosed in try-except(-finally) statements, and as R functions don't seem to return an error unless loss of contact with MongoDB occurs which means there are greater issues that will lead to an Internal Server Error 500 which is caught by the error handler. All file handling functions are encased in try-except(-finally) statements too, as are Google Books API requests. This means that the potential error is handled gracefully, and the user/reader is informed of the success or failure through flash messages.
+
+I've tried to use as specific an exception as I can use (ValidationError, TypeError, AttributeError, ValueError), however, in some instances I've resorted to using Exception.
+
+**Form and Field Validation:** all form fields are validated as a part of their templates, for example string/int, required, maxlength, min/max, and more. User/reader feedback is provided by the form or via flash messages.
+
+**Classes / Collections:** where applicable MongoDB fields have validators to ensure the correct value ranges are used, as well as defined types (string, int, date, etc). No dynamiic documents are used, all classes / collections have a defined schema which makes it easier to validate.
+
+**Function / End-point Validation:** in some instances, for example when updating/editing or deleting a book, an additiional validation is performed to ensure it's the owner/creator of the book that is trying to access the book. It was possible to guess the next Object ID of a Book and use that in the update/edit or delete URL.
+
+To stop the admin account from being deactivated or deleted, validation is performed to make sure this doesnt' occur.
+
+Decorators are used extensively:
+
+* @app.route(): ensuring appropriate routes are used, or 404.
+* @login_required: user/reader is authenticated, or redirected to the Sign In Page.
+* @app.errorhandler(CSRFError), @app.errorhandler(404), @app.errorhandler(405), @app.errorhandler(500): error handlers for three Client errors and one Server error.
+* @roles_required("Admin"): Admin role and is authenticated.
+
+**Flask-User:** using Flask-User for the User Management means using a tried-and-tested extension, as opposed to creating this functionality on my own with potential security risks.
+
+**Flask-MongoEngine/MongoEngine:** using an Object Document Mapper makes CRUD operations far easier to define, while avoiding potential PyMongo low-level functions. Using built-in functions such as pagination means less risk of errors or bugs.
+
+**Flask-Session:** secures the "Remember Me" cookie when set to strong. In future I'll look at Flask-Paranoia to secure application further.
+
+**CSRF:** Flask-User uses CSRF, and I use CSRF for my templates and end-points (@app.errorhandler(CSRFError)) to protect against cross-site request forgery where unauthorized commands are submitted from an authenticated user.
+
+**Error Handlers:** error handlers provide immediate feedback to the user/reader if there is a serious issue. In most cases, these are triggered through mistakes or malicious intent. The Internal Server Error is serious and I've succeded in triggering it when my GMail account request a reCaptcha. I've since remedied this using 2-factor authentication and a unique key.
+
+**Flash and Form Field Messages:** providing continuous user/reader feedback means that they always know what is happening, and in some cases why. Nothing "mysterious" occurs, confusing the user/reader.
+
+**Flask Debug Toolbar:** Flask Debug Toolbar helped me fix two bugs and find a workaround to a third, which means a better end-user experience. In addition to this, understanding what happens in the background is vital to writing good code as it takes guess-work out of the equation.
+
+**Gunicorn:** using Gunicorn for the Heroku environments, especially in Production, to improve stabilty, performance, and security.
+
+**Google Books API - HTTP -> HTTPS:** Google Books API returns an HTTP link for the front cover thumbnails, as opposed to an HTTPS link. All HTTP links and replaced by HTTPS.
+
+**Snippets:** I've a snippets directory on my local development environment where I test code I've found from various sources, as well as perform a fair amount of trial-and-error before using code in the development branch. This means I know (hopefully) what a pice of code does, and if it works as designed, before using it in my code.
+
+**Positive and Negative Testing:** I've tried, and occassionally succeeded, in breaking the code. For example, modifying the URL's for updating/editing and deleting books using an Object ID of a book not belonging to me (book documents are added sequentially in MongoDB, and if my last book ends with "...5c" then it stands to reason the next book document is "...5d"). This resulted in additional validations in 'app.py' to stop this from happening.
+
+I've tried breaking forms by entering bogus data and strings instead of numbers, using incomplete forms, trying to POST data I've created, and turned off the WiFi to see what happens which led to additional error handlers.
 
 ### Documentation Tools
+Microsoft PowerPoint
+[Quick Database Diagrams](https://app.quickdatabasediagrams.com/#/)
+Balsamiq
+[Markdown Tables Generator](https://www.tablesgenerator.com/markdown_tables)
+Pen and paper.
 
 ### Acknowledgements and Attributions of Used Features and Functions
 
