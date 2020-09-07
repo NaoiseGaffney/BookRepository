@@ -147,7 +147,9 @@ The selected features are driven by the opportunity matrix, which helps us under
 
 A Trello Board was used to list the Use Cases and Features, and grew over time as new ideas were added inspired by the project development. In other words, not all these ideas came about before the project development began. An Agile methodology was applied throughout this project.
 
+#### Opportunity Matrices for User Management, Book Repository, Admin Dashboard and Shared Funtions
 
+<!--<details><summary>Please click to expand: Opportunity Matrices - Tables and Scatter Diagrams</summary>-->
 
 ![Opportunity Matrix - User Management - Table](documentation/OppMatrixTable-UserMgmnt.png)
 
@@ -171,7 +173,7 @@ A Trello Board was used to list the Use Cases and Features, and grew over time a
 
 ![Opportunity Matrix - Shared Functions - Scatter](documentation/OppMatrixScatter-SharedFunctions.png)
 
-
+<!--</details>-->
 
 [Initial thoughts and plans for the Book Repository](https://github.com/NaoiseGaffney/BookRepository/wiki/Initial-Project-Design-Thoughts---have-since-changed-with-new-knowledge-and-skills.) The initial plan (scribbled on an A4) is similar to the end result in terms of user outcomes and high-level functions, however, it changed as I wrote things down on the Trello Board and researched some of the technology choices and their capabilities, as technical, functional, and skill contstraints emerged.
 
@@ -549,6 +551,8 @@ The initial wireframe diagram describes the first draft of the Book Repository. 
 
 Trying to come up with all the features up-front leads either to "Paralysis by analysis" or a  severly limited list of features not likely to satisfy any client requirements and needs. The backlog developed over time after each iteration inspired further items to be added to the backlog as the undersanding of the next feature or function to staisfy the overall requirements became clear.
 
+<details><summary>Please click to expand: Wireframes and Visuals</summary>
+
 ##### Initial Wireframe Diagram of the Book Repository
 
 ![Wireframe: Initial Wireframe Diagram of the Book Repository](documentation/Initial%20thoughts%20for%20Book%20Repository.jpg)
@@ -592,6 +596,8 @@ Trying to come up with all the features up-front leads either to "Paralysis by a
 ![Wireframe: Admin Dashboard](documentation/Book%20Repository/Admin%20Page.png)
 
 ![Visual: Admin Dashboard](documentation/Book%20Repository/V%20-%20Admin%20Dashboard.png)
+
+</details>
 
 ##### Visual Design, Information Architecture and Navigation
 These diagrams correspond to the similar diagrams in the User Experience (User Story) section above and are screenshots from the Production application.
@@ -977,10 +983,10 @@ user_manager = UserManager(app, db, User)
 
 </details>
 
-##### [`flask_user_layout.html`](templates/flask_user_layout.html)
-This is the Flask-User Base template for the Book Repository. To override the Flask-User default templates the directory structure and files are copied to the project's template directory. My own templates are in the templates directory, all Flask-User templates are in the /templates/flask_user and /templates/flask_user/emails directories with the notable exception of `flask_user_layout.html`. All files have been updated to suit the Book Repository.
+##### [flask\_user\_layout.html](templates/flask_user_layout.html)
+This is the Flask-User Base template for the Book Repository. To override the Flask-User default templates the directory structure and files are copied to the project's template directory. My own templates are in the templates directory, all Flask-User templates are in the /templates/flask_user and /templates/flask_user/emails directories with the notable exception of flask\_user\_layout.html. All files have been updated to suit the Book Repository.
 
-<details><summary>Please click to expand: 'app.py' Code Snippet for `flask_user_layout.html`</summary>
+<details><summary>Please click to expand: 'app.py' Code Snippet for flask\_user\_layout.html</summary>
 
 ```
 <!DOCTYPE html>
@@ -1377,7 +1383,7 @@ def member_page(page=1):
     return render_template("members.html", books_pagination=books_pagination, page_prev=(page - 1), page_next=(page + 1), genre_list=genre_list)
 ```
 
-'members.html'
+members.html
 
 ```
 {% extends "flask_user_layout.html" %}
@@ -1549,7 +1555,7 @@ def member_page(page=1):
 [Link: Add Book](https://book-repository-virtual.herokuapp.com/add_book)
 ![Visual: Add Book](documentation/Visuals%20-%20Add%20Book.png)
 
-'app.py' add_book() and save_book()
+'app.py' add\_book() and save\_book()
 
 `add_book()` gets the list of book genres and renders the `add_book.html` template with a form of fields to fill in. Once the fields are filled in and the add book button is clicked, `save_book()` is called.
 
@@ -1760,9 +1766,10 @@ add\_book.html
 
 ##### Edit and Update Book
 [Link: Edit Book (India: Cookbook)](https://book-repository-virtual.herokuapp.com/edit_book/5f54f88b937558f1cf5c1ef6)
+
 ![Visual: Edit Book](documentation/Visuals%20-%20Edit%20Book.png)
 
-'app.py' edit\_book(<book\_id>) and update\_book(<book\_id>)
+'app.py' edit\_book(\<book\_id>) and update\_book(\<book\_id>)
 
 Clicking on the blue pen icon on the book spine to edit a book (`edit_book()`) gets the book details provided the book is owned by the current user (to avoid someone else updating a book by changing the book\_id in the URL). A filled in form is provided in edit\_book.html. Updating the fields and then clicking on the update book button saves the updated book to the Book Repository.
 
@@ -1957,9 +1964,10 @@ edit\_book.html
 
 ##### Delete Book
 [Link: Delete Book (India: Cookbook)](https://book-repository-virtual.herokuapp.com/members#delete_book_5f54f88b937558f1cf5c1ef6)
+
 ![Visual: Delete Book](documentation/Visuals%20-%20Delete%20Book.png)
 
-'app.py' delete\_book(<book\_id>)
+'app.py' delete\_book(\<book\_id>)
 
 `delete_book()` takes the book id and opens up the delete book modal where the user/reader can click on yes to delete the book or no to keep it (close the delete book modal). Before the book is permanently deleted it's checked to see that the current user/reader is the owner of the book (to avoid someone else deleteing a book by changing the book\_id in the URL).
 
@@ -2020,6 +2028,7 @@ def delete_book(book_id):
 
 ##### Search Books
 [Link: Search Books](https://book-repository-virtual.herokuapp.com/search_book)
+
 ![Visual: Search Books](documentation/Visuals%20-%20Search%20Books.png)
 
 'app.py' search\_book(), save\_search(), and search\_results(page=1)
@@ -2255,6 +2264,8 @@ search\_book.html
 {% endblock %}
 ```
 
+search\_results.html
+
 ```
 {% extends "flask_user_layout.html" %}
 {% block content %}
@@ -2455,13 +2466,17 @@ search\_book.html
 ![Book Search 6: Book Search: public (all books, except hidden) and title, and author, and gte rating, and genre](documentation/Book%20Search%206.png)
 
 ##### Delete User - User Management (Gaff extension to Flask-User)
-[]()
-![]()
+[Link: Delete User Modal](https://book-repository-virtual.herokuapp.com/user/edit_user_profile#delete_user)
 
-'app.py' edit_book(<book_id>) and save_book(<book_id>)
+![Visual: Delete User Modal](documentation/Visuals%20-%20Delete%20User%20Modal.png)
+
+'app.py' delete\_user()
+
+`delete_user()` checks the current user's/reader's books first, deletes them, then deletes the current user/reader. The user is logged out too, and redirected to the Landing/Home Page.
+
+The user/reader is made aware of the result through a Flash message and the event is logged.
 
 <details><summary>Please click to expand: 'app.py' Code Snippet for the ...</summary>
-
 
 ```
 @app.route("/delete_user")
@@ -2489,11 +2504,20 @@ def delete_user():
 
 </details>
 
-##### Admin Dashboard
-[]()
-![]()
+##### Admin Dashboard - Admin Dashboard
+[Link: Admin Dashboard](https://book-repository-virtual.herokuapp.com/admin_dashboard)
 
-'app.py' eadmin_dashboard(page=1)
+![Visual: Admin Dashboard](documentation/Visuals%20-%20Admin%20Dashboard.png)
+
+'app.py' admin_dashboard(page=1)
+
+`admin_dashboard(page=1)` loads the paginated results of the users/readers in the Book Repository, as well as the previous and next page for the pagination navigation.
+
+For the statistics modal the book collection genres is iterated through and for each new genre, the genre is added to the dictionary and the initial value set to one. If the genre exists it's incremented by one. Once all exisitng genres are iterated through, the dictionary is sorted by the greatest number of genres in descending order. I discoverd a bug here, which is why I assign the results to `tuple_in_right_order`. Not doing so results in an incorrect order, one that seems to occur when the results are provided to the template.
+
+The results are added to a table with a modal to update the user/reader profile.
+
+The admin is made aware of the result through a Flash message and the event is logged.
 
 <details><summary>Please click to expand: 'app.py' Code Snippet for the ...</summary>
 
@@ -2521,6 +2545,7 @@ def admin_dashboard(page=1):
     tuple_in_right_order = sorted(genre_dict.items(), key=lambda kv: (kv[1], kv[0]), reverse=True)
     return render_template("admin_dashboard.html", user_details_query=user_details_query, page_prev=(page - 1), page_next=(page + 1), user_details_query_count=user_details_query_count, book_list_count=book_list_count, tuple_in_right_order=tuple_in_right_order, genre_list=genre_list)
 ```
+admin\_dashboard.html
 
 ```
 {% extends "flask_user_layout.html" %}
@@ -2741,10 +2766,15 @@ def admin_dashboard(page=1):
 </details>
 
 ##### Admin Dashboard - Update User
-[]()
-![]()
+[Link: Admin Dashboard - Update User](https://book-repository-virtual.herokuapp.com/admin_dashboard/1#edit_user_gaff)
 
-'app.py' update_user(user_id)
+![Visual: Admin Dashboard - Update User](documentation/Visuals%20-%20Admin%20User%20Modal.png)
+
+'app.py' update\_user(user_id)
+
+`update_user()` saves the changes to the user/reader profile, however, performs validations before doing so. Validate the the admin account isn't deactivated (not possible through the form) though may be possible through modification of the URL. Password validation is performed to ensure it's a valid password change.
+
+The admin is made aware of the result through a Flash message and the event is logged.
 
 <details><summary>Please click to expand: 'app.py' Code Snippet for the ...</summary>
 
@@ -2800,10 +2830,14 @@ def update_user(user_id):
 </details>
 
 ##### Admin Dashboard - Delete User
-[]()
-![]()
+[Link: Delete User (Jimmy Jones)](https://book-repository-virtual.herokuapp.com/admin_delete_user/5f51145d07a210352e40e63a)
+![Visual: Delete User](documentation/Visuals%20-%20Admin%20User%20Delete.png)
 
-'app.py' update_user(user_id)
+'app.py' admin\_delete\_user(user\_id)
+
+`admin_delete_user(user_id)` permanently deletes books associated with the user/reader as well as the user/reader account. The admin account can't be deleted as it's a key account.
+
+The admin is made aware of the result through a Flash message and the event is logged.
 
 <details><summary>Please click to expand: 'app.py' Code Snippet for the ...</summary>
 
@@ -2832,6 +2866,19 @@ def admin_delete_user(user_id):
 ```
 
 </details>
+
+##### Admin Dashboard - Load Genres
+[Link: Load Genres](https://book-repository-virtual.herokuapp.com/load_genres)
+
+![Visual: Load Genres](documentation/Visuals%20-%20Admin%20Load%20Genres.png)
+
+'app.py' load\_genres()
+
+`load_genres()` loads the book genres from the JSON file 'genre.json'. Create the Genre Collection if it does not exist. Genre descriptions taken from https://bookriot.com/guide-to-book-genres/. First validation: Genre Collection exists. Second validation: FileNotFound ('genre.json'). Third validation: JSONDecodeError (valid JSON format). Fourth validation: correct JSON Schema = Genre Class.
+
+The admin is made aware of the result through a Flash message and the event is logged.
+
+<details><summary>Please click to expand: 'app.py' Code Snippet for the ...</summary>
 
 ```
 @app.route("/load_genres")
@@ -2887,6 +2934,21 @@ def load_genres():
         app.logger.info("Genres Collection already created: [INFO] - (index.html)")
         return redirect(url_for("admin_dashboard"))
 ```
+
+</details>
+
+##### Admin Dashboard - Load Sample Books
+[Link: Load Books](https://book-repository-virtual.herokuapp.com/load_books)
+
+![Visual: Delete User](documentation/Visual%20-%20Admin%20Load%20Books.png)
+
+'app.py' load\_books()
+
+`load_books()` loads the sample books from the JSON file 'book.json'. Create the Sample Book Collection if it does not exist. First validation: Book Collection exists. Second validation: FileNotFound ('book.json'). Third validation: JSONDecodeError (valid JSON format). Fourth validation: correct JSON Schema = Book Class.
+
+The admin is made aware of the result through a Flash message and the event is logged.
+
+<details><summary>Please click to expand: 'app.py' Code Snippet for the ...</summary>
 
 ```
 @app.route("/load_books")
@@ -2950,6 +3012,21 @@ def load_books():
         return redirect(url_for("admin_dashboard"))
 ```
 
+</details>
+
+##### Error Handlers
+[Link: Error Handlers](https://book-repository-virtual.herokuapp.com/oops.html)
+
+![Visual: Error Handlers](documentation/Visuals%20-%20Error%20Handler.png)
+
+'app.py' Error Handlers
+
+Error Handlers for 400 CSRF Error (Bad Request), 404 Page Not Found, 405 Method Not Allowed, and 500 Internal Server Error.
+
+The event is logged.
+
+<details><summary>Please click to expand: 'app.py' Code Snippet for the ...</summary>
+
 ```
 # --- // Error Handlers for 400 CSRF Error (Bad Request), 404 Page Not Found, 405 Method Not Allowed, and 500 Internal Server Error.
 @app.errorhandler(CSRFError)
@@ -2996,6 +3073,8 @@ def internal_error(error):
         return render_template("oops.html", error=error, excuse=excuse, error_type="Server: 500 - Internal Server Error")
 ```
 
+oops.html
+
 ```
 {% extends "flask_user_layout.html" %}
 {% block content %}
@@ -3025,11 +3104,163 @@ def internal_error(error):
 {% endblock %}
 ```
 
-##### Register Page
+</details>
+
+##### User Management - Register Page
 
 [Link: Register Page](https://book-repository-virtual.herokuapp.com/user/register)
 
 ![Visual: Register Page](documentation/Book%20Repository/V%20-%20Register%20Page.png)
+
+Flask-User extension handles the user/reader registration. The class / collection is defined in 'app.py' and configured in 'config.py'.
+
+The user/reader fills in the form and submits it, clicks on the email confirmation link sent to the email address defined during registration.
+
+The user/reader is made aware of the result through a Flash message and the event is logged.
+
+<details><summary>Please click to expand: Registration</summary>
+
+app.py user class/collection
+
+```
+class User(db.Document, UserMixin):
+    # Active set to True to allow login of user
+    active = db.BooleanField(default=True)
+
+    # User authentication information
+    username = db.StringField(default="")
+    password = db.StringField()
+
+    # User information
+    first_name = db.StringField(default="")
+    last_name = db.StringField(default="")
+    email = db.StringField(default="")
+    email_confirmed_at = db.DateTimeField()
+    # Required for the e-mail confirmation, and subsequent login.
+
+    # Relationships  (Roles: user or user and Admin)
+    roles = db.ListField(db.StringField(), default=["user"])
+
+    meta = {
+        "auto_create_index": True,
+        "index_background": True,
+        "indexes": ["username"]
+    }
+```
+
+config.py
+
+```
+import os
+from datetime import timedelta
+
+from dotenv import load_dotenv
+from pathlib import Path
+env_path = Path(".") / ".env"
+load_dotenv(dotenv_path=env_path)
+
+
+class ConfigClass(object):
+    """ Flask application config """
+    # Flask settings
+    SECRET_KEY = os.environ.get("SECRET_KEY")
+
+    # Flask-MongoEngine settings
+    MONGO_DB_URL = os.environ.get("MONGO_URI_BR")
+    MONGODB_SETTINGS = {
+        'host': MONGO_DB_URL
+    }
+
+    # Flask-User settings
+    # Shown in email templates and page footers
+    USER_APP_NAME = "Book Repository"
+    USER_ENABLE_EMAIL = True      # Enable email authentication
+    USER_ENABLE_USERNAME = True    # Enable username authentication
+    USER_ENABLE_CONFIRM_EMAIL = True  # Enable email after registration
+    USER_ENABLE_FORGOT_PASSWORD = True # Enable email after forgot password
+    USER_ENABLE_CHANGE_PASSWORD = True # Enable email after password change
+    USER_SEND_PASSWORD_CHANGED_EMAIL = True # Enable email after password change
+    USER_REQUIRE_RETYPE_PASSWORD = True
+    USER_ENABLE_CHANGE_USERNAME = False
+
+    MAIL_SERVER = os.environ.get("MAIL_SERVER")
+    MAIL_PORT = os.environ.get("MAIL_PORT")
+    # TLS Port: 587, SSL Port: 465 --> TLS or SSL: True/False
+    MAIL_USERNAME = os.environ.get("MAIL_USERNAME")
+    MAIL_PASSWORD = os.environ.get("MAIL_PASSWORD")
+    MAIL_USE_TLS = True
+    MAIL_USE_SSL = False
+    USER_EMAIL_SENDER_EMAIL = os.environ.get("USER_EMAIL_SENDER_EMAIL")
+
+    # Flask Session Configuration for Session Protection and "Remember Me" function
+    SESSION_PROTECTION = "strong"
+    REMEMBER_COOKIE_DURATION = timedelta(seconds=3600) # Logged out after 1 hour (come back in without logging in too)
+    SESSION_COOKIE_SECURE = True
+
+    # Flask User Manager Configuration
+    USER_COPYRIGHT_YEAR = 2020
+    USER_CORPORATION_NAME = "GaffCo Consulting"
+```
+
+register.html
+
+```
+{% extends 'flask_user/_public_base.html' %}
+
+{% block content %}
+{% from "flask_user/_macros.html" import render_field, render_submit_field %}
+<h6><a href="{{ url_for('home_page')}}">Home</a>&nbsp; > &nbsp;<a
+        href="{{ url_for('user.register') }}">Register</a>&nbsp;<i
+        class="material-icons prefix tooltipped blue-text text-darken-4" data-position="bottom"
+        data-tooltip="<p class='left-align'>Please enter your username (Username) using 250 characters or less. Letters, digits and @ . + - _ only.</p><br><p class='left-align'>Please enter your email address (Email), for example 'name@domain.com'.</p><br><p class='left-align'>Please enter a password (Password) longer than 8 characters, using a mixture of numbers and letters, and ideally one or more special characters.</p><br><p class='left-align'>Password confirmation: Please enter the same password (Retype Password) again for verification.</p>">help</i>
+</h6>
+
+
+<form action="" method="POST" novalidate formnovalidate class="form" role="form">
+    <div class="field_top_padding">
+        {{ form.hidden_tag() }}
+        {% set field = form.username if user_manager.USER_ENABLE_USERNAME else form.email %}
+        <div class="form-group {% if field.errors %}has-error{% endif %}">
+            <div class="row">
+                <div class="input-field col s12">
+                    <i class="material-icons prefix tooltipped" data-position="bottom"
+                        data-tooltip="Please enter your username.">person</i>
+                    {{ field(class_='form-control') }}
+                    <label for="{{ field.id }}" class="control-label">{{ field.label.text }}</label>
+                    {% if field.errors %}
+                    {% for e in field.errors %}
+                    <p class="help-block">{{ e }}</p>
+                    {% endfor %}
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+        {% if user_manager.USER_ENABLE_EMAIL and user_manager.USER_ENABLE_USERNAME %}
+        {{ render_field(form.email) }}
+        {% endif %}
+
+        {{ render_field(form.password) }}
+
+        {% if user_manager.USER_REQUIRE_RETYPE_PASSWORD %}
+        {{ render_field(form.retype_password) }}
+        {% endif %}
+
+        <div class="button_top_padding">
+            <button class="btn waves-effect waves-light" type="submit" name="action">Register
+                <i class="material-icons right">how_to_reg</i>
+            </button>
+        </div>
+    </div>
+</form>
+<br>
+{% if user_manager.USER_ENABLE_REGISTER %}
+<p><a href="{{ url_for('user.login') }}">Already registered? Sign in.</a></p>
+{% endif %}
+{% endblock %}
+```
+
+</details>
 
 ##### Sign In
 
@@ -3037,15 +3268,740 @@ def internal_error(error):
 
 ![Visual: Sign In](documentation/Book%20Repository/V%20-%20Sign%20In.png)
 
-##### Admin Dashboard
+Flask-User extension handles the user/reader sign in. The class / collection is defined in 'app.py' and configured in 'config.py'.
 
-[Admin Dashboard](https://book-repository-virtual.herokuapp.com/admin_dashboard)
+The user/reader fills in the form and submits it.
 
-![Visual: Admin Dashboard](documentation/Book%20Repository/V%20-%20Admin%20Dashboard.png)
+The user/reader is made aware of the result through a Flash message and the event is logged.
 
-##### CSS
+<details><summary>Please click to expand: Sign In</summary>
 
+app.py user class/collection
+
+```
+class User(db.Document, UserMixin):
+    # Active set to True to allow login of user
+    active = db.BooleanField(default=True)
+
+    # User authentication information
+    username = db.StringField(default="")
+    password = db.StringField()
+
+    # User information
+    first_name = db.StringField(default="")
+    last_name = db.StringField(default="")
+    email = db.StringField(default="")
+    email_confirmed_at = db.DateTimeField()
+    # Required for the e-mail confirmation, and subsequent login.
+
+    # Relationships  (Roles: user or user and Admin)
+    roles = db.ListField(db.StringField(), default=["user"])
+
+    meta = {
+        "auto_create_index": True,
+        "index_background": True,
+        "indexes": ["username"]
+    }
+```
+
+config.py
+
+```
+import os
+from datetime import timedelta
+
+from dotenv import load_dotenv
+from pathlib import Path
+env_path = Path(".") / ".env"
+load_dotenv(dotenv_path=env_path)
+
+
+class ConfigClass(object):
+    """ Flask application config """
+    # Flask settings
+    SECRET_KEY = os.environ.get("SECRET_KEY")
+
+    # Flask-MongoEngine settings
+    MONGO_DB_URL = os.environ.get("MONGO_URI_BR")
+    MONGODB_SETTINGS = {
+        'host': MONGO_DB_URL
+    }
+
+    # Flask-User settings
+    # Shown in email templates and page footers
+    USER_APP_NAME = "Book Repository"
+    USER_ENABLE_EMAIL = True      # Enable email authentication
+    USER_ENABLE_USERNAME = True    # Enable username authentication
+    USER_ENABLE_CONFIRM_EMAIL = True  # Enable email after registration
+    USER_ENABLE_FORGOT_PASSWORD = True # Enable email after forgot password
+    USER_ENABLE_CHANGE_PASSWORD = True # Enable email after password change
+    USER_SEND_PASSWORD_CHANGED_EMAIL = True # Enable email after password change
+    USER_REQUIRE_RETYPE_PASSWORD = True
+    USER_ENABLE_CHANGE_USERNAME = False
+
+    MAIL_SERVER = os.environ.get("MAIL_SERVER")
+    MAIL_PORT = os.environ.get("MAIL_PORT")
+    # TLS Port: 587, SSL Port: 465 --> TLS or SSL: True/False
+    MAIL_USERNAME = os.environ.get("MAIL_USERNAME")
+    MAIL_PASSWORD = os.environ.get("MAIL_PASSWORD")
+    MAIL_USE_TLS = True
+    MAIL_USE_SSL = False
+    USER_EMAIL_SENDER_EMAIL = os.environ.get("USER_EMAIL_SENDER_EMAIL")
+
+    # Flask Session Configuration for Session Protection and "Remember Me" function
+    SESSION_PROTECTION = "strong"
+    REMEMBER_COOKIE_DURATION = timedelta(seconds=3600) # Logged out after 1 hour (come back in without logging in too)
+    SESSION_COOKIE_SECURE = True
+
+    # Flask User Manager Configuration
+    USER_COPYRIGHT_YEAR = 2020
+    USER_CORPORATION_NAME = "GaffCo Consulting"
+```
+
+login.html
+
+```
+{% extends 'flask_user/_public_base.html' %}
+
+{% block content %}
+{% from "flask_user/_macros.html" import render_field, render_checkbox_field, render_submit_field %}
+<h6><a href="{{ url_for('home_page')}}">Home</a>&nbsp; > &nbsp;<a href="{{ url_for('user.login') }}">Sign In
+        Page</a>&nbsp;<i class="material-icons prefix tooltipped blue-text text-darken-4" data-position="bottom"
+        role="tooltip"
+        data-tooltip="<p class='left-align'>Please enter your username or email (Username or Email), followed by your password (Password), the same ones you used when you registered.</p><br><p class='left-align'>Please click the checkbox (Remember Me) if you want to remain logged in.</p><br><p class='left-align'>Click on the SIGN IN button when done filling in the username and password fields.</p>">help</i>
+</h6>
+<form method="POST" class="form">
+    {{ form.hidden_tag() }}
+
+    {# Username or Email field #}
+    {% set field = form.username if user_manager.USER_ENABLE_USERNAME else form.email %}
+    <div class="field_top_padding">
+        <div class="form-group {% if field.errors %}has-error{% endif %}">
+            <div class="row">
+                <div class="input-field col s12">
+                    <i class="material-icons prefix tooltipped" data-position="bottom"
+                        data-tooltip="Please enter your username or email.">person</i>
+                    {{ field(class_='form-control') }}
+                    <label for="{{ field.id }}" class="control-label">{{ field.label.text }}</label>
+                    {% if field.errors %}
+                    {% for e in field.errors %}
+                    <p class="help-block">{{ e }}</p>
+                    {% endfor %}
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {# Password field #}
+    {% set field = form.password %}
+    <div class="field_top_padding">
+        <div class="form-group {% if field.errors %}has-error{% endif %}">
+            <div class="row">
+                <div class="input-field col s12">
+                    <i class="material-icons prefix tooltipped" data-position="bottom"
+                        data-tooltip="Please enter your password.">vpn_key</i>
+                    {{ field(class_='form-control') }}
+                    <label for="{{ field.id }}" class="control-label">{{ field.label.text }}</label>
+                    {% if field.errors %}
+                    {% for e in field.errors %}
+                    <p class="help-block">{{ e }}</p>
+                    {% endfor %}
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {# Remember me #}
+    {% if user_manager.USER_ENABLE_REMEMBER_ME %}
+    <div class="field_top_padding">
+        <div class="row">
+            <div class="col s12">
+                <i class="material-icons prefix tooltipped" data-position="bottom"
+                    data-tooltip="Please click the checkbox (Remember Me) if you want to remain logged in.">bookmark</i>
+                <label id="remember_me_label">Remember Me&nbsp;
+                    <input id="remember_me" name="remember_me" type="checkbox" /><span></span>
+                </label>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+
+    <div class="button_top_padding">
+        <button class="btn waves-effect waves-light" type="submit" name="action">Sign In
+            <i class="material-icons right">login</i>
+        </button>
+    </div>
+</form>
+<br>
+{% if user_manager.USER_ENABLE_REGISTER and not user_manager.USER_REQUIRE_INVITATION %}
+<p><a href="{{ url_for('user.register') }}">New here? Register.</a></p>
+{% endif %}
+{% if user_manager.USER_ENABLE_FORGOT_PASSWORD %}
+<p><a href="{{ url_for('user.forgot_password') }}">Forgot your Password?</a></p>
+{% endif %}
+{% endblock %}
+```
+
+</details>
+
+##### Edit User Profile
+
+[Link: Edit User Profile](https://book-repository-virtual.herokuapp.com/user/edit_user_profile)
+
+![Visual: Edit User Profile](documentation/Visuals%20-%20Edit%20User%20Profile.png)
+
+Flask-User extension handles the user/reader user profile. The class / collection is defined in 'app.py' and configured in 'config.py'.
+
+The user/reader fills in the form and submits it.
+
+The user/reader is made aware of the result through a Flash message and the event is logged.
+
+<details><summary>Please click to expand: Edit User Profile</summary>
+
+app.py user class/collection
+
+```
+class User(db.Document, UserMixin):
+    # Active set to True to allow login of user
+    active = db.BooleanField(default=True)
+
+    # User authentication information
+    username = db.StringField(default="")
+    password = db.StringField()
+
+    # User information
+    first_name = db.StringField(default="")
+    last_name = db.StringField(default="")
+    email = db.StringField(default="")
+    email_confirmed_at = db.DateTimeField()
+    # Required for the e-mail confirmation, and subsequent login.
+
+    # Relationships  (Roles: user or user and Admin)
+    roles = db.ListField(db.StringField(), default=["user"])
+
+    meta = {
+        "auto_create_index": True,
+        "index_background": True,
+        "indexes": ["username"]
+    }
+```
+
+config.py
+
+```
+import os
+from datetime import timedelta
+
+from dotenv import load_dotenv
+from pathlib import Path
+env_path = Path(".") / ".env"
+load_dotenv(dotenv_path=env_path)
+
+
+class ConfigClass(object):
+    """ Flask application config """
+    # Flask settings
+    SECRET_KEY = os.environ.get("SECRET_KEY")
+
+    # Flask-MongoEngine settings
+    MONGO_DB_URL = os.environ.get("MONGO_URI_BR")
+    MONGODB_SETTINGS = {
+        'host': MONGO_DB_URL
+    }
+
+    # Flask-User settings
+    # Shown in email templates and page footers
+    USER_APP_NAME = "Book Repository"
+    USER_ENABLE_EMAIL = True      # Enable email authentication
+    USER_ENABLE_USERNAME = True    # Enable username authentication
+    USER_ENABLE_CONFIRM_EMAIL = True  # Enable email after registration
+    USER_ENABLE_FORGOT_PASSWORD = True # Enable email after forgot password
+    USER_ENABLE_CHANGE_PASSWORD = True # Enable email after password change
+    USER_SEND_PASSWORD_CHANGED_EMAIL = True # Enable email after password change
+    USER_REQUIRE_RETYPE_PASSWORD = True
+    USER_ENABLE_CHANGE_USERNAME = False
+
+    MAIL_SERVER = os.environ.get("MAIL_SERVER")
+    MAIL_PORT = os.environ.get("MAIL_PORT")
+    # TLS Port: 587, SSL Port: 465 --> TLS or SSL: True/False
+    MAIL_USERNAME = os.environ.get("MAIL_USERNAME")
+    MAIL_PASSWORD = os.environ.get("MAIL_PASSWORD")
+    MAIL_USE_TLS = True
+    MAIL_USE_SSL = False
+    USER_EMAIL_SENDER_EMAIL = os.environ.get("USER_EMAIL_SENDER_EMAIL")
+
+    # Flask Session Configuration for Session Protection and "Remember Me" function
+    SESSION_PROTECTION = "strong"
+    REMEMBER_COOKIE_DURATION = timedelta(seconds=3600) # Logged out after 1 hour (come back in without logging in too)
+    SESSION_COOKIE_SECURE = True
+
+    # Flask User Manager Configuration
+    USER_COPYRIGHT_YEAR = 2020
+    USER_CORPORATION_NAME = "GaffCo Consulting"
+```
+
+edit\_user\_profile.html
+
+```
+{% extends 'flask_user/_authorized_base.html' %}
+
+{% block content %}
+{% from "flask_user/_macros.html" import render_field, render_checkbox_field, render_submit_field %}
+
+<h6>
+    {% if call_or_get(current_user.is_authenticated) %}
+    Home
+    {% else %}
+    <a href="{{ url_for('home_page')}}">Home</a>
+    {% endif %}
+    &nbsp; > &nbsp;<a href="{{ url_for('member_page') }}">Member's Page</a>&nbsp; > &nbsp;<a
+        href="{{ url_for('user.edit_user_profile') }}">User Profile:
+        {{ current_user.username or current_user.email }}</a>&nbsp;<i
+        class="material-icons prefix tooltipped blue-text text-darken-4" data-position="bottom"
+        data-tooltip="<p class='left-align'>Please enter your first (First Name) and last name (Last Name) in the fields below, and then click on the UPDATE button when you are done.</p>">help</i>
+</h6>
+
+<form method="POST" class="form">
+    {{ form.hidden_tag() }}
+    <div class="field_top_padding">
+        <div class="form-group">
+            <div class="row">
+                <div class="input-field col s12">
+                    <i class="material-icons prefix tooltipped" data-position="bottom"
+                        data-tooltip="Please enter your first name.">person</i>
+                    <input class="form-control" id="first_name" name="first_name" required="" type="text"
+                        value="{{current_user.first_name}}">
+                    <label for="first_name" class="control-label active">First Name</label>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="field_top_padding">
+        <div class="form-group">
+            <div class="row">
+                <div class="input-field col s12">
+                    <i class="material-icons prefix tooltipped" data-position="bottom"
+                        data-tooltip="Please enter your last name/surname.">group</i>
+                    <input class="form-control" id="last_name" name="last_name" required="" type="text"
+                        value="{{current_user.last_name}}">
+                    <label for="last_name" class="control-label active">Last Name</label>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="button_top_padding">
+        <button class="btn waves-effect waves-light" type="submit" name="action">Update
+            <i class="material-icons right">person_add</i>
+        </button>
+    </div>
+</form>
+<br>
+
+{% if not user_manager.USER_ENABLE_AUTH0 %}
+{% if user_manager.USER_ENABLE_CHANGE_USERNAME %}
+<p><a href="{{ url_for('user.change_username') }}">Change Username</a></p>
+{% endif %}
+{% if user_manager.USER_ENABLE_CHANGE_PASSWORD %}
+<p><a href="{{ url_for('user.change_password') }}">Change Password</a></p>
+{% endif %}
+{% endif %}
+{% if current_user.username != "admin" %}
+<a class="modal-trigger pink-text text-darken-1" href="#delete_user">Delete User</a>
+<div id="delete_user" class="modal">
+    <div class="modal-content center">
+        <h6 class="pink-text text-darken-1">Deleting your User account and all your Books: {{current_user.username}}
+        </h6>
+        <p>This action will permanently delete your User account and all your Books from the Book Repository. Are you
+            sure you wish to do this?</p>
+    </div>
+    <div class="modal-footer">
+        <a href="{{ url_for('delete_user') }}" class="modal-close btn blue darken-4"><i
+                class="material-icons white-text right">delete_forever</i>&nbsp;Yes</a>
+        <a href="#!" class="modal-close btn blue darken-4"><i
+                class="material-icons white-text right">pan_tool</i>&nbsp;No</a>
+    </div>
+</div>
+{% endif %}
+{% endblock %}
+```
+
+</details>
+
+##### Sign Out
+
+[Link: Sign Out](https://book-repository-virtual.herokuapp.com/user/sign-out)
+
+![Visual: Sign Out](documentation/Visuals%20-%20Sign%20Out.png)
+
+Sign Out logs out the user/reader and redirects to the Landing / Home Page.
+
+##### CSS - 'style.css'
+
+The CSS is short as most of the layout and styling of the Book Repository is handled using Materialize 1.0.0.
+
+style.css ensures a consistent use of the UX Design and Colopur Scheme, and consists of the following main sections:
+
+* Main Styling and Layout: resetting values and the main styling, configuring the background image, importing the Google Font Raleway, configuring the link (<a href...) colour, andthe pagination style.
+* Navigation Bar, Hamburger-bar, and Fixed Footer Styling and Layout: consistent styling in accordance with the UX Design of the navigation and footer elements.
+* Modal Colour Schemes to match the Book Repository UX Design.
+* Message Chips (Flask, MaterializeCSS 1.0.0, custom CSS 3, and a JS Timeout function = Flask Flash Messages).
+* Book Spine background-image for the Member's Page.
+* Form Fields and Buttons Styling.
+* Taken from 'materialize.css' (1.0.0) to style the input fields to match the Book Repository UX Design.
+* W3Schools Drop-Down Menu for the Member's, Search Results, and Admin Pages.
+
+<details><summary>Please click to expand: style.css</summary>
+
+```
+@import url('https://fonts.googleapis.com/css?family=Raleway|&display=swap');
+
+/* --- // Main Styling and Layout */
+/* Reset values */
+* {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    box-sizing: border-box;
+}
+
+/* Use Raleway font throughout the site, and provide room for the scrolling under the fixed nav-bar and footer */
+html,
+body {
+    font-family: 'Raleway', sans-serif;
+    margin-top: 35px;
+    margin-bottom: 50px;
+}
+
+/* Background image setting */
+html {
+    background: url("/static/images/sharon-mccutcheon-eMP4sYPJ9x0-unsplash.jpg") no-repeat center center fixed;
+    /* Photo by <a href="https://unsplash.com/@sharonmccutcheon?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Sharon McCutcheon</a> */
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+
+.landing_logo {
+    width: 100%;
+}
+
+.landing_page {
+    background: rgba(255, 255, 255, 0.5);
+    padding: 10px;
+}
+
+/* <a href... */
+a {
+    color: #0D47A1;
+}
+
+/* Pagination styling to suit <H6> above on the 'members.html' page */
+.pagination {
+    font-size: 1.15rem;
+    line-height: 110%;
+    margin-bottom: 1rem;
+}
+
+/* --- // Navigation Bar, Hamburger-bar, and Fixed Footer Styling and Layout */
+/* Navigation Bar: fixed and MaterializeCSS styling. */
+nav {
+    overflow: hidden;
+    position: fixed;
+    top: 0;
+    z-index: 10;
+}
+
+.sidenav {
+    width: 230px;
+}
+
+/* Footer: fixed footer and MaterializeCSS styling. Using box-shadow (in reverse) from the MaterializeCSS navbar class. */
+footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    background-color: #0D47A1;
+    color: #FFFFFF;
+    text-align: center;
+}
+
+.footer-copyright {
+    -webkit-box-shadow: 0 -2px 0 rgba(0, 0, 0, 0.14), 0 -3px 1px 0 rgba(0, 0, 0, 0.12), 0 -1px 5px 0 rgba(0, 0, 0, 0.2);
+    -moz-box-shadow: 0 -2px 0 rgba(0, 0, 0, 0.14), 0 -3px 1px 0 rgba(0, 0, 0, 0.12), 0 -1px 5px 0 rgba(0, 0, 0, 0.2);
+    box-shadow: 0 -2px 0 rgba(0, 0, 0, 0.14), 0 -3px 1px 0 rgba(0, 0, 0, 0.12), 0 -1px 5px 0 rgba(0, 0, 0, 0.2);
+}
+
+.page-footer,
+.footer-copyright {
+    padding: 0px;
+    z-index: 10;
+}
+
+#menu_book {
+    transform: scale(1.2);
+    padding: 0px 2px;
+}
+
+footer .left-align {
+    padding-left: 15%;
+}
+
+footer .right-align {
+    padding-right: 15%;
+}
+
+/* --- // Modal Colour Schemes to match the Book Repository UX Design */
+.modal,
+.modal-footer {
+    font-family: 'Raleway', sans-serif;
+    color: #0D47A1;
+}
+
+.page-footer,
+.tabs .indicator {
+    background-color: #0D47A1;
+}
+
+.tab_content_heading {
+    padding: 10px 0px;
+}
+
+/* --- // Message Chips (Flask, MaterializeCSS 1.0.0, custom CSS 3, and a JS Timeout function = Flask Flash Messages) */
+.message-success {
+    color: #FFFFFF;
+    background-color: #26A69A;
+}
+
+.message-info {
+    color: #FFFFFF;
+    background-color: #37474F;
+}
+
+.message-warning {
+    color: #FFFFFF;
+    background-color: orange;
+}
+
+.message-danger {
+    color: #FFFFFF;
+    background-color: #d81b60;
+}
+
+.help-block {
+    color: #FFFFFF;
+    background-color: #d81b60;
+}
+
+/* --- // Book Spine background-image for the Member's Page */
+.collapsible-header {
+    background-image: url("/static/images/christian-wiediger-GWucxGZvO-w-unsplash.jpg");
+    /* Photo by <a href="https://unsplash.com/@christianw?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Christian Wiediger</a> */
+    background-position: 95% 55%;
+    background-size: 150%
+}
+
+.collapsible-body {
+    background: rgba(255, 255, 255, 0.5);
+}
+
+.book_spine {
+    text-align: center;
+}
+
+.book_actions {
+    padding: 10px 0px 0px 10px;
+}
+
+/* ---// Form Fields and Buttons Styling */
+/* Remember Me Label */
+#remember_me_label {
+    font-size: 1rem;
+    color: #000000;
+    margin-left: 15px;
+}
+
+label {
+    color: #000000;
+}
+
+/* "Breathing space between the submit/register/login buttons, the fields and the forms */
+.button_top_padding,
+.field_top_padding {
+    padding-top: 1rem;
+}
+
+.btn {
+    background-color: #0d47a1;
+}
+
+.btn:hover,
+.btn:focus {
+    background-color: #0c4091;
+}
+
+/* --- // Taken from 'materialize.css' (1.0.0) to style the input fields to match the Book Repository UX Design */
+/* Checkbox when selected is the same colour as the rest of the form elements */
+[type="checkbox"]:checked+span:not(.lever):before {
+    border-right: 2px solid #0d47a1;
+    border-bottom: 2px solid #0d47a1;
+}
+
+input:not([type]):focus:not([readonly]),
+input[type=text]:not(.browser-default):focus:not([readonly]),
+input[type=password]:not(.browser-default):focus:not([readonly]),
+input[type=email]:not(.browser-default):focus:not([readonly]),
+input[type=url]:not(.browser-default):focus:not([readonly]),
+input[type=time]:not(.browser-default):focus:not([readonly]),
+input[type=date]:not(.browser-default):focus:not([readonly]),
+input[type=datetime]:not(.browser-default):focus:not([readonly]),
+input[type=datetime-local]:not(.browser-default):focus:not([readonly]),
+input[type=tel]:not(.browser-default):focus:not([readonly]),
+input[type=number]:not(.browser-default):focus:not([readonly]),
+input[type=search]:not(.browser-default):focus:not([readonly]),
+textarea.materialize-textarea:focus:not([readonly]) {
+    border-bottom: 1px solid #0d47a1;
+    -webkit-box-shadow: 0 1px 0 0 #0d47a1;
+    box-shadow: 0 1px 0 0 #0d47a1;
+}
+
+input:not([type]):focus:not([readonly])+label,
+input[type=text]:not(.browser-default):focus:not([readonly])+label,
+input[type=password]:not(.browser-default):focus:not([readonly])+label,
+input[type=email]:not(.browser-default):focus:not([readonly])+label,
+input[type=url]:not(.browser-default):focus:not([readonly])+label,
+input[type=time]:not(.browser-default):focus:not([readonly])+label,
+input[type=date]:not(.browser-default):focus:not([readonly])+label,
+input[type=datetime]:not(.browser-default):focus:not([readonly])+label,
+input[type=datetime-local]:not(.browser-default):focus:not([readonly])+label,
+input[type=tel]:not(.browser-default):focus:not([readonly])+label,
+input[type=number]:not(.browser-default):focus:not([readonly])+label,
+input[type=search]:not(.browser-default):focus:not([readonly])+label,
+textarea.materialize-textarea:focus:not([readonly])+label {
+    color: #0d47a1;
+}
+
+.input-field .prefix.active {
+    color: #0d47a1;
+}
+
+.switch label input[type=checkbox]:checked+.lever {
+    background-color: #0c4091;
+}
+
+.switch label input[type=checkbox]:checked+.lever:after {
+    background-color: #ffffff;
+}
+
+.input-field>label {
+    color: #000000;
+}
+
+.dropdown-content li>a,
+.dropdown-content li>span {
+    color: #0d47a1;
+}
+
+.select-wrapper input.select-dropdown:focus {
+    border-bottom: 2px solid #0d47a1;
+}
+
+.select-wrapper .prefix.active {
+    color: #0D47A1;
+}
+
+/* Active Label on the Register Page and Jinja render for Flask-User and error handling */
+.input-field>label:not(.label-icon).active {
+    color: #0D47A1;
+}
+
+/* --- // W3Schools Drop-Down Menu for the Member's, Search Results, and Admin Pages */
+.book-dropdown {
+    position: relative;
+    display: inline-block;
+    list-style-type: none;
+    padding-top: 12px;
+}
+
+.book-dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #ffffff;
+    min-width: 216px;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    padding: 12px 16px;
+    z-index: 10;
+    right: 0;
+}
+
+.book-dropdown:hover .book-dropdown-content {
+    display: block;
+}
+```
+
+</details>
+ 
 ##### JavaScript
+There are three JavaScript scripts. Two vendor scripts and one created to hide multiple Flash messages.
+
+<details><summary>Please click to expand: JavaScript scripts</summary>
+
+vendor/cookies.js
+
+Osano Consent Cookie is used as it's easy to use and configure. I've placed it in a position where consent isn't required, though advised.
+
+```
+window.cookieconsent.initialise({
+    "palette": {
+        "popup": {
+            "background": "#ffffff",
+            "text": "#0d47a1"
+        },
+        "button": {
+            "background": "#0d47a1",
+            "text": "#ffffff"
+        }
+    },
+    "position": "bottom-right",
+    "content": {
+        "message": "The Book Repository uses 🍪🍪 (cookies), solely for the purpose of session management (user registration, login, and access to restricted areas), and are a requirement to use the Book Repository.<br><br>No information is shared with third parties.<br><br>All 🍪🍪 (cookies) are deleted after the browser is closed.<br><br>",
+        "dismiss": "I understand and agree!",
+        "link": "I want to know more!"
+    }
+});
+```
+
+vendor/materialize.js
+
+As no specific Materialize options are required for any Materialize 1.0.0 functions all functions are auto initiated.
+
+```
+document.addEventListener("DOMContentLoaded", () => {
+    M.AutoInit();
+});
+```
+
+message.js
+
+By using getElementsByClassName all flash messages are added to the variable flash\_message and gets updated dynamically, which doesn’t happen when using querySelector or querySelectorAll as they create a static list at the time of execution that doesn’t get updated when the DOM gets updated.
+
+The for-loop iterates through the list of Flash Messages and sets the display to none for each one.
+
+```
+// Timeout Chip: handles multiple Flask flash messages.
+setTimeout(()=> {
+    chip_message = document.getElementsByClassName("chip");
+
+    for (let i = 0; i < chip_message.length; i++) {
+        chip_message[i].style.display="none";
+    }
+}, 5000);
+```
+
+</details>
 
 ### Code...
 
@@ -3092,19 +4048,19 @@ These variables are required for the Book Repository functions, such as register
 
 | Variables               | Local  | Heroku Review App | Heroku Staging | Heroku Production | Description                                                                                                                          |
 |-------------------------|--------|-------------------|----------------|-------------------|--------------------------------------------------------------------------------------------------------------------------------------|
-| `ADMIN_PASSWORD`          | Unique | Unique            | Unique         | Unique            | User 'admin' password used when   creating the 'admin' user on first Home/Landing Page access.                                       |
-| `GOOGLE_API_KEY`          | Shared | Shared            | Shared         | Shared            | Used for the Google Books API to   request the front cover thumbmnail for the book searched using ISBN.                              |
-| `LOGGING_LEVEL`           | Unique | Unique            | Unique         | Unique            | Application log level, for   rotating file log handler and the application log to console.                                           |
-| `MAIL_DEFAULT_SENDER`     | Shared | Shared            | Shared         | Shared            | Flask-User/Mail 'from' email   address for the registration and password reset confirmation emails.                                  |
-| `MAIL_PASSWORD`           | Shared | Shared            | Shared         | Shared            | Flask-User/Mail password for the   registration and password reset confirmation emails.                                              |
-| `MAIL_PORT`              | Shared | Shared            | Shared         | Shared            | Flask-User/Mail port for either   TLS or SSL (in this case TLS) for the registration and password reset   confirmation emails.       |
-| `MAIL_SERVER`             | Shared | Shared            | Shared         | Shared            | Flask-User/Mail server name for   the registration and password reset confirmation emails.                                           |
-| `MAIL_USERNAME`           | Shared | Shared            | Shared         | Shared            | Flask-User/Mail username for the   registration and password reset confirmation emails.                                              |
-| `MONGO_URI_BR`            | Unique | Unique            | Unique         | Unique            | MongoDB URI for each Book   Repository instance (Dev, Rev, Staging, Production).                                                     |
-| `SECRET_KEY`              | Unique | Unique            | Unique         | Unique            | Secret Key for Flask encryption.                                                                                                     |
-| `USER_EMAIL_SENDER_EMAIL` | Shared | Shared            | Shared         | Shared            | Flask-User/Mail 'from' email   address for the registration and password reset confirmation emails.                                  |
-| `APPDEBUG`              | Unique       | Unique        | Unique         | Unique                  | Variable to enable/disable all debugging.                                                                               |
-| `FDT`                     | Unique |                   |                |                   | Flask Debug Toolbar varibale to   ensure it only runs in local development environment as it contains   clear-text config variables. |
+| ADMIN\_PASSWORD          | Unique | Unique            | Unique         | Unique            | User 'admin' password used when   creating the 'admin' user on first Home/Landing Page access.                                       |
+| GOOGLE\_API\_KEY          | Shared | Shared            | Shared         | Shared            | Used for the Google Books API to   request the front cover thumbmnail for the book searched using ISBN.                              |
+| LOGGING\_LEVEL           | Unique | Unique            | Unique         | Unique            | Application log level, for   rotating file log handler and the application log to console.                                           |
+| MAIL\_DEFAULT\_SENDER     | Shared | Shared            | Shared         | Shared            | Flask-User/Mail 'from' email   address for the registration and password reset confirmation emails.                                  |
+| MAIL\_PASSWORD           | Shared | Shared            | Shared         | Shared            | Flask-User/Mail password for the   registration and password reset confirmation emails.                                              |
+| MAIL\_PORT              | Shared | Shared            | Shared         | Shared            | Flask-User/Mail port for either   TLS or SSL (in this case TLS) for the registration and password reset   confirmation emails.       |
+| MAIL\_SERVER             | Shared | Shared            | Shared         | Shared            | Flask-User/Mail server name for   the registration and password reset confirmation emails.                                           |
+| MAIL\_USERNAME           | Shared | Shared            | Shared         | Shared            | Flask-User/Mail username for the   registration and password reset confirmation emails.                                              |
+| MONGO\_URI\_BR            | Unique | Unique            | Unique         | Unique            | MongoDB URI for each Book   Repository instance (Dev, Rev, Staging, Production).                                                     |
+| SECRET\_KEY              | Unique | Unique            | Unique         | Unique            | Secret Key for Flask encryption.                                                                                                     |
+| USER\_EMAIL\_SENDER\_EMAIL | Shared | Shared            | Shared         | Shared            | Flask-User/Mail 'from' email   address for the registration and password reset confirmation emails.                                  |
+| APPDEBUG              | Unique       | Unique        | Unique         | Unique                  | Variable to enable/disable all debugging.                                                                               |
+| FDT                     | Unique |                   |                |                   | Flask Debug Toolbar varibale to   ensure it only runs in local development environment as it contains   clear-text config variables. |
 
 ### Flask-User and Book Repository Routes
 These routes are either a part of the Flask-User extension or created as a part of the Book Repository. The "y", "n", and "" under each heading (Flask User, Book Repo, User / Reader, Admin) denote the following: "y" = is either implemented by (Flask User or Book Repo) or used by (User/Reader or Admin), "n" = is either implemented by but not used (Flask User or Book Repo) nor used by (User/Reader or Admin), "" = is not implemented by (Flask User or Book Repo) nor used by (User/Reader or Admin).
@@ -3113,103 +4069,103 @@ For example, Flask-User implements user.invite_user, though isn't activated thro
 
 | URL   route                     | Endpoint name                  | HTTP methods             | Flask User | Book Repo | User / Reader | Admin |
 |---------------------------------|--------------------------------|--------------------------|------------|-----------------|-------------|-------|
-| `/`                               | `home_page`                      | GET, HEAD, OPTIONS       |            | y               | y           | y     |
-| `/add_book`                       | `add_book`                       | GET, HEAD, OPTIONS       |            | y               | y           | y     |
-| `/admin_dashboard`                | `admin_dashboard`                | GET, HEAD, OPTIONS       |            | y               |             | y     |
-| `/admin_dashboard/<int:page>`     | `admin_dashboard`                | GET, HEAD, OPTIONS       |            | y               |             | y     |
-| `/admin_delete_user/<user_id>`    | `admin_delete_user`              | GET, HEAD, OPTIONS       |            | y               |             | y     |
-| `/delete_book/<book_id>`          | `delete_book`                    | GET, HEAD, OPTIONS       |            | y               | y           | y     |
-| `/delete_user`                    | `delete_user`                    | GET, HEAD, OPTIONS       |            | y               | y           | y     |
-| `/edit_book/<book_id>`            | `edit_book`                      | GET, HEAD, OPTIONS       |            | y               | y           | y     |
-| `/index`                          | `home_page`                      | GET, HEAD, OPTIONS       |            | y               | y           | y     |
-| `/index.html`                     | `home_page`                      | GET, HEAD, OPTIONS       |            | y               | y           | y     |
-| `/load_books`                     | `load_books`                     | GET, HEAD, OPTIONS       |            | y               |             | y     |
-| `/load_genres`                    | `load_genres`                    | GET, HEAD, OPTIONS       |            | y               |             | y     |
-| `/members`                        | `member_page`                    | GET, HEAD, OPTIONS       |            | y               | y           | y     |
-| `/members/<int:page>`             | `member_page`                    | GET, HEAD, OPTIONS       |            | y               | y           | y     |
-| `/save_book`                      | `save_book`                      | OPTIONS, POST            |            | y               | y           | y     |
-| `/save_search`                    | `save_search`                    | GET, HEAD, OPTIONS, POST |            | y               | y           | y     |
-| `/search_book`                    | `search_book`                    | GET, HEAD, OPTIONS       |            | y               | y           | y     |
-| `/search_results`                 | `search_results`                 | GET, HEAD, OPTIONS, POST |            | y               | y           | y     |
-| `/search_results/<int:page>`      | `search_results`                 | GET, HEAD, OPTIONS       |            | y               | y           | y     |
-| `/static/<path:filename>`         | `static`                         | GET, HEAD, OPTIONS       | y          |                 | y           | y     |
-| `/update_book/<book_id>`          | `update_book`                    | OPTIONS, POST            |            | y               | y           | y     |
-| `/update_user/<user_id>`          | `update_user`                    | OPTIONS, POST            |            | y               | y           | y     |
-| `/user/change-password`           | `user.change_password`           | GET, HEAD, OPTIONS, POST | y          |                 | y           | y     |
-| `/user/change-username`           | `user.change_username`           | GET, HEAD, OPTIONS, POST | n          |                 | n           | n     |
-| `/user/confirm-email/<token>`     | `user.confirm_email`             | GET, HEAD, OPTIONS       | y          |                 | y           | y     |
-| `/user/edit_user_profile`         | `user.edit_user_profile`         | GET, HEAD, OPTIONS, POST | y          |                 | y           | y     |
-| `/user/email/<id>/<action>`       | `user.email_action`              | GET, HEAD, OPTIONS       | y          |                 | y           | y     |
-| `/user/forgot-password`           | `user.forgot_password`           | GET, HEAD, OPTIONS, POST | y          |                 | y           | y     |
-| `/user/invite`                    | `user.invite_user`               | GET, HEAD, OPTIONS, POST | n          |                 |             |       |
-| `/user/manage-emails`             | `user.manage_emails`             | GET, HEAD, OPTIONS, POST | n          |                 |             |       |
-| `/user/register`                  | `user.register`                  | GET, HEAD, OPTIONS, POST | y          |                 | y           | y     |
-| `/user/resend-email-confirmation` | `user.resend_email_confirmation` | GET, HEAD, OPTIONS, POST | y          |                 | y           | y     |
-| `/user/reset-password/<token>`    | `user.reset_password`            | GET, HEAD, OPTIONS, POST | y          |                 | y           | y     |
-| `/user/sign-in`                   | `user.login`                     | GET, HEAD, OPTIONS, POST | y          |                 | y           | y     |
-| `/user/sign-out`                  | `user.logout`                    | GET, HEAD, OPTIONS, POST | y          |                 | y           | y     |
+| /                               | home\_page                      | GET, HEAD, OPTIONS       |            | y               | y           | y     |
+| /add\_book                       | add\_book                       | GET, HEAD, OPTIONS       |            | y               | y           | y     |
+| /admin\_dashboard                | admin\_dashboard                | GET, HEAD, OPTIONS       |            | y               |             | y     |
+| /admin\_dashboard/<int:page>     | admin\_dashboard                | GET, HEAD, OPTIONS       |            | y               |             | y     |
+| /admin\_delete\_user/<user\_id>    | admin\_delete\_user              | GET, HEAD, OPTIONS       |            | y               |             | y     |
+| /delete\_book/<book\_id>          | delete\_book                    | GET, HEAD, OPTIONS       |            | y               | y           | y     |
+| /delete\_user                    | delete\_user                    | GET, HEAD, OPTIONS       |            | y               | y           | y     |
+| /edit\_book/<book\_id>            | edit\_book                      | GET, HEAD, OPTIONS       |            | y               | y           | y     |
+| /index                          | home\_page                      | GET, HEAD, OPTIONS       |            | y               | y           | y     |
+| /index.html                     | home\_page                      | GET, HEAD, OPTIONS       |            | y               | y           | y     |
+| /load\_books                     | load\_books                     | GET, HEAD, OPTIONS       |            | y               |             | y     |
+| /load\_genres                    | load\_genres                    | GET, HEAD, OPTIONS       |            | y               |             | y     |
+| /members                        | member\_page                    | GET, HEAD, OPTIONS       |            | y               | y           | y     |
+| /members/<int:page>             | member\_page                    | GET, HEAD, OPTIONS       |            | y               | y           | y     |
+| /save\_book                      | save\_book                      | OPTIONS, POST            |            | y               | y           | y     |
+| /save\_search                    | save\_search                    | GET, HEAD, OPTIONS, POST |            | y               | y           | y     |
+| /search\_book                    | search\_book                    | GET, HEAD, OPTIONS       |            | y               | y           | y     |
+| /search\_results                 | search\_results                 | GET, HEAD, OPTIONS, POST |            | y               | y           | y     |
+| /search\_results/<int:page>      | search\_results                 | GET, HEAD, OPTIONS       |            | y               | y           | y     |
+| /static/<path:filename>         | static                         | GET, HEAD, OPTIONS       | y          |                 | y           | y     |
+| /update\_book/<book\_id>          | update\_book                    | OPTIONS, POST            |            | y               | y           | y     |
+| /update\_user/<user\_id>          | update\_user                    | OPTIONS, POST            |            | y               | y           | y     |
+| /user/change-password           | user.change\_password           | GET, HEAD, OPTIONS, POST | y          |                 | y           | y     |
+| /user/change-username           | user.change\_username           | GET, HEAD, OPTIONS, POST | n          |                 | n           | n     |
+| /user/confirm-email/<token>     | user.confirm\_email             | GET, HEAD, OPTIONS       | y          |                 | y           | y     |
+| /user/edit\_user\_profile         | user.edit\_user\_profile         | GET, HEAD, OPTIONS, POST | y          |                 | y           | y     |
+| /user/email/<id>/<action>       | user.email\_action              | GET, HEAD, OPTIONS       | y          |                 | y           | y     |
+| /user/forgot-password           | user.forgot\_password           | GET, HEAD, OPTIONS, POST | y          |                 | y           | y     |
+| /user/invite                    | user.invite\_user               | GET, HEAD, OPTIONS, POST | n          |                 |             |       |
+| /user/manage-emails             | user.manage\_emails             | GET, HEAD, OPTIONS, POST | n          |                 |             |       |
+| /user/register                  | user.register                  | GET, HEAD, OPTIONS, POST | y          |                 | y           | y     |
+| /user/resend-email-confirmation | user.resend\_email\_confirmation | GET, HEAD, OPTIONS, POST | y          |                 | y           | y     |
+| /user/reset-password/<token>    | user.reset\_password            | GET, HEAD, OPTIONS, POST | y          |                 | y           | y     |
+| /user/sign-in                   | user.login                     | GET, HEAD, OPTIONS, POST | y          |                 | y           | y     |
+| /user/sign-out                  | user.logout                    | GET, HEAD, OPTIONS, POST | y          |                 | y           | y     |
 
 ### Flask, Flask-User, and Book Repository Configuration Variables
 | Key                           | Value                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         |
 |-------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `APPLICATION_ROOT`              | '/'                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           |
-| `DEBUG`                         | TRUE                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          |
-| `DEBUG_TB_ENABLED`              | TRUE                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          |
-| `DEBUG_TB_HOSTS`                | ()                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            |
-| `DEBUG_TB_INTERCEPT_REDIRECTS`  | TRUE                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          |
-| `DEBUG_TB_PANELS`               | ('flask_debugtoolbar.panels.versions.VersionDebugPanel',   'flask_debugtoolbar.panels.timer.TimerDebugPanel',   'flask_debugtoolbar.panels.headers.HeaderDebugPanel',   'flask_debugtoolbar.panels.request_vars.RequestVarsDebugPanel',   'flask_debugtoolbar.panels.config_vars.ConfigVarsDebugPanel',   'flask_debugtoolbar.panels.template.TemplateDebugPanel',   'flask_debugtoolbar.panels.sqlalchemy.SQLAlchemyDebugPanel',   'flask_debugtoolbar.panels.logger.LoggingPanel',   'flask_debugtoolbar.panels.route_list.RouteListDebugPanel',   'flask_debugtoolbar.panels.profiler.ProfilerDebugPanel') |
-| `ENV`                           | 'production'                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  |
-| `EXPLAIN_TEMPLATE_LOADING`      | FALSE                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         |
-| `JSON_AS_ASCII`                 | TRUE                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          |
-| `JSON_SORT_KEYS`                | TRUE                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          |
-| `JSONIFY_MIMETYPE`              | 'application/json'                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            |
-| `JSONIFY_PRETTYPRINT_REGULAR`   | FALSE                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         |
-| `MAIL_PASSWORD`                 | '**********************'                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      |
-| `MAIL_PORT`                     | '587'                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         |
-| `MAIL_SERVER`                   | 'smtp.gmail.com'                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              |
-| `MAIL_USE_SSL`                  | FALSE                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         |
-| `MAIL_USE_TLS`                  | TRUE                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          |
-| `MAIL_USERNAME`                 | '**********************'                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      |
-| `MAX_CONTENT_LENGTH`            | None                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          |
-| `MAX_COOKIE_SIZE`               | 4093                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          |
-| `MONGO_DB_URL`                  | 'mongodb+srv://mdb_c_root:**********************/BookRepositoryDev?retryWrites=true&w=majority'                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               |
-| `MONGODB_SETTINGS`              | {'host':   'mongodb+srv://mdb_c_root:**********************/BookRepositoryDev?retryWrites=true&w=majority'}                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   |
-| `PERMANENT_SESSION_LIFETIME`    | datetime.timedelta(seconds=3600)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              |
-| `PREFERRED_URL_SCHEME`          | 'http'                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        |
-| `PRESERVE_CONTEXT_ON_EXCEPTION` | None                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          |
-| `PROPAGATE_EXCEPTIONS`          | None                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          |
-| `REMEMBER_COOKIE_DURATION`      | datetime.timedelta(seconds=3600)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              |
-| `SECRET_KEY`                    | '**********************'                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      |
-| `SEND_FILE_MAX_AGE_DEFAULT`     | datetime.timedelta(seconds=43200)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             |
-| `SERVER_NAME`                   | None                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          |
-| `SESSION_COOKIE_DOMAIN`         | FALSE                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         |
-| `SESSION_COOKIE_HTTPONLY`       | TRUE                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          |
-| `SESSION_COOKIE_NAME`           | 'session'                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     |
-| `SESSION_COOKIE_PATH`           | None                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          |
-| `SESSION_COOKIE_SAMESITE`       | None                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          |
-| `SESSION_COOKIE_SECURE`         | TRUE                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          |
-| `SESSION_PROTECTION`            | 'strong'                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      |
-| `SESSION_REFRESH_EACH_REQUEST`  | TRUE                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          |
-| `TEMPLATES_AUTO_RELOAD`         | None                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          |
-| `TESTING`                       | FALSE                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         |
-| `TRAP_BAD_REQUEST_ERRORS`       | None                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          |
-| `TRAP_HTTP_EXCEPTIONS`          | FALSE                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         |
-| `USE_X_SENDFILE`                | FALSE                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         |
-| `USER_APP_NAME`                 | 'Book Repository'                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             |
-| `USER_COPYRIGHT_YEAR`           | 2020                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          |
-| `USER_CORPORATION_NAME`         | 'GaffCo Consulting'                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           |
-| `USER_EMAIL_SENDER_EMAIL`       | '**********************'                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      |
-| `USER_ENABLE_CHANGE_USERNAME`   | FALSE                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         |
-| `USER_ENABLE_EMAIL`             | TRUE                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          |
-| `USER_ENABLE_USERNAME`          | TRUE                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          |
-| `USER_REQUIRE_RETYPE_PASSWORD`  | TRUE                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          |
-| `WTF_CSRF_CHECK_DEFAULT`        | TRUE                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          |
-| `WTF_CSRF_ENABLED`              | TRUE                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          |
-| `WTF_CSRF_FIELD_NAME`           | 'csrf_token'                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  |
-| `WTF_CSRF_HEADERS`              | ['X-CSRFToken',   'X-CSRF-Token']                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             |
-| `WTF_CSRF_METHODS`              | {'PUT', 'POST', 'DELETE',   'PATCH'}                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          |
-| `WTF_CSRF_SSL_STRICT`           | TRUE                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          |
-| `WTF_CSRF_TIME_LIMIT`           | 3600                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          |
+| APPLICATION\_ROOT              | '/'                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           |
+| DEBUG                         | TRUE                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          |
+| DEBUG\_TB\_ENABLED              | TRUE                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          |
+| DEBUG\_TB\_HOSTS                | ()                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            |
+| DEBUG\_TB\_INTERCEPT\_REDIRECTS  | TRUE                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          |
+| DEBUG\_TB\_PANELS               | ('flask\_debugtoolbar.panels.versions.VersionDebugPanel',   'flask\_debugtoolbar.panels.timer.TimerDebugPanel',   'flask\_debugtoolbar.panels.headers.HeaderDebugPanel',   'flask\_debugtoolbar.panels.request\_vars.RequestVarsDebugPanel',   'flask\_debugtoolbar.panels.config\_vars.ConfigVarsDebugPanel',   'flask\_debugtoolbar.panels.template.TemplateDebugPanel',   'flask\_debugtoolbar.panels.sqlalchemy.SQLAlchemyDebugPanel',   'flask\_debugtoolbar.panels.logger.LoggingPanel',   'flask\_debugtoolbar.panels.route\_list.RouteListDebugPanel',   'flask\_debugtoolbar.panels.profiler.ProfilerDebugPanel') |
+| ENV                           | 'production'                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  |
+| EXPLAIN\_TEMPLATE\_LOADING      | FALSE                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         |
+| JSON\_AS\_ASCII                 | TRUE                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          |
+| JSON\_SORT\_KEYS                | TRUE                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          |
+| JSONIFY\_MIMETYPE              | 'application/json'                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            |
+| JSONIFY\_PRETTYPRINT\_REGULAR   | FALSE                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         |
+| MAIL\_PASSWORD                 | '**********************'                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      |
+| MAIL\_PORT                     | '587'                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         |
+| MAIL\_SERVER                   | 'smtp.gmail.com'                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              |
+| MAIL\_USE\_SSL                  | FALSE                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         |
+| MAIL\_USE\_TLS                  | TRUE                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          |
+| MAIL\_USERNAME                 | '**********************'                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      |
+| MAX\_CONTENT\_LENGTH            | None                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          |
+| MAX\_COOKIE\_SIZE               | 4093                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          |
+| MONGO\_DB\_URL                  | 'mongodb+srv://mdb\_c\_root:**********************/BookRepositoryDev?retryWrites=true&w=majority'                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               |
+| MONGODB\_SETTINGS              | {'host':   'mongodb+srv://mdb\_c\_root:**********************/BookRepositoryDev?retryWrites=true&w=majority'}                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   |
+| PERMANENT\_SESSION\_LIFETIME    | datetime.timedelta(seconds=3600)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              |
+| PREFERRED\_URL\_SCHEME          | 'http'                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        |
+| PRESERVE\_CONTEXT\_ON\_EXCEPTION | None                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          |
+| PROPAGATE\_EXCEPTIONS          | None                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          |
+| REMEMBER\_COOKIE\_DURATION      | datetime.timedelta(seconds=3600)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              |
+| SECRET\_KEY                    | '**********************'                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      |
+| SEND\_FILE\_MAX\_AGE\_DEFAULT     | datetime.timedelta(seconds=43200)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             |
+| SERVER\_NAME                   | None                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          |
+| SESSION\_COOKIE\_DOMAIN         | FALSE                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         |
+| SESSION\_COOKIE\_HTTPONLY       | TRUE                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          |
+| SESSION\_COOKIE\_NAME           | 'session'                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     |
+| SESSION\_COOKIE\_PATH           | None                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          |
+| SESSION\_COOKIE\_SAMESITE       | None                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          |
+| SESSION\_COOKIE\_SECURE         | TRUE                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          |
+| SESSION\_PROTECTION            | 'strong'                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      |
+| SESSION\_REFRESH\_EACH\_REQUEST  | TRUE                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          |
+| TEMPLATES\_AUTO\_RELOAD         | None                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          |
+| TESTING                       | FALSE                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         |
+| TRAP\_BAD\_REQUEST\_ERRORS       | None                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          |
+| TRAP\_HTTP\_EXCEPTIONS          | FALSE                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         |
+| USE\_X\_SENDFILE                | FALSE                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         |
+| USER\_APP\_NAME                 | 'Book Repository'                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             |
+| USER\_COPYRIGHT\_YEAR           | 2020                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          |
+| USER\_CORPORATION\_NAME         | 'GaffCo Consulting'                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           |
+| USER\_EMAIL\_SENDER\_EMAIL       | '**********************'                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      |
+| USER\_ENABLE\_CHANGE\_USERNAME   | FALSE                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         |
+| USER\_ENABLE\_EMAIL             | TRUE                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          |
+| USER\_ENABLE\_USERNAME          | TRUE                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          |
+| USER\_REQUIRE\_RETYPE\_PASSWORD  | TRUE                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          |
+| WTF\_CSRF\_CHECK\_DEFAULT        | TRUE                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          |
+| WTF\_CSRF\_ENABLED              | TRUE                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          |
+| WTF\_CSRF\_FIELD\_NAME           | 'csrf\_token'                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  |
+| WTF\_CSRF\_HEADERS              | ['X-CSRFToken',   'X-CSRF-Token']                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             |
+| WTF\_CSRF\_METHODS              | {'PUT', 'POST', 'DELETE',   'PATCH'}                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          |
+| WTF\_CSRF\_SSL\_STRICT           | TRUE                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          |
+| WTF\_CSRF\_TIME\_LIMIT           | 3600                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          |
 
 ![Section Divider: Features and Design Decisions and Technology Choices](documentation/section%20divider.png)
 
