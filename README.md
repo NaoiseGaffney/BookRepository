@@ -4385,11 +4385,82 @@ Decorators are used extensively:
 I've tried breaking forms by entering bogus data and strings instead of numbers, using incomplete forms, trying to POST data I've created, and turned off the WiFi to see what happens which led to additional error handlers.
 
 ### Documentation Tools
-Microsoft PowerPoint
+
+#### Trello Board
+
+[Trello Board](https://trello.com/b/vqcEO8H4)
+
+![Trello Board](documentation/Trello%20Board%202020-08-07%20at%2000.54.29.png)
+
+Tello Board was used to design, document, and develop the Book Repository. The layout:
+
+* User Stories / Use Cases: the basis for the User Stories and Use Cases described under the User Experience heading.
+* Backlog (Features & Functions): continuously updated list.
+* Development: Dev & Test: backlog items moved to here to be developed on my local development environment -> GitHub development branch, tested locally. Once tests have passed, regression and/or new feature testing a Pull Merge Request is executed and the tests applied on Heroku Review Application. If tests fail, the Pull Merge Request is cancelled. If tests pass, the Pull Merge Request is approved with a comment and the development branch is merged with the master branch.
+* Master --> Heroku Staging & Testing: updated GitHub master branch kicks off an auto deployment to Heroku Staging. Same test are applied before a manual promotion to Heroku Production.
+* Heroku Staging --> Production: this is the end-user application on Heroku Production.
+* Documentation and Design: all other documentation is stored here, Continuous Development and Deployment, Materialize CSS 1.0.0, Information Architecture and Sequntial Model, Technology Stack, Colour Scheme, Development Environments and MongoDB Instances, Book Repository MongoDB Schema, Background and Book Spine Images, Favicon, Links, Meta-tag Description, Gmail Account Configuration, and Route List.
+
+#### GitHub Wiki
+
+[GitHub Wiki](https://github.com/NaoiseGaffney/BookRepository/wiki/Initial-Project-Design-Thoughts---have-since-changed-with-new-knowledge-and-skills.)
+
+GitHub Wiki has potential to document development over time, however, I found the Trello Board to be superior. Having said this though, I have documented my initial design and project thoughts in the Wiki.
+
+#### Microsoft PowerPoint
+
+[Microsoft PowerPoint](https://office.live.com/start/powerpoint.aspx)
+
+The Book Repository logo, the Information Architecture diagrams, the Opportunity Matrices, Persona Summary, Book Search diagrams, and the Continuous Development and Deployment diagrams.
+
+#### Quick Database Diagrams
+
 [Quick Database Diagrams](https://app.quickdatabasediagrams.com/#/)
-Balsamiq
-[Markdown Tables Generator](https://www.tablesgenerator.com/markdown_tables)
-Pen and paper.
+
+The Book Repository MongoDB Schema was drawn using QDD.
+
+#### Balsamiq
+
+[Balsamiq](https://balsamiq.com/wireframes/desktop/)
+
+The wireframe diagrams were origiinally done with pen and paper, later PowerPoint, and finally Balsamiq.
+
+#### MarkDown Tables Generator
+
+[MarkDown Tables Generator](https://www.tablesgenerator.com/markdown_tables)
+
+All tables are created using MarkDown Tables Generator.
+
+#### MacDown
+
+[MacDown](https://macdown.uranusjr.com/)
+
+This document is created with MacDown.
+
+#### C4 Model and C4-PlantUML
+
+[C4 Model](https://c4model.com/)
+
+[C4-PlantUML](https://github.com/RicardoNiepel/C4-PlantUML)
+
+The C4 Model is an improvement upon the UML diagrams, as it concentrates on abstraction and not notation. The C4 covers Context, Container, Component, and Code. I've kept the diagramming simple, sticking to Context and Container.
+
+"The C4 model was created as a way to help software development teams describe and communicate software architecture, both during up-front design sessions and when retrospectively documenting an existing codebase. It's a way to create maps of your code, at various levels of detail, in the same way you would use something like Google Maps to zoom in and out of an area you are interested in." - C4 Model Description
+
+#### GitHub Wiki TOC Generator
+
+[GitHub Wiki TOC Generator](https://ecotrust-canada.github.io/markdown-toc/)
+
+Creating the Table-of-Contents.
+
+#### MarkDown Tables Generator
+
+[MarkDown Tables Generator](https://www.tablesgenerator.com/markdown_tables)
+
+All README.md tables are created using this table generator.
+
+#### Pen and Paper
+Pen and paper to create the initial design, and to create the odd doodle that became a proper diagram in Balsamiq and PowerPoint.
 
 ### Acknowledgements and Attributions of Used Features and Functions
 
