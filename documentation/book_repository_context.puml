@@ -1,0 +1,13 @@
+!includeurl https://raw.githubusercontent.com/RicardoNiepel/C4-PlantUML/release/1-0/C4_Container.puml
+
+Person(userAlias, "User/Reader", "Readers with libraries and/or stacks of books at home that they would like to catalogue online for easier access and overview, and share their ratings, thoughts and comments on their books with other Book Repository readers.")
+System_Boundary(c1, "Book Repository") {
+    Container(flask_app, "Book Repository", "HTML 5, CSS 3, JS, Python 3.8, Flask, MongoEngine", "Book Repository to allow users/readers to add, view, update, and delete books")
+}
+ContainerDb(database, "MongoDB", "Flask_MongoEngine -> MongoEngine -> PyMongo -> MongoDB" ,"noSQL database for the Book Repository - Collections: book, genre, session, user")
+Container(gmail, "GMail", "GMail 2FA", "Registration confirmation and password reset.")
+
+Rel(userAlias, flask_app, "Uses", "HTTPS: access the Book Repository")
+Rel(flask_app, gmail, "Uses", "SMTP: GMail")
+Rel(flask_app, database, "Uses", "MongoEngine -> PyMongo")
+Rel(gmail, userAlias, "Sends", "E-Mail: registration confirmation or password reset")

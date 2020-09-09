@@ -9,7 +9,7 @@
 </h6>
 
 
-<form action="" method="POST" novalidate formnovalidate class="form" role="form">
+<form method="POST" novalidate class="form">
     <div class="field_top_padding">
         {{ form.hidden_tag() }}
         {% set field = form.username if user_manager.USER_ENABLE_USERNAME else form.email %}

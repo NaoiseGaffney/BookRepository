@@ -1,0 +1,30 @@
+!includeurl https://raw.githubusercontent.com/RicardoNiepel/C4-PlantUML/release/1-0/C4_Container.puml
+
+Person(userAlias, "User/Reader", "As a new user/reader I want to join the Book Repository to store details about my books so that I can share them with a wider audience.")
+Person(adminAlias, "Admin", "As an admin or user/reader with the Admin Role I want to manage the users, genres, books, and statistics so that I can provide the best possible Book Repository experience for the users/readers.")
+System_Boundary(c1, "Book Repository") {
+    Container(user_management, "User Management", "Python, Flask, Flask-User (extended in 'app.py' and configured in 'config.py'), MongoEngine, JS, HTML 5, CSS 3, Materialize 1.0.0", "User: Register, Sign In, Password Reset, Edit User Profile, Sign Out (CRUD)")
+    Container(book_repository, "Book Repository", "Python, Flask, MongoEngine, JS, HTML 5, CSS 3, Materialize 1.0.0", "Book: Add, View, Update, and Delete books (CRUD)")
+    Container(admin_dashboard, "Admin Dashboard", "Python, Flask, MongoEngine, JS, HTML 5, CSS 3, Materialize 1.0.0", "User: View, Update, Delete User/Reader (RUD)")
+    Container(shared_functions, "Shared Functions", "Application Log (rotating file handler and Heroku console), Flash Messages, Flask Debug Toolbar, Error Handlers, Runtime (Debug), CSRF (Flask-User and Book Repository), Session Cookie (session, CSRF, book search criteria), Consent Cookie.")
+}
+ContainerDb(database, "MongoDB", "Flask_MongoEngine -> MongoEngine -> PyMongo -> MongoDB" ,"noSQL database for the Book Repository - Collections: book, genre, session, user")
+Container(gmail, "GMail", "GMail 2FA", "Registration confirmation and password reset.")
+Container(h_console, "Heroku Console", "Heroku Application Console")
+
+Rel(userAlias, user_management, "Uses", "HTTPS")
+Rel(userAlias, book_repository, "Uses", "HTTPS")
+Rel(adminAlias, user_management, "Uses", "HTTPS")
+Rel(adminAlias, book_repository, "Uses", "HTTPS")
+Rel(adminAlias, admin_dashboard, "Uses", "HTTPS")
+Rel(user_management, gmail, "Uses", "SMTP: GMail")
+Rel(gmail, userAlias, "Sends", "E-Mail: registration confirmation or password reset")
+Rel(gmail, adminAlias, "Sends", "E-Mail: registration confirmation or password reset")
+Rel(admin_dashboard, database, "Uses", "Flask_MongoEngine -> MongoEngine -> PyMongo: user, genre, book")
+Rel(book_repository, database, "Uses", "Flask_MongoEngine -> MongoEngine -> PyMongo: book, genre, user")
+Rel(user_management, database, "Uses", "Flask_MongoEngine -> MongoEngine -> PyMongo: user, session")
+Rel(shared_functions, database, "Session", "MongoSessionEngine: session, user")
+Rel_D(user_management, shared_functions, "Uses", "Shared Functions")
+Rel_D(book_repository, shared_functions, "Uses", "Shared Functions")
+Rel_D(admin_dashboard, shared_functions, "Uses", "Shared Functions")
+Rel_D(shared_functions, h_console, "Uses", "Heroku Application Console: Application Log")
