@@ -1,0 +1,481 @@
+{
+  "id": "0a5ad4f3-efb1-4777-b05a-fdcfdb07855d",
+  "version": "2.0",
+  "name": "Book Repository",
+  "url": "https://book-repository-virtual.herokuapp.com",
+  "tests": [{
+    "id": "0c103163-ad28-4981-981e-3570bdd5f548",
+    "name": "1. Test - User Management: User Story 001 (User/Reader) --> Use Case 001-001 (C in User CRUD) => Register",
+    "commands": [{
+      "id": "e72c8acd-357e-4cfb-a62a-e99b16ca62fa",
+      "comment": "",
+      "command": "open",
+      "target": "/",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "ff990c90-52c8-48cd-bf5a-7c52240afa13",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1680x989",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "6e2a5e26-a4a1-440a-876f-71468c9c0e7a",
+      "comment": "",
+      "command": "click",
+      "target": "css=#nav-mobile > li:nth-child(3) > a",
+      "targets": [
+        ["css=#nav-mobile > li:nth-child(3) > a", "css:finder"],
+        ["xpath=//ul[@id='nav-mobile']/li[3]/a", "xpath:idRelative"],
+        ["xpath=//a[contains(@href, '/user/register')]", "xpath:href"],
+        ["xpath=//li[3]/a", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "4d0da619-fe15-4879-b009-5845b7733fab",
+      "comment": "",
+      "command": "click",
+      "target": "css=.control-label:nth-child(3)",
+      "targets": [
+        ["css=.control-label:nth-child(3)", "css:finder"],
+        ["xpath=//label", "xpath:position"],
+        ["xpath=//label[contains(.,'Username')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "2ad8da1a-378e-4edd-8c41-ad9368277d0e",
+      "comment": "",
+      "command": "type",
+      "target": "id=username",
+      "targets": [
+        ["id=username", "id"],
+        ["name=username", "name"],
+        ["css=#username", "css:finder"],
+        ["xpath=//input[@id='username']", "xpath:attributes"],
+        ["xpath=//div/div/input", "xpath:position"]
+      ],
+      "value": "Naoise"
+    }, {
+      "id": "721f379b-7123-48b4-8168-42adc83f5175",
+      "comment": "",
+      "command": "type",
+      "target": "id=email",
+      "targets": [
+        ["id=email", "id"],
+        ["name=email", "name"],
+        ["css=#email", "css:finder"],
+        ["xpath=//input[@id='email']", "xpath:attributes"],
+        ["xpath=//div[2]/div/div/input", "xpath:position"]
+      ],
+      "value": "naoise.gaff.gaffney@gmail.com"
+    }, {
+      "id": "65f76207-4d3a-4d81-a1ce-060b04a6fcee",
+      "comment": "",
+      "command": "click",
+      "target": "id=password",
+      "targets": [
+        ["id=password", "id"],
+        ["name=password", "name"],
+        ["css=#password", "css:finder"],
+        ["xpath=//input[@id='password']", "xpath:attributes"],
+        ["xpath=//div[3]/div/div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "3d447ad4-abce-4fde-998e-d225f1f5d755",
+      "comment": "",
+      "command": "type",
+      "target": "id=password",
+      "targets": [
+        ["id=password", "id"],
+        ["name=password", "name"],
+        ["css=#password", "css:finder"],
+        ["xpath=//input[@id='password']", "xpath:attributes"],
+        ["xpath=//div[3]/div/div/input", "xpath:position"]
+      ],
+      "value": "S3cr3t@"
+    }, {
+      "id": "0dd31677-4d97-446f-899c-4a5f708b2e43",
+      "comment": "",
+      "command": "type",
+      "target": "id=retype_password",
+      "targets": [
+        ["id=retype_password", "id"],
+        ["name=retype_password", "name"],
+        ["css=#retype_password", "css:finder"],
+        ["xpath=//input[@id='retype_password']", "xpath:attributes"],
+        ["xpath=//div[4]/div/div/input", "xpath:position"]
+      ],
+      "value": "S3cr3t@"
+    }, {
+      "id": "a346e7f7-7e46-4f68-b986-d0099d517e81",
+      "comment": "",
+      "command": "click",
+      "target": "name=action",
+      "targets": [
+        ["name=action", "name"],
+        ["css=.button_top_padding > .btn", "css:finder"],
+        ["xpath=//button[@name='action']", "xpath:attributes"],
+        ["xpath=//button", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "1f62a6f5-1d2a-4bce-81ab-f88eb4bba14d",
+      "comment": "",
+      "command": "mouseDownAt",
+      "target": "id=email",
+      "targets": [
+        ["id=email", "id"],
+        ["name=email", "name"],
+        ["css=#email", "css:finder"],
+        ["xpath=//input[@id='email']", "xpath:attributes"],
+        ["xpath=//div[2]/div/div/input", "xpath:position"]
+      ],
+      "value": "245.75,11.109375"
+    }, {
+      "id": "c3b69f32-3d81-475a-bcac-a75c5e34c836",
+      "comment": "",
+      "command": "mouseMoveAt",
+      "target": "id=email",
+      "targets": [
+        ["id=email", "id"],
+        ["name=email", "name"],
+        ["css=#email", "css:finder"],
+        ["xpath=//input[@id='email']", "xpath:attributes"],
+        ["xpath=//div[2]/div/div/input", "xpath:position"]
+      ],
+      "value": "245.75,11.109375"
+    }, {
+      "id": "d3c62be7-9521-4b1a-b0f8-61d8836e2b72",
+      "comment": "",
+      "command": "mouseUpAt",
+      "target": "id=email",
+      "targets": [
+        ["id=email", "id"],
+        ["name=email", "name"],
+        ["css=#email", "css:finder"],
+        ["xpath=//input[@id='email']", "xpath:attributes"],
+        ["xpath=//div[2]/div/div/input", "xpath:position"]
+      ],
+      "value": "245.75,11.109375"
+    }, {
+      "id": "849eb44f-c237-458b-bd93-4138190fd3ea",
+      "comment": "",
+      "command": "click",
+      "target": "id=email",
+      "targets": [
+        ["id=email", "id"],
+        ["name=email", "name"],
+        ["css=#email", "css:finder"],
+        ["xpath=//input[@id='email']", "xpath:attributes"],
+        ["xpath=//div[2]/div/div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "014c57fb-5183-4a78-ab8e-251e1e8221fe",
+      "comment": "",
+      "command": "click",
+      "target": "css=.has-error .input-field",
+      "targets": [
+        ["css=.has-error .input-field", "css:finder"],
+        ["xpath=//div[2]/div/div", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "a6574cd4-0d92-4de5-aaee-479802358b31",
+      "comment": "",
+      "command": "type",
+      "target": "id=email",
+      "targets": [
+        ["id=email", "id"],
+        ["name=email", "name"],
+        ["css=#email", "css:finder"],
+        ["xpath=//input[@id='email']", "xpath:attributes"],
+        ["xpath=//div[2]/div/div/input", "xpath:position"]
+      ],
+      "value": "mobilecrusader@outlook.com"
+    }, {
+      "id": "4b57135d-66e0-4c7a-bc4f-e456ef149f38",
+      "comment": "",
+      "command": "click",
+      "target": "css=.form-group:nth-child(7) .control-label",
+      "targets": [
+        ["css=.form-group:nth-child(7) .control-label", "css:finder"],
+        ["xpath=//div[3]/div/div/label", "xpath:position"],
+        ["xpath=//label[contains(.,'Password')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "a15c6f62-c74e-439c-8ad3-26d00bc63ee3",
+      "comment": "",
+      "command": "type",
+      "target": "id=password",
+      "targets": [
+        ["id=password", "id"],
+        ["name=password", "name"],
+        ["css=#password", "css:finder"],
+        ["xpath=//input[@id='password']", "xpath:attributes"],
+        ["xpath=//div[3]/div/div/input", "xpath:position"]
+      ],
+      "value": "S3cr3t@"
+    }, {
+      "id": "3c39cd31-6094-46b5-aff1-26efc958d98a",
+      "comment": "",
+      "command": "type",
+      "target": "id=retype_password",
+      "targets": [
+        ["id=retype_password", "id"],
+        ["name=retype_password", "name"],
+        ["css=#retype_password", "css:finder"],
+        ["xpath=//input[@id='retype_password']", "xpath:attributes"],
+        ["xpath=//div[4]/div/div/input", "xpath:position"]
+      ],
+      "value": "S3cr3t@"
+    }, {
+      "id": "141eda04-0ec7-4a03-b27e-593905712383",
+      "comment": "",
+      "command": "click",
+      "target": "name=action",
+      "targets": [
+        ["name=action", "name"],
+        ["css=.button_top_padding > .btn", "css:finder"],
+        ["xpath=//button[@name='action']", "xpath:attributes"],
+        ["xpath=//button", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "b25a99b4-a7f6-4cac-b13d-3fe54232f788",
+      "comment": "",
+      "command": "click",
+      "target": "css=#nav-mobile > li:nth-child(3) > a",
+      "targets": [
+        ["css=#nav-mobile > li:nth-child(3) > a", "css:finder"],
+        ["xpath=//ul[@id='nav-mobile']/li[3]/a", "xpath:idRelative"],
+        ["xpath=//a[contains(@href, '/user/sign-out')]", "xpath:href"],
+        ["xpath=//li[3]/a", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "0a958d1e-63a2-414c-98c7-b05f8851608f",
+      "comment": "",
+      "command": "click",
+      "target": "css=html",
+      "targets": [
+        ["css=html", "css:finder"],
+        ["xpath=//html", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "e409be4a-6e5b-492c-aca8-b7f8894f239e",
+      "comment": "",
+      "command": "close",
+      "target": "",
+      "targets": [],
+      "value": ""
+    }]
+  }, {
+    "id": "79716a9d-4a51-4c45-8c62-be905df136ba",
+    "name": "2. Test - User Management: User Story 001 (User/Reader) --> Use Case 001-002 => Sign In",
+    "commands": [{
+      "id": "0cf4c49e-5ff7-4698-b246-bbaefb961cb3",
+      "comment": "",
+      "command": "open",
+      "target": "/",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "051dd2ea-17a4-41aa-a3c2-772d4013725e",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1680x989",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "8501186e-e68a-4737-91eb-929dd9b2598a",
+      "comment": "",
+      "command": "click",
+      "target": "css=#nav-mobile > li:nth-child(2) > a",
+      "targets": [
+        ["css=#nav-mobile > li:nth-child(2) > a", "css:finder"],
+        ["xpath=//ul[@id='nav-mobile']/li[2]/a", "xpath:idRelative"],
+        ["xpath=//a[contains(@href, '/user/sign-in')]", "xpath:href"],
+        ["xpath=//li[2]/a", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "9825153f-2ef4-4ee1-b396-4b62d2920cb3",
+      "comment": "",
+      "command": "click",
+      "target": "css=.field_top_padding:nth-child(4) .control-label",
+      "targets": [
+        ["css=.field_top_padding:nth-child(4) .control-label", "css:finder"],
+        ["xpath=//label", "xpath:position"],
+        ["xpath=//label[contains(.,'Username or Email')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "caec6c49-31a7-4936-8eeb-4a3c936a0613",
+      "comment": "",
+      "command": "type",
+      "target": "id=username",
+      "targets": [
+        ["id=username", "id"],
+        ["name=username", "name"],
+        ["css=#username", "css:finder"],
+        ["xpath=//input[@id='username']", "xpath:attributes"],
+        ["xpath=//div/input", "xpath:position"]
+      ],
+      "value": "Naoise"
+    }, {
+      "id": "ee5622ff-da07-4699-9a61-6825def4b2f5",
+      "comment": "",
+      "command": "type",
+      "target": "id=password",
+      "targets": [
+        ["id=password", "id"],
+        ["name=password", "name"],
+        ["css=#password", "css:finder"],
+        ["xpath=//input[@id='password']", "xpath:attributes"],
+        ["xpath=//div[2]/div/div/div/input", "xpath:position"]
+      ],
+      "value": "S3cr3t@"
+    }, {
+      "id": "5b1ffdb2-8160-4d95-8848-04dd31155b29",
+      "comment": "",
+      "command": "click",
+      "target": "css=span:nth-child(2)",
+      "targets": [
+        ["css=span:nth-child(2)", "css:finder"],
+        ["xpath=//label[@id='remember_me_label']/span", "xpath:idRelative"],
+        ["xpath=//label/span", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "525fed17-853e-4b70-b3f1-3dba8506d7e0",
+      "comment": "",
+      "command": "click",
+      "target": "name=action",
+      "targets": [
+        ["name=action", "name"],
+        ["css=.button_top_padding > .btn", "css:finder"],
+        ["xpath=//button[@name='action']", "xpath:attributes"],
+        ["xpath=//button", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "0df5ae3f-dbe4-41ab-901f-99f2d0649478",
+      "comment": "",
+      "command": "click",
+      "target": "css=#nav-mobile > li:nth-child(3) > a",
+      "targets": [
+        ["css=#nav-mobile > li:nth-child(3) > a", "css:finder"],
+        ["xpath=//ul[@id='nav-mobile']/li[3]/a", "xpath:idRelative"],
+        ["xpath=//a[contains(@href, '/user/sign-out')]", "xpath:href"],
+        ["xpath=//li[3]/a", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "ae8a227b-7b11-40a0-8321-4f2a5f753f20",
+      "comment": "",
+      "command": "close",
+      "target": "",
+      "targets": [],
+      "value": ""
+    }]
+  }, {
+    "id": "a5521f44-3860-4def-82f6-95a3ed861525",
+    "name": "3. Test - User Management: User Story 001 (User/Reader) --> Use Case 001-003 => Reset Password",
+    "commands": []
+  }, {
+    "id": "43e3bce9-e1f4-44b1-b58c-e99e9d3e1975",
+    "name": "4. Test - User Management: User Story 002 (User/Reader) --> Use Case 002-001 (U in User CRUD) => Update User Profile",
+    "commands": []
+  }, {
+    "id": "c1ed67ba-f50c-49bf-be29-0e02ba1d8c1b",
+    "name": "5. Test - User Management: User Story 002 (User/Reader) --> Use Case 002-002 (U in User CRUD) => Change Password",
+    "commands": []
+  }, {
+    "id": "2e48907c-6ef1-4fe3-ad88-c717955a8b17",
+    "name": "6. Test - User Management: User Story 002 (User/Reader) --> Use Case 002-003 (D in User CRUD) => Delete User",
+    "commands": []
+  }, {
+    "id": "0cd14744-4a35-4527-99cc-3f564f98978b",
+    "name": "7. Test – Book Repository: User Story 003 (User/Reader) --> Use Case 003-001 (C in Book CRUD) => Add Book",
+    "commands": []
+  }, {
+    "id": "e2e561bb-e173-4979-955d-c196211ab6bc",
+    "name": "8. Test – Book Repository: User Story 003 (User/Reader) --> Use Case 003-002 (R in Book CRUD) => View Book",
+    "commands": []
+  }, {
+    "id": "59923527-f798-4eec-a18b-74098022882f",
+    "name": "9. Test – Book Repository: User Story 003 (User/Reader) --> Use Case 003-003 (U in Book CRUD) => Update/Edit Book",
+    "commands": []
+  }, {
+    "id": "4f0af3fc-cdd1-455a-9382-2ca100261094",
+    "name": "10. Test – Book Repository: User Story 003 (User/Reader) --> Use Case 003-004 (D in Book CRUD) => Delete Book",
+    "commands": []
+  }, {
+    "id": "cf788b6f-7571-4363-86b1-ead0bb928b45",
+    "name": "11. Test – Book Repository: User Story 004 (User/Reader) --> Use Case 004-001 (R in Book CRUD) => Search Book (Private, ISBN)",
+    "commands": []
+  }, {
+    "id": "61d8d5c6-17df-4fd3-8dcf-cf5793989a96",
+    "name": "12. Test – Book Repository: User Story 004 (User/Reader) --> Use Case 004-002 (R in Book CRUD) => Search Book (Private, all fields, except genre nor ISBN)",
+    "commands": []
+  }, {
+    "id": "ad002bdd-d459-4719-89b8-7db156e405b2",
+    "name": "13. Test – Book Repository: User Story 004 (User/Reader) --> Use Case 004-003 (R in Book CRUD) => Search Book (Private, all fields, except ISBN)",
+    "commands": []
+  }, {
+    "id": "3f3d53f5-6286-4f95-9780-9c217a58c6d6",
+    "name": "14. Test – Book Repository: User Story 004 (User/Reader) --> Use Case 004-004 (R in Book CRUD) => Search Book (all fields, except ISBN)",
+    "commands": []
+  }, {
+    "id": "69581020-0839-401a-a939-89c0fc9f9a73",
+    "name": "15. Test – Book Repository: User Story 004 (User/Reader) --> Use Case 004-005 (R in Book CRUD) => Search Book (all fields, except genre nor ISBN)",
+    "commands": []
+  }, {
+    "id": "c84f1594-2bee-4be6-b732-cb63d27ea42d",
+    "name": "16. Test – Book Repository: User Story 004 (User/Reader) --> Use Case 004-006 (R in Book CRUD) => Search Book (all fields empty)",
+    "commands": []
+  }, {
+    "id": "33095d51-9b26-4f5c-a267-8a6312d638f3",
+    "name": "17. Test – Admin Dashboard: User Story 005 (Admin) --> Use Case 005-001 (R in Admin User CRUD) => View Users",
+    "commands": []
+  }, {
+    "id": "45c0aa91-cea8-4276-80ca-aac5e5e8bf4c",
+    "name": "18. Test – Admin Dashboard: User Story 005 (Admin) --> Use Case 005-002 (U in Admin User CRUD) => Update/Edit Users",
+    "commands": []
+  }, {
+    "id": "dea849d6-fd61-43c7-9a68-e4cf9d9c5d5b",
+    "name": "19. Test – Admin Dashboard: User Story 005 (Admin) --> Use Case 005-003 (D in Admin User CRUD) => Delete User",
+    "commands": []
+  }, {
+    "id": "31ce6b96-74a9-4085-aead-ab7e9e1f1592",
+    "name": "20. Test – Admin Dashboard: User Story 005 (Admin) --> Use Case 005-004 (C in Genre CRUD) => Load  Genres",
+    "commands": []
+  }, {
+    "id": "357bbd8c-6324-4e0d-a3a5-6567c9fe72e6",
+    "name": "21.Test – Admin Dashboard: User Story 005 (Admin) --> Use Case 005-005 (R in Genre CRUD) => List  Genres",
+    "commands": []
+  }, {
+    "id": "e57eb2d4-a6ed-4dda-b955-221df01a0ed5",
+    "name": "22. Test – Admin Dashboard: User Story 005 (Admin) --> Use Case 005-006 (R in Genre CRUD) => Load Books",
+    "commands": []
+  }, {
+    "id": "f178f60f-2bc4-4ed5-917e-ce8c1581e8b3",
+    "name": "23. Test – Admin Dashboard: User Story 005 (Admin) --> Use Case 005-007 (R in Statistics CRUD) => Statistics",
+    "commands": []
+  }],
+  "suites": [{
+    "id": "250db7a8-97e9-4609-aa91-f5e3200c8c4c",
+    "name": "Default Suite",
+    "persistSession": false,
+    "parallel": false,
+    "timeout": 300,
+    "tests": []
+  }],
+  "urls": ["https://book-repository-virtual.herokuapp.com/"],
+  "plugins": []
+}
