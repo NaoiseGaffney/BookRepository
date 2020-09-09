@@ -4025,8 +4025,6 @@ setTimeout(()=> {
 
 </details>
 
-### Code...
-
 ### Features CRUD Table (Views)
 This table is an overview of the CRUD functions for each feature or role or MongoDB collection. It describes the implemented features, the future features, possible future features, and features that are not planned to be implemented. The notes describe where the feature is implemented in the Book Repository.
 
@@ -4093,6 +4091,11 @@ These variables are required for the Book Repository functions, such as register
 | USER\_EMAIL\_SENDER\_EMAIL | Shared | Shared            | Shared         | Shared            | Flask-User/Mail 'from' email   address for the registration and password reset confirmation emails.                                  |
 | APPDEBUG              | Unique       | Unique        | Unique         | Unique                  | Variable to enable/disable all debugging.                                                                               |
 | FDT                     | Unique |                   |                |                   | Flask Debug Toolbar varibale to   ensure it only runs in local development environment as it contains   clear-text config variables. |
+| USERTESTNAME                     | Unique |                   |                |                   | Selenium IDE -> PyTest Variable |
+| USERTESTPASS                     | Unique |                   |                |                   | Selenium IDE -> PyTest Variable |
+| USERTESTPASSNEW                     | Unique |                   |                |                   | Selenium IDE -> PyTest Variable |
+| USERTESTEMAIL                     | Unique |                   |                |                   | Selenium IDE -> PyTest Variable |
+| ADMINTESTPASSWORD                     | Unique |                   |                |                   | Selenium IDE -> PyTest Variable |
 
 </details>
 
@@ -4952,6 +4955,10 @@ class TestBookRepositoryBDDTestSuite():
 
 
 ### Validation of HTML 5, CSS 3, JS and Python
+
+[CSS 3 Validator - Jigsaw](https://jigsaw.w3.org/css-validator/validator) loaded file 'style.css' - successfully validated as CSS level 3 + SVG.
+
+[Nu HTML Checker](https://validator.w3.org/nu/) copied and pasted every pages' HTML source code to validate - successfully validated!
 
 ![Section Divider: Testing and Validation, and Continuous Delivery and Deployment](documentation/section%20divider.png)
 
