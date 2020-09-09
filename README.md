@@ -4572,19 +4572,384 @@ Running the manual tasks validate the Use Case, and in turn the User Story. A te
 #### "Negative Testing"
 Tested updating and deleting books not belonging to the current user/reader. Fixed this issue in 'app.py'. All form fields are validated, and some fields are required, which means the user/reader is always made aware of issues.
 
-Tested all error handlers too, CSRF Token missing in templates by removing them. Incorrect URL is caught, as is unsupported method if someone tries something sinister, and catching internal server error which is tested by entering an incorrect email password for the registration and passsword reset confirmation.
+Tested all error handlers too, CSRF Token missing in templates by removing them. Incorrect URL is caught, as is unsupported method if someone tries something sinister, and catching internal server error which is tested by entering an incorrect email password variable for the registration and passsword reset confirmation.
 
 Tried accessing URL's without being authenticated. Requested to Sign In. Tried accessing URL's I shouldn't access as a user/reader, and am redirect to the correct error handler.
 
 I've tried posting incorrect data and data as another user, and this is caught too.
 
-I'm sure there are ways to break the application, and I think submit bogus data, though I don't know how nor do I think it's easy. The Flask-User extension, CSRF token, MongoSessionEngine, and Defensive Programming make it challenging to "act the maggot".
+I'm sure there are ways to break the application, and I think submit bogus data, though I don't know how nor do I think it's easy. The Flask-User extension, CSRF token, MongoSessionEngine, and Defensive Programming makes it challenging to "act the maggot".
 
 There is no way to access the MongoDB Book Repository directly without the root username and password. All access is controlled via the Book Repository application.
 
 ### Automated Behaviour Driven Development Testing
+Selenium IDE runs automated, and scripted tests when configured. In this case the Selenium IDE recording function is used to create the scripts, the scripts are exported to PyTest code, and then run to validate the test cases with `pytest test_bookRepositoryBDDTestSuite.py`.
+
+I've only configured a subset of the manual BDD test to prove that it works. The manual BDD has already clearly shown that all test cases PASS. I struggle with certain features such as drop-down menus, option menus, and modal buttons. Using the keyboard to navigate and select options works far better than using the mouse. Some tests that run in the Selenium IDE must be modified to work when executed in PyTest.
+
+The subset of test case results are provided here, as is the Selenium IDE PyTest created code. I had not planned to get to grips with PyTest until the next Milestone Project, however, this introduction has turned out better than I expected.
+
+To prepare for the tests:
+
+* Install pytest and selenium, and the correct webdriver (ChromeDriver)
+	* pip install pytest
+	* pip install selenium
+	* [ChromeDriver Download](http://chromedriver.chromium.org/downloads?tmpl=%2Fsystem%2Fapp%2Ftemplates%2Fprint%2F&showPrintDialog=1)
+		* Unzip and copy chromedriver to the virtual Python/bin directory.
+		* Execute chromedrive in the terminal to ensure the correct version is running; it has to match the version in "About Google Chrome". If using other browsers, other webdrivers must be installed. Don't do "pip install ChromeDriver" as it's likely to install an older version which means that the tests won't run as Chrome can't be controlled.
+* Add the following '.env' variables
+	* USERTESTNAME = "YourName"
+	* USERTESTPASS = "YourSecretPassword"
+	* USERTESTPASSNEW = "YourNewSecretPasswordForThePasswordChange"
+	* USERTESTEMAIL = "YourAuthenticEmailAddress"
+	* ADMINTESTPASSWORD = "YourExtremelySecretAdminPassword"
+* Ensure your user account doesn't already exist, if so select a new one or delete the current one from the user collection in MongoDB.
+* When executing the script, there are two stages where there is a 30 second delay for you to receive the registration email link. Click on it, click on Sign Out and close the browser. This must be done for the 1st test case, as well as for the 6X (after 6 and before 7) as it recreates the user account after it has been deleted.
+
+```
+
+(.venv) gaff@Naoises-MacBook-Pro BookRepository % pytest test_bookRepositoryBDDTestSuite.py
+===================================================================== test session starts ======================================================================
+platform darwin -- Python 3.8.2, pytest-6.0.1, py-1.9.0, pluggy-0.13.1
+rootdir: /Users/gaff/Dropbox/GaffCo/Repository/BookRepository/BookRepository
+collected 16 items                                                                                                                                             
+
+test_bookRepositoryBDDTestSuite.py ................                                                                                                      [100%]
+
+================================================================ 16 passed in 174.38s (0:02:54) ================================================================
+(.venv) gaff@Naoises-MacBook-Pro BookRepository % 
+```
+
+test_bookRepositoryBDDTestSuite.py
+
+```
+# Generated by Selenium IDE and modified by Gaff
+import pytest
+import time
+import json
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.common.action_chains import ActionChains
+from selenium.webdriver.support import expected_conditions
+from selenium.webdriver.support.wait import WebDriverWait
+from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
+
+import os
+from dotenv import load_dotenv
+from pathlib import Path
+env_path = Path(".") / ".env"
+load_dotenv(dotenv_path=env_path)
+
+class TestBookRepositoryBDDTestSuite():
+  def setup_method(self, method):
+    self.driver = webdriver.Chrome()
+    self.vars = {}
+  
+  def teardown_method(self, method):
+    self.driver.quit()
+  
+  def test_1TestUserManagementUserStory001UserReaderUseCase001001CinUserCRUDRegister(self):
+    self.driver.get("https://book-repository-virtual.herokuapp.com/")
+    self.driver.set_window_size(1680, 989)
+    self.driver.find_element(By.CSS_SELECTOR, "#nav-mobile > li:nth-child(3) > a").click()
+    self.driver.find_element(By.CSS_SELECTOR, ".control-label:nth-child(3)").click()
+    self.driver.find_element(By.ID, "username").send_keys(os.environ.get("USERTESTNAME"))
+    self.driver.find_element(By.ID, "email").send_keys(os.environ.get("USERTESTEMAIL"))
+    self.driver.find_element(By.ID, "password").send_keys(os.environ.get("USERTESTPASS"))
+    element = self.driver.find_element(By.NAME, "action")
+    actions = ActionChains(self.driver)
+    actions.move_to_element(element).perform()
+    self.driver.find_element(By.ID, "retype_password").send_keys(os.environ.get("USERTESTPASS"))
+    self.driver.find_element(By.NAME, "action").click()
+    self.driver.close()
+    time.sleep(30)
+  
+  def test_2TestUserManagementUserStory001UserReaderUseCase001002SignIn(self):
+    self.driver.get("https://book-repository-virtual.herokuapp.com/")
+    self.driver.set_window_size(1680, 989)
+    self.driver.find_element(By.CSS_SELECTOR, "#nav-mobile > li:nth-child(2) > a").click()
+    self.driver.find_element(By.CSS_SELECTOR, ".field_top_padding:nth-child(4) .control-label").click()
+    self.driver.find_element(By.ID, "username").send_keys(os.environ.get("USERTESTNAME"))
+    self.driver.find_element(By.ID, "password").send_keys(os.environ.get("USERTESTPASS"))
+    self.driver.find_element(By.CSS_SELECTOR, "span:nth-child(2)").click()
+    self.driver.find_element(By.NAME, "action").click()
+    self.driver.find_element(By.CSS_SELECTOR, "#nav-mobile > li:nth-child(3) > a").click()
+    self.driver.close()
+  
+  def test_3TestUserManagementUserStory001UserReaderUseCase001003ResetPassword(self):
+    self.driver.get("https://book-repository-virtual.herokuapp.com/")
+    self.driver.set_window_size(1680, 989)
+    self.driver.find_element(By.CSS_SELECTOR, "#nav-mobile > li:nth-child(2) > a").click()
+    self.driver.find_element(By.LINK_TEXT, "Forgot your Password?").click()
+    self.driver.find_element(By.ID, "email").click()
+    self.driver.find_element(By.ID, "email").send_keys("mobilecrusader@outlook.com")
+    self.driver.find_element(By.NAME, "action").click()
+    self.driver.close()
+  
+  def test_4TestUserManagementUserStory002UserReaderUseCase002001UinUserCRUDUpdateUserProfile(self):
+    self.driver.get("https://book-repository-virtual.herokuapp.com/")
+    self.driver.set_window_size(1680, 989)
+    self.driver.find_element(By.CSS_SELECTOR, "#nav-mobile > li:nth-child(2) > a").click()
+    self.driver.find_element(By.ID, "username").send_keys(os.environ.get("USERTESTNAME"))
+    self.driver.find_element(By.ID, "password").send_keys(os.environ.get("USERTESTPASS"))
+    self.driver.find_element(By.CSS_SELECTOR, "span:nth-child(2)").click()
+    element = self.driver.find_element(By.NAME, "action")
+    actions = ActionChains(self.driver)
+    actions.move_to_element(element).perform()
+    self.driver.find_element(By.NAME, "action").click()
+    # self.driver.find_element(By.CSS_SELECTOR, ".container > .container").click()
+    element = self.driver.find_element(By.CSS_SELECTOR, "#nav-mobile > li:nth-child(2) > a")
+    actions = ActionChains(self.driver)
+    actions.move_to_element(element).perform()
+    self.driver.find_element(By.CSS_SELECTOR, "#nav-mobile > li:nth-child(2) > a").click()
+    self.driver.find_element(By.CSS_SELECTOR, ".field_top_padding:nth-child(2) .control-label").click()
+    self.driver.find_element(By.ID, "first_name").send_keys("Naoise")
+    element = self.driver.find_element(By.NAME, "action")
+    actions = ActionChains(self.driver)
+    actions.move_to_element(element).perform()
+    self.driver.find_element(By.ID, "last_name").send_keys("Gaffney")
+    self.driver.find_element(By.NAME, "action").click()
+    self.driver.find_element(By.CSS_SELECTOR, "#nav-mobile > li:nth-child(3) > a").click()
+    self.driver.close()
+  
+  def test_5TestUserManagementUserStory002UserReaderUseCase002002UinUserCRUDChangePassword(self):
+    self.driver.get("https://book-repository-virtual.herokuapp.com/")
+    self.driver.set_window_size(1680, 989)
+    self.driver.find_element(By.CSS_SELECTOR, "#nav-mobile > li:nth-child(2) > a").click()
+    self.driver.find_element(By.CSS_SELECTOR, ".field_top_padding:nth-child(4) .control-label").click()
+    self.driver.find_element(By.ID, "username").send_keys("Naoise")
+    self.driver.find_element(By.ID, "password").send_keys("S3cr3t@")
+    self.driver.find_element(By.CSS_SELECTOR, "span:nth-child(2)").click()
+    self.driver.find_element(By.NAME, "action").click()
+    self.driver.find_element(By.CSS_SELECTOR, "#nav-mobile > li:nth-child(2) > a").click()
+    self.driver.find_element(By.LINK_TEXT, "Change Password").click()
+    self.driver.find_element(By.CSS_SELECTOR, ".form-group:nth-child(2) .control-label").click()
+    self.driver.find_element(By.ID, "old_password").send_keys(os.environ.get("USERTESTPASS"))
+    self.driver.find_element(By.ID, "new_password").send_keys(os.environ.get("USERTESTPASSNEW"))
+    element = self.driver.find_element(By.NAME, "action")
+    actions = ActionChains(self.driver)
+    actions.move_to_element(element).perform()
+    self.driver.find_element(By.ID, "retype_password").send_keys(os.environ.get("USERTESTPASSNEW"))
+    self.driver.find_element(By.NAME, "action").click()
+    self.driver.close()
+  
+  def test_6TestUserManagementUserStory002UserReaderUseCase002003DinUserCRUDDeleteUser(self):
+    self.driver.get("https://book-repository-virtual.herokuapp.com/")
+    self.driver.set_window_size(1680, 989)
+    self.driver.find_element(By.CSS_SELECTOR, "#nav-mobile > li:nth-child(2) > a").click()
+    self.driver.find_element(By.CSS_SELECTOR, ".field_top_padding:nth-child(4) .control-label").click()
+    self.driver.find_element(By.ID, "username").send_keys(os.environ.get("USERTESTNAME"))
+    self.driver.find_element(By.ID, "password").send_keys(os.environ.get("USERTESTPASSNEW"))
+    self.driver.find_element(By.ID, "password").send_keys(Keys.ENTER)
+    self.driver.find_element(By.CSS_SELECTOR, "#nav-mobile > li:nth-child(2) > a").click()
+    self.driver.find_element(By.LINK_TEXT, "Delete User").click()
+    self.driver.find_element(By.CSS_SELECTOR, ".modal-footer:nth-child(2) > .modal-close:nth-child(1)").click()
+    self.driver.close()
+
+  # Added to create the user account again for the remaining tests, as the account was just deleted in test case 6.
+  def test_6X_AddUserAccountAgainForRemainingTests(self):
+    self.driver.get("https://book-repository-virtual.herokuapp.com/")
+    self.driver.set_window_size(1680, 989)
+    self.driver.find_element(By.CSS_SELECTOR, "#nav-mobile > li:nth-child(3) > a").click()
+    self.driver.find_element(By.CSS_SELECTOR, ".control-label:nth-child(3)").click()
+    self.driver.find_element(By.ID, "username").send_keys(os.environ.get("USERTESTNAME"))
+    self.driver.find_element(By.ID, "email").send_keys(os.environ.get("USERTESTEMAIL"))
+    self.driver.find_element(By.ID, "password").send_keys(os.environ.get("USERTESTPASSNEW"))
+    element = self.driver.find_element(By.NAME, "action")
+    actions = ActionChains(self.driver)
+    actions.move_to_element(element).perform()
+    self.driver.find_element(By.ID, "retype_password").send_keys(os.environ.get("USERTESTPASSNEW"))
+    self.driver.find_element(By.NAME, "action").click()
+    self.driver.close()
+    time.sleep(30)
+
+  def test_7TestBookRepositoryUserStory003UserReaderUseCase003001CinBookCRUDAddBook(self):
+    self.driver.get("https://book-repository-virtual.herokuapp.com/")
+    self.driver.set_window_size(1680, 989)
+    self.driver.find_element(By.CSS_SELECTOR, "#nav-mobile > li:nth-child(2) > a").click()
+    self.driver.find_element(By.CSS_SELECTOR, ".field_top_padding:nth-child(4) .control-label").click()
+    self.driver.find_element(By.ID, "username").send_keys(os.environ.get("USERTESTNAME"))
+    self.driver.find_element(By.ID, "password").send_keys(os.environ.get("USERTESTPASSNEW"))
+    self.driver.find_element(By.ID, "password").send_keys(Keys.ENTER)
+    self.driver.get("https://book-repository-virtual.herokuapp.com/add_book")
+    self.driver.find_element(By.ID, "title").send_keys("Uganda")
+    self.driver.find_element(By.ID, "author").send_keys("Philip Briggs with Andrew Roberts")
+    self.driver.find_element(By.ID, "year").send_keys("2016")
+    self.driver.find_element(By.ID, "isbn").send_keys("9781784770228")
+    self.driver.execute_script("window.scrollTo(0,0)")
+    self.driver.find_element(By.ID, "short_description").send_keys("Uganda is the most comprehensive guidebook available, with up-to-date accommodation suggestions, advice on personal safety, and tips on the best wildlife experience.")
+    self.driver.find_element(By.ID, "rating").send_keys("7")
+    self.driver.find_element(By.CSS_SELECTOR, ".dropdown-trigger").send_keys(Keys.DOWN)
+    dropdown = self.driver.find_element(By.ID, "genre")
+    dropdown.find_element(By.XPATH, "//option[. = '(NF) Reference']")
+    self.driver.find_element(By.CSS_SELECTOR, ".dropdown-trigger").send_keys(Keys.TAB)
+    element = self.driver.find_element(By.NAME, "action")
+    actions = ActionChains(self.driver)
+    actions.move_to_element(element).perform()
+    self.driver.find_element(By.NAME, "action").click()
+    element = self.driver.find_element(By.CSS_SELECTOR, "#nav-mobile > li:nth-child(3) > a")
+    actions = ActionChains(self.driver)
+    actions.move_to_element(element).perform()
+    self.driver.find_element(By.CSS_SELECTOR, "#nav-mobile > li:nth-child(3) > a").click()
+    self.driver.close()
+
+  def test_8TestBookRepositoryUserStory003UserReaderUseCase003002RinBookCRUDViewBook(self):
+    self.driver.get("https://book-repository-virtual.herokuapp.com/")
+    self.driver.set_window_size(1680, 989)
+    self.driver.find_element(By.CSS_SELECTOR, "#nav-mobile > li:nth-child(2) > a").click()
+    self.driver.find_element(By.CSS_SELECTOR, ".field_top_padding:nth-child(4) .control-label").click()
+    self.driver.find_element(By.ID, "username").send_keys(os.environ.get("USERTESTNAME"))
+    self.driver.find_element(By.ID, "password").send_keys(os.environ.get("USERTESTPASSNEW"))
+    self.driver.find_element(By.CSS_SELECTOR, "span:nth-child(2)").click()
+    element = self.driver.find_element(By.NAME, "action")
+    actions = ActionChains(self.driver)
+    actions.move_to_element(element).perform()
+    self.driver.find_element(By.NAME, "action").click()
+    self.driver.find_element(By.CSS_SELECTOR, ".collapsible-header > .col").click()
+    self.driver.find_element(By.CSS_SELECTOR, "#nav-mobile > li:nth-child(3) > a").click()
+    self.driver.close()
+
+  def test_9TestBookRepositoryUserStory003UserReaderUseCase003003UinBookCRUDUpdateEditBook(self):
+    self.driver.get("https://book-repository-virtual.herokuapp.com/")
+    self.driver.set_window_size(1680, 989)
+    self.driver.find_element(By.CSS_SELECTOR, "#nav-mobile > li:nth-child(2) > a").click()
+    self.driver.find_element(By.ID, "username").send_keys(os.environ.get("USERTESTNAME"))
+    self.driver.find_element(By.ID, "password").send_keys(os.environ.get("USERTESTPASSNEW"))
+    self.driver.find_element(By.ID, "password").send_keys(Keys.ENTER)
+    self.driver.find_element(By.CSS_SELECTOR, ".book_actions .blue-text").click()
+    self.driver.find_element(By.ID, "comments").send_keys("Great book with excellent descriptions of things to do and to see.")
+    element = self.driver.find_element(By.CSS_SELECTOR, "#nav-mobile > li:nth-child(3) > a")
+    actions = ActionChains(self.driver)
+    actions.move_to_element(element).perform()
+    self.driver.find_element(By.CSS_SELECTOR, "#nav-mobile > li:nth-child(3) > a").click()
+    self.driver.close()
+  
+  def test_11TestBookRepositoryUserStory004UserReaderUseCase004001RinBookCRUDSearchBookPrivateISBN(self):
+    self.driver.get("https://book-repository-virtual.herokuapp.com/")
+    self.driver.set_window_size(1680, 989)
+    self.driver.find_element(By.CSS_SELECTOR, "#nav-mobile > li:nth-child(2) > a").click()
+    self.driver.find_element(By.CSS_SELECTOR, ".field_top_padding:nth-child(4) .control-label").click()
+    self.driver.find_element(By.ID, "username").send_keys(os.environ.get("USERTESTNAME"))
+    self.driver.find_element(By.ID, "password").send_keys(os.environ.get("USERTESTPASSNEW"))
+    self.driver.find_element(By.ID, "password").send_keys(Keys.ENTER)
+    self.driver.get("https://book-repository-virtual.herokuapp.com/search_book")
+    self.driver.find_element(By.ID, "isbn").send_keys("9781784770228")
+    self.driver.find_element(By.CSS_SELECTOR, ".lever").click()
+    self.driver.find_element(By.NAME, "action").click()
+    element = self.driver.find_element(By.CSS_SELECTOR, "#nav-mobile > li:nth-child(3) > a")
+    actions = ActionChains(self.driver)
+    actions.move_to_element(element).perform()
+    self.driver.find_element(By.CSS_SELECTOR, "#nav-mobile > li:nth-child(3) > a").click()
+    self.driver.close()
+  
+  def test_12TestBookRepositoryUserStory004UserReaderUseCase004002RinBookCRUDSearchBookPrivateallfieldsexceptgenrenorISBN(self):
+    self.driver.get("https://book-repository-virtual.herokuapp.com/")
+    self.driver.set_window_size(1680, 989)
+    element = self.driver.find_element(By.CSS_SELECTOR, "#nav-mobile > li:nth-child(2) > a")
+    actions = ActionChains(self.driver)
+    actions.move_to_element(element).perform()
+    self.driver.find_element(By.CSS_SELECTOR, "#nav-mobile > li:nth-child(2) > a").click()
+    self.driver.find_element(By.CSS_SELECTOR, ".field_top_padding:nth-child(4) .control-label").click()
+    self.driver.find_element(By.ID, "username").send_keys(os.environ.get("USERTESTNAME"))
+    self.driver.find_element(By.ID, "password").send_keys(os.environ.get("USERTESTPASSNEW"))
+    self.driver.find_element(By.ID, "password").send_keys(Keys.ENTER)
+    self.driver.get("https://book-repository-virtual.herokuapp.com/search_book")
+    self.driver.find_element(By.ID, "title").send_keys("U")
+    self.driver.find_element(By.ID, "author").send_keys("Philip")
+    self.driver.find_element(By.ID, "rating").send_keys("7")
+    self.driver.find_element(By.CSS_SELECTOR, ".lever").click()
+    self.driver.find_element(By.NAME, "action").click()
+    self.driver.find_element(By.CSS_SELECTOR, "#nav-mobile > li:nth-child(3) > a").click()
+    self.driver.close()
+  
+  def test_13TestBookRepositoryUserStory004UserReaderUseCase004003RinBookCRUDSearchBookPrivateallfieldsexceptISBN(self):
+    self.driver.get("https://book-repository-virtual.herokuapp.com/")
+    self.driver.set_window_size(1680, 989)
+    self.driver.find_element(By.CSS_SELECTOR, "li:nth-child(2) .right").click()
+    self.driver.find_element(By.CSS_SELECTOR, ".field_top_padding:nth-child(4) .control-label").click()
+    self.driver.find_element(By.ID, "username").send_keys(os.environ.get("USERTESTNAME"))
+    self.driver.find_element(By.ID, "password").send_keys(os.environ.get("USERTESTPASSNEW"))
+    self.driver.find_element(By.ID, "password").send_keys(Keys.ENTER)
+    self.driver.get("https://book-repository-virtual.herokuapp.com/search_book")
+    self.driver.find_element(By.CSS_SELECTOR, ".lever").click()
+    self.driver.find_element(By.NAME, "action").click()
+    element = self.driver.find_element(By.CSS_SELECTOR, "#nav-mobile > li:nth-child(3) > a")
+    actions = ActionChains(self.driver)
+    actions.move_to_element(element).perform()
+    self.driver.find_element(By.CSS_SELECTOR, "#nav-mobile > li:nth-child(3) > a").click()
+    self.driver.close()
+  
+  def test_14TestBookRepositoryUserStory004UserReaderUseCase004006RinBookCRUDSearchBookallfieldsempty(self):
+    self.driver.get("https://book-repository-virtual.herokuapp.com/")
+    self.driver.set_window_size(1680, 989)
+    self.driver.find_element(By.CSS_SELECTOR, "#nav-mobile > li:nth-child(2) > a").click()
+    self.driver.find_element(By.CSS_SELECTOR, ".field_top_padding:nth-child(4) .input-field").click()
+    self.driver.find_element(By.ID, "username").click()
+    self.driver.find_element(By.ID, "username").send_keys(os.environ.get("USERTESTNAME"))
+    self.driver.find_element(By.ID, "password").send_keys(os.environ.get("USERTESTPASSNEW"))
+    self.driver.find_element(By.ID, "password").send_keys(Keys.ENTER)
+    self.driver.get("https://book-repository-virtual.herokuapp.com/search_book")
+    self.driver.find_element(By.NAME, "action").click()
+    self.driver.find_element(By.LINK_TEXT, ">").click()
+    self.driver.find_element(By.LINK_TEXT, ">").click()
+    self.driver.find_element(By.LINK_TEXT, ">").click()
+    self.driver.find_element(By.LINK_TEXT, ">").click()
+    element = self.driver.find_element(By.CSS_SELECTOR, "#nav-mobile > li:nth-child(3) > a")
+    actions = ActionChains(self.driver)
+    actions.move_to_element(element).perform()
+    self.driver.find_element(By.CSS_SELECTOR, "#nav-mobile > li:nth-child(3) > a").click()
+    self.driver.close()
+  
+  def test_17TestAdminDashboardUserStory005AdminUseCase005001RinAdminUserCRUDViewUsers(self):
+    self.driver.get("https://book-repository-virtual.herokuapp.com/")
+    self.driver.set_window_size(1680, 989)
+    self.driver.find_element(By.CSS_SELECTOR, "#nav-mobile > li:nth-child(2) > a").click()
+    self.driver.find_element(By.CSS_SELECTOR, ".field_top_padding:nth-child(4) .control-label").click()
+    self.driver.find_element(By.ID, "username").send_keys("admin")
+    element = self.driver.find_element(By.NAME, "action")
+    actions = ActionChains(self.driver)
+    actions.move_to_element(element).perform()
+    self.driver.find_element(By.ID, "password").send_keys(os.environ.get("ADMINTESTPASSWORD"))
+    self.driver.find_element(By.NAME, "action").click()
+    self.driver.find_element(By.CSS_SELECTOR, "#nav-mobile > li:nth-child(1) > a").click()
+    element = self.driver.find_element(By.CSS_SELECTOR, "#nav-mobile > li:nth-child(4) > a")
+    actions = ActionChains(self.driver)
+    actions.move_to_element(element).perform()
+    self.driver.find_element(By.CSS_SELECTOR, "#nav-mobile > li:nth-child(4) > a").click()
+    self.driver.close()
+  
+  def test_20TestAdminDashboardUserStory005AdminUseCase005004CinGenreCRUDLoadGenres(self):
+    self.driver.get("https://book-repository-virtual.herokuapp.com/")
+    self.driver.set_window_size(1680, 989)
+    self.driver.find_element(By.CSS_SELECTOR, "#nav-mobile > li:nth-child(2) > a").click()
+    self.driver.find_element(By.ID, "username").send_keys("admin")
+    self.driver.find_element(By.ID, "password").send_keys(os.environ.get("ADMINTESTPASSWORD"))
+    self.driver.find_element(By.ID, "password").send_keys(Keys.ENTER)
+    self.driver.find_element(By.CSS_SELECTOR, "li:nth-child(1) > a > .right").click()
+    self.driver.get("https://book-repository-virtual.herokuapp.com/load_genres")
+    self.driver.close()
+
+```
+
+**Test Case 1 - Registration Confirmation Link**
+
+![Test Case 1 - Registration Confirmation Link](documentation/Test%20Case%201%20-%20Registration%20Confirmation%20Link.png)
+
+**Test Case 3 - Reset Password Email**
+
+![Test Case 3 - Reset Password Email](documentation/Test%20Case%203%20-%20Reset%20Password%20Email.png)
+
+**Test Case 5 - Password Change**
+
+![Test Case 5 - Password Change](documentation/Test%20Case%205%20-%20Password%20Change.png)
+
+**Test Case 6X - Registration Confirmation Link**
+
+![Test Case 6X - Registration Confirmation Link](documentation/Test%20Case%206X%20-%20Registration%20Confirmation%20Link.png)
 
 ### Testing Notes
+
 
 ### Validation of HTML 5, CSS 3, JS and Python
 
