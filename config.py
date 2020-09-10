@@ -21,12 +21,12 @@ class ConfigClass(object):
     # Flask-User settings
     # Shown in email templates and page footers
     USER_APP_NAME = "Book Repository"
-    USER_ENABLE_EMAIL = True      # Enable email authentication
-    USER_ENABLE_USERNAME = True    # Enable username authentication
-    USER_ENABLE_CONFIRM_EMAIL = True  # Enable email after registration
-    USER_ENABLE_FORGOT_PASSWORD = True # Enable email after forgot password
-    USER_ENABLE_CHANGE_PASSWORD = True # Enable email after password change
-    USER_SEND_PASSWORD_CHANGED_EMAIL = True # Enable email after password change
+    USER_ENABLE_EMAIL = True                    # Enable email authentication
+    USER_ENABLE_USERNAME = True                 # Enable username authentication
+    USER_ENABLE_CONFIRM_EMAIL = True            # Enable email after registration
+    USER_ENABLE_FORGOT_PASSWORD = True          # Enable email after forgot password
+    USER_ENABLE_CHANGE_PASSWORD = True          # Enable email after password change
+    USER_SEND_PASSWORD_CHANGED_EMAIL = True     # Enable email after password change
     USER_REQUIRE_RETYPE_PASSWORD = True
     USER_ENABLE_CHANGE_USERNAME = False
 
@@ -41,7 +41,7 @@ class ConfigClass(object):
 
     # Flask Session Configuration for Session Protection and "Remember Me" function
     SESSION_PROTECTION = "strong"
-    REMEMBER_COOKIE_DURATION = timedelta(seconds=3600) # Logged out after 1 hour (come back in without logging in too)
+    REMEMBER_COOKIE_DURATION = timedelta(seconds=3600)   # Logged out after 1 hour (come back in without logging in too)
     SESSION_COOKIE_SECURE = True
 
     # Flask User Manager Configuration

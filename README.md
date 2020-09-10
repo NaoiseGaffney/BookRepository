@@ -4960,6 +4960,61 @@ class TestBookRepositoryBDDTestSuite():
 
 [Nu HTML Checker](https://validator.w3.org/nu/) copied and pasted every pages' HTML source code to validate - successfully validated!
 
+[JSHint](jshint.com):
+
+'messages.js' - I use ES6 syntax by default as it's the latest version.
+
+```
+
+Metrics
+
+There is only one function in this file.
+
+It takes no arguments.
+
+This function contains 3 statements.
+
+Cyclomatic complexity number for this function is 2.
+
+Three warnings
+2	'arrow function syntax (=>)' is only available in ES6 (use 'esversion: 6').
+3	'let' is available in ES6 (use 'esversion: 6') or Mozilla JS extensions (use moz).
+5	'let' is available in ES6 (use 'esversion: 6') or Mozilla JS extensions (use moz).
+
+```
+
+'cookies.js' - Osano Consent Cookie configuration. No JSHint comments.
+
+'materialize.js' - Materialize CSS 1.0.0 function initialisation. I use ES6 syntax by default as it's the latest version. JS code is taken from the Materialize CSS 1.0.0 website.
+
+```
+Metrics
+
+There is only one function in this file.
+
+It takes no arguments.
+
+This function contains only one statement.
+
+Cyclomatic complexity number for this function is 1.
+
+One warning
+1	'arrow function syntax (=>)' is only available in ES6 (use 'esversion: 6').
+One undefined variable
+2	M
+
+```
+
+[PEP8 Online](http://pep8online.com/) copied 'app.py', 'config.py', and 'test_bookRepositoryBDDTestSuite.py' code into PEP8.
+
+E501 means line is too long. A lot has happened since PEP8 became a standard, and screens now handle longer lines than the 80 characters of the past. My code is readeable with 80+ characters.
+
+[Python Syntax Checker](https://extendsclass.com/python-tester.html) No syntax errors detected :)
+
+LightHouse
+
+Coverage
+
 ![Section Divider: Testing and Validation, and Continuous Delivery and Deployment](documentation/section%20divider.png)
 
 ## Continuous Delivery and Deployment
