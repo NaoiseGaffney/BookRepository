@@ -24,6 +24,7 @@ The Book Repository is inspired by my own love of books and reading, and my prop
   * [User Experience](#user-experience)
     + [A Persona Summary of the Users/Readers of the Book Repository](#a-persona-summary-of-the-users-readers-of-the-book-repository)
     + [Strategy Trade-Off](#strategy-trade-off)
+      - [Opportunity Matrices for User Management, Book Repository, Admin Dashboard and Shared Funtions](#opportunity-matrices-for-user-management--book-repository--admin-dashboard-and-shared-funtions)
     + [User Stories, Use Cases, and Tasks Mapped to Information Architecture and Navigation](#user-stories--use-cases--and-tasks-mapped-to-information-architecture-and-navigation)
   * [Design Decisions](#design-decisions)
     + [Design Decisions Overview](#design-decisions-overview)
@@ -67,23 +68,26 @@ The Book Repository is inspired by my own love of books and reading, and my prop
         * ['.env'](#-env-)
         * ['config.py'](#-configpy-)
         * ['app.py' extensions and shared features.](#-apppy--extensions-and-shared-features)
-        * [[`flask_user_layout.html`](templates/flask_user_layout.html)](#--flask-user-layouthtml---templates-flask-user-layouthtml-)
-        * [Landing / Home Page (User Management)](#landing---home-page--user-management-)
-        * [Member's Page](#member-s-page-1)
-        * [Add and Save Book](#add-and-save-book)
-        * [Edit and Update Book](#edit-and-update-book)
-        * [Delete Book](#delete-book)
-        * [Search Books](#search-books)
-        * [Search Books](#search-books-1)
-        * [Admin Dashboard](#admin-dashboard-1)
+        * [[flask\_user\_layout.html](templates/flask_user_layout.html)](#-flask--user--layouthtml--templates-flask-user-layouthtml-)
+        * [User Management and Book Repository - Landing / Home Page](#user-management-and-book-repository---landing---home-page)
+        * [User Management and Book Repository - Member's Page](#user-management-and-book-repository---member-s-page)
+        * [Book Repository - Add and Save Book](#book-repository---add-and-save-book)
+        * [Book Repository - Edit and Update Book](#book-repository---edit-and-update-book)
+        * [Book Repository - Delete Book](#book-repository---delete-book)
+        * [Book Repository - Search Books](#book-repository---search-books)
+        * [User Management - Delete User (extension to Flask-User)](#user-management---delete-user--extension-to-flask-user-)
+        * [Admin Dashboard - Admin Dashboard](#admin-dashboard---admin-dashboard)
         * [Admin Dashboard - Update User](#admin-dashboard---update-user)
         * [Admin Dashboard - Delete User](#admin-dashboard---delete-user)
-        * [Register Page](#register-page-1)
-        * [Sign In](#sign-in-1)
-        * [Admin Dashboard](#admin-dashboard-2)
-        * [CSS](#css)
+        * [Admin Dashboard - Load Genres](#admin-dashboard---load-genres)
+        * [Admin Dashboard - Load Sample Books](#admin-dashboard---load-sample-books)
+        * [Error Handlers](#error-handlers)
+        * [User Management - Register Page](#user-management---register-page)
+        * [User Management - Sign In](#user-management---sign-in)
+        * [User Management - Edit User Profile](#user-management---edit-user-profile)
+        * [User Management - Sign Out](#user-management---sign-out)
+        * [CSS - 'style.css'](#css----stylecss-)
         * [JavaScript](#javascript)
-    + [Code...](#code)
     + [Features CRUD Table (Views)](#features-crud-table--views-)
     + [Application Logging and Flash Messaging Levels](#application-logging-and-flash-messaging-levels)
     + [Book Repository '.env' and Heroku Variables](#book-repository--env--and-heroku-variables)
@@ -91,20 +95,52 @@ The Book Repository is inspired by my own love of books and reading, and my prop
     + [Flask, Flask-User, and Book Repository Configuration Variables](#flask--flask-user--and-book-repository-configuration-variables)
   * [Technology](#technology)
     + [Technology Choices](#technology-choices)
-    + [Code](#code)
-    + [Development and Staging Platforms and Environments](#development-and-staging-platforms-and-environments)
+      - [Flask and Jinja](#flask-and-jinja)
+      - [Flask-User](#flask-user)
+      - [Flask-MongoEngine/MongoEngine](#flask-mongoengine-mongoengine)
+      - [Flask-MongoEngine Pagination](#flask-mongoengine-pagination)
+      - [Application Logging](#application-logging)
+      - [CSRF](#csrf)
+      - [Flask Debug Toolbar](#flask-debug-toolbar)
+      - [JSON File Handling, Validation, and Schema](#json-file-handling--validation--and-schema)
+      - [Google Books API](#google-books-api)
+      - [Flask-Session](#flask-session)
+      - [Consent Cookie](#consent-cookie)
+      - ['config.py', .env and Heroku variables](#-configpy---env-and-heroku-variables)
+      - [Continuous Delivery and Deployment](#continuous-delivery-and-deployment)
+      - [MongoDB Schema - Book Repository](#mongodb-schema---book-repository)
+      - [Gunicorn](#gunicorn)
+    + [Defensive Programming](#defensive-programming)
     + [Documentation Tools](#documentation-tools)
+      - [Trello Board](#trello-board)
+      - [GitHub Wiki](#github-wiki)
+      - [Microsoft PowerPoint](#microsoft-powerpoint)
+      - [Quick Database Diagrams](#quick-database-diagrams)
+      - [Balsamiq](#balsamiq)
+      - [MarkDown Tables Generator](#markdown-tables-generator)
+      - [MacDown](#macdown)
+      - [C4 Model and C4-PlantUML](#c4-model-and-c4-plantuml)
+      - [GitHub Wiki TOC Generator](#github-wiki-toc-generator)
+      - [MarkDown Tables Generator](#markdown-tables-generator-1)
+      - [Pen and Paper](#pen-and-paper)
     + [Acknowledgements and Attributions of Used Features and Functions](#acknowledgements-and-attributions-of-used-features-and-functions)
     + [General Knowledge and Hours of Reading](#general-knowledge-and-hours-of-reading)
   * [Testing and Validation](#testing-and-validation)
-    + [Manual BDD](#manual-bdd)
-    + [Automated BDD](#automated-bdd)
+    + [Manual Behaviour Driven Development Testing](#manual-behaviour-driven-development-testing)
+      - [User Management](#user-management)
+      - [Book Repository](#book-repository-1)
+      - [Admin Dashboard](#admin-dashboard-1)
+      - ["Negative Testing"](#-negative-testing-)
+    + [Automated Behaviour Driven Development Testing](#automated-behaviour-driven-development-testing)
     + [Testing Notes](#testing-notes)
     + [Validation of HTML 5, CSS 3, JS and Python](#validation-of-html-5--css-3--js-and-python)
-  * [Continuous Delivery and Deployment](#continuous-delivery-and-deployment)
+      - [LightHouse PDF's:](#lighthouse-pdf-s-)
+      - [Coverage: 'style.css'](#coverage---stylecss-)
+  * [Continuous Delivery and Deployment (Deployment)](#continuous-delivery-and-deployment--deployment-)
   * [Credits](#credits)
     + [Content](#content)
     + [Media](#media)
+    + [Lessons Learned](#lessons-learned)
     + [Acknowledgements](#acknowledgements)
 
 <small><i><a href='http://ecotrust-canada.github.io/markdown-toc/'>Table of contents generated with markdown-toc</a></i></small>
@@ -4609,6 +4645,8 @@ To prepare for the tests:
 * Ensure your user account doesn't already exist, if so select a new one or delete the current one from the user collection in MongoDB.
 * When executing the script, there are two stages where there is a 30 second delay for you to receive the registration email link. Click on it, click on Sign Out and close the browser. This must be done for the 1st test case, as well as for the 6X (after 6 and before 7) as it recreates the user account after it has been deleted.
 
+<details><summary>Please click to expand: Selenium IDE / PyTest BDD Results and Code</summary>
+
 ```
 
 (.venv) gaff@Naoises-MacBook-Pro BookRepository % pytest test_bookRepositoryBDDTestSuite.py
@@ -4951,8 +4989,22 @@ class TestBookRepositoryBDDTestSuite():
 
 ![Test Case 6X - Registration Confirmation Link](documentation/Test%20Case%206X%20-%20Registration%20Confirmation%20Link.png)
 
-### Testing Notes
+</details>
 
+### Testing Notes
+Continuous unit and integration testing while coding on the local development branch before commiting coode to GitHub development caught most of my coding errors. Testing was performed using the local Flask WSGI Server, before committing the code to GitHub development and creating a merge pull request in VSCode triggering a Heroku Review App deployment for further testing. If the tests failed I canceleled the pull request, and if they passed I added a comment and accepted the merge pull request to merge GitHub development to master, which in turn automatically deployed to Heroku Staging. Further tests on Heroku Staging before manual promotion to Heroku Production.
+
+Flask Debug Toolbar together with ample use of `print` statements aided in fixing the bugs. I highly recommend the use of Flask Debug Toolbar, not only for debugging, but for the insights gained of how Flask and Flask extensions work making it easier to both design and develop the Book Repository.
+
+There were three main bugs that required serious attention and GitHub issues were created in VSCode:
+
+* [Book Repository on Heroku behaves erratically. #17](https://github.com/NaoiseGaffney/BookRepository/issues/17): I had introduced what I thought was a brlliant way to create a `SECRET_KEY` using `SECRET_KEY = os.urandom(128).hex()`. This works locally, though erratically on Heroku forcing me to Sign In twice. I fixed this by using `SECRET_KEY = os.environ.get("SECRET_KEY")` insetad with the `SECRET_KEY` defined in '.env' locally and as a variable on Heroku for Review Apps, Staging, and Production.
+* [Book Results creates "empty" space when displaying public book search results. #20](https://github.com/NaoiseGaffney/BookRepository/issues/20): I fixed this by changing the BaseQuerySets in `search_results(page=1)`. I had tried using 'Q' (supported by MongoEngine) queries and '~Q' (not supported by Flask_MongoEngine nor MongoEngine, though works on Djongo for Django) to no effect, and changed the way it works by omitting all books marked as PRIVATE/HIDDEN from the public book searches.
+* [Python configuration file has stopped loading all of a sudden. #29](https://github.com/NaoiseGaffney/BookRepository/issues/29): using Gmail as the SMTP provider for user registration and password reset emails stopped working and caused an "Internal Server Error 500" and crashed the application. The issue is one of the reCaptcha being required for the Gmail account. I reconfigured the Gmail account I use for this to support 2-Factor Authentication with a specila code/key to use instead of the password in my environment variables.
+
+Besides the continuous unit and integration testing performed during development, I also used manual BDD testing which is documented previously in this document. In addition I performed automated BDD testing too, using Selenium IDE to record the test cases, converting the tests to PyTest, modifying the code (one test case at a time) to get it working, before running successful test suites (documented previously in this document).
+
+Testing has been performed on several different devices, to ensure all works well on different screen sizes and using different browsers. In fact, the User Management and Book Repository features look fabulous (IM(H)O) on smaller screens. The Admin Dashboard requires wider screens to fit the user table on one screen without needing to scrool, though is easily viewed on smaller screens too.
 
 ### Validation of HTML 5, CSS 3, JS and Python
 
@@ -5011,7 +5063,7 @@ E501 means line is too long. A lot has happened since PEP8 became a standard, an
 
 [Python Syntax Checker](https://extendsclass.com/python-tester.html) "No syntax errors detected :)" for all '.py' files.
 
-LightHouse PDF's:
+#### LightHouse PDF's:
 
 * Desktop
 	* [Landing / Home Page](documentation/LH%20-%20Landing%20Page.pdf)
@@ -5036,27 +5088,28 @@ LightHouse PDF's:
 	* [Change Password Page](documentation/LH_Mobile_Change_Password_Page.pdf)
 	* [Admin Dashboard](documentation/LH_Mobile_Admin_Dashboard_Page.pdf)
 
-Google Chrome LightHouse highlights the following observations:
+Google Chrome LightHouse highlights the following critical observations:
 
-* Performance: Slow loading of images due to blocking features. I can't remove the blocking features as they are CDN's (Google Fonts, Materialize CSS, Osano Cookie Consent) that are vital to the functionaly and UX Design of the Book Repository. I could minify my 'style.css' though due to its small size will not gain much in terms of performance.
-	* Having tested extensively on several real devices (Apple MacBook Pro, Samsung Galaxy Note 10+ 5G, Apple iPhone 8, Jolla, Huawei Y6) it's clear that performance is not an issue. In fact, the Book Repository is faster on Heroku than on my local machine.
-* Accessibility:
-	* hh
-* Best Practices:
-	* hh
-* SEO:
-	* dd
-* Progressive Web App:
-	* hh
+**Performance:** Slow loading of images due to blocking features and use of '.png' instead of next-gen formats. I can't remove the blocking features as they are CDN's (Google Fonts, Materialize CSS, Osano Cookie Consent) that are vital to the functionaly and UX Design of the Book Repository. I could minify my 'style.css' though due to its small size will not gain much in terms of performance. Some images could be resized, however, the performance-gain is negligable and I don't want to ruin the background image as it looks good on all devices on all screen sizes (Apple iPhone 8 and Huawei Y6 to 4K Ultra-Wide 32" display). Instead of using CDN's I could download the extentions/frameworks/libraries to potentially speed up performance. Having tested extensively on several real devices (Apple MacBook Pro, Samsung Galaxy Note 10+ 5G, Apple iPhone 8, Jolla, Huawei Y6) it's clear that performance is not an issue. In fact, the Book Repository is faster on Heroku than on my local machine. Running the Flask Debug Toolbar Profiler places the slowest load to less than 200 ms for the heaviest pages (Member's and Search Results Pages).
 
-Coverage: 'style.css'
+**Accessibility:** On pages with option menus and toggle switches, labels exist and are readable by a screen reader though they are placed a little differently due to a Materialize CSS 1.0.0 undocumented feature (bug), and this is highlighted by LightHouse. Materilize CSS 1.0.0 and Flask/Jinja rendering of some elements such as the toggle switch and options menu make them challenging to style and label. For example, I kept an empty `<span></span>` to render the label for the toggle switch or it would disappear. All pages pass the Nu HTML Checker so the approach is fine from a syntactic perspective.
+
+**Best Practices:** Some concerns regarding skewed images, the Book Repository Logo and my "ego-page" tab image are fine on screen sizes of all sizes. The Book Repository Logo needs to be large enough to be seen on small screen, yet small enough to fit on the navigatiion bar for screens of all sizes. To the naked eye it looks great (IM(H)O). There is a concern raised regarding the tap-target-sizes for mobile devices, the view (teal eye icon), the edit (blue pencil icon), and the delete (pink bin icon) features on the book spines on the Member's amd Search Results pages. Making the images larger will squeeze the title and author text too much, making it a poor user experience on small devices. My fat fingers (larger than normal hands , and also thicker fingers) work well on the mobile devices I've tried them on with these icon sizes.
+
+**SEO:** I don't have a 'robots.txt' though Heroku may well have one (I don't know). Other concerns are not an issue.
+
+**Progressive Web App:** Speed (performance) is raised as a concern and is already discussed under the Performance heading above. Regarding HTTP not being redirected to HTTPS, this concerns the static components mainly (JS, CSS, non-book Images) and on Heroku Production all access is HTTPS, though can be accessed if the URL is changed manually to using HTTP instead.
+
+#### Coverage: 'style.css'
 
 All CSS statements are used when testing the application in full (every page and feature).
 
 ![Section Divider: Testing and Validation, and Continuous Delivery and Deployment](documentation/section%20divider.png)
 
-## Continuous Delivery and Deployment
+## Continuous Delivery and Deployment (Deployment)
 ![CDD - Development and Test Cycle](documentation/CDD%20-%20Development%20and%20Test%20Cycle.png)
+
+
 
 ![CDD - Technology Stack](documentation/CDD%20-%203D%20Technlogy%20Stack.png)
 
