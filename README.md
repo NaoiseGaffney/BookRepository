@@ -5009,15 +5009,66 @@ One undefined variable
 
 E501 means line is too long. A lot has happened since PEP8 became a standard, and screens now handle longer lines than the 80 characters of the past. My code is readeable with 80+ characters.
 
-[Python Syntax Checker](https://extendsclass.com/python-tester.html) No syntax errors detected :)
+[Python Syntax Checker](https://extendsclass.com/python-tester.html) "No syntax errors detected :)" for all '.py' files.
 
-LightHouse
+LightHouse PDF's:
 
-Coverage
+* Desktop
+	* [Landing / Home Page](documentation/LH%20-%20Landing%20Page.pdf)
+	* [Register Page](documentation/LH%20-%20Registration%20Page.pdf)
+	* [Sign In Page](documentation/LH%20-%20Sign%20In%20Page.pdf)
+	* [Member's Page](documentation/LH%20-%20Members%20Page.pdf)
+	* [Add Book Page](documentation/LH%20-%20Add%20Book%20Page.pdf)
+	* [Search Book Page](documentation/LH%20-%20Search%20Book%20Page.pdf)
+	* [Search Results Page](documentation/LH%20-%20Search%20Results%20Page.pdf)
+	* [Edit User Profile Page](documentation/LH%20-%20Edit%20User%20Profile%20Page.pdf)
+	* [Change Password Page](documentation/LH%20-%20Change%20Password%20Page.pdf)
+	* [Admin Dashboard](documentation/LH%20-%20Admin%20Dashboard%20Page.pdf)
+* Mobile
+	* [Landing / Home Page](documentation/LH_Mobile_Landing_Page.pdf)
+	* [Register Page](documentation/LH_Mobile_Register_Page.pdf)
+	* [Sign In Page](documentation/LH_Mobile_Sign_In_Page.pdf)
+	* [Member's Page](documentation/LH_Mobile_Members_Page.pdf)
+	* [Add Book Page](documentation/LH_Mobile_Add_Book_Page.pdf)
+	* [Search Book Page](documentation/LH_Mobile_Search_Books_Page.pdf)
+	* [Search Results Page](documentation/LH_Mobile_Search_Results_Page.pdf)
+	* [Edit User Profile Page](documentation/LH_Mobile_Edit_User_Profile_Page.pdf)
+	* [Change Password Page](documentation/LH_Mobile_Change_Password_Page.pdf)
+	* [Admin Dashboard](documentation/LH_Mobile_Admin_Dashboard_Page.pdf)
+
+Google Chrome LightHouse highlights the following observations:
+
+* Performance: Slow loading of images due to blocking features. I can't remove the blocking features as they are CDN's (Google Fonts, Materialize CSS, Osano Cookie Consent) that are vital to the functionaly and UX Design of the Book Repository. I could minify my 'style.css' though due to its small size will not gain much in terms of performance.
+	* Having tested extensively on several real devices (Apple MacBook Pro, Samsung Galaxy Note 10+ 5G, Apple iPhone 8, Jolla, Huawei Y6) it's clear that performance is not an issue. In fact, the Book Repository is faster on Heroku than on my local machine.
+* Accessibility:
+	* hh
+* Best Practices:
+	* hh
+* SEO:
+	* dd
+* Progressive Web App:
+	* hh
+
+Coverage: 'style.css'
+
+All CSS statements are used when testing the application in full (every page and feature).
 
 ![Section Divider: Testing and Validation, and Continuous Delivery and Deployment](documentation/section%20divider.png)
 
 ## Continuous Delivery and Deployment
+![CDD - Development and Test Cycle](documentation/CDD%20-%20Development%20and%20Test%20Cycle.png)
+
+![CDD - Technology Stack](documentation/CDD%20-%203D%20Technlogy%20Stack.png)
+
+![CDD - Configuration Steps](documentation/CDD%20-%20CDD%20Configuration%20Steps.png)
+
+![CDD - Workflow](documentation/CDD%20-%20Workflow.png)
+
+![CDD - Testing](documentation/CDD%20-%20Testing.png)
+
+![CDD - Python Flask Requirements](documentation/CDD%20-%20Python%20Flask%20Requirements.png)
+
+![CDD - 4 Environments](documentation/CDD%20-%204%20Development%20Environments.png)
 
 ![Section Divider: Continuous Delivery and Deployment, and Credits](documentation/section%20divider.png)
 
