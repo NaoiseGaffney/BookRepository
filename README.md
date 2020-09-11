@@ -4992,6 +4992,9 @@ class TestBookRepositoryBDDTestSuite():
 </details>
 
 ### Testing Notes
+
+![CDD - Testing](documentation/CDD%20-%20Testing.png)
+
 Continuous unit and integration testing while coding on the local development branch before commiting coode to GitHub development caught most of my coding errors. Testing was performed using the local Flask WSGI Server, before committing the code to GitHub development and creating a merge pull request in VSCode triggering a Heroku Review App deployment for further testing. If the tests failed I canceleled the pull request, and if they passed I added a comment and accepted the merge pull request to merge GitHub development to master, which in turn automatically deployed to Heroku Staging. Further tests on Heroku Staging before manual promotion to Heroku Production.
 
 Flask Debug Toolbar together with ample use of `print` statements aided in fixing the bugs. I highly recommend the use of Flask Debug Toolbar, not only for debugging, but for the insights gained of how Flask and Flask extensions work making it easier to both design and develop the Book Repository.
@@ -5107,21 +5110,60 @@ All CSS statements are used when testing the application in full (every page and
 ![Section Divider: Testing and Validation, and Continuous Delivery and Deployment](documentation/section%20divider.png)
 
 ## Continuous Delivery and Deployment (Deployment)
+
+### Development and Test Cycle
+
 ![CDD - Development and Test Cycle](documentation/CDD%20-%20Development%20and%20Test%20Cycle.png)
 
+All development, initial unit and integration testing, is done locally on the development branch. Once a piece of code is done in VSCode (menu, not CLI) an "All Changes are Staged" is performed, followed by "Commit All", and finally "Push" to the GitHub development branch.
 
+After a number of code pushes to the GitHub development branch a "Create Pull Request" ([Closed Pull Requests](https://github.com/NaoiseGaffney/BookRepository/pulls?q=is%3Apr+is%3Aclosed)) is performed in VSCode ([VSCode Extension: GitHub Pull Requests and Issues](https://marketplace.visualstudio.com/items?itemName=GitHub.vscode-pull-request-github)). This triggers a Heroku Review Application deployment where regression tests are run before updating the Merge Pull Request with a comment and merging of GitHub development to the master branch. Updating the GitHub master branch triggers an auto deployment to Heroku Staging with further tests and a manual promotion to Heroku Production after a number of successful Staging deployments and tests. I'm always trying to keep the Heroku Production environment as stable as possible. Then it all begins again...
+
+### Technology Stack
 
 ![CDD - Technology Stack](documentation/CDD%20-%203D%20Technlogy%20Stack.png)
 
+The technology stack in development is all local except for the MongoDB instance. The logical design is a 3-tier technology stack with a Web Server (HTML 5, CSS 3, Materialize CSS 1.0.0, and JavaScript), an Application instance (Python, Flask, Flask Extensions, and MongoEngine -> PyMongo), and a Databse (MongoDB).
+
+The physical stack once deployed on Heroku consists of 2 tiers, the Heroku platform with Web Server and Application instances in one, and the MongoDB instance on MongoDB Atlas.
+
+A 3-tier logical system on a 2-tier physical platform.
+
+### Configuration Steps
+
 ![CDD - Configuration Steps](documentation/CDD%20-%20CDD%20Configuration%20Steps.png)
+
+Configuration starts on GitHub, using the Code Institute's Full Template and create a new repository based on it, in this case Book Repository. The master branch is created by default and I create a development branch where I can fail fast and do all sorts of funky stuff before merging it with the master branch. Occasionally I create a separate branch for additional development and testing, before merging with the master branch on GitHub.
+
+In VSCode I clone the Book Repository repo, create a Python Virtual Environment and activate it, followed by the installation of Flask and relevant extensions. Create 'requirements.txt', 'Procfile', and 'runtime.txt'. To test the  CDD functionality a minimum viable Flask application is created, stashed, committed, pushed, and merged using the VSCode menu (Git commands are included in the diagram for the benefit of others).
+
+On Heroku I created a Pipeline, book-repository-pipe with a Staging applicatioin linked to the Book Repository GitHub master with auto deployment, as well as Production application allowing promotion from Staging. Heroku Review Application is configured too, and all three Heroku environments variables are configured too.
+
+### Workflow
 
 ![CDD - Workflow](documentation/CDD%20-%20Workflow.png)
 
-![CDD - Testing](documentation/CDD%20-%20Testing.png)
+The workflow is described at a high level under the Development and Testing Cycle heading above. This diagram highlights the workflow and steps. One thing worthtaking note of is the pulling of the GitHub master branch to the local master branch after successful Merge Pull Request from GitHub development to master.
+
+### Python Flask Requirements
 
 ![CDD - Python Flask Requirements](documentation/CDD%20-%20Python%20Flask%20Requirements.png)
 
+To run the Book Repository Python Flask application successfully on Heroku, a couple of configuration files are required to tell Heroku how to run the application, and these files are stored in the root directory.
+
+* 'requirements.txt': is created by executing the terminal command `pip freeze > requirements.txt`. This needs to be run whenever a new extension is installed using pip.
+* 'Procfile': is created by executing the terminal command `echo web: gunicorn app:app > Procfile`. I use Gunicorn WSGI on Heroku instead of the Flask WSGI as it performs better.
+* 'runtime.txt': is created by executing the terminal command `echo python-3.6.12 > runtime.txt`. This isn't always necessary though ensures the right version is used on Heroku. Heroku has a list of approved Python versions it supports.
+
+### Environments
+
 ![CDD - 4 Environments](documentation/CDD%20-%204%20Development%20Environments.png)
+
+Proper Software Development and Deploment Practices are observed throughout this Milestone Project.
+
+There are 4 development and testing environments. The first is the local application using it'as own MongoDB instance on MongoDB Atlas. The second is the Heroku Review Application, also with its own MongoDB instance. This Heroku application is automatically deployed whenever a Merg Pull Request is executed in VSCode, and it is deleted once the Merge Pull Request is merged/approved. Once the Merge Pull Request is successful, the GitHub development branch (or any other branch) is merged with the master branch, the auto deployment to Heroku Staging is triggered. Heroku Staging also has its own MongoDB instance. The final environment is Heroku Production with its own MongoDB instance, and is created when Heroku Staging is manually deployed to Heroku Production.
+
+The reason for having 4 separate environments is to practice good CDD practices, and getting to know how it's possibly done by professional development teams. The reason for having 4 separate MongoDB instances is to ensure proper testing is performed in each environment without being affected by existing data. All 4 MongoDB instances are repeatedly dropped (erased) and automatically created by MongoEngine ("It's like magic!").
 
 ![Section Divider: Continuous Delivery and Deployment, and Credits](documentation/section%20divider.png)
 
