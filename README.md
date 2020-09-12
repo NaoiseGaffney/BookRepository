@@ -5199,6 +5199,8 @@ In VSCode I clone the Book Repository repo, create a Python Virtual Environment 
 
 On Heroku I created a Pipeline, book-repository-pipe with a Staging application linked to the Book Repository GitHub master with auto deployment, as well as Production application allowing promotion from Staging. Heroku Review Application is configured too, and all three Heroku environments variables are configured too.
 
+After deploying the full GitHub repository, including all the documentation, my Heroku Slug-size was larger than 300 MB. "Warning: Your slug size (337 MB) exceeds our soft limit (300 MB) which may affect boot time." I've created a '.slugignore' to not include the documentation directories (/documentation, /out) and the Slug-size is now down to 61.7 MB.
+
 ### Workflow
 
 ![CDD - Workflow](documentation/CDD%20-%20Workflow.png)
