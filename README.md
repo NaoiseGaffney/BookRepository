@@ -1623,7 +1623,7 @@ members.html
 
 The user/reader is made aware of the result through a Flash message and the event is logged.
 
-<details><summary>Please click to expand: 'app.py' Code Snippet for the ...</summary>
+<details><summary>Please click to expand: 'app.py' Code Snippet for `add_book()` and `save_book()`</summary>
 
 ```
 @app.route("/add_book")
@@ -1837,7 +1837,7 @@ Clicking on the blue pen icon on the book spine to edit a book (`edit_book()`) g
 
 The user/reader is made aware of the result through a Flash message and the event is logged.
 
-<details><summary>Please click to expand: 'app.py' Code Snippet for the ...</summary>
+<details><summary>Please click to expand: 'app.py' Code Snippet for `edit_book()` and `update_book()`</summary>
 
 ```
 @app.route("/edit_book/<book_id>")
@@ -2033,7 +2033,7 @@ edit\_book.html
 
 The user/reader is made aware of the result through a Flash message and the event is logged.
 
-<details><summary>Please click to expand: 'app.py' Code Snippet for the ...</summary>
+<details><summary>Please click to expand: 'app.py' Code Snippet for `delete_book()`</summary>
 
 ```
 @app.route("/delete_book/<book_id>")
@@ -2099,7 +2099,7 @@ Book search using a combination of form fields saved in the session cookie in 's
 
 search\_book.html is similar to members.html in features and functions, with the notable exception of books not belonging to the current user/reader can't edit/update nor delete books not belonging to them. They can't see books marked as hidden either if a public book search was performed.
 
-<details><summary>Please click to expand: 'app.py' Code Snippet for the ...</summary>
+<details><summary>Please click to expand: 'app.py' Code Snippet for `search_book()`, `save_search()`, and `search_results()`</summary>
 
 ```
 @app.route("/search_book")
@@ -2536,7 +2536,7 @@ search\_results.html
 
 The user/reader is made aware of the result through a Flash message and the event is logged.
 
-<details><summary>Please click to expand: 'app.py' Code Snippet for the ...</summary>
+<details><summary>Please click to expand: 'app.py' Code Snippet for `delete_user()`</summary>
 
 ```
 @app.route("/delete_user")
@@ -2579,7 +2579,7 @@ The results are added to a table with a modal to update the user/reader profile.
 
 The admin is made aware of the result through a Flash message and the event is logged.
 
-<details><summary>Please click to expand: 'app.py' Code Snippet for the ...</summary>
+<details><summary>Please click to expand: 'app.py' Code Snippet for `admin_dashboard()`</summary>
 
 ```
 # --- // Admin Dashboard for user management and content loading (genre and book collections).
@@ -2836,7 +2836,7 @@ admin\_dashboard.html
 
 The admin is made aware of the result through a Flash message and the event is logged.
 
-<details><summary>Please click to expand: 'app.py' Code Snippet for the ...</summary>
+<details><summary>Please click to expand: 'app.py' Code Snippet for `update_user()`</summary>
 
 ```
 @app.route("/update_user/<user_id>", methods=["POST"])
@@ -2899,7 +2899,7 @@ def update_user(user_id):
 
 The admin is made aware of the result through a Flash message and the event is logged.
 
-<details><summary>Please click to expand: 'app.py' Code Snippet for the ...</summary>
+<details><summary>Please click to expand: 'app.py' Code Snippet for `admin_delete_user()`</summary>
 
 ```
 @app.route("/admin_delete_user/<user_id>", methods=["GET"])
@@ -2938,7 +2938,7 @@ def admin_delete_user(user_id):
 
 The admin is made aware of the result through a Flash message and the event is logged.
 
-<details><summary>Please click to expand: 'app.py' Code Snippet for the ...</summary>
+<details><summary>Please click to expand: 'app.py' Code Snippet for `load_genres()`</summary>
 
 ```
 @app.route("/load_genres")
@@ -3008,7 +3008,7 @@ def load_genres():
 
 The admin is made aware of the result through a Flash message and the event is logged.
 
-<details><summary>Please click to expand: 'app.py' Code Snippet for the ...</summary>
+<details><summary>Please click to expand: 'app.py' Code Snippet for `load_books()`</summary>
 
 ```
 @app.route("/load_books")
@@ -3085,7 +3085,7 @@ Error Handlers for 400 CSRF Error (Bad Request), 404 Page Not Found, 405 Method 
 
 The event is logged.
 
-<details><summary>Please click to expand: 'app.py' Code Snippet for the ...</summary>
+<details><summary>Please click to expand: 'app.py' Code Snippet for the Error Handlers</summary>
 
 ```
 # --- // Error Handlers for 400 CSRF Error (Bad Request), 404 Page Not Found, 405 Method Not Allowed, and 500 Internal Server Error.
@@ -4526,8 +4526,54 @@ All README.md tables are created using this table generator.
 Pen and paper to create the initial design, and to create the odd doodle that became a proper diagram in Balsamiq and PowerPoint.
 
 ### Acknowledgements and Attributions of Used Features and Functions
+* [Google Fonts: Raleway](https://fonts.googleapis.com/css?family=Raleway%7C&display=swap)
+	* Using this font in different sizes for all text.
+* [FontAwesome CDN](https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css)
+	* Using FontAwesome font icons to add visual elements to key website features, making the website memorable and easier to navigate.
+* [W3Schools Drop-Down Menu for the Member's, Search Results, and Admin Pages](https://www.w3schools.com/howto/howto_css_dropdown.asp)
+	* Using this modal function for my Fixed Footer links.
+* [Sharon McCutcheon - Photographer - Background Image](https://images.unsplash.com/photo-1516979187457-637abb4f9353?ixlib=rb-1.2.1&auto=format&fit=crop&w=2550&q=80)
+	* Background image.
+* [Christian Wiediger - Photographer - Book Spine Image](https://images.unsplash.com/photo-1553447977-754f9430685c?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80)
+	* Book spine image.
+* [Book Repository Logo - Created using Microsoft PowerPoint stock image of a stack of Books](static/images/logo_bookstack_text_96_spacing.png)
+	* Book Repository Logo.
+* [Google Icon Font - Material Icons](https://fonts.googleapis.com/icon?family=Material+Icons)
+	* Material Icons.
+* [Favicon](static/images/android-chrome-192x192.png)
+	* Favicon.
+* [Google Books API - Book Front Cover Thumbnails](https://developers.google.com/books/docs/v1/using)
+	* Book front cover thumbnails.
+* [The Flask Extensions Course by PrettyPrinted (Anthony Herbert)](https://courses.prettyprinted.com/p/the-flask-extensions-course)
+	* I decided to use the Flask-User extension after taking a Pretty-Printed (Anthony Herbert) overview course on Flask extensions (a bit like dipping a toe in the lake before taking a deep-dive in the Atlantic). This is what made me aware of the Flask-User extension, and what ultimately persuaded me to use this extension for my Milestone Project.
+* [Collapsible MarkDown](https://gist.github.com/pierrejoubert73/902cc94d79424356a8d20be2b382e1ab)
+	* 
+* [MarkDown Tables Generator](https://www.tablesgenerator.com/markdown_tables#)
+* [Flask-User API](https://flask-user.readthedocs.io/en/latest/api.html)
+* [MongoDB with MongoEngine](https://flask.palletsprojects.com/en/1.1.x/patterns/mongoengine/)
+* [Flask-MongoEngine](http://docs.mongoengine.org/projects/flask-mongoengine/en/latest/)
+* [MongoEngine](http://docs.mongoengine.org/index.html)
+* [Flask Sessions and Error Handling](https://hackersandslackers.com/flask-routes/)
+* [Flask Request Object](https://pythonise.com/series/learning-flask/the-flask-request-object)
+* [Google Books API](https://developers.google.com/books/docs/v1/using)
+* [Flask Framework](https://exploreflask.com/en/latest/index.html)
+* [JSON Schema](https://python-jsonschema.readthedocs.io/en/latest/)
+* [CSRF Tokens for forms not using WTForms](https://flask-wtf.readthedocs.io/en/stable/csrf.html)
+* [Python Logging Good Practice](https://www.toptal.com/python/in-depth-python-logging)
+* [Osano Consent Management (Consent Cookie) 🍪](https://www.osano.com/features/consent-management)
+* [Flask-MongoEngine Pagination](https://www.techcoil.com/blog/how-to-paginate-mongoengine-records-in-your-python-3-flask-application/)
 
 ### General Knowledge and Hours of Reading
+* [Website: CSS Tricks](https://css-tricks.com/)
+	* A website on more than CSS, for example Articles, Videos, Almanac of CSS Features, Code Snippets, Newsletter, Jobs, and Guides all related to front-end web development. I get happily "distracted" by this site, always learning and testing new skills.
+* [FREE: Pro Git eBook by Scott Chacon and Ben Straub](https://git-scm.com/book/en/v2)
+	* Read parts of this eBook to better understand Git.
+* [FREE PDF: Elements of User Experience Design by Jesse James Garrett (second edition 2010)](https://www.academia.edu/33276128/The_Elements_of_User_Experience_-_Jesse_James_Garrett)
+	* User experience design makes sure the aesthetic and functional aspects of an element works in the context of the rest of the website.
+* [Genre descriptions taken from...](https://bookriot.com/guide-to-book-genres/.)
+	* Book genre descriptions taken from this Bookriot page.
+* [The Flask Extensions Course by PrettyPrinted (Anthony Herbert)](https://courses.prettyprinted.com/p/the-flask-extensions-course)
+	* I decided to use the Flask-User extension after taking a Pretty-Printed (Anthony Herbert) overview course on Flask extensions (a bit like dipping a toe in the lake before taking a deep-dive in the Atlantic). This is what made me aware of the Flask-User extension, and what ultimately persuaded me to use this extension for my Milestone Project.
 
 ![Section Divider: Technology and, Testing and Validation](documentation/section%20divider.png)
 
@@ -4543,7 +4589,7 @@ Running the manual tasks validate the Use Case, and in turn the User Story. A te
 
 #### User Management
 
-<details><summary>Please click to expand: User Management Test Results</summary>
+<!--<details><summary>Please click to expand: User Management Test Results</summary>-->
 
 | User Story -> Use   Cases -> Tasks                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               | Pass / Fail |
 |--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-------------|
@@ -4569,11 +4615,11 @@ Running the manual tasks validate the Use Case, and in turn the User Story. A te
 | + > **Use Case 002-003 (D in User CRUD):** as a   user/reader I want to delete my account.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    | [PASS](documentation/Test%20-%20User%20Management%20-%20User%20Story%20002%20-%20Use%20Case%20002-003.png)            |
 | + + + > **Tasks 1:** [Member's   Page](https://book-repository-virtual.herokuapp.com/members) -> click on   the user profile (username) on the navigation bar [Edit User   Profile](https://book-repository-virtual.herokuapp.com/user/edit_user_profile)   -> click on [Delete   User](https://book-repository-virtual.herokuapp.com/user/edit_user_profile#delete_user)   -> click on yes to permanently delete the user/reader and associated books   from the Book Repository or no to close the delete user modal -> success   Flash message [Landing/Home   Page](https://book-repository-virtual.herokuapp.com/index.html). | PASS            |
 
-</details>
+<!--</details>-->
 
 #### Book Repository
 
-<details><summary>Please click to expand: Book Repository Test Results</summary>
+<!--<details><summary>Please click to expand: Book Repository Test Results</summary>-->
 
 | User Story -> Use   Cases -> Tasks                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  | Pass / Fail |
 |---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-------------|
@@ -4603,11 +4649,11 @@ Running the manual tasks validate the Use Case, and in turn the User Story. A te
 | + > **Use Case 004-006 (R in Book CRUD):** as a   user/reader I want to search for all the books in the Book Repository using   an empty form search.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          | [PASS](documentation/Test%20-%20Book%20Repository%20-%20User%20Story%20004%20-%20Use%20Case%20004-006.png)            |
 | + + + > **Tasks 1:** [Member's   Page](https://book-repository-virtual.herokuapp.com/members) -> via the   drop-down menu click on Search Books -> [Search   Books](https://book-repository-virtual.herokuapp.com/search_book) -> leave   all form fields empty, leave the toggle switch off (public search), and click   on the Search Books button -> [Search   Results](https://book-repository-virtual.herokuapp.com/search_results) ->   stack (list) of books found that are not    marked as private/hidden by users/readers -> Book CRUD operations   apply to my books, only R in Book CRUD for books belonging to other   users/readers.                                                                                                                                                                 | PASS            |
 
-</details>
+<!--</details>-->
 
 #### Admin Dashboard
 
-<details><summary>Please click to expand: Admin Dashboard Test Results</summary>
+<!--<details><summary>Please click to expand: Admin Dashboard Test Results</summary>-->
 
 | User Story -> Use   Cases -> Tasks                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        | Pass / Fail |
 |-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-------------|
@@ -4629,7 +4675,7 @@ Running the manual tasks validate the Use Case, and in turn the User Story. A te
 | + > **Use Case 005-007 (R in Statistics   CRUD):** as an admin I want to view the number of users, number of books, and   the most popular genres in the Book Repository.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  | [PASS](documentation/Test%20-%20Admin%20Dashboard%20-%20User%20Story%20005%20-%20Use%20Case%20005-007.png)            |
 | + + + > **Tasks 1:** [Member's   Page](https://book-repository-virtual.herokuapp.com/members) -> click on   [Admin Page](https://book-repository-virtual.herokuapp.com/admin_dashboard)   -> hover over the drop-down (category icon) menu and click on the   Statistics button -> scroll through the statistics and click on the Done   button to close the modal -> [Admin   Page](https://book-repository-virtual.herokuapp.com/admin_dashboard).                                                                                                                                                                                                                                                                                                                                                                                                                                            | PASS            |
 
-</details>
+<!--</details>-->
 
 #### "Negative Testing"
 Tested updating and deleting books not belonging to the current user/reader. Fixed this issue in 'app.py'. All form fields are validated, and some fields are required, which means the user/reader is always made aware of issues.
@@ -4668,8 +4714,6 @@ To prepare for the tests:
 * Ensure your user account doesn't already exist, if so select a new one or delete the current one from the user collection in MongoDB.
 * When executing the script, there are two stages where there is a 30 second delay for you to receive the registration email link. Click on it, click on Sign Out and close the browser. This must be done for the 1st test case, as well as for the 6X (after 6 and before 7) as it recreates the user account after it has been deleted.
 
-<details><summary>Please click to expand: Selenium IDE / PyTest BDD Results and Code</summary>
-
 ```
 
 (.venv) gaff@Naoises-MacBook-Pro BookRepository % pytest test_bookRepositoryBDDTestSuite.py
@@ -4683,6 +4727,8 @@ test_bookRepositoryBDDTestSuite.py ................                             
 ================================================================ 16 passed in 174.38s (0:02:54) ================================================================
 (.venv) gaff@Naoises-MacBook-Pro BookRepository % 
 ```
+
+<details><summary>Please click to expand: Selenium IDE / PyTest BDD Code</summary>
 
 test_bookRepositoryBDDTestSuite.py
 
@@ -4996,23 +5042,14 @@ class TestBookRepositoryBDDTestSuite():
 
 ```
 
-**Test Case 1 - Registration Confirmation Link**
-
-![Test Case 1 - Registration Confirmation Link](documentation/Test%20Case%201%20-%20Registration%20Confirmation%20Link.png)
-
-**Test Case 3 - Reset Password Email**
-
-![Test Case 3 - Reset Password Email](documentation/Test%20Case%203%20-%20Reset%20Password%20Email.png)
-
-**Test Case 5 - Password Change**
-
-![Test Case 5 - Password Change](documentation/Test%20Case%205%20-%20Password%20Change.png)
-
-**Test Case 6X - Registration Confirmation Link**
-
-![Test Case 6X - Registration Confirmation Link](documentation/Test%20Case%206X%20-%20Registration%20Confirmation%20Link.png)
-
 </details>
+
+| Test Case Number                                  | Test Case Result Email                                                                                                        |
+|---------------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------|
+| **Test Case 1 - Registration Confirmation Link**  | ![Test Case 1 - Registration Confirmation Link](documentation/Test%20Case%201%20-%20Registration%20Confirmation%20Link.png)   |
+| **Test Case 3 - Reset Password Email**            | ![Test Case 3 - Reset Password Email](documentation/Test%20Case%203%20-%20Reset%20Password%20Email.png)                       |
+| **Test Case 5 - Password Change**                 | ![Test Case 5 - Password Change](documentation/Test%20Case%205%20-%20Password%20Change.png)                                   |
+| **Test Case 6X - Registration Confirmation Link** | ![Test Case 6X - Registration Confirmation Link](documentation/Test%20Case%206X%20-%20Registration%20Confirmation%20Link.png) |
 
 ### Testing Notes
 
@@ -5132,7 +5169,7 @@ All CSS statements are used when testing the application in full (every page and
 
 ![Section Divider: Testing and Validation, and Continuous Delivery and Deployment](documentation/section%20divider.png)
 
-## Continuous Delivery and Deployment (Deployment)
+## Continuous Delivery and Deployment
 
 ### Development and Test Cycle
 
@@ -5228,12 +5265,18 @@ Book Repository - Review Applications: created with unique URL's for each Merge 
 ### Lessons Learned
 The Code Institute's Diploma course on Full Stack Development provided an introduction to Python and the Flask Framework and Jinja that I've added to in terms of both increase in knowledge and improvement of skills.
 
+The new skills I've gained are documented throughout this document. Some gained through online sources, some gained through courses like the Flask-Extensions course, and some through self-study and trial-and-error, actually most of it is through trial-and-error. It's the way I learn the best, though tends to be both time-consuming and frustrating yet yields the best results.
 
+I now have the knowledge, skills, and confidence to knock up a full-stack solution in a short space of time thanks to this experience. Despite the many shortcomings of the Flask micro-framework, I've come to appreciate its versatility and flexibility. I also find myself liking Python a lot too, as well as the benefits of MongoEngine ODM with MongoDB.
 
 ### Acknowledgements
 
-The Diploma in Full Stack Development provides a great foundation of tools and technologies used to work as a professional developer. It's a case of being a Jack-of-All-Trades, and a Master of None (or Some). It's up to each developer to expand upon the knowledge and skills acquired during the course through additional self-study of elements covered as a part of the course as well as other frameworks, languages, tools, methodologies,  processes, and solutions.
+The Diploma in Full Stack Development provides a great foundation of tools and technologies used to work as a professional developer. It's a case of being a Jack-of-All-Trades, and a Master of None (or Some). It's up to each developer to expand upon the knowledge and skills acquired during the course through additional self-study of elements covered as a part of the course as well as other frameworks, languages, tools, methodologies, processes, and solutions.
 
 Thank you Code Institute for allowing me on this journey in life!
 
 Thank you Spencer Barriball for your unwavering support!
+
+Thank you Toby for "chucking a goat's eye" on the Book Repository despite your busy schedule!
+
+Thank you Code Institute peer-code-reviewers (you all know who you are) for putting the Book Repository through its paces!
