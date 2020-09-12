@@ -137,6 +137,12 @@ The Book Repository is inspired by my own love of books and reading, and my prop
       - [LightHouse PDF's:](#lighthouse-pdf-s-)
       - [Coverage: 'style.css'](#coverage---stylecss-)
   * [Continuous Delivery and Deployment (Deployment)](#continuous-delivery-and-deployment--deployment-)
+    + [Development and Test Cycle](#development-and-test-cycle)
+    + [Technology Stack](#technology-stack)
+    + [Configuration Steps](#configuration-steps)
+    + [Workflow](#workflow)
+    + [Python Flask Requirements](#python-flask-requirements)
+    + [Environments](#environments)
   * [Credits](#credits)
     + [Content](#content)
     + [Media](#media)
@@ -150,7 +156,7 @@ The Book Repository is inspired by my own love of books and reading, and my prop
 ![Section Divider: Title and Business](documentation/section%20divider.png)
 
 ## Business
-The Business goals describe the expected user/reader and site owner goals, and drive the design, development, and deployment of the application which in this case is the Book Repository. The fulfillment of these goals detemine the success of the application.
+The Business goals describe the expected user/reader and site owner goals, and drive the design, development, and deployment of the application which in this case is the Book Repository. The fulfilment of these goals determine the success of the application.
 
 ### External User's Goals
 Readers with libraries and/or stacks of books at home that they would like to catalogue online for easier access and overview, and share their ratings, thoughts and comments on their books with other Book Repository readers.
@@ -158,7 +164,7 @@ Readers with libraries and/or stacks of books at home that they would like to ca
 Seeking and finding inspiration on books to read as found by reading the book comments and ratings by the other readers.
 
 ### Site Owner's Goals
-Inspire readers to find books they might not have heard of, and compel them to buy the books on Amazon or other book outlets, potentially providing comission to the site owner (this is not active as this is an educational project only).
+Inspire readers to find books they might not have heard of, and compel them to buy the books on Amazon or other book outlets, potentially providing commission to the site owner (this is not active as this is an educational project only).
 
 Find new books to read, broadening my horizons, and enjoying the excitement of delving into the mind and perspective of the author.
 
@@ -185,8 +191,6 @@ A Trello Board was used to list the Use Cases and Features, and grew over time a
 
 #### Opportunity Matrices for User Management, Book Repository, Admin Dashboard and Shared Funtions
 
-<!--<details><summary>Please click to expand: Opportunity Matrices - Tables and Scatter Diagrams</summary>-->
-
 ![Opportunity Matrix - User Management - Table](documentation/OppMatrixTable-UserMgmnt.png)
 
 ![Opportunity Matrix - User Management - Scatter](documentation/OppMatrixScatter-UserMgmnt.png)
@@ -209,14 +213,12 @@ A Trello Board was used to list the Use Cases and Features, and grew over time a
 
 ![Opportunity Matrix - Shared Functions - Scatter](documentation/OppMatrixScatter-SharedFunctions.png)
 
-<!--</details>-->
-
-[Initial thoughts and plans for the Book Repository](https://github.com/NaoiseGaffney/BookRepository/wiki/Initial-Project-Design-Thoughts---have-since-changed-with-new-knowledge-and-skills.) The initial plan (scribbled on an A4) is similar to the end result in terms of user outcomes and high-level functions, however, it changed as I wrote things down on the Trello Board and researched some of the technology choices and their capabilities, as technical, functional, and skill contstraints emerged.
+[Initial thoughts and plans for the Book Repository](https://github.com/NaoiseGaffney/BookRepository/wiki/Initial-Project-Design-Thoughts---have-since-changed-with-new-knowledge-and-skills.) The initial plan (scribbled on an A4) is similar to the end result in terms of user outcomes and high-level functions, however, it changed as I wrote things down on the Trello Board and researched some of the technology choices and their capabilities, as technical, functional, and skill constraints emerged.
 
 ### User Stories, Use Cases, and Tasks Mapped to Information Architecture and Navigation
 The User Experience links the Business goals of the external user and site owner to a number of user stories. A user story captures a description of a software feature from an end-user perspective. A user story describes the type of user, what they want and why. A use case is a list of actions or event steps describing the interactions between a role and a system to achieve a goal.
 
-A user story has one or more use cases with one or more tasks with steps associated with it, describing how the user story, and subsequent fulfillment of the external user's and site owner's business goals are realised: Business Goals -> User Story -> Use Case(s) -> Task(s).
+A user story has one or more use cases with one or more tasks with steps associated with it, describing how the user story, and subsequent fulfilment of the external user's and site owner's business goals are realised: Business Goals -> User Story -> Use Case(s) -> Task(s).
 
 Information Architecture is sequential with modals, leading the user/reader along at every stage. The navigation bar provides a different set of options depending on the role (user or Admin), and whether authenticated or not. The breadcrumbs provide the "trodden path", making it easy to get back to where the user/reader started while also clarifying where they are (please note, once signed in, the Landing/Home Page redirects to the Member's Page). On pages with many books (Member's Page, Search Results Page) and many users/readers (Admin Page) pagination navigation is provided at the top of the book stack/user table to either select a page directly or go through them using the < (previous page) and (next page) >.
 
@@ -226,25 +228,25 @@ Information Architecture is sequential with modals, leading the user/reader alon
 
 * **User Story 001 (User/Reader):** as a new user/reader I want to join the Book Repository to store details about my books so that I can share them with a wider audience.
 	* **Use Case 001-001 (C in User CRUD):** as a new user/reader I want to register an account with the Book Repository.
-		*  **Tasks 1:** [Book Repository Home/Landing Page](https://book-repository-virtual.herokuapp.com/) -> read and accept the Consent Cookie (optional) -> click on Register in the naviagtion bar or the hamburger-menu followed by Register [Register](https://book-repository-virtual.herokuapp.com/user/register) -> fill in the form: username, email address, password, password confirmation, and click on the Register button -> if successful: a success Flash message, otherwise a danger Flash message.
+		*  **Tasks 1:** [Book Repository Home/Landing Page](https://book-repository-virtual.herokuapp.com/) -> read and accept the Consent Cookie (optional) -> click on Register in the navigation bar or the hamburger-menu followed by Register [Register](https://book-repository-virtual.herokuapp.com/user/register) -> fill in the form: username, email address, password, password confirmation, and click on the Register button -> if successful: a success Flash message, otherwise a danger Flash message.
 		*  **Tasks 2:** a confirmation email with a link is sent to the email address specified during registration -> click on the link -> you're accepted and signed in at the same time -> Member's Page -> two success Flash messages, one for registration and one for sign in.
 	*  **Use Case 001-002:** as a user/reader I want to Sign In to the Book Repository to access my stack of books.
 		*  **Tasks 1:** [Book Repository Home/Landing Page](https://book-repository-virtual.herokuapp.com/) -> read and accept the Consent Cookie (optional) -> click on Sign In in the navigation bar or the hamburger-menu followed by Sign In [Sign In](https://book-repository-virtual.herokuapp.com/user/sign-in) -> enter your username and password (the same credentials used when registering), click on the Remember Me box (optional), and click on the Sign In button -> success Flash message and [Member's Page](https://book-repository-virtual.herokuapp.com/members).
 	*  **Use Case 001-003:** as a user/reader I want to reset my password as I have forgotten it.
-		*  **Tasks 1:** [Book Repository Home/Landing Page](https://book-repository-virtual.herokuapp.com/) -> read and accept the Consent Cookie (optional) -> click on Sign In in the navigation bar or the hamburger-menu followed by Sign In [Sign In](https://book-repository-virtual.herokuapp.com/user/sign-in) -> click on [Forgot Your Password?](https://book-repository-virtual.herokuapp.com/user/forgot-password) -> enter your email address, the same one you used o register your acccount and click on the Send Reset Password Email button -> success Flash message.
+		*  **Tasks 1:** [Book Repository Home/Landing Page](https://book-repository-virtual.herokuapp.com/) -> read and accept the Consent Cookie (optional) -> click on Sign In in the navigation bar or the hamburger-menu followed by Sign In [Sign In](https://book-repository-virtual.herokuapp.com/user/sign-in) -> click on [Forgot Your Password?](https://book-repository-virtual.herokuapp.com/user/forgot-password) -> enter your email address, the same one you used o register your account and click on the Send Reset Password Email button -> success Flash message.
 		*  **Tasks 2:** a password reset email is sent to the provided email address, provided it exists in the Book Repository -> click on the password link to reset your password or ignore if you don't need to reset your password -> [Reset Password](https://book-repository-virtual.herokuapp.com/user/reset-password/...) -> enter your new password, retype your new password to confirm, and click on the Change Password button -> success Flash message and [Member's Page](https://book-repository-virtual.herokuapp.com/members).
 		*  **Tasks 3:** an email confirming your password change is sent to the email address you provided -> if you initiated the password change, do nothing, otherwise click on the "click here to reset it" link.
 
 ---
 
-*  **User Story 002 (User/Reader):** as a user/reader I want the ability to manage my user profile so that I can have the best possible user/reader exeperience.
+*  **User Story 002 (User/Reader):** as a user/reader I want the ability to manage my user profile so that I can have the best possible user/reader experience.
 	*  **Use Case 002-001 (U in User CRUD):** as a user/reader I want to update my user profile.
 		*  **Tasks 1:** [Member's Page](https://book-repository-virtual.herokuapp.com/members) -> click on the user profile (username) on the navigation bar [Edit User Profile](https://book-repository-virtual.herokuapp.com/user/edit_user_profile) -> add/edit your First and Last Name, click on the Update button -> success Flash message and [Member's Page](https://book-repository-virtual.herokuapp.com/members).
 	*  **Use Case 002-002 (U in User CRUD):** as a user/reader I want to change my password.
 		*  **Tasks 1:** [Member's Page](https://book-repository-virtual.herokuapp.com/members) -> click on the user profile (username) on the navigation bar [Edit User Profile](https://book-repository-virtual.herokuapp.com/user/edit_user_profile) -> click on [Change Password](https://book-repository-virtual.herokuapp.com/user/change-password) -> enter your current/old password, your new password, retype your new password for confirmation, and click on the Change Password button -> success Flash message and [Member's Page](https://book-repository-virtual.herokuapp.com/members).
 		*  **Tasks 2:** an email is sent to the user's/reader's email address, confirming the password change -> if the password change wasn't initiated by the user/reader they can click on the link in the email to change the password.
 	*  **Use Case 002-003 (D in User CRUD):** as a user/reader I want to delete my account.
-		*  **Tasks 1:** [Member's Page](https://book-repository-virtual.herokuapp.com/members) -> click on the user profile (username) on the navigation bar [Edit User Profile](https://book-repository-virtual.herokuapp.com/user/edit_user_profile) -> click on [Delete User](https://book-repository-virtual.herokuapp.com/user/edit_user_profile#delete_user) -> click on yes to permanetly delete the user/reader and associated books from the Book Repository or no to close the delete user modal -> success Flash message [Landing/Home Page](https://book-repository-virtual.herokuapp.com/index.html).
+		*  **Tasks 1:** [Member's Page](https://book-repository-virtual.herokuapp.com/members) -> click on the user profile (username) on the navigation bar [Edit User Profile](https://book-repository-virtual.herokuapp.com/user/edit_user_profile) -> click on [Delete User](https://book-repository-virtual.herokuapp.com/user/edit_user_profile#delete_user) -> click on yes to permanently delete the user/reader and associated books from the Book Repository or no to close the delete user modal -> success Flash message [Landing/Home Page](https://book-repository-virtual.herokuapp.com/index.html).
 
 ---
 
@@ -277,11 +279,11 @@ Information Architecture is sequential with modals, leading the user/reader alon
 
 ![Information Architecture and Navigation - Admin Dashboard](documentation/IA%20Nav%20-%20Admin%20Dashboard.png)
 
-*  **User Story 005 (User 'admin' and user/reader with Admin Role):** as an admin or user/reader with the Admin Role I want to manage the users, genres, books, and statistics so that I can provide the best possible Book Repository experince for the users/readers.
+*  **User Story 005 (User 'admin' and user/reader with Admin Role):** as an admin or user/reader with the Admin Role I want to manage the users, genres, books, and statistics so that I can provide the best possible Book Repository experience for the users/readers.
 	*  **Use Case 005-001 (R in Admin User CRUD):** as an admin I want to view the users/readers in the Book Repository.
 		*  **Tasks 1:** [Member's Page](https://book-repository-virtual.herokuapp.com/members) -> click on [Admin Page](https://book-repository-virtual.herokuapp.com/admin_dashboard) -> view the paginated table (10 users per page) and navigate between the pages using the < > and the page numbers -> click on a user/reader link -> view: active/inactive status, first and last name, password (hidden and hashed), and email address, and click on the Cancel button to get back to [Admin Page](https://book-repository-virtual.herokuapp.com/admin_dashboard).
 	*  **Use Case 005-002 (U in Admin User CRUD):** as an admin I want to update the user/readers details in the Book Repository.
-		*  **Tasks 1:** [Member's Page](https://book-repository-virtual.herokuapp.com/members) -> click on [Admin Page](https://book-repository-virtual.herokuapp.com/admin_dashboard) -> view the paginated table (10 users per page) and navigate between the pages using the < > and the page numbers -> click on a user/reader link -> view: active/inactive status, first and last name, password (hidden and hashed), and email address -> update the form fields: activate/deactivate (inactive) user/reader (inactive = user/reader can't sign in), first and last name, password and retype password (once submitted the new password is hashed), and email address, and click on the Update button when done or Cancel button if no updates are required -> sucess Flash message and [Admin Page](https://book-repository-virtual.herokuapp.com/admin_dashboard).
+		*  **Tasks 1:** [Member's Page](https://book-repository-virtual.herokuapp.com/members) -> click on [Admin Page](https://book-repository-virtual.herokuapp.com/admin_dashboard) -> view the paginated table (10 users per page) and navigate between the pages using the < > and the page numbers -> click on a user/reader link -> view: active/inactive status, first and last name, password (hidden and hashed), and email address -> update the form fields: activate/deactivate (inactive) user/reader (inactive = user/reader can't sign in), first and last name, password and retype password (once submitted the new password is hashed), and email address, and click on the Update button when done or Cancel button if no updates are required -> success Flash message and [Admin Page](https://book-repository-virtual.herokuapp.com/admin_dashboard).
 	*  **Use Case 005-003 (D in Admin User CRUD):** as an admin I want to delete the user/reader and associated books permanently.
 		*  **Tasks 1:** [Member's Page](https://book-repository-virtual.herokuapp.com/members) -> click on [Admin Page](https://book-repository-virtual.herokuapp.com/admin_dashboard) -> view the paginated table (10 users per page) and navigate between the pages using the < > and the page numbers -> click on a user/reader link -> view: active/inactive status, first and last name, password (hidden and hashed), and email address -> click on the Delete button (there is no "Are you sure?" modal) or Cancel button if no deletion is required -> success Flash message and [Admin Page](https://book-repository-virtual.herokuapp.com/admin_dashboard).
 	*  **Use Case 005-004 (C in Genre CRUD):** as an admin I want to load the 'genre.json' file (book genres) to the Genre Collection so that they can be used by the users/readers when adding, updating, and viewing books.
@@ -293,7 +295,7 @@ Information Architecture is sequential with modals, leading the user/reader alon
 		*  **Tasks 1:** (optional) update the 'book.json' file to suit your Book Repository requirements.
 		*  **Tasks 2:** [Member's Page](https://book-repository-virtual.herokuapp.com/members) -> click on [Admin Page](https://book-repository-virtual.herokuapp.com/admin_dashboard) -> hover over the drop-down (category icon) menu and click on the Load Books button -> if the Book Collection already exists a Flash message will say so, otherwise a Flash message will say successful creation and [Admin Page](https://book-repository-virtual.herokuapp.com/admin_dashboard).
 	*  **Use Case 005-007 (R in Statistics CRUD):** as an admin I want to view the number of users, number of books, and the most popular genres in the Book Repository.
-		*  **Tasks 1:** [Member's Page](https://book-repository-virtual.herokuapp.com/members) -> click on [Admin Page](https://book-repository-virtual.herokuapp.com/admin_dashboard) -> hover over the drop-down (category icon) menu and click on the Statistics button -> scroll through the statitics and click on the Done button to close the modal -> [Admin Page](https://book-repository-virtual.herokuapp.com/admin_dashboard).
+		*  **Tasks 1:** [Member's Page](https://book-repository-virtual.herokuapp.com/members) -> click on [Admin Page](https://book-repository-virtual.herokuapp.com/admin_dashboard) -> hover over the drop-down (category icon) menu and click on the Statistics button -> scroll through the statistics and click on the Done button to close the modal -> [Admin Page](https://book-repository-virtual.herokuapp.com/admin_dashboard).
 
 ![Section Divider: Title and Business](documentation/section%20divider.png)
 
@@ -301,11 +303,11 @@ Information Architecture is sequential with modals, leading the user/reader alon
 The design decisions cover the look-and-feel, typography, colour scheme, forms, buttons, navigation elements, tooltips and more. They put "lipstick-on-the-pig", in other words make the Book Repository application appealing to and easy-to-use for a user/reader. They make the functions come alive and provide information and interaction with the user/reader.
 
 ### Design Decisions Overview
-Flask-User uses Bootstrap-3 by defualt, a CSS Framework, I've opted for [Materialize 1.0.0](https://materializecss.com/) instead as it provides a clean, crisp look and is based on principles of Material Design. While there is a Flask extension called Flask-Materialize, it's based on a previous version of Materialize and doesn't offer the same stable features as a result, nor is it as flexible as using Materialize in this way. It also means that JavaScript is used to initialise the features, and doesn't rely on jQuery which improves performance, and jQuery doesn't need to be loaded.
+Flask-User uses Bootstrap-3 by default, a CSS Framework, I've opted for [Materialize 1.0.0](https://materializecss.com/) instead as it provides a clean, crisp look and is based on principles of Material Design. While there is a Flask extension called Flask-Materialize, it's based on a previous version of Materialize and doesn't offer the same stable features as a result, nor is it as flexible as using Materialize in this way. It also means that JavaScript is used to initialise the features, and doesn't rely on jQuery which improves performance, and jQuery doesn't need to be loaded.
 
 [Material Icons](https://material.io/resources/icons/?style=baseline) are used too, for their clean, crisp look. They work well together with the CSS Framework Materialize 1.0.0.
 
-The Forms and Fields follow the same look-and-feel consistenly across the Book Repository. The base is Materialize 1.0.0, the icons used are Material Icons, each field has a descriptive label that moves out-of-the-way when the field is selected, and each icon has a hover-tooltip to explain the field's purpose.
+The Forms and Fields follow the same look-and-feel consistently across the Book Repository. The base is Materialize 1.0.0, the icons used are Material Icons, each field has a descriptive label that moves out-of-the-way when the field is selected, and each icon has a hover-tooltip to explain the field's purpose.
 
 The colour scheme has changed over time to provide improved contrast and user feedback. As a general rule the main colours are blue darken-4 and white, used interchangeably to good effect. Teal lighten-1 is used for success messages and views, pink darken-1 is used for failure and delete, and charcoal is used for information.
 
@@ -329,14 +331,14 @@ Error Handlers are displayed on the 'oops.html' page, the title is in pink darke
 * Responsive Web Design: the Book Repository works across all devices and screen sizes. In fact, it looks somewhat better on mobile device than on the desktop if anything.
 * The colour scheme has changed over the course of the project, aiming to provide a clear and clean user interface with a good contrast.
 * The font used throughout the Book Repository is Raleway, provided by Google Fonts. It's an easy-to-read font on all device/screen sizes and is comfortable to read over long periods of time.
-* The 4 error handlers handle the unfortunate incidents where a user/reader goes astray, or an internal issue has occured. The error handlers provide a means to get back to the Member's Page or Sign Out, as well as an apology for the incident and an explanation of what has occured and potentially why.
+* The 4 error handlers handle the unfortunate incidents where a user/reader goes astray, or an internal issue has occurred. The error handlers provide a means to get back to the Member's Page or Sign Out, as well as an apology for the incident and an explanation of what has occurred and potentially why.
 * The Book Repository logo is easily recognisable and simple in its design. It's a stack of books with the text, "Book Repository".
 
 ### Design Details
 This section describes the visual components in detail, and with examples, to clarify their design and purpose.
 
 #### Typography
-![Book Repository Typgraphy: Raleway Font](documentation/Raleway%20Font.png)
+![Book Repository Typography: Raleway Font](documentation/Raleway%20Font.png)
 
 [Google Fonts: Raleway](https://fonts.google.com/specimen/Raleway#standard-styles)
 
@@ -365,11 +367,11 @@ The buttons are consistent in style and instantly recognisable with both text an
 
 ![Buttons - Primary](documentation/Buttons%20-%20Primary.png)
 
-All buttons are styled the same, with capitalised text on the left and an icon on the right. Primary buttons have a "blue darken-4" background with white text and icon, except for the Delete (Delete User) button in the Admin Dahsboard User Modal as it doesn't have a "Are you sure you wish to do this?" feature.
+All buttons are styled the same, with capitalised text on the left and an icon on the right. Primary buttons have a "blue darken-4" background with white text and icon, except for the Delete (Delete User) button in the Admin Dashboard User Modal as it doesn't have a "Are you sure you wish to do this?" feature.
 
 ![Buttons - Secondary (drop-down)](documentation/Buttons%20-%20Secondary%20(drop-down).png)
 
-The seceondary, drop-down menu buttons have a white background with "blue darken-4" text on the left and icon on the right.
+The secondary, drop-down menu buttons have a white background with "blue darken-4" text on the left and icon on the right.
 
 #### Navigation Bar
 The Navigation Bar is styled the same way as the primary buttons, with white text on the left and icon on the right on a "blue darken-4" background. The Navigation Bar is controlled by the Jinja template 'flask_user_layout.html' where if-else statements check whether the user/reader is authenticated or not, and whether the user is authenticated and has the role of Admin.
@@ -408,7 +410,7 @@ The fixed footer has grey text and a white icon on a blue darken-4 background. T
 The About Modal contains short descriptions on the purpose of the Book Repository, my "ego-page", and a code overview with a link to the GitHub Repository.
 
 #### Background Image
-![Stack of Books on the rigth-hand side by Sharon McCutcheon on Unsplash](static/images/sharon-mccutcheon-eMP4sYPJ9x0-unsplash.jpg)
+![Stack of Books on the right-hand side by Sharon McCutcheon on Unsplash](static/images/sharon-mccutcheon-eMP4sYPJ9x0-unsplash.jpg)
 
 [Sharon McCutcheon - Photographer](https://unsplash.com/@sharonmccutcheon?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText)
 
@@ -484,7 +486,7 @@ The features are divided into 4 main areas, User Management, Book Repository (th
 ![Book Repository - Context/Container C4 Diagram](out/documentation/book_repository_container/book_repository_container.png)
 
 ### Existing Features
-Features currrently implemented as a part of the Book Repository.
+Features currently implemented as a part of the Book Repository.
 
 #### User Management:
 
@@ -499,7 +501,7 @@ Features currrently implemented as a part of the Book Repository.
 #### Book Repository:
 
 * Member's Page with:
-	* The user's/reader's virtual stack of books to ilicit the same feeling as walking into a library at home, or a public library.
+	* The user's/reader's virtual stack of books to elicit the same feeling as walking into a library at home, or a public library.
 	* The ability to view the stack, the book details, edit/update a book, and delete a book (RUD in Book CRUD).
 	* The ability to add a new book via the drop-down menu (C in Book CRUD).
 	* The ability to search for books via the drop-down menu (R in Book CRUD).
@@ -512,7 +514,7 @@ Features currrently implemented as a part of the Book Repository.
 * Search Books with (R in Book CRUD):
 	* The ability to search for public (all books except those marked private/hidden) or private (own books).
 	* The ability to search for books using ISBN.
-	* The ability to search for books using a combinaition to title (partial or full) and author (partial or full), rating equal to or greater than, and genre (none or 1 of 32).
+	* The ability to search for books using a combination to title (partial or full) and author (partial or full), rating equal to or greater than, and genre (none or 1 of 32).
 * Search Books Results with:
 	* The ability to browse and view books matching the search criteria.
 	* The ability to edit/update books belonging to the current user/reader (books belonging to other users/readers can't be edited/updated, nor deleted).
@@ -522,7 +524,7 @@ Features currrently implemented as a part of the Book Repository.
 * Admin Page with:
 	* User Management table, User, Full Name, Active, E-mail.
 		* User modal to update user details, set user to active/inactive, and permanently deleter the user/reader and associated books (RUD in User CRUD).
-		* Load Genres via the drop-down menu in case the genres collection wasn't created by the first access to the Landind Page or was accidentally deleted  (C in Book Genre CRUD).
+		* Load Genres via the drop-down menu in case the genres collection wasn't created by the first access to the Landing Page or was accidentally deleted  (C in Book Genre CRUD).
 		* Load Books via the drop-down menu to load a sample of 28 books to populate the Book Repository and use for testing purposes (C in Book CRUD).
 		* List Genres, to view the 32 genres and their description. Future feature to add, update, and delete genres here (R in Book Genre CRUD).
 		* Book Repository Statistics via the drop-down menu to vie the number of users, number of books, and number of books in each genre (R in Statistics CRUD).
@@ -584,11 +586,11 @@ Future features are planned features that didn't make it into this first release
 
 
 #### Wireframes and Visuals
-The initial wireframe diagram describes the first draft of the Book Repository. Further research and education formed the next release of the Book Repository, the wireframe diagrams below. The Book Reposiory changed over time, as increased knowledge and improved skills were gained, and as the development inspired further improvements.
+The initial wireframe diagram describes the first draft of the Book Repository. Further research and education formed the next release of the Book Repository, the wireframe diagrams below. The Book Repository changed over time, as increased knowledge and improved skills were gained, and as the development inspired further improvements.
 
-Trying to come up with all the features up-front leads either to "Paralysis by analysis" or a  severly limited list of features not likely to satisfy any client requirements and needs. The backlog developed over time after each iteration inspired further items to be added to the backlog as the undersanding of the next feature or function to staisfy the overall requirements became clear.
+Trying to come up with all the features up-front leads either to "Paralysis by analysis" or a  severely limited list of features not likely to satisfy any client requirements and needs. The backlog developed over time after each iteration inspired further items to be added to the backlog as the understanding of the next feature or function to satisfy the overall requirements became clear.
 
-<details><summary>Please click to expand: Wireframes and Visuals</summary>
+<!--<details><summary>Please click to expand: Wireframes and Visuals</summary>-->
 
 ##### Initial Wireframe Diagram of the Book Repository
 
@@ -634,7 +636,7 @@ Trying to come up with all the features up-front leads either to "Paralysis by a
 
 ![Visual: Admin Dashboard](documentation/Book%20Repository/V%20-%20Admin%20Dashboard.png)
 
-</details>
+<!--</details>-->
 
 ##### Visual Design, Information Architecture and Navigation
 These diagrams correspond to the similar diagrams in the User Experience (User Story) section above and are screenshots from the Production application.
@@ -681,7 +683,7 @@ APPDEBUG = ON
 
 ##### 'config.py'
 
-'config.py' loads the variables from the '.env' file. The secret key is loaded for use by the itdangerous library and sessions. The Book Repository URI to MongoDB Atlas is next (user, password, and database name). Flask-User settings configuring the features to enable, and the mail parameters (GMail) for registration confirmation and password reset. Flask Session settings to enable strong protection and use of HTTPS only, as well as setting the timeout for the "Remember Me" function. Please note that there might still be a vulnerability in this that may be remedied by using Flask-Paranoid (future feature).
+'config.py' loads the variables from the '.env' file. The secret key is loaded for use by the itsdangerous library and sessions. The Book Repository URI to MongoDB Atlas is next (user, password, and database name). Flask-User settings configuring the features to enable, and the mail parameters (Gmail) for registration confirmation and password reset. Flask Session settings to enable strong protection and use of HTTPS only, as well as setting the timeout for the "Remember Me" function. Please note that there might still be a vulnerability in this that may be remedied by using Flask-Paranoid (future feature).
 
 <details><summary>Please click to expand: 'config.py'</summary>
 
@@ -754,9 +756,9 @@ load_dotenv(dotenv_path=env_path)
 ```
 </details>
 
-**Application Factory Setup:** [based on the Flask-User example for MongoDB](https://flask-user.readthedocs.io/en/latest/mongodb_app.html). `from config import ConfigClass` loads the varibles defined in 'config.py' which gets most variables from '.env', and is used by `app.config.from_object(__name__ + ".ConfigClass")`.
+**Application Factory Setup:** [based on the Flask-User example for MongoDB](https://flask-user.readthedocs.io/en/latest/mongodb_app.html). `from config import ConfigClass` loads the variables defined in 'config.py' which gets most variables from '.env', and is used by `app.config.from_object(__name__ + ".ConfigClass")`.
 
-The end checks that all the variables that are crucial to the Book Respository are defined, and if not raise and exception (application won't run). There is also a check to see whether the application is running in debug mode or not. By default, debug is off, unless specifically turned on by `APPDEBUG = ON`. This means it won't be turned on by mistake on Heroku in Production.
+The end checks that all the variables that are crucial to the Book Repository are defined, and if not raise and exception (application won't run). There is also a check to see whether the application is running in debug mode or not. By default, debug is off, unless specifically turned on by `APPDEBUG = ON`. This means it won't be turned on by mistake on Heroku in Production.
 
 <details><summary>Please click to expand: 'app.py' Code Snippet for the Application Factory Setup</summary>
 
@@ -804,9 +806,9 @@ if __name__ == "__main__":
 
 </details>
 
-**MongoDB Connection:** ODM (Object Document Mapper) Flask-MongoEngine/MongoEngine is used to perform the CRUD operations in MongoDB. This is preferred to using PyMongo directly as it's easier to use once the database schema is created to suit this approach (requires a bit of thought and changes during the development process). I can concentrate on the application logic, as opposed to spending time and effort on databse operations. However, as neither Flask-MongoEngine nor MongoEngine have a lot of documented examples this turned out initially not to be true. I've spent countless hours scouring Stackoverflow, YouTube, Programiz, MongoEngine documentation, googling, and trial-and-error testing to understand Flask-MongoEngine and MongoEngine. Strangely enough I found the most elucidating documentation in the Django Framework. Now that I know it well I can concentrate on the application logic... :-)
+**MongoDB Connection:** ODM (Object Document Mapper) Flask-MongoEngine/MongoEngine is used to perform the CRUD operations in MongoDB. This is preferred to using PyMongo directly as it's easier to use once the database schema is created to suit this approach (requires a bit of thought and changes during the development process). I can concentrate on the application logic, as opposed to spending time and effort on database operations. However, as neither Flask-MongoEngine nor MongoEngine have a lot of documented examples this turned out initially not to be true. I've spent countless hours scouring Stackoverflow, YouTube, Programiz, MongoEngine documentation, googling, and trial-and-error testing to understand Flask-MongoEngine and MongoEngine. Strangely enough I found the most elucidating documentation in the Django Framework. Now that I know it well I can concentrate on the application logic... :-)
 
-'config.py' contains the MongoDB URI (databse, user, passsword) loaded from the environment variable ('.env') and is used during db setup in 'app.py'.
+'config.py' contains the MongoDB URI (database, user, password) loaded from the environment variable ('.env') and is used during db setup in 'app.py'.
 
 The beauty of using the ODM MongoEngine is that the database is created dynamically, it's collections on an as-per-needed basis which makes development easier as I can drop a collection or database only to have it reappear, created by MongoEngine again.
 
@@ -877,9 +879,9 @@ app.session_interface = MongoEngineSessionInterface(db)
 
 </details>
 
-**Application Log:** Rotating File Handler and Heroku Console. If the app is running locally it uses the Rotating File Log Handler as it's easier to read logs in a log file than on a console. Heroku doesn't approve of log files, prefering it's own console or one of several paid for logging applications. Log files are key to perform root cause and impact analysis over time, and a future feature of the Admin Dashboard of the Book Repository is to view log events related to a specific user filtered by date, time, and severity. Being able to trace a user's/reader's path through the application to the event of the fault is key to root cause analysis.
+**Application Log:** Rotating File Handler and Heroku Console. If the app is running locally it uses the Rotating File Log Handler as it's easier to read logs in a log file than on a console. Heroku doesn't approve of log files, preferring its own console or one of several paid for logging applications. Log files are key to perform root cause and impact analysis over time, and a future feature of the Admin Dashboard of the Book Repository is to view log events related to a specific user filtered by date, time, and severity. Being able to trace a user's/reader's path through the application to the event of the fault is key to root cause analysis.
 
-The log level is set by an environment variable (LOGGING_LEVEL), which makes it easy to modify when furhter analysis and testing is required.
+The log level is set by an environment variable (LOGGING_LEVEL), which makes it easy to modify when further analysis and testing is required.
 
 <details><summary>Please click to expand: 'app.py' Code Snippet for the Application Log</summary>
 
@@ -939,7 +941,7 @@ if os.environ.get("FDT") == "ON":
 
 `from flask_user import login_required, UserManager, UserMixin, current_user, roles_required` enables the user functions of Flask-User.
 
-Book colletion contains the books added by users/readers and its schema is defined by me. book.user = user.username to link the book to the user/reader that added the book.
+Book collection contains the books added by users/readers and its schema is defined by me. book.user = user.username to link the book to the user/reader that added the book.
 
 All collections have a meta tag, `"auto_create_index": True,` which ensures indexing is performed (default, paranoia-setting), `"index_background": True,` ensures the indexing is performed in the background for performance reasons (once the repository grows), `"indexes": ["..."]` creates an additional index to speed up read access, and `"ordering": ["..."]` orders the documents in the collection by whatever field is defined (for example, no sorting required when listing the book genres).
 
@@ -1042,7 +1044,7 @@ At a high level the following sections make up this template:
 	* materialize.js to auto-initialize Materialize CSS 1.0.0 functions.
 	* Flash message chip timeout, message.js.
 	* Osano Consent Cookie JavaScript.
-	* Osano Concent Cookie configuration, cookies.js.
+	* Osano Consent Cookie configuration, cookies.js.
 
 <details><summary>Please click to expand: 'app.py' Code Snippet for flask\_user\_layout.html</summary>
 
@@ -1133,7 +1135,7 @@ At a high level the following sections make up this template:
                 </ul>
             </div>
         </nav>
-        <!-- Naviagtion for Mobile devices using a "Hamburger-menu" which must be defined outside of <nav></nav> to function in Materialize 1.0.0 -->
+        <!-- Navigation for Mobile devices using a "Hamburger-menu" which must be defined outside of <nav></nav> to function in Materialize 1.0.0 -->
         <ul class="sidenav blue darken-4" id="mobile-links">
             {% if call_or_get(current_user.is_authenticated) %}
             {% if "Admin" in current_user.roles %}
@@ -1411,7 +1413,7 @@ def home_page():
 
 The Member's Page book stack is populated once the user/reader is authenticated. If no books, the user/reader is requested to add a book.
 
-If there are 8 or more books the results are paginated `books_pagination = Book.objects.filter(user=current_user.username).paginate(page=page, per_page=7)` and for navigation purposes `return render_template("members.html", books_pagination=books_pagination, page_prev=(page - 1), page_next=(page + 1), genre_list=genre_list)` the paginated results, as well as the previous and next pages are provided to the Jinja template. The template uses a macro to create the page numbers (from the Flask-MongoEngine documentation) and I've added the prevous next feature and styling.
+If there are 8 or more books the results are paginated `books_pagination = Book.objects.filter(user=current_user.username).paginate(page=page, per_page=7)` and for navigation purposes `return render_template("members.html", books_pagination=books_pagination, page_prev=(page - 1), page_next=(page + 1), genre_list=genre_list)` the paginated results, as well as the previous and next pages are provided to the Jinja template. The template uses a macro to create the page numbers (from the Flask-MongoEngine documentation) and I've added the previous next feature and styling.
 
 The breadcrumbs describe the path taken to get to here, and pending on whether the user is authenticated or not the "Home Page" is either clickable or not (authenticated).
 
@@ -1421,7 +1423,7 @@ The books are populated in Materialize 1.0.0 collapsible popout elements with th
 
 The book details contain the hidden/open status of the book (hidden from public book searches or not), reader (user field in the book document), published, ISBN and ISBN link to ISBN Search, rating (from 1 to 10) and a colour indicator, genre (from the genre collection), description (book description), and comments (user/reader) comments.
 
-The drop-down menu has three buttons, Add Book, Seach Books, and List Genres (modal with a table).
+The drop-down menu has three buttons, Add Book, Search Books, and List Genres (modal with a table).
 
 The book title link to Amazon UK and the ISBN link to ISBN Search have a tooltip to describe the link.
 
@@ -1617,7 +1619,7 @@ members.html
 
 `add_book()` gets the list of book genres and renders the `add_book.html` template with a form of fields to fill in. Once the fields are filled in and the add book button is clicked, `save_book()` is called.
 
-`save_book()` gets the form fields and saves them to the object `book`. A request payload is created with the `GOOGLE_API_KEY` and ISBN used as the search criteria from the Google Books API. If a front cover thumbnail images exists it'll be used, otherwise a default Book Repository logo is used instead. The returned link from the Google Books API uses `http://` and is replaced by `https://` to ensure secure links are used throuhgout the Book Repository.
+`save_book()` gets the form fields and saves them to the object `book`. A request payload is created with the `GOOGLE_API_KEY` and ISBN used as the search criteria from the Google Books API. If a front cover thumbnail images exists it'll be used, otherwise a default Book Repository logo is used instead. The returned link from the Google Books API uses `http://` and is replaced by `https://` to ensure secure links are used throughout the Book Repository.
 
 The user/reader is made aware of the result through a Flash message and the event is logged.
 
@@ -2027,7 +2029,7 @@ edit\_book.html
 
 'app.py' delete\_book(\<book\_id>)
 
-`delete_book()` takes the book id and opens up the delete book modal where the user/reader can click on yes to delete the book or no to keep it (close the delete book modal). Before the book is permanently deleted it's checked to see that the current user/reader is the owner of the book (to avoid someone else deleteing a book by changing the book\_id in the URL).
+`delete_book()` takes the book id and opens up the delete book modal where the user/reader can click on yes to delete the book or no to keep it (close the delete book modal). Before the book is permanently deleted it's checked to see that the current user/reader is the owner of the book (to avoid someone else deleting a book by changing the book\_id in the URL).
 
 The user/reader is made aware of the result through a Flash message and the event is logged.
 
@@ -2571,7 +2573,7 @@ def delete_user():
 
 `admin_dashboard(page=1)` loads the paginated results of the users/readers in the Book Repository, as well as the previous and next page for the pagination navigation.
 
-For the statistics modal the book collection genres is iterated through and for each new genre, the genre is added to the dictionary and the initial value set to one. If the genre exists it's incremented by one. Once all exisitng genres are iterated through, the dictionary is sorted by the greatest number of genres in descending order. I discoverd a bug here, which is why I assign the results to `tuple_in_right_order`. Not doing so results in an incorrect order, one that seems to occur when the results are provided to the template.
+For the statistics modal the book collection genres is iterated through and for each new genre, the genre is added to the dictionary and the initial value set to one. If the genre exists it's incremented by one. Once all existing genres are iterated through, the dictionary is sorted by the greatest number of genres in descending order. I discovered a bug here, which is why I assign the results to `tuple_in_right_order`. Not doing so results in an incorrect order, one that seems to occur when the results are provided to the template.
 
 The results are added to a table with a modal to update the user/reader profile.
 
@@ -2830,7 +2832,7 @@ admin\_dashboard.html
 
 'app.py' update\_user(user_id)
 
-`update_user()` saves the changes to the user/reader profile, however, performs validations before doing so. Validate the the admin account isn't deactivated (not possible through the form) though may be possible through modification of the URL. Password validation is performed to ensure it's a valid password change.
+`update_user()` saves the changes to the user/reader profile, however, performs validations before doing so. Validate the admin account isn't deactivated (not possible through the form) though may be possible through modification of the URL. Password validation is performed to ensure it's a valid password change.
 
 The admin is made aware of the result through a Flash message and the event is logged.
 
@@ -3263,6 +3265,7 @@ class ConfigClass(object):
 register.html
 
 ```
+
 {% extends 'flask_user/_public_base.html' %}
 
 {% block content %}
@@ -3274,7 +3277,7 @@ register.html
 </h6>
 
 
-<form action="" method="POST" novalidate formnovalidate class="form" role="form">
+<form method="POST" novalidate class="form">
     <div class="field_top_padding">
         {{ form.hidden_tag() }}
         {% set field = form.username if user_manager.USER_ENABLE_USERNAME else form.email %}
@@ -3316,6 +3319,7 @@ register.html
 <p><a href="{{ url_for('user.login') }}">Already registered? Sign in.</a></p>
 {% endif %}
 {% endblock %}
+
 ```
 
 </details>
@@ -3699,9 +3703,9 @@ Sign Out logs out the user/reader and redirects to the Landing / Home Page.
 
 The CSS is short as most of the layout and styling of the Book Repository is handled using Materialize 1.0.0.
 
-style.css ensures a consistent use of the UX Design and Colopur Scheme, and consists of the following main sections:
+style.css ensures a consistent use of the UX Design and Colour Scheme, and consists of the following main sections:
 
-* Main Styling and Layout: resetting values and the main styling, configuring the background image, importing the Google Font Raleway, configuring the link (<a href...) colour, andthe pagination style.
+* Main Styling and Layout: resetting values and the main styling, configuring the background image, importing the Google Font Raleway, configuring the link (<a href...) colour, and the pagination style.
 * Navigation Bar, Hamburger-bar, and Fixed Footer Styling and Layout: consistent styling in accordance with the UX Design of the navigation and footer elements.
 * Modal Colour Schemes to match the Book Repository UX Design.
 * Message Chips (Flask, MaterializeCSS 1.0.0, custom CSS 3, and a JS Timeout function = Flask Flash Messages).
@@ -4072,7 +4076,7 @@ This table is an overview of the CRUD functions for each feature or role or Mong
 
 '' = not planning to implement CRUD feature
 
-<details><summary>Please click to expand: Features CRUD Table</summary>
+<!--<details><summary>Please click to expand: Features CRUD Table</summary>-->
 
 | Collection or Role or Feature | C | R | U | D | Notes                                                                                                                                                                                                                                                      |
 |-------------------------------|---|---|---|---|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
@@ -4083,18 +4087,18 @@ This table is an overview of the CRUD functions for each feature or role or Mong
 | Admin Statistics              |   | X |   |   | Statistics provided are: number of users/readers, number of books, table of current genres used and number of each in descending order. Future feature includes the number of books and genre per user.                                                    |
 | Application Logs              | X | f |   | X | Application logs provide application endpoint/function information related to each user/reader. In future, viewing these logs, and filtering them per user/reader and severity is useful to identify issues. Rotating logs are deleted after 10 instances. |
 
-</details>
+<!--</details>-->
 
 ### Application Logging and Flash Messaging Levels
-Application logging is key to gather application usage for statistics and planning, for security reasons to detect potential attempts at disrupting the site, for performance planning as the site grows (increased usage and conversion rates) to ensure the use of the Book Repository is always a pleasant exeperience, and for root-cause and impact-analysis in the event of critical issues disrupting the end-user experience.
+Application logging is key to gather application usage for statistics and planning, for security reasons to detect potential attempts at disrupting the site, for performance planning as the site grows (increased usage and conversion rates) to ensure the use of the Book Repository is always a pleasant experience, and for root-cause and impact-analysis in the event of critical issues disrupting the end-user experience.
 
 Flash messaging keeps the users/readers informed (success, info, failure) through continuous feedback as they use the features of the Book Repository.
 
 Python default logging is used, and additional information is attached to the log message to fulfil the above-mentioned application logging requirements. In future the Admin Dashboard will filter application log messages by user/reader, endpoint/function, and severity.
 
-Local development uses a rotating file handler which makes the logs easier to read (colour-coded) and search as they are saved to files. Heroku places constraints on logging, prefering the use of the exisitng application log and paid for logging tools.
+Local development uses a rotating file handler which makes the logs easier to read (colour-coded) and search as they are saved to files. Heroku places constraints on logging, preferring the use of the existing application log and paid for logging tools.
 
-<details><summary>Please click to expand: Application Logging and Flash Messaging Levels Table</summary>
+<!--<details><summary>Please click to expand: Application Logging and Flash Messaging Levels Table</summary>-->
 
 | Logger   | Flash   | Message       | Environments                                                 | Notes                                                                                                                                                    |
 |----------|---------|---------------|--------------------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------|
@@ -4105,17 +4109,17 @@ Local development uses a rotating file handler which makes the logs easier to re
 | Error    |         |               |                                                              |                                                                                                                                                          |
 | Critical | Danger  | Failure       | Heroku Production                                            | Application Log (rotating file logger and console) = Critical. Flash Message = Danger (pink). Book Repository Message in Application Log = Failure.      |
 
-</details>
+<!--</details>-->
 
 ### Book Repository '.env' and Heroku Variables
 These variables are required for the Book Repository functions, such as register confirmation and password reset emails. Some are shared (the same) across all four environments, while some are unique to each environment (for example, the `MONGO_URI_BR` which is the MongoDB URI for each instance).
 
-<details><summary>Please click to expand: '.env' and Heroku Variables Table</summary>
+<!--<details><summary>Please click to expand: '.env' and Heroku Variables Table</summary>-->
 
 | Variables               | Local  | Heroku Review App | Heroku Staging | Heroku Production | Description                                                                                                                          |
 |-------------------------|--------|-------------------|----------------|-------------------|--------------------------------------------------------------------------------------------------------------------------------------|
 | ADMIN\_PASSWORD          | Unique | Unique            | Unique         | Unique            | User 'admin' password used when   creating the 'admin' user on first Home/Landing Page access.                                       |
-| GOOGLE\_API\_KEY          | Shared | Shared            | Shared         | Shared            | Used for the Google Books API to   request the front cover thumbmnail for the book searched using ISBN.                              |
+| GOOGLE\_API\_KEY          | Shared | Shared            | Shared         | Shared            | Used for the Google Books API to   request the front cover thumbnail for the book searched using ISBN.                              |
 | LOGGING\_LEVEL           | Unique | Unique            | Unique         | Unique            | Application log level, for   rotating file log handler and the application log to console.                                           |
 | MAIL\_DEFAULT\_SENDER     | Shared | Shared            | Shared         | Shared            | Flask-User/Mail 'from' email   address for the registration and password reset confirmation emails.                                  |
 | MAIL\_PASSWORD           | Shared | Shared            | Shared         | Shared            | Flask-User/Mail password for the   registration and password reset confirmation emails.                                              |
@@ -4126,29 +4130,29 @@ These variables are required for the Book Repository functions, such as register
 | SECRET\_KEY              | Unique | Unique            | Unique         | Unique            | Secret Key for Flask encryption.                                                                                                     |
 | USER\_EMAIL\_SENDER\_EMAIL | Shared | Shared            | Shared         | Shared            | Flask-User/Mail 'from' email   address for the registration and password reset confirmation emails.                                  |
 | APPDEBUG              | Unique       | Unique        | Unique         | Unique                  | Variable to enable/disable all debugging.                                                                               |
-| FDT                     | Unique |                   |                |                   | Flask Debug Toolbar varibale to   ensure it only runs in local development environment as it contains   clear-text config variables. |
+| FDT                     | Unique |                   |                |                   | Flask Debug Toolbar variable to   ensure it only runs in local development environment as it contains   clear-text config variables. |
 | USERTESTNAME                     | Unique |                   |                |                   | Selenium IDE -> PyTest Variable |
 | USERTESTPASS                     | Unique |                   |                |                   | Selenium IDE -> PyTest Variable |
 | USERTESTPASSNEW                     | Unique |                   |                |                   | Selenium IDE -> PyTest Variable |
 | USERTESTEMAIL                     | Unique |                   |                |                   | Selenium IDE -> PyTest Variable |
 | ADMINTESTPASSWORD                     | Unique |                   |                |                   | Selenium IDE -> PyTest Variable |
 
-</details>
+<!--</details>-->
 
 ### Flask-User and Book Repository Routes
 These routes are either a part of the Flask-User extension or created as a part of the Book Repository. The "y", "n", and "" under each heading (Flask User, Book Repo, User / Reader, Admin) denote the following: "y" = is either implemented by (Flask User or Book Repo) or used by (User/Reader or Admin), "n" = is either implemented by but not used (Flask User or Book Repo) nor used by (User/Reader or Admin), "" = is not implemented by (Flask User or Book Repo) nor used by (User/Reader or Admin).
 
 For example, Flask-User implements user.invite_user, though isn't activated through 'config.py' configuration parameters which is why it's marked as "n".
 
-<details><summary>Please click to expand: Routes / End-points</summary>
+<!--<details><summary>Please click to expand: Routes / End-points</summary>-->
 
 | URL   route                     | Endpoint name                  | HTTP methods             | Flask User | Book Repo | User / Reader | Admin |
 |---------------------------------|--------------------------------|--------------------------|------------|-----------------|-------------|-------|
 | /                               | home\_page                      | GET, HEAD, OPTIONS       |            | y               | y           | y     |
 | /add\_book                       | add\_book                       | GET, HEAD, OPTIONS       |            | y               | y           | y     |
 | /admin\_dashboard                | admin\_dashboard                | GET, HEAD, OPTIONS       |            | y               |             | y     |
-| /admin\_dashboard/<int:page>     | admin\_dashboard                | GET, HEAD, OPTIONS       |            | y               |             | y     |
-| /admin\_delete\_user/<user\_id>    | admin\_delete\_user              | GET, HEAD, OPTIONS       |            | y               |             | y     |
+| /admin\_dashboard/\<int:page>     | admin\_dashboard                | GET, HEAD, OPTIONS       |            | y               |             | y     |
+| /admin\_delete\_user/\<user\_id>    | admin\_delete\_user              | GET, HEAD, OPTIONS       |            | y               |             | y     |
 | /delete\_book/<book\_id>          | delete\_book                    | GET, HEAD, OPTIONS       |            | y               | y           | y     |
 | /delete\_user                    | delete\_user                    | GET, HEAD, OPTIONS       |            | y               | y           | y     |
 | /edit\_book/<book\_id>            | edit\_book                      | GET, HEAD, OPTIONS       |            | y               | y           | y     |
@@ -4157,20 +4161,20 @@ For example, Flask-User implements user.invite_user, though isn't activated thro
 | /load\_books                     | load\_books                     | GET, HEAD, OPTIONS       |            | y               |             | y     |
 | /load\_genres                    | load\_genres                    | GET, HEAD, OPTIONS       |            | y               |             | y     |
 | /members                        | member\_page                    | GET, HEAD, OPTIONS       |            | y               | y           | y     |
-| /members/<int:page>             | member\_page                    | GET, HEAD, OPTIONS       |            | y               | y           | y     |
+| /members/\<int:page>             | member\_page                    | GET, HEAD, OPTIONS       |            | y               | y           | y     |
 | /save\_book                      | save\_book                      | OPTIONS, POST            |            | y               | y           | y     |
 | /save\_search                    | save\_search                    | GET, HEAD, OPTIONS, POST |            | y               | y           | y     |
 | /search\_book                    | search\_book                    | GET, HEAD, OPTIONS       |            | y               | y           | y     |
 | /search\_results                 | search\_results                 | GET, HEAD, OPTIONS, POST |            | y               | y           | y     |
-| /search\_results/<int:page>      | search\_results                 | GET, HEAD, OPTIONS       |            | y               | y           | y     |
-| /static/<path:filename>         | static                         | GET, HEAD, OPTIONS       | y          |                 | y           | y     |
-| /update\_book/<book\_id>          | update\_book                    | OPTIONS, POST            |            | y               | y           | y     |
-| /update\_user/<user\_id>          | update\_user                    | OPTIONS, POST            |            | y               | y           | y     |
+| /search\_results/\<int:page>      | search\_results                 | GET, HEAD, OPTIONS       |            | y               | y           | y     |
+| /static/\<path:filename>         | static                         | GET, HEAD, OPTIONS       | y          |                 | y           | y     |
+| /update\_book/\<book\_id>          | update\_book                    | OPTIONS, POST            |            | y               | y           | y     |
+| /update\_user/\<user\_id>          | update\_user                    | OPTIONS, POST            |            | y               | y           | y     |
 | /user/change-password           | user.change\_password           | GET, HEAD, OPTIONS, POST | y          |                 | y           | y     |
 | /user/change-username           | user.change\_username           | GET, HEAD, OPTIONS, POST | n          |                 | n           | n     |
 | /user/confirm-email/<token>     | user.confirm\_email             | GET, HEAD, OPTIONS       | y          |                 | y           | y     |
 | /user/edit\_user\_profile         | user.edit\_user\_profile         | GET, HEAD, OPTIONS, POST | y          |                 | y           | y     |
-| /user/email/<id>/<action>       | user.email\_action              | GET, HEAD, OPTIONS       | y          |                 | y           | y     |
+| /user/email/\<id>/\<action>       | user.email\_action              | GET, HEAD, OPTIONS       | y          |                 | y           | y     |
 | /user/forgot-password           | user.forgot\_password           | GET, HEAD, OPTIONS, POST | y          |                 | y           | y     |
 | /user/invite                    | user.invite\_user               | GET, HEAD, OPTIONS, POST | n          |                 |             |       |
 | /user/manage-emails             | user.manage\_emails             | GET, HEAD, OPTIONS, POST | n          |                 |             |       |
@@ -4180,11 +4184,11 @@ For example, Flask-User implements user.invite_user, though isn't activated thro
 | /user/sign-in                   | user.login                     | GET, HEAD, OPTIONS, POST | y          |                 | y           | y     |
 | /user/sign-out                  | user.logout                    | GET, HEAD, OPTIONS, POST | y          |                 | y           | y     |
 
-</details>
+<!--</details>-->
 
 ### Flask, Flask-User, and Book Repository Configuration Variables
 
-<details><summary>Please click to expand: Configuration Variables Table</summary>
+<!--<details><summary>Please click to expand: Configuration Variables Table</summary>-->
 
 | Key                           | Value                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         |
 |-------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
@@ -4247,7 +4251,7 @@ For example, Flask-User implements user.invite_user, though isn't activated thro
 | WTF\_CSRF\_SSL\_STRICT           | TRUE                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          |
 | WTF\_CSRF\_TIME\_LIMIT           | 3600                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          |
 
-</details>
+<!--</details>-->
 
 ![Section Divider: Features and Design Decisions and Technology Choices](documentation/section%20divider.png)
 
@@ -4258,6 +4262,25 @@ This section covers all technology components and choices.
 Some of the technology choices are governed by the Milestone Project requirements, while all others are my own choice (good, bad, and downright awful).
 
 For the third Milestone Project for the Diploma in Full Stack Development at the Code Institute, the following mandatory technology choices apply: HTML5, CSS 3, JavaScript, Python 3, Flask Framework (and Jinja), and MongoDB.
+
+* [HTML 5.2. - W3C Recommendation, 14 December 2017](https://www.w3.org/TR/html52/)
+	* The project uses HTML 5 to create the content.
+* [CSS 3 CSS - Snapshot 2018 W3C Working Group Note, 22 January 2019](https://www.w3.org/TR/css-2018/)
+	* The project uses CSS 3 to style the content and provide the layout.
+* [ECMAScript® 2015 Language Specification](http://www.ecma-international.org/ecma-262/6.0/)
+	* The project uses JavaScript, based on the ECMAScript language specification and implemented by numerous browser vendors. As a general rule, I read the implementation of this at [MDN web docs](https://developer.mozilla.org/en-US/docs/Web/JavaScript).
+* [Python](https://www.python.org/)
+	* An interpreted, high-level, and general-purpose programming language.
+* [Code Institute GitPod Full Template](https://github.com/Code-Institute-Org/gitpod-full-template)
+	* Using the GitPod Full Template from the Code Institute for my project.
+* [DropBox](https://www.dropbox.com/)
+	* Using DropBox as a staging area for Visual Studio Code, and synching this with GitHub.
+* [Visual Studio Code](https://code.visualstudio.com/)
+	* Main development editor (IDE).
+* [GitHub](https://github.com/)
+	* Project repository.
+* [Heroku](https://heroku.com/)
+	* Review Application, Staging, and Production environments.
 
 #### Flask and Jinja
 [Explore Flask](https://exploreflask.com/en/latest/index.html) and [Flask Palletsproject](https://flask.palletsprojects.com/en/1.1.x/)
@@ -4271,9 +4294,9 @@ Jinja templating language is used extensively too, [Jinja](https://jinja.pallets
 
 I decided to use the Flask-User extension after taking a Pretty-Printed (Anthony Herbert) overview course on Flask extensions (a bit like dipping a toe in the lake before taking a deep-dive in the Atlantic): [The Flask Extensions Course](https://courses.prettyprinted.com/p/the-flask-extensions-course).
 
-Flask-User handles the User Management extremely well, with registration, sign in, sign out, password reset, edit user profile, role-based authorization, and using email confiirmations. All I did was extend and add features like a user delete modal, and configure the Flask-User features I wanted to use in my 'config.py' file.
+Flask-User handles the User Management extremely well, with registration, sign in, sign out, password reset, edit user profile, role-based authorisation, and using email confirmations. All I did was extend and add features like a user delete modal, and configure the Flask-User features I wanted to use in my 'config.py' file.
 
-I also changed the defualt CSS framework from Bootstrap 3 to Materialize 1.0.0 as I think it has a cleaner and crisper interface.
+I also changed the default CSS framework from Bootstrap 3 to Materialize 1.0.0 as I think it has a cleaner and crisper interface.
 
 A good resource for Flask Extensions: [Awesome Flask](https://github.com/humiaozuzu/awesome-flask).
 
@@ -4288,7 +4311,7 @@ I found the knowledge of ODM MongoEngine CUD from this YouTube set of videos: [P
 
 Inspiration was found here too [Djongo](https://nesdis.github.io/djongo/), even though it's for a different Web Framework.
 
-Using an ODM like MongoEngine means that I can concentrate on the application logic, and worry less about the intricasies of database statements which is the case is using PyMongo directly.
+Using an ODM like MongoEngine means that I can concentrate on the application logic, and worry less about the intricacies of database statements which is the case is using PyMongo directly.
 
 Flask-MongoEngine -> MongoEngine -> PyMongo -> MongoDB.
 
@@ -4304,7 +4327,7 @@ I used the example Jinja Macro for pagination navigation and extended it with < 
 
 Having good logs can be very useful, not only when debugging but also to provide insight for application issues/performance. It's a vital part of root-cause-analysis to ascertain what has gone wrong, when, and how, as well as understand who or what has been impacted by the event.
 
-Reading the log file is far easier than reading a scrolling console, in addition a log saves events over time which makes it easy to pinpoint reoccuring events that may indicate an undocumented feature (bug) or an attempt to break something.
+Reading the log file is far easier than reading a scrolling console, in addition a log saves events over time which makes it easy to pinpoint reoccurring events that may indicate an undocumented feature (bug) or an attempt to break something.
 
 The next release of the Book Repository will have log analysis as a part of the Admin Dashboard.
 
@@ -4334,7 +4357,7 @@ In future I want to add the ability to update/delete/create the book genres in t
 #### Google Books API
 [Google Books API](https://developers.google.com/books/docs/v1/using)
 
-Google Books API is used to request front cover thumbnails for the books that are either added or updated. It means the user/reader doesn't have to upload images or upload unsuitable images. The search uses ISBN as the search criteria, with my Google API Key, and if a thumbnail exists a link is returned. The link uses HTTP and is repalced by HTTPS. If a thumbnail image doesn't exist, the Book Repository logo without the text is used instead.
+Google Books API is used to request front cover thumbnails for the books that are either added or updated. It means the user/reader doesn't have to upload images or upload unsuitable images. The search uses ISBN as the search criteria, with my Google API Key, and if a thumbnail exists a link is returned. The link uses HTTP and is replaced by HTTPS. If a thumbnail image doesn't exist, the Book Repository logo without the text is used instead.
 
 In future when a user/reader adds a book, I'd like to add a list of books matching the title and author for the user/reader to pick from, making it increasingly user-friendly.
 
@@ -4369,14 +4392,14 @@ I opted for this to make my development easier, while also learning how to confi
 
 There are four collections in the Book Repository database. One, user, is Flask-User (Flask-Login) related. The user class / collection is defined in 'app.py' based on the Flask-User sample MongoEngine App. The session collection is created by MongoSessionEngine. The book and genre classes / collections are defined by me, as are the user to book to genre relationships. MongoSessionEngine handles the relationship between user and session.
 
-The user class / collection fields are dictated by the Flask-User features that are activated in 'config.py'. I've extended the example with the email_confirmed_at for the registration email confirmation (allowing the user/reader to sign in). The session collection fields are handled by MongoSessionEngine and its fields are related to authentiation, CSRF, expiration, and the session cookie fields data when a book search is executed.
+The user class / collection fields are dictated by the Flask-User features that are activated in 'config.py'. I've extended the example with the email_confirmed_at for the registration email confirmation (allowing the user/reader to sign in). The session collection fields are handled by MongoSessionEngine and its fields are related to authentication, CSRF, expiration, and the session cookie fields data when a book search is executed.
 
 The Book class / collection has fields relevant to storing book data. The creation_date field is intended for future statistics data in the Admin Dashboard. Each book document is linked to it's user/reader: book.user = user.username. Each book document is linked to a genre document: book.genre = genre.genre.
 
 #### Gunicorn
 [Gunicorn - WSGI Server](https://docs.gunicorn.org/en/stable/)
 
-Gunicorn is used on the Heroku platform for Review Application, Staging,and Production. It has a much better performance than the Flask-WSGI.
+Gunicorn is used on the Heroku platform for Review Application, Staging, and Production. It has a much better performance than the Flask-WSGI.
 
 ### Defensive Programming
 All input data is validated in the templates (form fields), in 'app.py', and by the DB Schema and field validators where applicable. Internal errors are handled gracefully using try-except-finally statements and validations, as well as providing user/reader feedback via field warnings or flash messages.
@@ -4387,11 +4410,11 @@ I've tried to use as specific an exception as I can use (ValidationError, TypeEr
 
 **Form and Field Validation:** all form fields are validated as a part of their templates, for example string/int, required, maxlength, min/max, and more. User/reader feedback is provided by the form or via flash messages.
 
-**Classes / Collections:** where applicable MongoDB fields have validators to ensure the correct value ranges are used, as well as defined types (string, int, date, etc). No dynamiic documents are used, all classes / collections have a defined schema which makes it easier to validate.
+**Classes / Collections:** where applicable MongoDB fields have validators to ensure the correct value ranges are used, as well as defined types (string, int, date, etc). No dynamic documents are used, all classes / collections have a defined schema which makes it easier to validate.
 
-**Function / End-point Validation:** in some instances, for example when updating/editing or deleting a book, an additiional validation is performed to ensure it's the owner/creator of the book that is trying to access the book. It was possible to guess the next Object ID of a Book and use that in the update/edit or delete URL.
+**Function / End-point Validation:** in some instances, for example when updating/editing or deleting a book, an additional validation is performed to ensure it's the owner/creator of the book that is trying to access the book. It was possible to guess the next Object ID of a Book and use that in the update/edit or delete URL.
 
-To stop the admin account from being deactivated or deleted, validation is performed to make sure this doesnt' occur.
+To stop the admin account from being deactivated or deleted, validation is performed to make sure this doesn't occur.
 
 Decorators are used extensively:
 
@@ -4406,21 +4429,21 @@ Decorators are used extensively:
 
 **Flask-Session:** secures the "Remember Me" cookie when set to strong. In future I'll look at Flask-Paranoia to secure application further.
 
-**CSRF:** Flask-User uses CSRF, and I use CSRF for my templates and end-points (@app.errorhandler(CSRFError)) to protect against cross-site request forgery where unauthorized commands are submitted from an authenticated user.
+**CSRF:** Flask-User uses CSRF, and I use CSRF for my templates and end-points (@app.errorhandler(CSRFError)) to protect against cross-site request forgery where unauthorised commands are submitted from an authenticated user.
 
-**Error Handlers:** error handlers provide immediate feedback to the user/reader if there is a serious issue. In most cases, these are triggered through mistakes or malicious intent. The Internal Server Error is serious and I've succeded in triggering it when my GMail account request a reCaptcha. I've since remedied this using 2-factor authentication and a unique key.
+**Error Handlers:** error handlers provide immediate feedback to the user/reader if there is a serious issue. In most cases, these are triggered through mistakes or malicious intent. The Internal Server Error is serious and I've succeeded in triggering it when my Gmail account request a reCaptcha. I've since remedied this using 2-factor authentication and a unique key.
 
 **Flash and Form Field Messages:** providing continuous user/reader feedback means that they always know what is happening, and in some cases why. Nothing "mysterious" occurs, confusing the user/reader.
 
 **Flask Debug Toolbar:** Flask Debug Toolbar helped me fix two bugs and find a workaround to a third, which means a better end-user experience. In addition to this, understanding what happens in the background is vital to writing good code as it takes guess-work out of the equation.
 
-**Gunicorn:** using Gunicorn for the Heroku environments, especially in Production, to improve stabilty, performance, and security.
+**Gunicorn:** using Gunicorn for the Heroku environments, especially in Production, to improve stability, performance, and security.
 
 **Google Books API - HTTP -> HTTPS:** Google Books API returns an HTTP link for the front cover thumbnails, as opposed to an HTTPS link. All HTTP links and replaced by HTTPS.
 
 **Snippets:** I've a snippets directory on my local development environment where I test code I've found from various sources, as well as perform a fair amount of trial-and-error before using code in the development branch. This means I know (hopefully) what a pice of code does, and if it works as designed, before using it in my code.
 
-**Positive and Negative Testing:** I've tried, and occassionally succeeded, in breaking the code. For example, modifying the URL's for updating/editing and deleting books using an Object ID of a book not belonging to me (book documents are added sequentially in MongoDB, and if my last book ends with "...5c" then it stands to reason the next book document is "...5d"). This resulted in additional validations in 'app.py' to stop this from happening.
+**Positive and Negative Testing:** I've tried, and occasionally succeeded, in breaking the code. For example, modifying the URL's for updating/editing and deleting books using an Object ID of a book not belonging to me (book documents are added sequentially in MongoDB, and if my last book ends with "...5c" then it stands to reason the next book document is "...5d"). This resulted in additional validations in 'app.py' to stop this from happening.
 
 I've tried breaking forms by entering bogus data and strings instead of numbers, using incomplete forms, trying to POST data I've created, and turned off the WiFi to see what happens which led to additional error handlers.
 
@@ -4439,7 +4462,7 @@ Tello Board was used to design, document, and develop the Book Repository. The l
 * Development: Dev & Test: backlog items moved to here to be developed on my local development environment -> GitHub development branch, tested locally. Once tests have passed, regression and/or new feature testing a Pull Merge Request is executed and the tests applied on Heroku Review Application. If tests fail, the Pull Merge Request is cancelled. If tests pass, the Pull Merge Request is approved with a comment and the development branch is merged with the master branch.
 * Master --> Heroku Staging & Testing: updated GitHub master branch kicks off an auto deployment to Heroku Staging. Same test are applied before a manual promotion to Heroku Production.
 * Heroku Staging --> Production: this is the end-user application on Heroku Production.
-* Documentation and Design: all other documentation is stored here, Continuous Development and Deployment, Materialize CSS 1.0.0, Information Architecture and Sequntial Model, Technology Stack, Colour Scheme, Development Environments and MongoDB Instances, Book Repository MongoDB Schema, Background and Book Spine Images, Favicon, Links, Meta-tag Description, Gmail Account Configuration, and Route List.
+* Documentation and Design: all other documentation is stored here, Continuous Development and Deployment, Materialize CSS 1.0.0, Information Architecture and Sequential Model, Technology Stack, Colour Scheme, Development Environments and MongoDB Instances, Book Repository MongoDB Schema, Background and Book Spine Images, Favicon, Links, Meta-tag Description, Gmail Account Configuration, and Route List.
 
 #### GitHub Wiki
 
@@ -4463,7 +4486,7 @@ The Book Repository MongoDB Schema was drawn using QDD.
 
 [Balsamiq](https://balsamiq.com/wireframes/desktop/)
 
-The wireframe diagrams were origiinally done with pen and paper, later PowerPoint, and finally Balsamiq.
+The wireframe diagrams were originally done with pen and paper, later PowerPoint, and finally Balsamiq.
 
 #### MarkDown Tables Generator
 
@@ -4509,7 +4532,7 @@ Pen and paper to create the initial design, and to create the odd doodle that be
 ![Section Divider: Technology and, Testing and Validation](documentation/section%20divider.png)
 
 ## Testing and Validation
-Business Driven Development aims to overcome the common mismatch between the Business and IT. BDD consists of a continuous cycle of Modeling -> Building -> Deploying -> Managing. Testing is a part of Building, through unit, integration, and regression testing. These tests won't validate the user experience in the form of user stories and use cases. Behavior Driven Development (BDD) is a branch of Test Driven Development (TDD). BDD uses human-readable descriptions of software user requirements as the basis for software tests.
+Business Driven Development aims to overcome the common mismatch between the Business and IT. BDD consists of a continuous cycle of Modelling -> Building -> Deploying -> Managing. Testing is a part of Building, through unit, integration, and regression testing. These tests won't validate the user experience in the form of user stories and use cases. Behaviour Driven Development (BDD) is a branch of Test Driven Development (TDD). BDD uses human-readable descriptions of software user requirements as the basis for software tests.
 
 BDD Testing is performed manually, and automated using Selenium IDE.
 
@@ -4526,12 +4549,12 @@ Running the manual tasks validate the Use Case, and in turn the User Story. A te
 |--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-------------|
 | **User   Story 001 (User/Reader):** as a new user/reader I want to join the Book   Repository to store details about my books so that I can share them with a   wider audience.                                                                                                                                                                                                                                                                                                                                                                                                                | PASS            |
 | + > **Use Case   001-001 (C in User CRUD):** as a new user/reader I want to register an   account with the Book Repository.                                                                                                                                                                                                                                                                                                                                                                                                                                                                        | [PASS](documentation/Test%20-%20User%20Management%20-%20User%20Story%20001%20-%20Use%20Case%20001-001.png)            |
-| + + + > **Tasks 1:** [Book Repository Home/Landing   Page](https://book-repository-virtual.herokuapp.com/) -> read and accept   the Consent Cookie (optional) -> click on Register in the naviagtion bar   or the hamburger-menu followed by Register   [Register](https://book-repository-virtual.herokuapp.com/user/register) ->   fill in the form: username, email address, password, password confirmation,   and click on the Register button -> if successful: a success Flash message,   otherwise a danger Flash message.                                                                    | PASS            |
+| + + + > **Tasks 1:** [Book Repository Home/Landing   Page](https://book-repository-virtual.herokuapp.com/) -> read and accept   the Consent Cookie (optional) -> click on Register in the navigation bar   or the hamburger-menu followed by Register   [Register](https://book-repository-virtual.herokuapp.com/user/register) ->   fill in the form: username, email address, password, password confirmation,   and click on the Register button -> if successful: a success Flash message,   otherwise a danger Flash message.                                                                    | PASS            |
 | + + + > **Tasks 2:** a confirmation email with a   link is sent to the email address specified during registration -> click   on the link -> you're accepted and signed in at the same time ->   Member's Page -> two success Flash messages, one for registration and one   for sign in.                                                                                                                                                                                                                                                                                                             | PASS            |
 | + > **Use Case 001-002:** as a user/reader I   want to Sign In to the Book Repository to access my stack of books.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                | [PASS](documentation/Test%20-%20User%20Management%20-%20User%20Story%20001%20-%20Use%20Case%20001-002.png)            |
 | + + + > **Tasks 1:** [Book Repository Home/Landing   Page](https://book-repository-virtual.herokuapp.com/) -> read and accept   the Consent Cookie (optional) -> click on Sign In in the navigation bar or   the hamburger-menu followed by Sign In [Sign   In](https://book-repository-virtual.herokuapp.com/user/sign-in) -> enter   your username and password (the same credentials used when registering),   click on the Remember Me box (optional), and click on the Sign In button ->   success Flash message and [Member's   Page](https://book-repository-virtual.herokuapp.com/members).   | PASS           |
 | + > **Use Case 001-003:** as a user/reader I   want to reset my password as I have forgotten it.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  | [PASS](documentation/Test%20-%20User%20Management%20-%20User%20Story%20001%20-%20Use%20Case%20001-003.png)            |
-| + + + > **Tasks 1:** [Book Repository Home/Landing   Page](https://book-repository-virtual.herokuapp.com/) -> read and accept   the Consent Cookie (optional) -> click on Sign In in the navigation bar or   the hamburger-menu followed by Sign In [Sign   In](https://book-repository-virtual.herokuapp.com/user/sign-in) -> click   on [Forgot Your   Password?](https://book-repository-virtual.herokuapp.com/user/forgot-password)   -> enter your email address, the same one you used o register your   acccount and click on the Send Reset Password Email button -> success   Flash message. | PASS            |
+| + + + > **Tasks 1:** [Book Repository Home/Landing   Page](https://book-repository-virtual.herokuapp.com/) -> read and accept   the Consent Cookie (optional) -> click on Sign In in the navigation bar or   the hamburger-menu followed by Sign In [Sign   In](https://book-repository-virtual.herokuapp.com/user/sign-in) -> click   on [Forgot Your   Password?](https://book-repository-virtual.herokuapp.com/user/forgot-password)   -> enter your email address, the same one you used o register your   account and click on the Send Reset Password Email button -> success   Flash message. | PASS            |
 | + + + > **Tasks 2:** a password reset email is sent   to the provided email address, provided it exists in the Book Repository   -> click on the password link to reset your password or ignore if you   don't need to reset your password -> [Reset   Password](https://book-repository-virtual.herokuapp.com/user/reset-password/...)   -> enter your new password, retype your new password to confirm, and click   on the Change Password button -> success Flash message and [Member's   Page](https://book-repository-virtual.herokuapp.com/members).                                           | PASS            |
 | + + + > **Tasks 3:** an email confirming your   password change is sent to the email address you provided -> if you   initiated the password change, do nothing, otherwise click on the "click   here to reset it" link.                                                                                                                                                                                                                                                                                                                                                                              | PASS            |
 
@@ -4544,7 +4567,7 @@ Running the manual tasks validate the Use Case, and in turn the User Story. A te
 | + + + > **Tasks 1:** [Member's   Page](https://book-repository-virtual.herokuapp.com/members) -> click on   the user profile (username) on the navigation bar [Edit User   Profile](https://book-repository-virtual.herokuapp.com/user/edit_user_profile)   -> click on [Change   Password](https://book-repository-virtual.herokuapp.com/user/change-password)   -> enter your current/old password, your new password, retype your new   password for confirmation, and click on the Change Password button ->   success Flash message and [Member's   Page](https://book-repository-virtual.herokuapp.com/members).            | PASS            |
 | + + + > **Tasks 2:** an email is sent to the   user's/reader's email address, confirming the password change -> if the   password change wasn't initiated by the user/reader they can click on the   link in the email to change the password.                                                                                                                                                                                                                                                                                                                                                                                    | PASS            |
 | + > **Use Case 002-003 (D in User CRUD):** as a   user/reader I want to delete my account.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    | [PASS](documentation/Test%20-%20User%20Management%20-%20User%20Story%20002%20-%20Use%20Case%20002-003.png)            |
-| + + + > **Tasks 1:** [Member's   Page](https://book-repository-virtual.herokuapp.com/members) -> click on   the user profile (username) on the navigation bar [Edit User   Profile](https://book-repository-virtual.herokuapp.com/user/edit_user_profile)   -> click on [Delete   User](https://book-repository-virtual.herokuapp.com/user/edit_user_profile#delete_user)   -> click on yes to permanetly delete the user/reader and associated books   from the Book Repository or no to close the delete user modal -> success   Flash message [Landing/Home   Page](https://book-repository-virtual.herokuapp.com/index.html). | PASS            |
+| + + + > **Tasks 1:** [Member's   Page](https://book-repository-virtual.herokuapp.com/members) -> click on   the user profile (username) on the navigation bar [Edit User   Profile](https://book-repository-virtual.herokuapp.com/user/edit_user_profile)   -> click on [Delete   User](https://book-repository-virtual.herokuapp.com/user/edit_user_profile#delete_user)   -> click on yes to permanently delete the user/reader and associated books   from the Book Repository or no to close the delete user modal -> success   Flash message [Landing/Home   Page](https://book-repository-virtual.herokuapp.com/index.html). | PASS            |
 
 </details>
 
@@ -4588,11 +4611,11 @@ Running the manual tasks validate the Use Case, and in turn the User Story. A te
 
 | User Story -> Use   Cases -> Tasks                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        | Pass / Fail |
 |-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-------------|
-| **User Story 005 (User 'admin' and   user/reader with Admin Role):** as an admin or user/reader with the Admin   Role I want to manage the users, genres, books, and statistics so that I can   provide the best possible Book Repository experince for the users/readers.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             | PASS            |
+| **User Story 005 (User 'admin' and   user/reader with Admin Role):** as an admin or user/reader with the Admin   Role I want to manage the users, genres, books, and statistics so that I can   provide the best possible Book Repository experience for the users/readers.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             | PASS            |
 | + > **Use Case 005-001 (R in Admin User   CRUD):** as an admin I want to view the users/readers in the Book Repository.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    | [PASS](documentation/Test%20-%20Admin%20Dashboard%20-%20User%20Story%20005%20-%20Use%20Case%20005-001.png)            |
 | + + +  > **Tasks 1:** [Member's   Page](https://book-repository-virtual.herokuapp.com/members) -> click on   [Admin Page](https://book-repository-virtual.herokuapp.com/admin_dashboard)   -> view the paginated table (10 users per page) and navigate between the   pages using the < > and the page numbers -> click on a user/reader   link -> view: active/inactive status, first and last name, password   (hidden and hashed), and email address, and click on the Cancel button to get   back to [Admin   Page](https://book-repository-virtual.herokuapp.com/admin_dashboard).                                                                                                                                                                                                                                                                                                         | PASS            |
 | + > **Use Case 005-002 (U in Admin User   CRUD):** as an admin I want to update the user/readers details in the Book   Repository.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         | [PASS](documentation/Test%20-%20Admin%20Dashboard%20-%20User%20Story%20005%20-%20Use%20Case%20005-002.png)            |
-| + + + > **Tasks 1:** [Member's   Page](https://book-repository-virtual.herokuapp.com/members) -> click on   [Admin Page](https://book-repository-virtual.herokuapp.com/admin_dashboard)   -> view the paginated table (10 users per page) and navigate between the   pages using the < > and the page numbers -> click on a user/reader   link -> view: active/inactive status, first and last name, password   (hidden and hashed), and email address -> update the form fields: activate/deactivate   (inactive) user/reader (inactive = user/reader can't sign in), first and last   name, password and retype password (once submitted the new password is   hashed), and email address, and click on the Update button when done or   Cancel button if no updates are required -> sucess Flash message and   [Admin Page](https://book-repository-virtual.herokuapp.com/admin_dashboard). | PASS            |
+| + + + > **Tasks 1:** [Member's   Page](https://book-repository-virtual.herokuapp.com/members) -> click on   [Admin Page](https://book-repository-virtual.herokuapp.com/admin_dashboard)   -> view the paginated table (10 users per page) and navigate between the   pages using the < > and the page numbers -> click on a user/reader   link -> view: active/inactive status, first and last name, password   (hidden and hashed), and email address -> update the form fields: activate/deactivate   (inactive) user/reader (inactive = user/reader can't sign in), first and last   name, password and retype password (once submitted the new password is   hashed), and email address, and click on the Update button when done or   Cancel button if no updates are required -> success Flash message and   [Admin Page](https://book-repository-virtual.herokuapp.com/admin_dashboard). | PASS            |
 | + > **Use Case 005-003 (D in Admin User   CRUD):** as an admin I want to delete the user/reader and associated books   permanently.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        | [PASS](documentation/Test%20-%20Admin%20Dashboard%20-%20User%20Story%20005%20-%20Use%20Case%20005-003.png)            |
 | + + + > **Tasks 1:** [Member's   Page](https://book-repository-virtual.herokuapp.com/members) -> click on   [Admin Page](https://book-repository-virtual.herokuapp.com/admin_dashboard)   -> view the paginated table (10 users per page) and navigate between the   pages using the < > and the page numbers -> click on a user/reader   link -> view: active/inactive status, first and last name, password   (hidden and hashed), and email address -> click on the Delete button   (there is no "Are you sure?" modal) or Cancel button if no deletion   is required -> success Flash message and [Admin   Page](https://book-repository-virtual.herokuapp.com/admin_dashboard).                                                                                                                                                                                                           | PASS            |
 | + > **Use Case 005-004 (C in Genre CRUD):** as   an admin I want to load the 'genre.json' file (book genres) to the Genre   Collection so that they can be used by the users/readers when adding,   updating, and viewing books.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           | [PASS](documentation/Test%20-%20Admin%20Dashboard%20-%20User%20Story%20005%20-%20Use%20Case%20005-004.png)            |
@@ -4604,14 +4627,14 @@ Running the manual tasks validate the Use Case, and in turn the User Story. A te
 | + + + > **Tasks 1:** (optional) update the   'book.json' file to suit your Book Repository requirements.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       | PASS            |
 | + + + > **Tasks 2:** [Member's   Page](https://book-repository-virtual.herokuapp.com/members) -> click on   [Admin Page](https://book-repository-virtual.herokuapp.com/admin_dashboard)   -> hover over the drop-down (category icon) menu and click on the Load   Books button -> if the Book Collection already exists a Flash message will   say so, otherwise a Flash message will say successful creation and [Admin   Page](https://book-repository-virtual.herokuapp.com/admin_dashboard).                                                                                                                                                                                                                                                                                                                                                                                              | PASS            |
 | + > **Use Case 005-007 (R in Statistics   CRUD):** as an admin I want to view the number of users, number of books, and   the most popular genres in the Book Repository.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  | [PASS](documentation/Test%20-%20Admin%20Dashboard%20-%20User%20Story%20005%20-%20Use%20Case%20005-007.png)            |
-| + + + > **Tasks 1:** [Member's   Page](https://book-repository-virtual.herokuapp.com/members) -> click on   [Admin Page](https://book-repository-virtual.herokuapp.com/admin_dashboard)   -> hover over the drop-down (category icon) menu and click on the   Statistics button -> scroll through the statitics and click on the Done   button to close the modal -> [Admin   Page](https://book-repository-virtual.herokuapp.com/admin_dashboard).                                                                                                                                                                                                                                                                                                                                                                                                                                            | PASS            |
+| + + + > **Tasks 1:** [Member's   Page](https://book-repository-virtual.herokuapp.com/members) -> click on   [Admin Page](https://book-repository-virtual.herokuapp.com/admin_dashboard)   -> hover over the drop-down (category icon) menu and click on the   Statistics button -> scroll through the statistics and click on the Done   button to close the modal -> [Admin   Page](https://book-repository-virtual.herokuapp.com/admin_dashboard).                                                                                                                                                                                                                                                                                                                                                                                                                                            | PASS            |
 
 </details>
 
 #### "Negative Testing"
 Tested updating and deleting books not belonging to the current user/reader. Fixed this issue in 'app.py'. All form fields are validated, and some fields are required, which means the user/reader is always made aware of issues.
 
-Tested all error handlers too, CSRF Token missing in templates by removing them. Incorrect URL is caught, as is unsupported method if someone tries something sinister, and catching internal server error which is tested by entering an incorrect email password variable for the registration and passsword reset confirmation.
+Tested all error handlers too, CSRF Token missing in templates by removing them. Incorrect URL is caught, as is unsupported method if someone tries something sinister, and catching internal server error which is tested by entering an incorrect email password variable for the registration and password reset confirmation.
 
 Tried accessing URL's without being authenticated. Requested to Sign In. Tried accessing URL's I shouldn't access as a user/reader, and am redirect to the correct error handler.
 
@@ -4635,7 +4658,7 @@ To prepare for the tests:
 	* pip install selenium
 	* [ChromeDriver Download](http://chromedriver.chromium.org/downloads?tmpl=%2Fsystem%2Fapp%2Ftemplates%2Fprint%2F&showPrintDialog=1)
 		* Unzip and copy chromedriver to the virtual Python/bin directory.
-		* Execute chromedrive in the terminal to ensure the correct version is running; it has to match the version in "About Google Chrome". If using other browsers, other webdrivers must be installed. Don't do "pip install ChromeDriver" as it's likely to install an older version which means that the tests won't run as Chrome can't be controlled.
+		* Execute chromedriver in the terminal to ensure the correct version is running; it has to match the version in "About Google Chrome". If using other browsers, other webdrivers must be installed. Don't do "pip install ChromeDriver" as it's likely to install an older version which means that the tests won't run as Chrome can't be controlled.
 * Add the following '.env' variables
 	* USERTESTNAME = "YourName"
 	* USERTESTPASS = "YourSecretPassword"
@@ -4995,19 +5018,19 @@ class TestBookRepositoryBDDTestSuite():
 
 ![CDD - Testing](documentation/CDD%20-%20Testing.png)
 
-Continuous unit and integration testing while coding on the local development branch before commiting coode to GitHub development caught most of my coding errors. Testing was performed using the local Flask WSGI Server, before committing the code to GitHub development and creating a merge pull request in VSCode triggering a Heroku Review App deployment for further testing. If the tests failed I canceleled the pull request, and if they passed I added a comment and accepted the merge pull request to merge GitHub development to master, which in turn automatically deployed to Heroku Staging. Further tests on Heroku Staging before manual promotion to Heroku Production.
+Continuous unit and integration testing while coding on the local development branch before commiting coode to GitHub development caught most of my coding errors. Testing was performed using the local Flask WSGI Server, before committing the code to GitHub development and creating a merge pull request in VSCode triggering a Heroku Review App deployment for further testing. If the tests failed I cancelled the pull request, and if they passed I added a comment and accepted the merge pull request to merge GitHub development to master, which in turn automatically deployed to Heroku Staging. Further tests on Heroku Staging before manual promotion to Heroku Production.
 
 Flask Debug Toolbar together with ample use of `print` statements aided in fixing the bugs. I highly recommend the use of Flask Debug Toolbar, not only for debugging, but for the insights gained of how Flask and Flask extensions work making it easier to both design and develop the Book Repository.
 
 There were three main bugs that required serious attention and GitHub issues were created in VSCode:
 
-* [Book Repository on Heroku behaves erratically. #17](https://github.com/NaoiseGaffney/BookRepository/issues/17): I had introduced what I thought was a brlliant way to create a `SECRET_KEY` using `SECRET_KEY = os.urandom(128).hex()`. This works locally, though erratically on Heroku forcing me to Sign In twice. I fixed this by using `SECRET_KEY = os.environ.get("SECRET_KEY")` insetad with the `SECRET_KEY` defined in '.env' locally and as a variable on Heroku for Review Apps, Staging, and Production.
+* [Book Repository on Heroku behaves erratically. #17](https://github.com/NaoiseGaffney/BookRepository/issues/17): I had introduced what I thought was a brilliant way to create a `SECRET_KEY` using `SECRET_KEY = os.urandom(128).hex()`. This works locally, though erratically on Heroku forcing me to Sign In twice. I fixed this by using `SECRET_KEY = os.environ.get("SECRET_KEY")` instead with the `SECRET_KEY` defined in '.env' locally and as a variable on Heroku for Review Apps, Staging, and Production.
 * [Book Results creates "empty" space when displaying public book search results. #20](https://github.com/NaoiseGaffney/BookRepository/issues/20): I fixed this by changing the BaseQuerySets in `search_results(page=1)`. I had tried using 'Q' (supported by MongoEngine) queries and '~Q' (not supported by Flask_MongoEngine nor MongoEngine, though works on Djongo for Django) to no effect, and changed the way it works by omitting all books marked as PRIVATE/HIDDEN from the public book searches.
-* [Python configuration file has stopped loading all of a sudden. #29](https://github.com/NaoiseGaffney/BookRepository/issues/29): using Gmail as the SMTP provider for user registration and password reset emails stopped working and caused an "Internal Server Error 500" and crashed the application. The issue is one of the reCaptcha being required for the Gmail account. I reconfigured the Gmail account I use for this to support 2-Factor Authentication with a specila code/key to use instead of the password in my environment variables.
+* [Python configuration file has stopped loading all of a sudden. #29](https://github.com/NaoiseGaffney/BookRepository/issues/29): using Gmail as the SMTP provider for user registration and password reset emails stopped working and caused an "Internal Server Error 500" and crashed the application. The issue is one of the reCaptcha being required for the Gmail account. I reconfigured the Gmail account I use for this to support 2-Factor Authentication with a special code/key to use instead of the password in my environment variables.
 
 Besides the continuous unit and integration testing performed during development, I also used manual BDD testing which is documented previously in this document. In addition I performed automated BDD testing too, using Selenium IDE to record the test cases, converting the tests to PyTest, modifying the code (one test case at a time) to get it working, before running successful test suites (documented previously in this document).
 
-Testing has been performed on several different devices, to ensure all works well on different screen sizes and using different browsers. In fact, the User Management and Book Repository features look fabulous (IM(H)O) on smaller screens. The Admin Dashboard requires wider screens to fit the user table on one screen without needing to scrool, though is easily viewed on smaller screens too.
+Testing has been performed on several different devices, to ensure all works well on different screen sizes and using different browsers. In fact, the User Management and Book Repository features look fabulous (IM(H)O) on smaller screens. The Admin Dashboard requires wider screens to fit the user table on one screen without needing to scroll, though is easily viewed on smaller screens too.
 
 ### Validation of HTML 5, CSS 3, JS and Python
 
@@ -5062,7 +5085,7 @@ One undefined variable
 
 [PEP8 Online](http://pep8online.com/) copied 'app.py', 'config.py', and 'test_bookRepositoryBDDTestSuite.py' code into PEP8.
 
-E501 means line is too long. A lot has happened since PEP8 became a standard, and screens now handle longer lines than the 80 characters of the past. My code is readeable with 80+ characters.
+E501 means line is too long. A lot has happened since PEP8 became a standard, and screens now handle longer lines than the 80 characters of the past. My code is readable with 80+ characters.
 
 [Python Syntax Checker](https://extendsclass.com/python-tester.html) "No syntax errors detected :)" for all '.py' files.
 
@@ -5093,11 +5116,11 @@ E501 means line is too long. A lot has happened since PEP8 became a standard, an
 
 Google Chrome LightHouse highlights the following critical observations:
 
-**Performance:** Slow loading of images due to blocking features and use of '.png' instead of next-gen formats. I can't remove the blocking features as they are CDN's (Google Fonts, Materialize CSS, Osano Cookie Consent) that are vital to the functionaly and UX Design of the Book Repository. I could minify my 'style.css' though due to its small size will not gain much in terms of performance. Some images could be resized, however, the performance-gain is negligable and I don't want to ruin the background image as it looks good on all devices on all screen sizes (Apple iPhone 8 and Huawei Y6 to 4K Ultra-Wide 32" display). Instead of using CDN's I could download the extentions/frameworks/libraries to potentially speed up performance. Having tested extensively on several real devices (Apple MacBook Pro, Samsung Galaxy Note 10+ 5G, Apple iPhone 8, Jolla, Huawei Y6) it's clear that performance is not an issue. In fact, the Book Repository is faster on Heroku than on my local machine. Running the Flask Debug Toolbar Profiler places the slowest load to less than 200 ms for the heaviest pages (Member's and Search Results Pages).
+**Performance:** Slow loading of images due to blocking features and use of '.png' instead of next-gen formats. I can't remove the blocking features as they are CDN's (Google Fonts, Materialize CSS, Osano Cookie Consent) that are vital to the functionality and UX Design of the Book Repository. I could minify my 'style.css' though due to its small size will not gain much in terms of performance. Some images could be resized, however, the performance-gain is negligible and I don't want to ruin the background image as it looks good on all devices on all screen sizes (Apple iPhone 8 and Huawei Y6 to 4K Ultra-Wide 32" display). Instead of using CDN's I could download the extensions/frameworks/libraries to potentially speed up performance. Having tested extensively on several real devices (Apple MacBook Pro, Samsung Galaxy Note 10+ 5G, Apple iPhone 8, Jolla, Huawei Y6) it's clear that performance is not an issue. In fact, the Book Repository is faster on Heroku than on my local machine. Running the Flask Debug Toolbar Profiler places the slowest load to less than 200 ms for the heaviest pages (Member's and Search Results Pages).
 
 **Accessibility:** On pages with option menus and toggle switches, labels exist and are readable by a screen reader though they are placed a little differently due to a Materialize CSS 1.0.0 undocumented feature (bug), and this is highlighted by LightHouse. Materilize CSS 1.0.0 and Flask/Jinja rendering of some elements such as the toggle switch and options menu make them challenging to style and label. For example, I kept an empty `<span></span>` to render the label for the toggle switch or it would disappear. All pages pass the Nu HTML Checker so the approach is fine from a syntactic perspective.
 
-**Best Practices:** Some concerns regarding skewed images, the Book Repository Logo and my "ego-page" tab image are fine on screen sizes of all sizes. The Book Repository Logo needs to be large enough to be seen on small screen, yet small enough to fit on the navigatiion bar for screens of all sizes. To the naked eye it looks great (IM(H)O). There is a concern raised regarding the tap-target-sizes for mobile devices, the view (teal eye icon), the edit (blue pencil icon), and the delete (pink bin icon) features on the book spines on the Member's amd Search Results pages. Making the images larger will squeeze the title and author text too much, making it a poor user experience on small devices. My fat fingers (larger than normal hands , and also thicker fingers) work well on the mobile devices I've tried them on with these icon sizes.
+**Best Practices:** Some concerns regarding skewed images, the Book Repository Logo and my "ego-page" tab image are fine on screen sizes of all sizes. The Book Repository Logo needs to be large enough to be seen on small screen, yet small enough to fit on the navigation bar for screens of all sizes. To the naked eye it looks great (IM(H)O). There is a concern raised regarding the tap-target-sizes for mobile devices, the view (teal eye icon), the edit (blue pencil icon), and the delete (pink bin icon) features on the book spines on the Member's and Search Results pages. Making the images larger will squeeze the title and author text too much, making it a poor user experience on small devices. My fat fingers (larger than normal hands , and also thicker fingers) work well on the mobile devices I've tried them on with these icon sizes.
 
 **SEO:** I don't have a 'robots.txt' though Heroku may well have one (I don't know). Other concerns are not an issue.
 
@@ -5137,13 +5160,13 @@ Configuration starts on GitHub, using the Code Institute's Full Template and cre
 
 In VSCode I clone the Book Repository repo, create a Python Virtual Environment and activate it, followed by the installation of Flask and relevant extensions. Create 'requirements.txt', 'Procfile', and 'runtime.txt'. To test the  CDD functionality a minimum viable Flask application is created, stashed, committed, pushed, and merged using the VSCode menu (Git commands are included in the diagram for the benefit of others).
 
-On Heroku I created a Pipeline, book-repository-pipe with a Staging applicatioin linked to the Book Repository GitHub master with auto deployment, as well as Production application allowing promotion from Staging. Heroku Review Application is configured too, and all three Heroku environments variables are configured too.
+On Heroku I created a Pipeline, book-repository-pipe with a Staging application linked to the Book Repository GitHub master with auto deployment, as well as Production application allowing promotion from Staging. Heroku Review Application is configured too, and all three Heroku environments variables are configured too.
 
 ### Workflow
 
 ![CDD - Workflow](documentation/CDD%20-%20Workflow.png)
 
-The workflow is described at a high level under the Development and Testing Cycle heading above. This diagram highlights the workflow and steps. One thing worthtaking note of is the pulling of the GitHub master branch to the local master branch after successful Merge Pull Request from GitHub development to master.
+The workflow is described at a high level under the Development and Testing Cycle heading above. This diagram highlights the workflow and steps. One thing worth taking note of is the pulling of the GitHub master branch to the local master branch after successful Merge Pull Request from GitHub development to master.
 
 ### Python Flask Requirements
 
@@ -5159,9 +5182,9 @@ To run the Book Repository Python Flask application successfully on Heroku, a co
 
 ![CDD - 4 Environments](documentation/CDD%20-%204%20Development%20Environments.png)
 
-Proper Software Development and Deploment Practices are observed throughout this Milestone Project.
+Proper Software Development and Deployment Practices are observed throughout this Milestone Project.
 
-There are 4 development and testing environments. The first is the local application using it'as own MongoDB instance on MongoDB Atlas. The second is the Heroku Review Application, also with its own MongoDB instance. This Heroku application is automatically deployed whenever a Merg Pull Request is executed in VSCode, and it is deleted once the Merge Pull Request is merged/approved. Once the Merge Pull Request is successful, the GitHub development branch (or any other branch) is merged with the master branch, the auto deployment to Heroku Staging is triggered. Heroku Staging also has its own MongoDB instance. The final environment is Heroku Production with its own MongoDB instance, and is created when Heroku Staging is manually deployed to Heroku Production.
+There are 4 development and testing environments. The first is the local application using its own MongoDB instance on MongoDB Atlas. The second is the Heroku Review Application, also with its own MongoDB instance. This Heroku application is automatically deployed whenever a Merg Pull Request is executed in VSCode, and it is deleted once the Merge Pull Request is merged/approved. Once the Merge Pull Request is successful, the GitHub development branch (or any other branch) is merged with the master branch, the auto deployment to Heroku Staging is triggered. Heroku Staging also has its own MongoDB instance. The final environment is Heroku Production with its own MongoDB instance, and is created when Heroku Staging is manually deployed to Heroku Production.
 
 The reason for having 4 separate environments is to practice good CDD practices, and getting to know how it's possibly done by professional development teams. The reason for having 4 separate MongoDB instances is to ensure proper testing is performed in each environment without being affected by existing data. All 4 MongoDB instances are repeatedly dropped (erased) and automatically created by MongoEngine ("It's like magic!").
 
@@ -5178,10 +5201,34 @@ Code Institute Mentor - [GitHub: 5pence - Spencer Barriball](https://github.com/
 
 ### Content
 
+[Book Repository on GitHub](https://github.com/NaoiseGaffney/BookRepository)
+
+[Book Repository - Heroku Production](https://book-repository-virtual.herokuapp.com/)
+
+[Book Repository - Heroku Staging](https://book-repository-staging.herokuapp.com/)
+
+Book Repository - Review Applications: created with unique URL's for each Merge Pull Request.
+
 ### Media
 
+[Sharon McCutcheon - Photographer - Background Image](https://images.unsplash.com/photo-1516979187457-637abb4f9353?ixlib=rb-1.2.1&auto=format&fit=crop&w=2550&q=80)
+
+[Christian Wiediger - Photographer - Book Spine Image](https://images.unsplash.com/photo-1553447977-754f9430685c?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80)
+
+[Book Repository Logo - Created using Microsoft PowerPoint stock image of a stack of Books](static/images/logo_bookstack_text_96_spacing.png)
+
+[Google Fonts - Raleway](https://fonts.googleapis.com/css?family=Raleway|&display=swap)
+
+[Google Icon Font - Material Icons](https://fonts.googleapis.com/icon?family=Material+Icons)
+
+[Favicon](static/images/android-chrome-192x192.png)
+
+[Google Books API - Book Front Cover Thumbnails](https://developers.google.com/books/docs/v1/using)
+
 ### Lessons Learned
-The course provided an introduction to the Flask Framework and Jinja that I've added to in terms of both knowledge and skills
+The Code Institute's Diploma course on Full Stack Development provided an introduction to Python and the Flask Framework and Jinja that I've added to in terms of both increase in knowledge and improvement of skills.
+
+
 
 ### Acknowledgements
 
